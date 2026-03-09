@@ -1,0 +1,869 @@
+/* ===== style.css ===== */
+/* Gabungan semua style - LENGKAP & SIAP PAKAI */
+
+/* Font & Base Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+}
+
+:root {
+    --bg-page: #F1F2F6;
+    --bg-card: #ffffff;
+    --bg-section-alt: #ffffff;
+    --text-primary: #1B262C;
+    --text-primary-dark: #0A3D62;
+    --text-muted: #6b7280;
+    --text-secondary: #7a8a96;
+    --text-tertiary: #4a5568;
+    --text-gray-600: #4b5563;
+    --text-gray-700: #374151;
+    --border-card: #e5e7eb;
+    --border-input: #e5e7eb;
+    --border-gray-100: #f3f4f6;
+    --border-gray-200: #e5e7eb;
+    --bg-input: #ffffff;
+    --bg-item: #fafbfc;
+    --bg-gray-50: #f9fafb;
+    --bg-gray-100: #f3f4f6;
+    --bg-gray-200: #e5e7eb;
+    --border-item: #e8ecef;
+    --footer-bg: #1B262C;
+    --footer-text: rgba(255, 255, 255, 0.5);
+    --info-bg: rgba(10, 61, 98, 0.04);
+    --tab-border: #e5e7eb;
+    --action-bg: rgba(10, 61, 98, 0.04);
+    --stat-bg: #fafbfc;
+    --timeline-bg: #ffffff;
+    --scrollbar-track: #f1f1f1;
+    --scrollbar-thumb: #c1c1c1;
+    --scrollbar-thumb-hover: #a8a8a8;
+    --slider-bg: #e8ecef;
+    --map-bg-start: #c8e6f0;
+    --map-bg-middle: #b3d9e8;
+    --map-bg-end: #a0d0e3;
+    --accent-primary: #0A3D62;
+    --accent-secondary: #1DD1A1;
+    --accent-gradient: linear-gradient(135deg, #0A3D62 0%, #1565a0 100%);
+}
+
+/* Dark mode tokens */
+html.dark {
+    --bg-page: #0d1b2a;
+    --bg-card: #1a2a3a;
+    --bg-section-alt: #132035;
+    --text-primary: #e8f4ff;
+    --text-primary-dark: #1DD1A1;
+    --text-muted: #8aafc8;
+    --text-secondary: #9bb8d4;
+    --text-tertiary: #b8cde0;
+    --text-gray-600: #cbd5e0;
+    --text-gray-700: #e2e8f0;
+    --border-card: #1f3a52;
+    --border-input: #1f3a52;
+    --border-gray-100: #1f3a52;
+    --border-gray-200: #1f3a52;
+    --bg-input: #1f2f40;
+    --bg-item: #162233;
+    --bg-gray-50: #1a2a3a;
+    --bg-gray-100: #1f2f40;
+    --bg-gray-200: #25364a;
+    --border-item: #1f3a52;
+    --footer-bg: #091525;
+    --footer-text: rgba(255, 255, 255, 0.4);
+    --info-bg: rgba(29, 209, 161, 0.1);
+    --tab-border: #1f3a52;
+    --action-bg: rgba(29, 209, 161, 0.1);
+    --stat-bg: #1a2a3a;
+    --timeline-bg: #1a2a3a;
+    --scrollbar-track: #1f3a52;
+    --scrollbar-thumb: #3a5670;
+    --scrollbar-thumb-hover: #4a6b8a;
+    --slider-bg: #1f3a52;
+    --map-bg-start: #1a3a4a;
+    --map-bg-middle: #14445a;
+    --map-bg-end: #0e4a65;
+    --accent-primary: #1DD1A1;
+    --accent-secondary: #0A3D62;
+    --accent-gradient: linear-gradient(135deg, #1DD1A1 0%, #0A3D62 100%);
+}
+
+body {
+    background-color: var(--bg-page);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hero gradient - tetap konsisten */
+.hero-gradient {
+    background: linear-gradient(135deg, rgba(10, 61, 98, 0.95) 0%, rgba(10, 61, 98, 0.7) 60%, rgba(10, 61, 98, 0.55) 100%);
+}
+
+/* CTA gradient - menggunakan variable */
+.cta-gradient {
+    background: var(--accent-gradient);
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes pulse-soft {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(1.1);
+    }
+}
+
+.animate-pulse-custom {
+    animation: pulse-soft 2s infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.animate-spin-custom {
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes fadeSlide {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-slide {
+    animation: fadeSlide 0.6s ease-out forwards;
+}
+
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-slide-in {
+    animation: slideIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-up {
+    animation: fadeInUp 0.25s ease-out forwards;
+}
+
+@keyframes slideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-slide-down {
+    animation: slideDown 0.25s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes slideInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-slideInLeft {
+    animation: slideInLeft 0.5s ease forwards;
+}
+
+@keyframes slideInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-slideInRight {
+    animation: slideInRight 0.5s ease forwards;
+}
+
+.animate-fade-left {
+    animation: fadeSlide 0.4s ease-out forwards;
+    transform: translateX(-10px);
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+/* ===== ANIMATIONS DARI STYLE INTERNAL ===== */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-fadeInUp {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+.animate-slideInLeft {
+    animation: slideInLeft 0.5s ease forwards;
+}
+
+.animate-slideInRight {
+    animation: slideInRight 0.5s ease forwards;
+}
+
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-600 { animation-delay: 0.6s; }
+
+/* ===== TRANSITIONS ===== */
+.transition-smooth {
+    transition: all 0.2s ease;
+}
+
+/* Smooth theme transition - Dioptimalkan */
+*,
+*::before,
+*::after {
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.15s ease;
+}
+
+/* But NOT transforms (breaks hover animations) */
+*:hover {
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.15s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-lift {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+html.dark .hover-lift:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== UTILITY CLASSES using CSS vars ===== */
+.card-bg {
+    background-color: var(--bg-card);
+    border-color: var(--border-card);
+}
+
+.item-bg {
+    background-color: var(--bg-item);
+    border-color: var(--border-item);
+}
+
+.text-primary {
+    color: var(--text-primary);
+}
+
+.text-primary-dark {
+    color: var(--text-primary-dark);
+}
+
+.text-muted {
+    color: var(--text-muted);
+}
+
+.text-secondary {
+    color: var(--text-secondary);
+}
+
+.text-tertiary {
+    color: var(--text-tertiary);
+}
+
+.text-gray-600 {
+    color: var(--text-gray-600);
+}
+
+.text-gray-700 {
+    color: var(--text-gray-700);
+}
+
+.section-alt-bg {
+    background-color: var(--bg-section-alt);
+}
+
+.page-bg {
+    background-color: var(--bg-page);
+}
+
+.border-default {
+    border-color: var(--border-card);
+}
+
+.bg-input {
+    background-color: var(--bg-input);
+    border-color: var(--border-input);
+}
+
+.bg-gray-50 {
+    background-color: var(--bg-gray-50);
+}
+
+.bg-gray-100 {
+    background-color: var(--bg-gray-100);
+}
+
+.bg-gray-200 {
+    background-color: var(--bg-gray-200);
+}
+
+.border-gray-100 {
+    border-color: var(--border-gray-100);
+}
+
+.border-gray-200 {
+    border-color: var(--border-gray-200);
+}
+
+.stat-bg {
+    background-color: var(--stat-bg);
+    border-color: var(--border-item);
+}
+
+.accent-text {
+    color: var(--accent-primary);
+}
+
+.accent-bg {
+    background-color: var(--accent-primary);
+}
+
+.accent-border {
+    border-color: var(--accent-primary);
+}
+
+/* ===== MOBILE MENU ===== */
+#mobile-menu {
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+}
+
+#mobile-menu.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-8px);
+}
+
+#mobile-menu:not(.hidden) {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* ===== THEME TOGGLE BUTTON ===== */
+.theme-toggle {
+    width: 40px;
+    height: 22px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+    min-width: 40px;
+    min-height: 22px;
+}
+
+.theme-toggle .knob {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #1DD1A1;
+    transition: transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+html.dark .theme-toggle .knob {
+    transform: translateX(18px);
+}
+
+/* ===== FOOTER ===== */
+.footer-section {
+    background-color: var(--footer-bg);
+}
+
+/* ===== CUSTOM ELEMENTS ===== */
+.connecting-line {
+    position: absolute;
+    top: 32px;
+    left: 12.5%;
+    right: 12.5%;
+    height: 2px;
+    background: linear-gradient(90deg, #0A3D62, #1DD1A1);
+    z-index: 0;
+}
+
+/* Custom scroll for checklist */
+.checklist-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.checklist-scroll::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+    border-radius: 10px;
+}
+
+.checklist-scroll::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 10px;
+}
+
+.checklist-scroll::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+}
+
+/* Timeline styles */
+.timeline-line {
+    position: absolute;
+    left: 20px;
+    top: 24px;
+    bottom: 24px;
+    width: 2px;
+    background: linear-gradient(180deg, #EE5253, #FFC312, #1DD1A1);
+    border-radius: 2px;
+}
+
+/* Alpine.js transition */
+[x-cloak] {
+    display: none !important;
+}
+
+/* Custom slider styling */
+.custom-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    background: var(--slider-bg);
+    border-radius: 3px;
+    outline: none;
+}
+
+.custom-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: white;
+    border: 2.5px solid;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    margin-top: -7px;
+}
+
+.custom-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: white;
+    border: 2.5px solid;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.slider-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    border-radius: 3px;
+    pointer-events: none;
+    transition: width 0.1s ease;
+}
+
+.meter-fill {
+    transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-left {
+    transition: left 0.1s ease;
+}
+
+.map-svg {
+    transition: transform 0.3s ease;
+}
+
+/* ===== DISASTER GUIDES (ACCORDION) ===== */
+.disaster-guide-card {
+    background-color: #ffffff;
+    border: 2px solid #e5e7eb;
+    transition: all 0.2s ease;
+}
+
+.disaster-guide-card:hover {
+    border-color: #0A3D62;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.disaster-guide-card .guide-title {
+    color: #1B262C;
+    font-weight: 700;
+}
+
+.disaster-guide-card .chevron-icon {
+    color: #6b7280;
+}
+
+.disaster-guide-card .tip-text {
+    color: #374151;
+}
+
+.disaster-guide-card.open {
+    border-color: rgba(10, 61, 98, 0.25);
+    background-color: rgba(10, 61, 98, 0.02);
+}
+
+html.dark .disaster-guide-card {
+    background-color: var(--bg-card);
+    border-color: var(--border-item);
+}
+
+html.dark .disaster-guide-card:hover {
+    border-color: #1DD1A1;
+}
+
+html.dark .disaster-guide-card .guide-title {
+    color: var(--text-primary);
+}
+
+html.dark .disaster-guide-card .chevron-icon {
+    color: var(--text-muted);
+}
+
+html.dark .disaster-guide-card .tip-text {
+    color: var(--text-tertiary);
+}
+
+html.dark .disaster-guide-card.open {
+    border-color: rgba(29, 209, 161, 0.4);
+    background-color: rgba(29, 209, 161, 0.05);
+}
+
+.guide-icon-container {
+    background-color: rgba(10, 61, 98, 0.1);
+    border-radius: 0.75rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+html.dark .guide-icon-container {
+    background-color: rgb(255, 255, 255);
+}
+
+/* ===== CHECKLIST ITEMS ===== */
+.checklist-item {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    color: #1B262C;
+}
+
+.checklist-item.checked {
+    background-color: rgba(29, 209, 161, 0.06);
+    border-color: rgba(29, 209, 161, 0.2);
+}
+
+.checklist-item .item-text {
+    color: #1B262C;
+}
+
+.checklist-item.checked .item-text {
+    color: #6b7280;
+    text-decoration: line-through;
+}
+
+html.dark .checklist-item {
+    background-color: var(--bg-gray-50);
+    border-color: var(--border-gray-200);
+    color: var(--text-primary);
+}
+
+html.dark .checklist-item .item-text {
+    color: var(--text-primary);
+}
+
+html.dark .checklist-item.checked .item-text {
+    color: var(--text-muted);
+}
+
+/* ===== PHASE TABS ===== */
+.phase-tab {
+    background-color: #f9fafb;
+    border-color: #e5e7eb;
+    color: #6b7280;
+}
+
+.phase-tab.active {
+    background-color: rgba(10, 61, 98, 0.04);
+    border-color: #0A3D62;
+    color: #0A3D62;
+}
+
+.phase-tab.active i {
+    color: #0A3D62;
+}
+
+html.dark .phase-tab {
+    background-color: var(--bg-gray-50);
+    border-color: var(--border-item);
+    color: var(--text-muted);
+}
+
+html.dark .phase-tab.active {
+    background-color: rgba(29, 209, 161, 0.1);
+    border-color: #1DD1A1;
+    color: #1DD1A1;
+}
+
+html.dark .phase-tab.active i {
+    color: #1DD1A1;
+}
+
+/* ===== STEP ITEMS ===== */
+.step-item {
+    background-color: #f9fafb;
+    border: 1px solid #f3f4f6;
+}
+
+.step-item .step-text {
+    color: #374151;
+}
+
+html.dark .step-item {
+    background-color: var(--bg-gray-50);
+    border-color: var(--border-gray-100);
+}
+
+html.dark .step-item .step-text {
+    color: var(--text-tertiary);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .connecting-line {
+        display: none;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .edu-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .risk-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    button,
+    a,
+    .touch-target {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    .nav-link {
+        padding: 12px 16px;
+        display: block;
+    }
+}
+
+/* ===== DARK MODE SPECIFIC OVERRIDES ===== */
+html.dark .bg-white {
+    background-color: var(--bg-card) !important;
+}
+
+html.dark .bg-\[\#fafbfc\] {
+    background-color: var(--stat-bg);
+}
+
+html.dark .text-\[\#1B262C\] {
+    color: var(--text-primary);
+}
+
+html.dark .text-\[\#4a5568\] {
+    color: var(--text-tertiary);
+}
+
+html.dark .text-\[\#7a8a96\] {
+    color: var(--text-secondary);
+}
+
+html.dark .border-gray-200 {
+    border-color: var(--border-card);
+}
+
+html.dark .bg-\[rgba\(10\2c 61\2c 98\2c 0\.04\)\] {
+    background-color: rgba(29, 209, 161, 0.1);
+}
+
+html.dark .bg-\[rgba\(10\2c 61\2c 98\2c 0\.07\)\] {
+    background-color: rgba(29, 209, 161, 0.15);
+}
+
+html.dark .bg-\[rgba\(10\2c 61\2c 98\2c 0\.08\)\] {
+    background-color: rgba(29, 209, 161, 0.15);
+}
+
+html.dark .text-\[\#0A3D62\] {
+    color: #1DD1A1;
+}
+
+html.dark .border-\[\#0A3D62\] {
+    border-color: #1DD1A1;
+}
+
+html.dark .bg-\[\#0A3D62\]\/5 {
+    background-color: rgba(29, 209, 161, 0.1);
+}
+
+/* Preserve blue backgrounds */
+html.dark .bg-\[\#0A3D62\],
+html.dark button.bg-\[\#0A3D62\] {
+    background-color: #0A3D62 !important;
+}
+
+html.dark .from-\[\#0A3D62\] {
+    --tw-gradient-from: #0A3D62 !important;
+}
+
+html.dark .to-\[\#1565a0\] {
+    --tw-gradient-to: #1565a0 !important;
+}
+
+/* Dark mode map gradient */
+html.dark .bg-gradient-to-b.from-\[\#c8e6f0\] {
+    background: linear-gradient(to bottom, var(--map-bg-start), var(--map-bg-middle), var(--map-bg-end)) !important;
+}
+
+/* Fix untuk teks di dropdown/select */
+select option {
+    color: #1B262C;
+    background-color: #ffffff;
+}
+
+html.dark select option {
+    color: var(--text-primary);
+    background-color: var(--bg-card);
+}
+
+html.dark select {
+    background-color: var(--bg-input);
+    color: var(--text-primary);
+}
+
+/* Progress text */
+.progress-text {
+    color: #4b5563;
+}
+
+html.dark .progress-text {
+    color: var(--text-secondary);
+}
+
+/* Accessibility focus styles */
+*:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+}
