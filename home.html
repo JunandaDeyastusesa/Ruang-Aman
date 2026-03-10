@@ -22,94 +22,6 @@
             }
         })();
     </script>
-
-    <!-- Animasi tambahan untuk hero baru -->
-    <style>
-        @keyframes scroll-x {
-            from {
-                transform: translateX(0);
-            }
-
-            to {
-                transform: translateX(-50%);
-            }
-        }
-
-        @keyframes wave1 {
-            0% {
-                d: path("M0,60 C240,100 480,20 720,60 C960,100 1200,20 1440,60 L1440,120 L0,120 Z");
-            }
-
-            33% {
-                d: path("M0,80 C240,40 480,100 720,60 C960,20 1200,100 1440,40 L1440,120 L0,120 Z");
-            }
-
-            66% {
-                d: path("M0,60 C240,100 480,20 720,60 C960,100 1200,20 1440,60 L1440,120 L0,120 Z");
-            }
-        }
-
-        @keyframes wave2 {
-            0% {
-                d: path("M0,80 C360,40 720,100 1080,60 C1260,40 1380,80 1440,80 L1440,120 L0,120 Z");
-            }
-
-            33% {
-                d: path("M0,50 C360,90 720,50 1080,90 C1260,110 1380,50 1440,70 L1440,120 L0,120 Z");
-            }
-
-            66% {
-                d: path("M0,80 C360,40 720,100 1080,60 C1260,40 1380,80 1440,80 L1440,120 L0,120 Z");
-            }
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-6px);
-            }
-        }
-
-        .animate-scroll {
-            animation: scroll-x 20s linear infinite;
-        }
-
-        .animate-float {
-            animation: float 4s ease-in-out infinite;
-        }
-
-        .animate-float-delay-1 {
-            animation: float 5s ease-in-out infinite 0.7s;
-        }
-
-        .animate-float-delay-2 {
-            animation: float 6s ease-in-out infinite 1.4s;
-        }
-
-        .animate-float-delay-3 {
-            animation: float 7s ease-in-out infinite 2.1s;
-        }
-
-        .wave-path-1 {
-            animation: wave1 8s infinite ease-in-out;
-        }
-
-        .wave-path-2 {
-            animation: wave2 6s infinite ease-in-out;
-            animation-delay: 1s;
-        }
-
-        @media (max-width: 768px) {
-            .hero-stats {
-                display: none;
-            }
-        }
-    </style>
 </head>
 
 <body x-data="{
@@ -222,200 +134,85 @@
         </div>
     </nav>
 
-    <section class="relative bg-[#0A3D62] min-h-[600px] overflow-hidden pt-[68px]"
-        style="background: linear-gradient(160deg, rgba(10,61,98,0.92) 0%, rgba(27,38,44,0.85) 60%, rgba(10,61,98,0.75) 100%), url('https://images.unsplash.com/photo-1711948784979-848571af3fa5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxvY2VhbiUyMHdhdmVzJTIwY29hc3RhbCUyMGFlcmlhbCUyMHZpZXclMjBJbmRvbmVzaWF8ZW58MXx8fHwxNzcxNjUzMzk5fDA&ixlib=rb-4.1.0&q=80&w=1080') center/cover no-repeat;">
+    <section class="relative bg-[#0A3D62] min-h-[600px] overflow-hidden pt-[68px]">
         <div class="absolute inset-0 bg-cover bg-center opacity-[0.18]"
             style="background-image: url('https://images.unsplash.com/photo-1728051104538-fd2236fd53a1?q=80&w=1080');">
         </div>
-        <!-- <div class="absolute inset-0 hero-gradient"></div> -->
+        <div class="absolute inset-0 hero-gradient"></div>
 
-        <div class="absolute bottom-0 left-0 w-full leading-[0] block md:hidden">
-            <svg viewBox="0 0 1440 80" preserveAspectRatio="none" class="w-full h-20"
-                style="fill: var(--bg-section-alt)">
-                <path d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z"></path>
-            </svg>
-        </div>
-
-        <div class="absolute bottom-0 left-0 w-full leading-[0] md:hidden">
-            <svg viewBox="0 0 1440 80" preserveAspectRatio="none" class="w-full h-20"
-                style="fill: var(--bg-page)">
+        <div class="absolute bottom-0 left-0 w-full leading-[0]">
+            <svg viewBox="0 0 1440 80" preserveAspectRatio="none" class="w-full h-20" style="fill: var(--bg-page)">
                 <path d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z"></path>
             </svg>
         </div>
 
         <div class="relative max-w-7xl mx-auto px-6 py-20 md:py-32 md:px-20">
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-15 items-center hero-grid">
-
-                <!-- Left content -->
-                <div>
-                    <div class="mb-5 opacity-0 animate-[fadeInUp_0.5s_ease-out_forwards]">
-                        <span
-                            class="inline-flex items-center gap-2 bg-[rgba(29,209,161,0.15)] border border-[rgba(29,209,161,0.3)] py-1.5 px-4 rounded-full text-[#1DD1A1] text-xs font-semibold">
-                            <span class="w-2 h-2 rounded-full bg-[#1DD1A1] animate-pulse-custom inline-block"></span>
-                            Platform Kesiapsiagaan Pesisir Nasional
-                        </span>
-                    </div>
-
-                    <h1
-                        class="text-white text-4xl md:text-6xl font-extrabold leading-[1.15] mb-6 tracking-[-0.02em] opacity-0 animate-[fadeInUp_0.7s_ease-out_0.1s_forwards]">
-                        Siap Sebelum <span
-                            class="text-transparent bg-clip-text bg-gradient-to-r from-[#1DD1A1] to-[#00b894]">Bencana
-                            Datang.</span>
-                    </h1>
-
-                    <p
-                        class="text-lg text-[rgba(241,242,246,0.8)] leading-relaxed mb-9 max-w-[480px] opacity-0 animate-[fadeInUp_0.6s_ease-out_0.2s_forwards]">
-                        Platform kesiapsiagaan bencana pesisir berbasis risiko wilayah — banjir, rob, gempa, dan
-                        tsunami. Data real-time, analisis cerdas, respons cepat.
-                    </p>
-
-                    <div class="flex gap-4 flex-wrap opacity-0 animate-[fadeInUp_0.6s_ease-out_0.3s_forwards]">
-                        <a href="cek-risiko.html"
-                            class="py-4 px-8 rounded-[14px] border-none bg-gradient-to-r from-[#1DD1A1] to-[#00b894] text-[#0A3D61] text-base font-bold cursor-pointer transition-all duration-300 shadow-[0_8px_30px_rgba(29,209,161,0.4)] hover:shadow-[0_12px_40px_rgba(29,209,161,0.5)] hover:-translate-y-1 flex items-center gap-2">
-                            <i data-lucide="shield" class="w-[18px] h-[18px]"></i>
-                            Cek Risiko Wilayah
-                        </a>
-                        <a href="peta.html"
-                            class="py-4 px-8 rounded-[14px] border-[1.5px] border-white/30 bg-white/10 backdrop-blur text-white text-base font-semibold cursor-pointer transition-all duration-300 hover:bg-white/20 hover:-translate-y-1 flex items-center gap-2">
-                            <i data-lucide="map" class="w-[18px] h-[18px]"></i>
-                            Lihat Peta
-                        </a>
-                    </div>
-
-                    <div class="mt-10 flex gap-6 flex-wrap opacity-0 animate-[fadeIn_0.5s_ease-out_0.5s_forwards]">
-                        <div class="flex items-center gap-1.5"><i data-lucide="check-circle"
-                                class="w-4 h-4 text-[#1DD1A1]"></i><span
-                                class="text-xs text-[rgba(241,242,246,0.7)]">Data BMKG Real-time</span></div>
-                        <div class="flex items-center gap-1.5"><i data-lucide="check-circle"
-                                class="w-4 h-4 text-[#1DD1A1]"></i><span
-                                class="text-xs text-[rgba(241,242,246,0.7)]">Berbasis Ilmu Pengetahuan</span></div>
-                        <div class="flex items-center gap-1.5"><i data-lucide="check-circle"
-                                class="w-4 h-4 text-[#1DD1A1]"></i><span
-                                class="text-xs text-[rgba(241,242,246,0.7)]">Akses Gratis</span></div>
-                    </div>
+            <div class="max-w-2xl">
+                <div
+                    class="inline-flex items-center gap-2 bg-[#1DD1A1]/10 border border-[#1DD1A1]/30 rounded-full px-4 py-1.5 mb-6">
+                    <div class="w-2 h-2 rounded-full bg-[#1DD1A1] shadow-[0_0_8px_#1DD1A1] animate-pulse-custom"></div>
+                    <span class="text-[#1DD1A1] text-[11px] font-bold tracking-wider uppercase">Sistem Aktif —
+                        Pemantauan Real-Time</span>
                 </div>
-
-                <!-- Right: Floating Stat Cards -->
-                <div class="relative hidden md:flex h-[400px] flex flex-col gap-4 items-end hero-stats">
-                    <!-- Stat 1 -->
-                    <div class="w-full max-w-[280px] opacity-0 animate-[fadeInUp_0.6s_ease-out_0.3s_forwards]">
-                        <div
-                            class="bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-4 flex items-center gap-4 shadow-2xl animate-float">
-                            <div
-                                class="w-12 h-12 rounded-[14px] bg-[rgba(238,82,83,0.12)] flex items-center justify-center shrink-0">
-                                <i data-lucide="users" class="w-[22px] h-[22px]" style="color:#EE5253"></i>
-                            </div>
-                            <div>
-                                <div class="font-['Poppins'] text-white text-2xl font-extrabold leading-tight">42.3 Juta
-                                </div>
-                                <div class="text-xs text-[rgba(241,242,246,0.6)] mt-0.5">Jiwa Terpapar</div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Stat 2 -->
-                    <div class="w-full max-w-[280px] opacity-0 animate-[fadeInUp_0.6s_ease-out_0.45s_forwards]">
-                        <div
-                            class="bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-4 flex items-center gap-4 shadow-2xl animate-float-delay-1">
-                            <div
-                                class="w-12 h-12 rounded-[14px] bg-[rgba(255,159,67,0.12)] flex items-center justify-center shrink-0">
-                                <i data-lucide="building2" class="w-[22px] h-[22px]" style="color:#FF9F43"></i>
-                            </div>
-                            <div>
-                                <div class="font-['Poppins'] text-white text-2xl font-extrabold leading-tight">1.340+
-                                </div>
-                                <div class="text-xs text-[rgba(241,242,246,0.6)] mt-0.5">Pulau Berisiko</div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Stat 3 -->
-                    <div class="w-full max-w-[280px] opacity-0 animate-[fadeInUp_0.6s_ease-out_0.6s_forwards]">
-                        <div
-                            class="bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-4 flex items-center gap-4 shadow-2xl animate-float-delay-2">
-                            <div
-                                class="w-12 h-12 rounded-[14px] bg-[rgba(29,209,161,0.12)] flex items-center justify-center shrink-0">
-                                <i data-lucide="waves" class="w-[22px] h-[22px]" style="color:#1DD1A1"></i>
-                            </div>
-                            <div>
-                                <div class="font-['Poppins'] text-white text-2xl font-extrabold leading-tight">81.000 km
-                                </div>
-                                <div class="text-xs text-[rgba(241,242,246,0.6)] mt-0.5">Garis Pantai</div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Stat 4 -->
-                    <div class="w-full max-w-[280px] opacity-0 animate-[fadeInUp_0.6s_ease-out_0.75s_forwards]">
-                        <div
-                            class="bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-4 flex items-center gap-4 shadow-2xl animate-float-delay-3">
-                            <div
-                                class="w-12 h-12 rounded-[14px] bg-[rgba(255,195,18,0.12)] flex items-center justify-center shrink-0">
-                                <i data-lucide="alert-triangle" class="w-[22px] h-[22px]" style="color:#FFC312"></i>
-                            </div>
-                            <div>
-                                <div class="font-['Poppins'] text-white text-2xl font-extrabold leading-tight">35
-                                    Provinsi</div>
-                                <div class="text-xs text-[rgba(241,242,246,0.6)] mt-0.5">Zona Bahaya Aktif</div>
-                            </div>
-                        </div>
-                    </div>
+                <h1 class="text-white text-4xl md:text-6xl font-extrabold leading-[1.15] mb-6">
+                    Siap Sebelum <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-[#1DD1A1] to-[#7efdd8]">Bencana</span>
+                    Datang.
+                </h1>
+                <p class="text-white/75 text-lg leading-relaxed mb-10">
+                    Platform kesiapsiagaan bencana pesisir berbasis data untuk masyarakat Indonesia. Pahami risiko,
+                    rencanakan evakuasi, dan lindungi keluarga Anda.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="cek-risiko.html"
+                        class="bg-gradient-to-r from-[#1DD1A1] to-[#17b88d] text-[#0A3D61] px-8 py-4 rounded-xl font-bold flex items-center gap-2 shadow-lg hover:-translate-y-1 transition-all">
+                        <i data-lucide="shield" class="w-5 h-5"></i> Cek Risiko Wilayah
+                    </a>
+                    <a href="peta.html"
+                        class="bg-white/10 border border-white/30 backdrop-blur-md text-white px-8 py-4 rounded-xl font-bold flex items-center gap-2 hover:bg-white/20 transition-all">
+                        <i data-lucide="map-pin" class="w-5 h-5"></i> Lihat Peta Risiko
+                    </a>
                 </div>
             </div>
         </div>
-        <!-- <div class="absolute bottom-0 left-0 right-0 overflow-hidden leading-none">
-            <svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="block w-full h-[120px]">
-                <path class="wave-path-1" fill="#F1F2F6"
-                    d="M0,60 C240,100 480,20 720,60 C960,100 1200,20 1440,60 L1440,120 L0,120 Z" />
-                <path class="wave-path-2" fill="rgba(241,242,246,0.5)"
-                    d="M0,80 C360,40 720,100 1080,60 C1260,40 1380,80 1440,80 L1440,120 L0,120 Z" />
-            </svg>
-        </div> -->
     </section>
 
-    <!-- Sisanya tetap (statistik kecil, fitur, dll) -->
-    <section class="max-w-7xl mx-auto px-6 md:px-20 pb-16 md:hidden">
+    <section class="max-w-7xl mx-auto px-6 md:px-20 pb-16">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10 relative z-10">
-            <!-- Stat 1: Jiwa Terpapar -->
             <div
                 class="card-bg p-6 rounded-2xl shadow-xl border flex items-center gap-4 hover:-translate-y-1 transition-all">
-                <div class="w-12 h-12 rounded-xl bg-[#EE5253]/10 flex items-center justify-center text-[#EE5253]">
-                    <i data-lucide="users" class="w-6 h-6"></i>
-                </div>
+                <div class="w-12 h-12 rounded-xl bg-[#1DD1A1]/10 flex items-center justify-center text-[#1DD1A1]"><i
+                        data-lucide="building-2"></i></div>
                 <div>
-                    <div class="text-xl font-bold text-primary">42.3 Juta</div>
-                    <div class="text-xs text-muted">Jiwa Terpapar</div>
+                    <div class="text-xl font-bold text-primary">27 Provinsi</div>
+                    <div class="text-xs text-muted">Wilayah Terpantau</div>
                 </div>
             </div>
-            <!-- Stat 2: Pulau Berisiko -->
             <div
                 class="card-bg p-6 rounded-2xl shadow-xl border flex items-center gap-4 hover:-translate-y-1 transition-all">
-                <div class="w-12 h-12 rounded-xl bg-[#FF9F43]/10 flex items-center justify-center text-[#FF9F43]">
-                    <i data-lucide="building2" class="w-6 h-6"></i>
-                </div>
+                <div class="w-12 h-12 rounded-xl bg-[#FFC312]/10 flex items-center justify-center text-[#FFC312]"><i
+                        data-lucide="users"></i></div>
                 <div>
-                    <div class="text-xl font-bold text-primary">1.340+</div>
-                    <div class="text-xs text-muted">Pulau Berisiko</div>
+                    <div class="text-xl font-bold text-primary">4.2 Juta+</div>
+                    <div class="text-xs text-muted">Penduduk Pesisir</div>
                 </div>
             </div>
-            <!-- Stat 3: Garis Pantai -->
             <div
                 class="card-bg p-6 rounded-2xl shadow-xl border flex items-center gap-4 hover:-translate-y-1 transition-all">
-                <div class="w-12 h-12 rounded-xl bg-[#1DD1A1]/10 flex items-center justify-center text-[#1DD1A1]">
-                    <i data-lucide="waves" class="w-6 h-6"></i>
-                </div>
+                <div class="w-12 h-12 rounded-xl bg-[#FF9F43]/10 flex items-center justify-center text-[#FF9F43]"><i
+                        data-lucide="activity"></i></div>
                 <div>
-                    <div class="text-xl font-bold text-primary">81.000 km</div>
-                    <div class="text-xs text-muted">Garis Pantai</div>
+                    <div class="text-xl font-bold text-primary">823 Kejadian</div>
+                    <div class="text-xs text-muted">Bencana Per Tahun</div>
                 </div>
             </div>
-            <!-- Stat 4: Zona Bahaya Aktif -->
             <div
                 class="card-bg p-6 rounded-2xl shadow-xl border flex items-center gap-4 hover:-translate-y-1 transition-all">
-                <div class="w-12 h-12 rounded-xl bg-[#FFC312]/10 flex items-center justify-center text-[#FFC312]">
-                    <i data-lucide="alert-triangle" class="w-6 h-6"></i>
-                </div>
+                <div class="w-12 h-12 rounded-xl bg-[#EE5253]/10 flex items-center justify-center text-[#EE5253]"><i
+                        data-lucide="trending-up"></i></div>
                 <div>
-                    <div class="text-xl font-bold text-primary">35 Provinsi</div>
-                    <div class="text-xs text-muted">Zona Bahaya Aktif</div>
+                    <div class="text-xl font-bold text-primary">67%</div>
+                    <div class="text-xs text-muted">Risiko Tinggi</div>
                 </div>
             </div>
         </div>
@@ -635,7 +432,7 @@
                 </p>
                 <div class="flex flex-wrap justify-center gap-5">
                     <a href="cek-risiko.html"
-                        class="bg-gradient-to-r from-[#1DD1A1] to-[#17b88d] text-[#0A3D61] px-6 py-3 rounded-xl font-bold flex items-center gap-2 shadow-xl hover:-translate-y-1 transition-all">
+                        class="bg-gradient-to-r from-[#1DD1A1] to-[#17b88d] text-[#0A3D62] px-6 py-3 rounded-xl font-bold flex items-center gap-2 shadow-xl hover:-translate-y-1 transition-all">
                         <i data-lucide="shield" class="w-5 h-5"></i> Mulai Analisis Risiko
                     </a>
                     <a href="edukasi.html"
