@@ -19,4 +19,4 @@ Manfaat dari pengembangan website ini adalah meningkatkan literasi kebencanaan m
 Pemilihan subtema dalam karya ini didasarkan pada pentingnya peran teknologi digital dalam mendukung upaya mitigasi dan kesiapsiagaan bencana. Melalui pemanfaatan teknologi web, informasi yang kompleks dapat disajikan secara lebih visual, terstruktur, dan mudah dipahami sehingga mampu memberikan nilai tambah bagi masyarakat dalam menghadapi potensi bencana di masa mendatang.
 
 ## Link Website
-https://link-Website -hasil-deploy
+https://junandadeyastusesa.github.io/Ruang-Aman/
