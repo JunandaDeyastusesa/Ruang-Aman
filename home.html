@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="id" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIAPBENCANA - Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        (function () {
+            const saved = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (saved === 'dark' || (!saved && prefersDark)) {
+                document.documentElement.classList.remove('light');
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+</head>
+
+<body x-data="{
+    scrolled: false,
+    mobileOpen: false,
+    darkMode: document.documentElement.classList.contains('dark'),
+    toggleTheme() {
+        this.darkMode = !this.darkMode;
+        if (this.darkMode) {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+        }
+        setTimeout(() => lucide.createIcons(), 50);
+    }
+}" @scroll.window="scrolled = (window.pageYOffset > 20)">
+
+    <nav :class="scrolled ? 'bg-[#0A3D62]/95 border-b border-[#1DD1A1]/20 shadow-lg' : 'bg-[#0A3D62]'"
+        class="fixed top-0 left-0 right-0 z-[1000] backdrop-blur-md transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-[68px] flex items-center justify-between gap-3">
+
+            <a href="#" class="flex items-center gap-3 shrink-0">
+                <div
+                    class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center shadow-lg">
+                    <i data-lucide="shield" class="text-white w-5 h-5"></i>
+                </div>
+                <div class="text-white">
+                    <div class="font-extrabold text-base leading-none">SIAPBENCANA</div>
+                    <div class="text-[10px] text-[#1DD1A1] tracking-widest leading-none uppercase">Coastal Safety</div>
+                </div>
+            </a>
+
+            <div class="hidden md:flex items-center gap-5 lg:gap-6">
+                <a href="index.html" class="text-sm font-medium text-[#1DD1A1]">Home</a>
+                <a href="cek-risiko.html"
+                    class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Cek Risiko</a>
+                <a href="peta.html"
+                    class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Peta</a>
+                <a href="edukasi.html"
+                    class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Edukasi</a>
+                <a href="simulasi.html"
+                    class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Simulasi</a>
+                <a href="about.html"
+                    class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">About</a>
+
+                <button @click="toggleTheme()"
+                    class="relative w-16 h-8 rounded-full transition-colors duration-300 focus:outline-none"
+                    :class="darkMode ? 'bg-[#1DD1A1]' : 'bg-gray-600'"
+                    :title="darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+
+                    <span
+                        class="absolute top-1 w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-300 flex items-center justify-center"
+                        :class="darkMode ? 'translate-x-8' : 'translate-x-1'">
+                        <i :data-lucide="darkMode ? 'moon' : 'sun'" class="w-3.5 h-3.5"
+                            :class="darkMode ? 'text-[#1DD1A1]' : 'text-yellow-500'"></i>
+                    </span>
+                </button>
+            </div>
+
+            <button @click="mobileOpen = !mobileOpen"
+                class="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 transition-all gap-1.5"
+                aria-label="Toggle menu">
+                <span :class="mobileOpen ? 'rotate-45 translate-y-[7px]' : ''"
+                    class="block w-5 h-0.5 bg-white rounded-full transition-transform duration-200"></span>
+                <span :class="mobileOpen ? 'opacity-0 scale-x-0' : ''"
+                    class="block w-5 h-0.5 bg-white rounded-full transition-all duration-200"></span>
+                <span :class="mobileOpen ? '-rotate-45 -translate-y-[7px]' : ''"
+                    class="block w-5 h-0.5 bg-white rounded-full transition-transform duration-200"></span>
+            </button>
+        </div>
+
+        <div x-show="mobileOpen" x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 -translate-y-2"
+            class="md:hidden bg-[#0A3D62]/98 backdrop-blur-md border-t border-white/10 px-4 py-4">
+            <div class="flex flex-col gap-1">
+                <a href="#" class="text-[#1DD1A1] font-semibold text-sm px-3 py-2.5 rounded-xl bg-white/5">Home</a>
+                <a href="cek-risiko.html"
+                    class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Cek
+                    Risiko</a>
+                <a href="peta.html"
+                    class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Peta</a>
+                <a href="edukasi.html"
+                    class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Edukasi</a>
+                <a href="simulasi.html"
+                    class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Simulasi</a>
+                <a href="about.html"
+                    class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">About</a>
+
+                <div class="flex items-center justify-between px-3 py-2.5 mt-2 border-t border-white/10 pt-3">
+                    <span class="text-sm font-medium text-white/80">Mode Tampilan</span>
+
+                    <button @click="toggleTheme()"
+                        class="relative w-16 h-8 rounded-full transition-colors duration-300 focus:outline-none flex items-center"
+                        :class="darkMode ? 'bg-[#1DD1A1]' : 'bg-gray-600'"
+                        :title="darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+
+                        <span
+                            class="absolute w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300 flex items-center justify-center"
+                            :class="darkMode ? 'translate-x-9' : 'translate-x-1'">
+                            <i :data-lucide="darkMode ? 'moon' : 'sun'" class="w-3.5 h-3.5"
+                                :class="darkMode ? 'text-[#1DD1A1]' : 'text-yellow-500'"></i>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="relative bg-[#0A3D62] min-h-[600px] overflow-hidden pt-[68px]">
+        <div class="absolute inset-0 bg-cover bg-center opacity-[0.18]"
+            style="background-image: url('https://images.unsplash.com/photo-1728051104538-fd2236fd53a1?q=80&w=1080');">
+        </div>
+        <div class="absolute inset-0 hero-gradient"></div>
+
+        <div class="absolute bottom-0 left-0 w-full leading-[0]">
+            <svg viewBox="0 0 1440 80" preserveAspectRatio="none" class="w-full h-20" style="fill: var(--bg-page)">
+                <path d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z"></path>
+            </svg>
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-6 py-20 md:py-32 md:px-20">
+            <div class="max-w-2xl">
+                <div
+                    class="inline-flex items-center gap-2 bg-[#1DD1A1]/10 border border-[#1DD1A1]/30 rounded-full px-4 py-1.5 mb-6">
+                    <div class="w-2 h-2 rounded-full bg-[#1DD1A1] shadow-[0_0_8px_#1DD1A1] animate-pulse-custom"></div>
+                    <span class="text-[#1DD1A1] text-[11px] font-bold tracking-wider uppercase">Sistem Aktif —
+                        Pemantauan Real-Time</span>
+                </div>
+                <h1 class="text-white text-4xl md:text-6xl font-extrabold leading-[1.15] mb-6">
+                    Siap Sebelum <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-[#1DD1A1] to-[#7efdd8]">Bencana</span>
+                    Datang.
+                </h1>
+                <p class="text-white/75 text-lg leading-relaxed mb-10">
+                    Platform kesiapsiagaan bencana pesisir berbasis data untuk masyarakat Indonesia. Pahami risiko,
+                    rencanakan evakuasi, dan lindungi keluarga Anda.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="cek-risiko.html"
+                        class="bg-gradient-to-r from-[#1DD1A1] to-[#17b88d] text-[#0A3D61] px-8 py-4 rounded-xl font-bold flex items-center gap-2 shadow-lg hover:-translate-y-1 transition-all">
+                        <i data-lucide="shield" class="w-5 h-5"></i> Cek Risiko Wilayah
+                    </a>
+                    <a href="peta.html"
+                        class="bg-white/10 border border-white/30 backdrop-blur-md text-white px-8 py-4 rounded-xl font-bold flex items-center gap-2 hover:bg-white/20 transition-all">
+                        <i data-lucide="map-pin" class="w-5 h-5"></i> Lihat Peta Risiko
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-6 md:px-20 pb-16">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10 relative z-10">
+            <div
+                class="card-bg p-6 rounded-2xl shadow-xl border flex items-center gap-4 hover:-translate-y-1 transition-all">
+                <div class="w-12 h-12 rounded-xl bg-[#1DD1A1]/10 flex items-center justify-center text-[#1DD1A1]"><i
+                        data-lucide="building-2"></i></div>
+                <div>
+                    <div class="text-xl font-bold text-primary">27 Provinsi</div>
+                    <div class="text-xs text-muted">Wilayah Terpantau</div>
+                </div>
+            </div>
+            <div
+                class="card-bg p-6 rounded-2xl shadow-xl border flex items-center gap-4 hover:-translate-y-1 transition-all">
+                <div class="w-12 h-12 rounded-xl bg-[#FFC312]/10 flex items-center justify-center text-[#FFC312]"><i
+                        data-lucide="users"></i></div>
+                <div>
+                    <div class="text-xl font-bold text-primary">4.2 Juta+</div>
+                    <div class="text-xs text-muted">Penduduk Pesisir</div>
+                </div>
+            </div>
+            <div
+                class="card-bg p-6 rounded-2xl shadow-xl border flex items-center gap-4 hover:-translate-y-1 transition-all">
+                <div class="w-12 h-12 rounded-xl bg-[#FF9F43]/10 flex items-center justify-center text-[#FF9F43]"><i
+                        data-lucide="activity"></i></div>
+                <div>
+                    <div class="text-xl font-bold text-primary">823 Kejadian</div>
+                    <div class="text-xs text-muted">Bencana Per Tahun</div>
+                </div>
+            </div>
+            <div
+                class="card-bg p-6 rounded-2xl shadow-xl border flex items-center gap-4 hover:-translate-y-1 transition-all">
+                <div class="w-12 h-12 rounded-xl bg-[#EE5253]/10 flex items-center justify-center text-[#EE5253]"><i
+                        data-lucide="trending-up"></i></div>
+                <div>
+                    <div class="text-xl font-bold text-primary">67%</div>
+                    <div class="text-xs text-muted">Risiko Tinggi</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-alt-bg py-20 px-6">
+        <div class="max-w-7xl mx-auto px-6 md:px-20 pb-16">
+            <div class="text-center mb-14">
+                <span
+                    class="bg-[#0A3D62]/5 dark:bg-[#1DD1A1]/10 text-[#0A3D62] dark:text-[#1DD1A1] text-[10px] font-black tracking-widest px-4 py-1.5 rounded-full uppercase">Ancaman
+                    Bahaya Pesisir</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-primary mt-4 mb-3">Empat Ancaman Utama <span
+                        class="text-[#0A3D62] dark:text-[#1DD1A1]">Wilayah Pesisir</span></h2>
+                <p class="text-muted max-w-lg mx-auto text-sm leading-relaxed">Indonesia memiliki 81.000+ km garis
+                    pantai yang rentan terhadap berbagai ancaman bencana hidrometeorologi dan geologi.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div
+                    class="item-bg border p-8 rounded-2xl hover:-translate-y-1 hover:border-[#0A3D62]/30 dark:hover:border-[#1DD1A1]/30 transition-all">
+                    <div
+                        class="w-12 h-12 bg-[#0A3D62]/10 rounded-xl flex items-center justify-center text-[#0A3D62] dark:text-[#1DD1A1] mb-6">
+                        <i data-lucide="waves"></i>
+                    </div>
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="font-bold text-primary">Banjir</h3>
+                        <span
+                            class="bg-[#FF9F43]/10 text-[#FF9F43] text-[10px] font-bold px-2 py-0.5 rounded-full">Tinggi</span>
+                    </div>
+                    <p class="text-muted text-xs leading-relaxed">Banjir pesisir akibat curah hujan ekstrem dan luapan
+                        sungai</p>
+                </div>
+                <div
+                    class="item-bg border p-8 rounded-2xl hover:-translate-y-1 hover:border-[#0A3D62]/30 dark:hover:border-[#1DD1A1]/30 transition-all">
+                    <div
+                        class="w-12 h-12 bg-[#0A3D62]/10 rounded-xl flex items-center justify-center text-[#0A3D62] dark:text-[#1DD1A1] mb-6">
+                        <i data-lucide="wind"></i>
+                    </div>
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="font-bold text-primary">Banjir Rob</h3>
+                        <span
+                            class="bg-[#FFC312]/10 text-[#FFC312] text-[10px] font-bold px-2 py-0.5 rounded-full">Sedang</span>
+                    </div>
+                    <p class="text-muted text-xs leading-relaxed">Genangan air laut akibat pasang surut dan kenaikan
+                        muka air</p>
+                </div>
+                <div
+                    class="item-bg border p-8 rounded-2xl hover:-translate-y-1 hover:border-[#0A3D62]/30 dark:hover:border-[#1DD1A1]/30 transition-all">
+                    <div
+                        class="w-12 h-12 bg-[#0A3D62]/10 rounded-xl flex items-center justify-center text-[#0A3D62] dark:text-[#1DD1A1] mb-6">
+                        <i data-lucide="activity"></i>
+                    </div>
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="font-bold text-primary">Gempa Bumi</h3>
+                        <span
+                            class="bg-[#FF9F43]/10 text-[#FF9F43] text-[10px] font-bold px-2 py-0.5 rounded-full">Tinggi</span>
+                    </div>
+                    <p class="text-muted text-xs leading-relaxed">Aktivitas seismik dari lempeng tektonik di zona
+                        subduksi</p>
+                </div>
+                <div
+                    class="item-bg border p-8 rounded-2xl hover:-translate-y-1 hover:border-[#0A3D62]/30 dark:hover:border-[#1DD1A1]/30 transition-all">
+                    <div
+                        class="w-12 h-12 bg-[#0A3D62]/10 rounded-xl flex items-center justify-center text-[#0A3D62] dark:text-[#1DD1A1] mb-6">
+                        <i data-lucide="zap"></i>
+                    </div>
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="font-bold text-primary">Tsunami</h3>
+                        <span
+                            class="bg-[#EE5253]/10 text-[#EE5253] text-[10px] font-bold px-2 py-0.5 rounded-full">Bahaya</span>
+                    </div>
+                    <p class="text-muted text-xs leading-relaxed">Gelombang dahsyat akibat gempa bawah laut atau longsor
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 page-bg">
+        <div class="max-w-7xl mx-auto px-6 md:px-20 pb-16">
+            <div class="text-center mb-16">
+                <span
+                    class="text-[#0A8F6C] dark:text-[#1DD1A1] text-xs font-black tracking-[0.2em] uppercase bg-[#1DD1A1]/10 px-4 py-1.5 rounded-full">Fitur
+                    Platform</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-primary mt-6 mb-4">Semua yang Anda Butuhkan untuk
+                    <span class="text-[#1DD1A1]">Keselamatan</span>
+                </h2>
+                <p class="text-muted max-w-lg mx-auto">Akses informasi, analisis risiko, dan panduan keselamatan dalam
+                    satu platform terintegrasi.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <a href="cek-risiko.html"
+                    class="group card-bg p-8 rounded-3xl shadow-sm border hover:border-[#0A3D62] dark:hover:border-[#1DD1A1] hover:shadow-2xl transition-all duration-300">
+                    <div
+                        class="w-14 h-14 bg-[#0A3D62] rounded-2xl flex items-center justify-center text-white mb-8 group-hover:scale-110 transition-transform">
+                        <i data-lucide="shield"></i>
+                    </div>
+                    <h3 class="font-bold text-primary text-xl mb-3">Cek Risiko Wilayah</h3>
+                    <p class="text-muted text-sm leading-relaxed mb-6">Analisis risiko bencana berdasarkan wilayah dan
+                        jenis ancaman secara instan.</p>
+                    <div class="flex items-center gap-2 font-bold text-xs text-[#0A3D62] dark:text-[#1DD1A1]">
+                        MULAI ANALISIS <i data-lucide="chevron-right"
+                            class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </a>
+                <a href="peta.html"
+                    class="group card-bg p-8 rounded-3xl shadow-sm border hover:border-[#0A3D62] dark:hover:border-[#1DD1A1] hover:shadow-2xl transition-all duration-300">
+                    <div
+                        class="w-14 h-14 bg-[#0A3D62] rounded-2xl flex items-center justify-center text-white mb-8 group-hover:scale-110 transition-transform">
+                        <i data-lucide="map-pin"></i>
+                    </div>
+                    <h3 class="font-bold text-primary text-xl mb-3">Peta Interaktif</h3>
+                    <p class="text-muted text-sm leading-relaxed mb-6">Visualisasi zona risiko, jalur evakuasi, dan
+                        titik aman di wilayah pesisir.</p>
+                    <div class="flex items-center gap-2 font-bold text-xs text-[#0A3D62] dark:text-[#1DD1A1]">
+                        BUKA PETA <i data-lucide="chevron-right"
+                            class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </a>
+                <a href="simulasi.html"
+                    class="group card-bg p-8 rounded-3xl shadow-sm border hover:border-[#0A3D62] dark:hover:border-[#1DD1A1] hover:shadow-2xl transition-all duration-300">
+                    <div
+                        class="w-14 h-14 bg-[#0A3D62] rounded-2xl flex items-center justify-center text-white mb-8 group-hover:scale-110 transition-transform">
+                        <i data-lucide="activity"></i>
+                    </div>
+                    <h3 class="font-bold text-primary text-xl mb-3">Simulasi Dampak</h3>
+                    <p class="text-muted text-sm leading-relaxed mb-6">Simulasikan skenario bencana berdasarkan curah
+                        hujan dan kondisi pasang laut.</p>
+                    <div class="flex items-center gap-2 font-bold text-xs text-[#0A3D62] dark:text-[#1DD1A1]">
+                        COBA SIMULASI <i data-lucide="chevron-right"
+                            class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </a>
+                <a href="edukasi.html"
+                    class="group card-bg p-8 rounded-3xl shadow-sm border hover:border-[#0A3D62] dark:hover:border-[#1DD1A1] hover:shadow-2xl transition-all duration-300">
+                    <div
+                        class="w-14 h-14 bg-[#0A3D62] rounded-2xl flex items-center justify-center text-white mb-8 group-hover:scale-110 transition-transform">
+                        <i data-lucide="life-buoy"></i>
+                    </div>
+                    <h3 class="font-bold text-primary text-xl mb-3">Edukasi</h3>
+                    <p class="text-muted text-sm leading-relaxed mb-6">Panduan lengkap sebelum, saat, dan setelah
+                        bencana untuk keselamatan Anda.</p>
+                    <div class="flex items-center gap-2 font-bold text-xs text-[#0A3D62] dark:text-[#1DD1A1]">
+                        PELAJARI LEBIH <i data-lucide="chevron-right"
+                            class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-alt-bg py-20 px-6">
+        <div class="max-w-7xl mx-auto px-6 md:px-20 pb-16">
+            <div class="flex justify-between items-end mb-8 gap-4 flex-wrap">
+                <div>
+                    <span
+                        class="bg-red-50 dark:bg-red-900/20 text-[#EE5253] text-[10px] font-bold tracking-widest px-4 py-1.5 rounded-full uppercase">Peringatan
+                        Terkini</span>
+                    <h2 class="text-3xl font-bold text-primary mt-4">Status Wilayah Real-Time</h2>
+                </div>
+                <a href="#"
+                    class="text-[#0A3D62] dark:text-[#1DD1A1] font-bold text-sm flex items-center gap-1 hover:underline">
+                    Lihat Semua <i data-lucide="arrow-right" class="w-4"></i>
+                </a>
+            </div>
+            <div class="space-y-4">
+                <div
+                    class="item-bg border-l-4 border-[#FF9F43] border p-6 rounded-2xl flex items-center gap-6 flex-wrap group hover:translate-x-1 transition-all">
+                    <div class="w-10 h-10 rounded-xl bg-[#FF9F43]/10 flex items-center justify-center text-[#FF9F43]"><i
+                            data-lucide="alert-triangle" class="w-5"></i></div>
+                    <div class="flex-1 min-w-[200px]">
+                        <h4 class="font-bold text-primary text-sm">Kabupaten Demak, Jawa Tengah</h4>
+                        <p class="text-muted text-xs mt-1">Potensi banjir rob dengan ketinggian 30–50 cm pada malam hari
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <span
+                            class="bg-[#FF9F43]/10 text-[#FF9F43] border border-[#FF9F43]/20 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-tighter">Siaga</span>
+                        <span
+                            class="bg-gray-100 dark:bg-white/10 text-muted text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-tighter">Rob</span>
+                        <span class="text-muted text-[11px]">2 jam lalu</span>
+                    </div>
+                </div>
+                <div
+                    class="item-bg border-l-4 border-[#FFC312] border p-6 rounded-2xl flex items-center gap-6 flex-wrap group hover:translate-x-1 transition-all">
+                    <div class="w-10 h-10 rounded-xl bg-[#FFC312]/10 flex items-center justify-center text-[#FFC312]"><i
+                            data-lucide="alert-triangle" class="w-5"></i></div>
+                    <div class="flex-1 min-w-[200px]">
+                        <h4 class="font-bold text-primary text-sm">Kota Palu, Sulawesi Tengah</h4>
+                        <p class="text-muted text-xs mt-1">Aktivitas seismik M4.2 terdeteksi, tidak berpotensi tsunami
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <span
+                            class="bg-[#FFC312]/10 text-[#FFC312] border border-[#FFC312]/20 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-tighter">Waspada</span>
+                        <span
+                            class="bg-gray-100 dark:bg-white/10 text-muted text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-tighter">Gempa</span>
+                        <span class="text-muted text-[11px]">5 jam lalu</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-6 md:px-20 pb-16 py-24">
+        <div class="cta-gradient rounded-[32px] p-12 md:p-14 text-center relative overflow-hidden shadow-2xl">
+            <div class="absolute -top-24 -right-24 w-64 h-64 bg-[#1DD1A1]/10 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
+            <div class="relative z-10">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-6 leading-tight">
+                    Ketahui Risiko di <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-[#1DD1A1] to-[#7efdd8]">Wilayah
+                        Anda</span> Sekarang
+                </h2>
+                <p class="text-white/70 text-lg mb-10 max-w-xl mx-auto leading-relaxed">
+                    Jangan tunggu bencana datang. Cek tingkat risiko wilayah Anda dan dapatkan rekomendasi keselamatan
+                    yang tepat.
+                </p>
+                <div class="flex flex-wrap justify-center gap-5">
+                    <a href="cek-risiko.html"
+                        class="bg-gradient-to-r from-[#1DD1A1] to-[#17b88d] text-[#0A3D62] px-6 py-3 rounded-xl font-bold flex items-center gap-2 shadow-xl hover:-translate-y-1 transition-all">
+                        <i data-lucide="shield" class="w-5 h-5"></i> Mulai Analisis Risiko
+                    </a>
+                    <a href="edukasi.html"
+                        class="bg-white/10 border border-white/30 backdrop-blur-md text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-white/20 transition-all">
+                        Panduan Keselamatan
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer-section text-white pt-20">
+        <div class="max-w-7xl mx-auto px-6 pb-20 grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div class="col-span-1">
+                <div class="flex items-center gap-3 mb-6">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center">
+                        <i data-lucide="shield" class="text-white"></i>
+                    </div>
+                    <div class="font-extrabold text-lg">SIAPBENCANA</div>
+                </div>
+                <p class="text-white/50 text-sm leading-relaxed">Platform kesiapsiagaan bencana pesisir berbasis risiko
+                    wilayah untuk Indonesia yang lebih aman.</p>
+            </div>
+            <div>
+                <h5 class="font-bold mb-6">Navigasi</h5>
+                <ul class="space-y-4 text-sm text-white/50">
+                    <li><a href="cek-risiko.html" class="hover:text-[#1DD1A1] transition-colors">Cek Risiko</a></li>
+                    <li><a href="peta.html" class="hover:text-[#1DD1A1] transition-colors">Peta Interaktif</a></li>
+                    <li><a href="edukasi.html" class="hover:text-[#1DD1A1] transition-colors">Panduan Edukasi</a></li>
+                    <li><a href="simulasi.html" class="hover:text-[#1DD1A1] transition-colors">Simulasi</a></li>
+                    <li><a href="about.html" class="hover:text-[#1DD1A1] transition-colors">About</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="font-bold mb-6">Kontak</h5>
+                <ul class="space-y-4 text-sm text-white/50">
+                    <li class="flex gap-2"><i data-lucide="mail" class="w-4 text-[#1DD1A1] shrink-0"></i>
+                        info@siapbencana.go.id</li>
+                    <li class="flex gap-2"><i data-lucide="phone" class="w-4 text-[#1DD1A1] shrink-0"></i> +62 21 1234
+                        5678</li>
+                </ul>
+            </div>
+            <div>
+                <div class="bg-[#1DD1A1]/10 border border-[#1DD1A1]/20 p-6 rounded-2xl">
+                    <div class="text-[10px] font-bold text-[#1DD1A1] uppercase mb-1">Darurat</div>
+                    <div class="text-3xl font-black">119</div>
+                    <div class="text-[10px] text-white/40 mt-1 uppercase">BNPB Response</div>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-white/5 py-8 text-center text-[11px] text-white/30">
+            © 2026 SIAPBENCANA. Coastal Safety Platform Indonesia.
+        </div>
+    </footer>
+
+    <script>
+        function refreshIcons() {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+
+        function initWithRetry(retries = 3) {
+            refreshIcons();
+
+            if (retries > 0) {
+                setTimeout(() => initWithRetry(retries - 1), 300);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => setTimeout(initWithRetry, 100));
+        window.addEventListener('load', () => setTimeout(refreshIcons, 200));
+
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('button[\\@click="mobileOpen = !mobileOpen"]')) {
+                setTimeout(refreshIcons, 200);
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('button[\\@click="toggleTheme()"]')) {
+                setTimeout(refreshIcons, 200);
+            }
+        });
+    </script>
+</body>
+
+</html>
