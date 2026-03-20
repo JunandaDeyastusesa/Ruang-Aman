@@ -1,744 +1,1600 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id" class="light">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIAPBENCANA - Cek Risiko Wilayah</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RUANG AMAN - Cek Risiko Wilayah</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <script>
-        // Initialize theme before page renders to avoid flash
-        (function () {
-            const saved = localStorage.getItem('theme');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      // Initialize theme before page renders to avoid flash
+      (function () {
+        const saved = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-            if (saved === 'dark' || (!saved && prefersDark)) {
-                document.documentElement.classList.remove('light');
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-                document.documentElement.classList.add('light');
-            }
-        })();
+        if (saved === "dark" || (!saved && prefersDark)) {
+          document.documentElement.classList.remove("light");
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+          document.documentElement.classList.add("light");
+        }
+      })();
     </script>
-</head>
+  </head>
 
-<body x-data="riskApp()" @scroll.window="scrolled = (window.pageYOffset > 20)" :class="darkMode ? 'dark' : ''"
-    class="page-bg">
-
+  <body x-data="riskApp()" @scroll.window="scrolled = (window.pageYOffset > 20)" :class="darkMode ? 'dark' : ''" class="page-bg">
     <!-- NAVBAR -->
-    <nav :class="scrolled ? 'bg-[#0A3D62]/95 border-b border-[#1DD1A1]/20 shadow-lg' : 'bg-[#0A3D62]'"
-        class="fixed top-0 left-0 right-0 z-[1000] backdrop-blur-md transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-[68px] flex items-center justify-between gap-3">
+    <nav :class="scrolled ? 'bg-[#0A3D62]/95 border-b border-[#1DD1A1]/20 shadow-lg' : 'bg-[#0A3D62]'" class="fixed top-0 left-0 right-0 z-[1000] backdrop-blur-md transition-all duration-300">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 h-[68px] flex items-center justify-between gap-3">
+        <a href="#" class="flex items-center gap-3 shrink-0">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center shadow-lg">
+            <i data-lucide="shield" class="text-white w-5 h-5"></i>
+          </div>
+          <div class="text-white">
+            <div class="font-extrabold text-base leading-none">RUANG AMAN</div>
+            <div class="text-[10px] text-[#1DD1A1] tracking-widest leading-none uppercase">Water-Related Disaster Safety</div>
+          </div>
+        </a>
 
-            <a href="#" class="flex items-center gap-3 shrink-0">
-                <div
-                    class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center shadow-lg">
-                    <i data-lucide="shield" class="text-white w-5 h-5"></i>
-                </div>
-                <div class="text-white">
-                    <div class="font-extrabold text-base leading-none">SIAPBENCANA</div>
-                    <div class="text-[10px] text-[#1DD1A1] tracking-widest leading-none uppercase">Coastal Safety</div>
-                </div>
-            </a>
+        <div class="hidden md:flex items-center gap-5 lg:gap-6">
+          <a href="index.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1]">Home</a>
+          <a href="cek-risiko.html" class="text-sm font-medium transition-colors text-[#1DD1A1]">Cek Risiko</a>
+          <a href="peta.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Peta</a>
+          <a href="edukasi.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Edukasi</a>
+          <a href="simulasi.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Simulasi</a>
+          <a href="about.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">About</a>
 
-            <div class="hidden md:flex items-center gap-5 lg:gap-6">
-                <a href="index.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1]">Home</a>
-                <a href="cek-risiko.html" class="text-sm font-medium transition-colors text-[#1DD1A1]">Cek Risiko</a>
-                <a href="peta.html"
-                    class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Peta</a>
-                <a href="edukasi.html"
-                    class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Edukasi</a>
-                <a href="simulasi.html"
-                    class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Simulasi</a>
-                <a href="about.html"
-                    class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">About</a>
+          <button
+            @click="toggleTheme()"
+            class="relative w-16 h-8 rounded-full transition-colors duration-300 focus:outline-none"
+            :class="darkMode ? 'bg-[#1DD1A1]' : 'bg-gray-600'"
+            :title="darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
+          >
+            <span class="absolute top-1 w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-300 flex items-center justify-center" :class="darkMode ? 'translate-x-8' : 'translate-x-1'">
+              <i :data-lucide="darkMode ? 'moon' : 'sun'" class="w-3.5 h-3.5" :class="darkMode ? 'text-[#1DD1A1]' : 'text-yellow-500'"></i>
+            </span>
+          </button>
+        </div>
 
-                <button @click="toggleTheme()"
-                    class="relative w-16 h-8 rounded-full transition-colors duration-300 focus:outline-none"
-                    :class="darkMode ? 'bg-[#1DD1A1]' : 'bg-gray-600'"
-                    :title="darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+        <button @click="mobileOpen = !mobileOpen" class="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 transition-all gap-1.5" aria-label="Toggle menu">
+          <span :class="mobileOpen ? 'rotate-45 translate-y-[7px]' : ''" class="block w-5 h-0.5 bg-white rounded-full transition-transform duration-200"></span>
+          <span :class="mobileOpen ? 'opacity-0 scale-x-0' : ''" class="block w-5 h-0.5 bg-white rounded-full transition-all duration-200"></span>
+          <span :class="mobileOpen ? '-rotate-45 -translate-y-[7px]' : ''" class="block w-5 h-0.5 bg-white rounded-full transition-transform duration-200"></span>
+        </button>
+      </div>
 
-                    <span
-                        class="absolute top-1 w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-300 flex items-center justify-center"
-                        :class="darkMode ? 'translate-x-8' : 'translate-x-1'">
-                        <i :data-lucide="darkMode ? 'moon' : 'sun'" class="w-3.5 h-3.5"
-                            :class="darkMode ? 'text-[#1DD1A1]' : 'text-yellow-500'"></i>
-                    </span>
-                </button>
-            </div>
+      <div
+        x-show="mobileOpen"
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0 -translate-y-2"
+        x-transition:enter-end="opacity-100 translate-y-0"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100 translate-y-0"
+        x-transition:leave-end="opacity-0 -translate-y-2"
+        class="md:hidden bg-[#0A3D62]/98 backdrop-blur-md border-t border-white/10 px-4 py-4"
+      >
+        <div class="flex flex-col gap-1">
+          <a href="index.html" class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Home</a>
+          <a href="cek-risiko.html" class="text-[#1DD1A1] font-semibold text-sm px-3 py-2.5 rounded-xl bg-white/5">Cek Risiko</a>
+          <a href="peta.html" class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Peta</a>
+          <a href="edukasi.html" class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Edukasi</a>
+          <a href="simulasi.html" class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Simulasi</a>
+          <a href="about.html" class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">About</a>
 
-            <button @click="mobileOpen = !mobileOpen"
-                class="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 transition-all gap-1.5"
-                aria-label="Toggle menu">
-                <span :class="mobileOpen ? 'rotate-45 translate-y-[7px]' : ''"
-                    class="block w-5 h-0.5 bg-white rounded-full transition-transform duration-200"></span>
-                <span :class="mobileOpen ? 'opacity-0 scale-x-0' : ''"
-                    class="block w-5 h-0.5 bg-white rounded-full transition-all duration-200"></span>
-                <span :class="mobileOpen ? '-rotate-45 -translate-y-[7px]' : ''"
-                    class="block w-5 h-0.5 bg-white rounded-full transition-transform duration-200"></span>
+          <div class="flex items-center justify-between px-3 py-2.5 mt-2 border-t border-white/10 pt-3">
+            <span class="text-sm font-medium text-white/80">Mode Tampilan</span>
+
+            <button
+              @click="toggleTheme()"
+              class="relative w-16 h-8 rounded-full transition-colors duration-300 focus:outline-none flex items-center"
+              :class="darkMode ? 'bg-[#1DD1A1]' : 'bg-gray-600'"
+              :title="darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
+            >
+              <span class="absolute w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300 flex items-center justify-center" :class="darkMode ? 'translate-x-9' : 'translate-x-1'">
+                <i :data-lucide="darkMode ? 'moon' : 'sun'" class="w-3.5 h-3.5" :class="darkMode ? 'text-[#1DD1A1]' : 'text-yellow-500'"></i>
+              </span>
             </button>
+          </div>
         </div>
-
-        <div x-show="mobileOpen" x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
-            x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0"
-            x-transition:leave-end="opacity-0 -translate-y-2"
-            class="md:hidden bg-[#0A3D62]/98 backdrop-blur-md border-t border-white/10 px-4 py-4">
-            <div class="flex flex-col gap-1">
-                <a href="index.html"
-                    class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Home</a>
-                <a href="cek-risiko.html"
-                    class="text-[#1DD1A1] font-semibold text-sm px-3 py-2.5 rounded-xl bg-white/5">Cek
-                    Risiko</a>
-                <a href="peta.html"
-                    class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Peta</a>
-                <a href="edukasi.html"
-                    class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Edukasi</a>
-                <a href="simulasi.html"
-                    class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Simulasi</a>
-                <a href="about.html"
-                    class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">About</a>
-
-                <div class="flex items-center justify-between px-3 py-2.5 mt-2 border-t border-white/10 pt-3">
-                    <span class="text-sm font-medium text-white/80">Mode Tampilan</span>
-
-                    <button @click="toggleTheme()"
-                        class="relative w-16 h-8 rounded-full transition-colors duration-300 focus:outline-none flex items-center"
-                        :class="darkMode ? 'bg-[#1DD1A1]' : 'bg-gray-600'"
-                        :title="darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
-
-                        <span
-                            class="absolute w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300 flex items-center justify-center"
-                            :class="darkMode ? 'translate-x-9' : 'translate-x-1'">
-                            <i :data-lucide="darkMode ? 'moon' : 'sun'" class="w-3.5 h-3.5"
-                                :class="darkMode ? 'text-[#1DD1A1]' : 'text-yellow-500'"></i>
-                        </span>
-                    </button>
-                </div>
-            </div>
-        </div>
+      </div>
     </nav>
 
     <!-- MAIN CONTENT -->
     <main class="pt-[68px]">
-        <!-- Header -->
-        <div class="bg-[#0A3D62] px-4 sm:px-6 pt-12 pb-16 md:pt-16 md:pb-20">
-            <div class="max-w-7xl mx-auto text-center">
-                <div class="animate-fade-slide opacity-0" style="animation: fadeSlide 0.6s ease-out forwards;">
-                    <div
-                        class="inline-flex items-center gap-2 bg-[rgba(29,209,161,0.12)] border border-[rgba(29,209,161,0.25)] rounded-full px-4 py-1.5 mb-4">
-                        <i data-lucide="shield" class="text-[#1DD1A1] w-3.5 h-3.5"></i>
-                        <span class="text-[#1DD1A1] text-xs font-semibold tracking-wide">ANALISIS RISIKO BENCANA</span>
-                    </div>
-                    <h1 class="text-white font-extrabold text-3xl md:text-4xl lg:text-5xl mb-3">Cek Risiko Wilayah</h1>
-                    <p class="text-white/65 text-sm md:text-base max-w-2xl mx-auto leading-relaxed px-4">
-                        Pilih wilayah dan jenis bencana untuk mendapatkan analisis risiko berbasis data ilmiah dan
-                        rekomendasi tindakan yang tepat.
-                    </p>
-                </div>
+      <!-- Header -->
+      <div class="bg-[#0A3D62] px-4 sm:px-6 pt-12 pb-16 md:pt-16 md:pb-20">
+        <div class="max-w-7xl mx-auto text-left">
+          <div class="animate-fade-slide opacity-0" style="animation: fadeSlide 0.6s ease-out forwards">
+            <div class="inline-flex items-center gap-2 bg-[rgba(29,209,161,0.12)] border border-[rgba(29,209,161,0.25)] rounded-full px-4 py-1.5 mb-4">
+              <i data-lucide="shield" class="text-[#1DD1A1] w-3.5 h-3.5"></i>
+              <span class="text-[#1DD1A1] text-xs font-semibold tracking-wide">ANALISIS RISIKO BENCANA</span>
             </div>
+            <h1 class="text-white font-extrabold text-3xl md:text-4xl lg:text-5xl mb-3">Cek Risiko Wilayah</h1>
+            <p class="text-white/65 text-sm md:text-base max-w-2xl leading-relaxed">Pilih wilayah dan jenis bencana untuk mendapatkan analisis risiko berbasis data ilmiah dan rekomendasi tindakan yang tepat.</p>
+          </div>
         </div>
+      </div>
 
-        <!-- Content -->
-        <div class="max-w-7xl mx-auto -mt-10 px-4 md:px-6 pb-20">
-            <div class="grid grid-cols-1 gap-8" :class="{'lg:grid-cols-2': result, 'lg:grid-cols-1': !result}"
-                class="risk-grid transition-all duration-300">
+      <!-- Content -->
+      <div class="max-w-7xl mx-auto -mt-10 px-4 md:px-6 pb-20">
+        <div class="grid grid-cols-1 gap-8" :class="{'lg:grid-cols-2': result, 'lg:grid-cols-1': !result}" class="risk-grid transition-all duration-300">
+          <!-- Input Panel -->
+          <div class="card-bg rounded-2xl p-4 sm:p-6 md:p-8 shadow-lg border border-default transition-all">
+            <h2 class="font-bold text-lg text-primary mb-1">Pilih Wilayah & Bencana</h2>
+            <p class="text-sm text-secondary mb-7">Masukkan informasi di bawah untuk memulai analisis risiko bencana.</p>
 
-                <!-- Input Panel -->
-                <div class="card-bg rounded-2xl p-4 sm:p-6 md:p-8 shadow-lg border border-default transition-all">
-                    <h2 class="font-bold text-lg text-primary mb-1">Pilih Wilayah & Bencana</h2>
-                    <p class="text-sm text-secondary mb-7">Masukkan informasi di bawah untuk memulai analisis risiko
-                        bencana pesisir.</p>
-
-                    <div class="space-y-5">
-                        <!-- Wilayah Select -->
-                        <div>
-                            <label
-                                class="flex items-center gap-2 font-semibold text-xs text-primary mb-2 uppercase tracking-wide">
-                                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
-                                Pilih Wilayah
-                            </label>
-                            <div class="relative">
-                                <select x-model="wilayah"
-                                    class="w-full p-3 pl-3.5 pr-10 rounded-xl border-2 border-default bg-input text-sm appearance-none cursor-pointer focus:border-[#0A3D62] dark:focus:border-[#1DD1A1] outline-none transition text-primary touch-target">
-                                    <option value="">Pilih kabupaten/kota...</option>
-                                    <template x-for="w in wilayahList" :key="w">
-                                        <option :value="w" x-text="w"></option>
-                                    </template>
-                                </select>
-                                <i data-lucide="chevron-down"
-                                    class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted pointer-events-none"></i>
-                            </div>
-                        </div>
-
-                        <!-- Bencana Selector -->
-                        <div>
-                            <label
-                                class="flex items-center gap-2 font-semibold text-xs text-primary mb-3 uppercase tracking-wide">
-                                <i data-lucide="activity" class="w-3.5 h-3.5 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
-                                Jenis Bencana
-                            </label>
-                            <div class="grid grid-cols-2 gap-2.5">
-                                <template x-for="b in bencanaList" :key="b.id">
-                                    <button @click="bencana = b.id"
-                                        :class="bencana === b.id ? 'border-[#0A3D62] dark:border-[#1DD1A1] bg-[rgba(10,61,98,0.06)] dark:bg-[rgba(29,209,161,0.1)] font-semibold text-[#0A3D62] dark:text-[#1DD1A1]' : 'border-default bg-input text-secondary'"
-                                        class="p-3 rounded-xl border-2 transition-all flex items-center gap-2 text-xs touch-target min-h-[44px]">
-                                        <i :data-lucide="b.icon" class="w-4 h-4 flex-shrink-0"
-                                            :class="bencana === b.id ? 'text-[#0A3D62] dark:text-[#1DD1A1]' : 'text-muted'"></i>
-                                        <span class="truncate" x-text="b.label"></span>
-                                    </button>
-                                </template>
-                            </div>
-                        </div>
-
-                        <!-- Analyze Button -->
-                        <button @click="handleAnalysis" :disabled="!wilayah || !bencana || loading"
-                            :class="!wilayah || !bencana ? 'bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed' : 'bg-gradient-to-r from-[#0A3D62] to-[#1565a0] text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5'"
-                            class="w-full p-4 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 mt-2 touch-target min-h-[52px]">
-                            <template x-if="loading">
-                                <span class="flex items-center gap-2">
-                                    <div
-                                        class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin-custom">
-                                    </div>
-                                    <span>Menganalisis...</span>
-                                </span>
-                            </template>
-                            <template x-if="!loading">
-                                <span class="flex items-center gap-2">
-                                    <i data-lucide="bar-chart-2" class="w-4 h-4"></i>
-                                    <span>Analisis Risiko</span>
-                                </span>
-                            </template>
-                        </button>
-                    </div>
-
-                    <!-- Info Note -->
-                    <div
-                        class="mt-5 p-3 bg-[rgba(10,61,98,0.04)] dark:bg-[rgba(29,209,161,0.1)] rounded-lg flex gap-2.5 items-start">
-                        <i data-lucide="info"
-                            class="w-4 h-4 text-[#0A3D62] dark:text-[#1DD1A1] flex-shrink-0 mt-0.5"></i>
-                        <p class="text-xs text-secondary leading-relaxed">
-                            Data analisis berdasarkan data BMKG, BNPB, dan PVMBG. Hasil ini bersifat indikatif untuk
-                            edukasi dan perencanaan.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Result Panel -->
-                <template x-if="result && levelConf">
-                    <div class="card-bg rounded-2xl overflow-hidden shadow-lg border border-default animate-slide-in">
-                        <!-- Result Header -->
-                        <div class="p-4 sm:p-6 md:p-7 border-b-4"
-                            :style="{ background: result.bgColor, borderBottomColor: result.color }">
-                            <div class="flex gap-3 items-start mb-4">
-                                <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-                                    :style="{ background: result.color }">
-                                    <i :data-lucide="result.icon" class="w-5 h-5 text-white"></i>
-                                </div>
-                                <div>
-                                    <div class="text-xs font-semibold text-secondary uppercase tracking-wide mb-1"
-                                        x-text="wilayah + ' · ' + (selectedBencana?.label || '')"></div>
-                                    <div class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold text-white"
-                                        :style="{ background: result.color }">
-                                        STATUS: <span x-text="levelConf.label" class="ml-1"></span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Risk Index Bar -->
-                            <div>
-                                <div class="flex justify-between items-center mb-2">
-                                    <span class="text-xs font-semibold text-secondary uppercase tracking-wide">Indeks
-                                        Risiko</span>
-                                    <span class="text-2xl font-extrabold" :style="{ color: result.color }">
-                                        <span x-text="result.index"></span><span
-                                            class="text-sm font-medium text-muted">/100</span>
-                                    </span>
-                                </div>
-                                <div class="h-2.5 bg-black/10 dark:bg-white/10 rounded-full overflow-hidden">
-                                    <div class="h-full rounded-full transition-all duration-1000"
-                                        :style="{ width: result.index + '%', background: `linear-gradient(90deg, ${result.color}88, ${result.color})` }">
-                                    </div>
-                                </div>
-                                <div class="flex justify-between mt-1 text-[10px] text-muted">
-                                    <span>Aman (0)</span>
-                                    <span>Waspada (30)</span>
-                                    <span>Siaga (60)</span>
-                                    <span>Bahaya (80)</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Tabs -->
-                        <div class="flex border-b border-default">
-                            <button @click="activeTab = 'detail'"
-                                :class="activeTab === 'detail' ? 'text-[#0A3D62] dark:text-[#1DD1A1] border-b-2 border-[#0A3D62] dark:border-[#1DD1A1] font-semibold' : 'text-muted'"
-                                class="flex-1 py-3.5 flex items-center justify-center gap-2 text-xs transition-all touch-target">
-                                <i data-lucide="info" class="w-4 h-4"></i>
-                                <span class="hidden xs:inline">Detail Risiko</span>
-                            </button>
-                            <button @click="activeTab = 'actions'"
-                                :class="activeTab === 'actions' ? 'text-[#0A3D62] dark:text-[#1DD1A1] border-b-2 border-[#0A3D62] dark:border-[#1DD1A1] font-semibold' : 'text-muted'"
-                                class="flex-1 py-3.5 flex items-center justify-center gap-2 text-xs transition-all touch-target">
-                                <i data-lucide="list" class="w-4 h-4"></i>
-                                <span class="hidden xs:inline">Tindakan</span>
-                            </button>
-                        </div>
-
-                        <!-- Tab Content -->
-                        <div class="p-4 sm:p-6 md:p-7">
-                            <!-- Detail Tab -->
-                            <template x-if="activeTab === 'detail'">
-                                <div class="animate-fade-up">
-                                    <p class="text-sm text-primary leading-relaxed mb-5" x-text="result.description">
-                                    </p>
-                                    <div
-                                        class="text-xs font-bold text-[#0A3D62] dark:text-[#1DD1A1] uppercase tracking-wide mb-3">
-                                        Faktor
-                                        Risiko Utama</div>
-                                    <template x-for="(factor, i) in result.factors" :key="i">
-                                        <div class="flex gap-2.5 items-start mb-2.5">
-                                            <div class="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0"
-                                                :style="{ background: result.color }"></div>
-                                            <span class="text-sm text-primary" x-text="factor"></span>
-                                        </div>
-                                    </template>
-                                </div>
-                            </template>
-
-                            <!-- Actions Tab -->
-                            <template x-if="activeTab === 'actions'">
-                                <div class="animate-fade-up">
-                                    <div
-                                        class="text-xs font-bold text-[#0A3D62] dark:text-[#1DD1A1] uppercase tracking-wide mb-4">
-                                        Rekomendasi Tindakan</div>
-                                    <template x-for="(action, i) in result.actions" :key="i">
-                                        <div
-                                            class="flex gap-3 items-start bg-[rgba(10,61,98,0.04)] dark:bg-[rgba(29,209,161,0.1)] p-3.5 rounded-lg mb-2.5">
-                                            <div class="w-6 h-6 rounded-full bg-[#0A3D62] flex items-center justify-center text-white text-xs font-bold flex-shrink-0"
-                                                x-text="i + 1"></div>
-                                            <span class="text-sm text-primary" x-text="action"></span>
-                                        </div>
-                                    </template>
-                                    <a href="edukasi.html"
-                                        class="mt-4 flex items-center justify-center gap-2 bg-gradient-to-r from-[#0A3D62] to-[#1565a0] text-white p-3.5 rounded-lg text-xs font-semibold transition-all hover:shadow-lg touch-target">
-                                        Pelajari Lebih Lanjut <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                                    </a>
-                                </div>
-                            </template>
-                        </div>
-                    </div>
-                </template>
-            </div>
-
-            <!-- Risk Level Guide -->
-            <div class="mt-8 card-bg rounded-2xl p-4 sm:p-6 md:p-8 shadow-md border border-default">
-                <h3 class="font-bold text-base text-primary mb-4">Panduan Tingkat Risiko</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                    <template x-for="[key, config] in Object.entries(levelConfig)" :key="key">
-                        <div class="p-4 rounded-xl border flex items-start gap-3"
-                            :style="{ background: config.bg, borderColor: config.border }">
-                            <div class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
-                                :style="{ background: config.color }">
-                                <i :data-lucide="config.icon" class="w-4 h-4 text-white"></i>
-                            </div>
-                            <div>
-                                <div class="font-bold text-xs" :style="{ color: config.color }" x-text="config.label">
-                                </div>
-                                <div class="text-xs text-secondary mt-0.5" x-text="config.description"></div>
-                            </div>
-                        </div>
+            <div class="space-y-5">
+              <!-- Wilayah Select -->
+              <div>
+                <label class="flex items-center gap-2 font-semibold text-xs text-primary mb-2 uppercase tracking-wide">
+                  <i data-lucide="map-pin" class="w-3.5 h-3.5 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
+                  Pilih Wilayah
+                </label>
+                <div class="relative">
+                  <select
+                    x-model="wilayah"
+                    class="w-full p-3 pl-3.5 pr-10 rounded-xl border-2 border-default bg-input text-sm appearance-none cursor-pointer focus:border-[#0A3D62] dark:focus:border-[#1DD1A1] outline-none transition text-primary touch-target"
+                  >
+                    <option value="">Pilih kabupaten/kota...</option>
+                    <template x-for="w in wilayahList" :key="w">
+                      <option :value="w" x-text="w"></option>
                     </template>
+                  </select>
+                  <i data-lucide="chevron-down" class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted pointer-events-none"></i>
                 </div>
+              </div>
+
+              <!-- Bencana Selector -->
+              <div>
+                <label class="flex items-center gap-2 font-semibold text-xs text-primary mb-3 uppercase tracking-wide">
+                  <i data-lucide="activity" class="w-3.5 h-3.5 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
+                  Jenis Bencana
+                </label>
+                <div class="grid grid-cols-2 gap-2.5">
+                  <template x-for="b in bencanaList" :key="b.id">
+                    <button
+                      @click="bencana = b.id"
+                      :class="bencana === b.id ? 'border-[#0A3D62] dark:border-[#1DD1A1] bg-[rgba(10,61,98,0.06)] dark:bg-[rgba(29,209,161,0.1)] font-semibold text-[#0A3D62] dark:text-[#1DD1A1]' : 'border-default bg-input text-secondary'"
+                      class="p-3 rounded-xl border-2 transition-all flex items-center gap-2 text-xs touch-target min-h-[44px]"
+                    >
+                      <i :data-lucide="b.icon" class="w-4 h-4 flex-shrink-0" :class="bencana === b.id ? 'text-[#0A3D62] dark:text-[#1DD1A1]' : 'text-muted'"></i>
+                      <span class="truncate" x-text="b.label"></span>
+                    </button>
+                  </template>
+                </div>
+              </div>
+
+              <!-- Analyze Button -->
+              <button
+                @click="handleAnalysis"
+                :disabled="!wilayah || !bencana || loading"
+                :class="!wilayah || !bencana ? 'bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed' : 'bg-gradient-to-r from-[#0A3D62] to-[#1565a0] text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5'"
+                class="w-full p-4 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 mt-2 touch-target min-h-[52px]"
+              >
+                <template x-if="loading">
+                  <span class="flex items-center gap-2">
+                    <div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin-custom"></div>
+                    <span>Menganalisis...</span>
+                  </span>
+                </template>
+                <template x-if="!loading">
+                  <span class="flex items-center gap-2">
+                    <i data-lucide="bar-chart-2" class="w-4 h-4"></i>
+                    <span>Analisis Risiko</span>
+                  </span>
+                </template>
+              </button>
             </div>
+
+            <!-- Info Note -->
+            <div class="mt-5 p-3 bg-[rgba(10,61,98,0.04)] dark:bg-[rgba(29,209,161,0.1)] rounded-lg flex gap-2.5 items-start">
+              <i data-lucide="info" class="w-4 h-4 text-[#0A3D62] dark:text-[#1DD1A1] flex-shrink-0 mt-0.5"></i>
+              <p class="text-xs text-secondary leading-relaxed">Data analisis berdasarkan data BMKG, BNPB, dan PVMBG. Hasil ini bersifat indikatif untuk edukasi dan perencanaan.</p>
+            </div>
+          </div>
+
+          <!-- Result Panel -->
+          <template x-if="result && levelConf">
+            <div class="card-bg rounded-2xl overflow-hidden shadow-lg border border-default animate-slide-in">
+              <!-- Result Header -->
+              <div class="p-4 sm:p-6 md:p-7 border-b-4" :style="{ background: result.bgColor, borderBottomColor: result.color }">
+                <div class="flex gap-3 items-start mb-4">
+                  <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" :style="{ background: result.color }">
+                    <i :data-lucide="result.icon" class="w-5 h-5 text-white"></i>
+                  </div>
+                  <div>
+                    <div class="text-xs font-semibold text-secondary uppercase tracking-wide mb-1" x-text="wilayah + ' · ' + (selectedBencana?.label || '')"></div>
+                    <div class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold text-white" :style="{ background: result.color }">STATUS: <span x-text="levelConf.label" class="ml-1"></span></div>
+                  </div>
+                </div>
+
+                <!-- Risk Index Bar -->
+                <div>
+                  <div class="flex justify-between items-center mb-2">
+                    <span class="text-xs font-semibold text-secondary uppercase tracking-wide">Indeks Risiko</span>
+                    <span class="text-2xl font-extrabold" :style="{ color: result.color }"> <span x-text="result.index"></span><span class="text-sm font-medium text-muted">/100</span> </span>
+                  </div>
+                  <div class="h-2.5 bg-black/10 dark:bg-white/10 rounded-full overflow-hidden">
+                    <div class="h-full rounded-full transition-all duration-1000" :style="{ width: result.index + '%', background: `linear-gradient(90deg, ${result.color}88, ${result.color})` }"></div>
+                  </div>
+                  <div class="flex justify-between mt-1 text-[10px] text-muted">
+                    <span>Aman (0)</span>
+                    <span>Waspada (30)</span>
+                    <span>Siaga (60)</span>
+                    <span>Bahaya (80)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tabs -->
+              <div class="flex border-b border-default">
+                <button
+                  @click="activeTab = 'detail'"
+                  :class="activeTab === 'detail' ? 'text-[#0A3D62] dark:text-[#1DD1A1] border-b-2 border-[#0A3D62] dark:border-[#1DD1A1] font-semibold' : 'text-muted'"
+                  class="flex-1 py-3.5 flex items-center justify-center gap-2 text-xs transition-all touch-target"
+                >
+                  <i data-lucide="info" class="w-4 h-4"></i>
+                  <span class="hidden sm:inline">Detail Risiko</span>
+                </button>
+                <button
+                  @click="activeTab = 'actions'"
+                  :class="activeTab === 'actions' ? 'text-[#0A3D62] dark:text-[#1DD1A1] border-b-2 border-[#0A3D62] dark:border-[#1DD1A1] font-semibold' : 'text-muted'"
+                  class="flex-1 py-3.5 flex items-center justify-center gap-2 text-xs transition-all touch-target"
+                >
+                  <i data-lucide="list" class="w-4 h-4"></i>
+                  <span class="hidden sm:inline">Tindakan</span>
+                </button>
+              </div>
+
+              <!-- Tab Content -->
+              <div class="p-4 sm:p-6 md:p-7">
+                <!-- Detail Tab -->
+                <template x-if="activeTab === 'detail'">
+                  <div class="animate-fade-up">
+                    <p class="text-sm text-primary leading-relaxed mb-5" x-text="result.description"></p>
+                    <div class="text-xs font-bold text-[#0A3D62] dark:text-[#1DD1A1] uppercase tracking-wide mb-3">Faktor Risiko Utama</div>
+                    <template x-for="(factor, i) in result.factors" :key="i">
+                      <div class="flex gap-2.5 items-start mb-2.5">
+                        <div class="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0" :style="{ background: result.color }"></div>
+                        <span class="text-sm text-primary" x-text="factor"></span>
+                      </div>
+                    </template>
+                  </div>
+                </template>
+
+                <!-- Actions Tab -->
+                <template x-if="activeTab === 'actions'">
+                  <div class="animate-fade-up">
+                    <div class="text-xs font-bold text-[#0A3D62] dark:text-[#1DD1A1] uppercase tracking-wide mb-4">Rekomendasi Tindakan</div>
+                    <template x-for="(action, i) in result.actions" :key="i">
+                      <div class="flex gap-3 items-start bg-[rgba(10,61,98,0.04)] dark:bg-[rgba(29,209,161,0.1)] p-3.5 rounded-lg mb-2.5">
+                        <div class="w-6 h-6 rounded-full bg-[#0A3D62] flex items-center justify-center text-white text-xs font-bold flex-shrink-0" x-text="i + 1"></div>
+                        <span class="text-sm text-primary" x-text="action"></span>
+                      </div>
+                    </template>
+                    <a href="edukasi.html" class="mt-4 flex items-center justify-center gap-2 bg-gradient-to-r from-[#0A3D62] to-[#1565a0] text-white p-3.5 rounded-lg text-xs font-semibold transition-all hover:shadow-lg touch-target">
+                      Pelajari Lebih Lanjut <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                  </div>
+                </template>
+              </div>
+            </div>
+          </template>
         </div>
+
+        <!-- Risk Level Guide -->
+        <div class="mt-8 card-bg rounded-2xl p-4 sm:p-6 md:p-8 shadow-md border border-default">
+          <h3 class="font-bold text-base text-primary mb-4">Panduan Tingkat Risiko</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <template x-for="[key, config] in Object.entries(levelConfig)" :key="key">
+              <div class="p-4 rounded-xl border flex items-start gap-3" :style="{ background: config.bg, borderColor: config.border }">
+                <div class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" :style="{ background: config.color }">
+                  <i :data-lucide="config.icon" class="w-4 h-4 text-white"></i>
+                </div>
+                <div>
+                  <div class="font-bold text-xs" :style="{ color: config.color }" x-text="config.label"></div>
+                  <div class="text-xs text-secondary mt-0.5" x-text="config.description"></div>
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+      </div>
     </main>
 
     <!-- FOOTER -->
     <footer class="bg-[#1B262C] text-white pt-16 sm:pt-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 pb-16 sm:pb-20 grid grid-cols-1 md:grid-cols-4 gap-8 sm:gap-12">
-            <div class="col-span-1 md:col-span-1">
-                <div class="flex items-center gap-3 mb-6">
-                    <div
-                        class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center flex-shrink-0">
-                        <i data-lucide="shield" class="text-white"></i>
-                    </div>
-                    <div class="font-extrabold text-lg">SIAPBENCANA</div>
-                </div>
-                <p class="text-white/50 text-sm leading-relaxed">Platform kesiapsiagaan bencana pesisir berbasis risiko
-                    wilayah untuk Indonesia yang lebih aman.</p>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 pb-16 sm:pb-20 grid grid-cols-1 md:grid-cols-4 gap-8 sm:gap-12">
+        <div class="col-span-1 md:col-span-1">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center flex-shrink-0">
+              <i data-lucide="shield" class="text-white"></i>
             </div>
-            <div>
-                <h5 class="font-bold mb-6">Navigasi</h5>
-                <ul class="space-y-4 text-sm text-white/50">
-                    <li><a href="#" class="hover:text-[#1DD1A1] transition-colors touch-target inline-block py-2">Cek
-                            Risiko</a></li>
-                    <li><a href="#" class="hover:text-[#1DD1A1] transition-colors touch-target inline-block py-2">Peta
-                            Interaktif</a></li>
-                    <li><a href="#"
-                            class="hover:text-[#1DD1A1] transition-colors touch-target inline-block py-2">Panduan
-                            Edukasi</a></li>
-                </ul>
-            </div>
-            <div>
-                <h5 class="font-bold mb-6">Kontak</h5>
-                <ul class="space-y-4 text-sm text-white/50">
-                    <li class="flex gap-2 items-center"><i data-lucide="mail"
-                            class="w-4 text-[#1DD1A1] flex-shrink-0"></i> info@siapbencana.go.id
-                    </li>
-                    <li class="flex gap-2 items-center"><i data-lucide="phone"
-                            class="w-4 text-[#1DD1A1] flex-shrink-0"></i> +62 21 1234 5678</li>
-                </ul>
-            </div>
-            <div>
-                <div class="bg-[#1DD1A1]/10 border border-[#1DD1A1]/20 p-6 rounded-2xl">
-                    <div class="text-[10px] font-bold text-[#1DD1A1] uppercase mb-1">Darurat</div>
-                    <div class="text-3xl font-black">119</div>
-                    <div class="text-[10px] text-white/40 mt-1 uppercase">BNPB Response</div>
-                </div>
-            </div>
+            <div class="font-extrabold text-lg">RUANG AMAN</div>
+          </div>
+          <p class="text-white/50 text-sm leading-relaxed">Platform terpadu untuk analisis dan informasi risiko bencana berbasis air guna mendukung kesiapsiagaan masyarakat.</p>
         </div>
-        <div class="border-t border-white/5 py-8 text-center text-[11px] text-white/30">
-            © 2026 SIAPBENCANA. Coastal Safety Platform Indonesia.
+        <div>
+          <h5 class="font-bold mb-6">Navigasi</h5>
+          <ul class="space-y-4 text-sm text-white/50">
+            <li><a href="cek-risiko.html" class="hover:text-[#1DD1A1] transition-colors">Cek Risiko</a></li>
+            <li><a href="peta.html" class="hover:text-[#1DD1A1] transition-colors">Peta Interaktif</a></li>
+            <li><a href="edukasi.html" class="hover:text-[#1DD1A1] transition-colors">Panduan Edukasi</a></li>
+            <li><a href="simulasi.html" class="hover:text-[#1DD1A1] transition-colors">Simulasi</a></li>
+            <li><a href="about.html" class="hover:text-[#1DD1A1] transition-colors">About</a></li>
+          </ul>
         </div>
+        <div>
+          <h5 class="font-bold mb-6">Kontak</h5>
+          <ul class="space-y-4 text-sm text-white/50">
+            <li class="flex gap-2"><i data-lucide="mail" class="w-4 text-[#1DD1A1] shrink-0"></i> info@ruangaman.go.id</li>
+            <li class="flex gap-2"><i data-lucide="phone" class="w-4 text-[#1DD1A1] shrink-0"></i> +62 21 1234 5678</li>
+          </ul>
+        </div>
+        <div>
+          <div class="bg-[#1DD1A1]/10 border border-[#1DD1A1]/20 p-6 rounded-2xl">
+            <div class="text-[10px] font-bold text-[#1DD1A1] uppercase mb-1">Darurat</div>
+            <div class="text-3xl font-black">117</div>
+            <div class="text-[10px] text-white/40 mt-1 uppercase">BNPB Response</div>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-white/5 py-8 text-center text-[11px] text-white/30">© 2026 RUANG AMAN. Water-Related Disasters Safety Platform Indonesia.</div>
     </footer>
 
+    <!-- <script>
+      function riskApp() {
+        return {
+          scrolled: false,
+          wilayah: "",
+          bencana: "",
+          loading: false,
+          result: null,
+          activeTab: "detail",
+          darkMode: document.documentElement.classList.contains("dark"),
+          mobileOpen: false, // TAMBAHKAN INI
+
+          wilayahList: [
+            "Kabupaten Demak, Jawa Tengah",
+            "Kota Semarang, Jawa Tengah",
+            "Kabupaten Pekalongan, Jawa Tengah",
+            "Kota Palu, Sulawesi Tengah",
+            "Kabupaten Aceh Besar, Aceh",
+            "Kota Banda Aceh, Aceh",
+            "Kabupaten Cilacap, Jawa Tengah",
+            "Kota Padang, Sumatera Barat",
+            "Kabupaten Lombok Barat, NTB",
+            "Kota Manado, Sulawesi Utara",
+          ],
+
+          bencanaList: [
+            { id: "banjir", label: "Banjir", icon: "Waves" },
+            { id: "rob", label: "Rob / Banjir Pasang", icon: "Wind" },
+            { id: "gempa", label: "Gempa Bumi", icon: "Activity" },
+            { id: "tsunami", label: "Tsunami", icon: "Zap" },
+          ],
+
+          riskDatabase: {
+            "Kabupaten Demak, Jawa Tengah": {
+              banjir: {
+                level: "bahaya",
+                index: 85,
+                title: "Tingkat Risiko: BAHAYA",
+                description: "Kabupaten Demak merupakan wilayah dengan risiko banjir sangat tinggi. Subsidence tanah dan kenaikan muka air laut mempercepat genangan di wilayah ini.",
+                factors: ["Penurunan tanah (land subsidence) 5–10 cm/tahun", "Sistem drainase yang tidak memadai", "Topografi rendah di bawah muka air laut", "Curah hujan tinggi (>200 mm/bulan)"],
+                actions: ["Siapkan rute evakuasi ke tempat lebih tinggi", "Buat tas darurat dengan dokumen penting", "Pantau info BMKG dan BPBD secara rutin", "Hindari area bantaran sungai saat hujan deras"],
+                color: "#EE5253",
+                bgColor: "rgba(238,82,83,0.08)",
+                icon: "AlertTriangle",
+              },
+              rob: {
+                level: "bahaya",
+                index: 90,
+                title: "Tingkat Risiko: BAHAYA",
+                description: "Banjir rob di Demak sangat parah akibat kombinasi penurunan tanah dan kenaikan permukaan laut. Banyak kawasan permanen terendam.",
+                factors: ["Penurunan muka tanah ekstrem di pesisir", "Kenaikan permukaan laut regional", "Hilangnya mangrove pelindung pantai", "Pemompaan air tanah berlebihan"],
+                actions: ["Pertimbangkan relokasi ke kawasan lebih aman", "Bangun tanggul penahan air di sekitar rumah", "Ikuti program pemerintah untuk warga pesisir", "Simpan barang berharga di tempat tinggi"],
+                color: "#EE5253",
+                bgColor: "rgba(238,82,83,0.08)",
+                icon: "AlertTriangle",
+              },
+              gempa: {
+                level: "waspada",
+                index: 35,
+                title: "Tingkat Risiko: WASPADA",
+                description: "Aktivitas seismik di Demak relatif rendah, namun tetap perlu kewaspadaan karena berada di Pulau Jawa yang berdekatan dengan zona subduksi.",
+                factors: ["Zona seismik rendah–sedang", "Jarak sedang dari zona subduksi selatan Jawa", "Tanah aluvial yang rentan likuifaksi"],
+                actions: ["Perkuat konstruksi bangunan", "Ikuti latihan mitigasi gempa", "Ketahui titik aman di dalam dan luar bangunan"],
+                color: "#FFC312",
+                bgColor: "rgba(255,195,18,0.08)",
+                icon: "AlertTriangle",
+              },
+              tsunami: {
+                level: "waspada",
+                index: 28,
+                title: "Tingkat Risiko: WASPADA",
+                description: "Risiko tsunami relatif rendah karena Demak menghadap Laut Jawa yang dangkal. Namun kewaspadaan tetap diperlukan.",
+                factors: ["Laut Jawa yang dangkal meredam gelombang", "Tidak langsung berhadapan dengan samudra terbuka", "Potensi tsunami lokal dari Gunung Berapi bawah laut"],
+                actions: ["Kenali tanda-tanda awal tsunami", "Segera ke tempat tinggi jika gempa kuat", "Patuhi sistem peringatan dini resmi"],
+                color: "#FFC312",
+                bgColor: "rgba(255,195,18,0.08)",
+                icon: "AlertTriangle",
+              },
+            },
+            "Kota Palu, Sulawesi Tengah": {
+              gempa: {
+                level: "bahaya",
+                index: 92,
+                title: "Tingkat Risiko: BAHAYA",
+                description: "Kota Palu berada di lembah sesar aktif Palu-Koro, salah satu sesar dengan pergeseran tercepat di Indonesia (~40mm/tahun). Risiko gempa sangat tinggi.",
+                factors: ["Dilalui sesar aktif Palu-Koro", "Riwayat gempa M7.5 tahun 2018", "Topografi lembah sempit rentan amplifikasi", "Potensi likuifaksi di daerah aluvial"],
+                actions: ["Bangun shelter tahan gempa", "Ikuti drills evakuasi rutin BPBD", "Kenal jalur evakuasi terdekat", "Pasang pengamanan furniture dan objek berat"],
+                color: "#EE5253",
+                bgColor: "rgba(238,82,83,0.08)",
+                icon: "AlertTriangle",
+              },
+              tsunami: {
+                level: "bahaya",
+                index: 95,
+                title: "Tingkat Risiko: BAHAYA",
+                description: "Teluk Palu sangat berbahaya terhadap tsunami karena bentuk teluk seperti corong (funnel) yang memperkuat gelombang. Tsunami 2018 mencapai 6m.",
+                factors: ["Bentuk teluk memperkuat gelombang tsunami", "Sumber gempa dekat (sesar bawah laut)", "Populasi padat di tepi pantai", "Riwayat tsunami destruktif 2018"],
+                actions: ["Evakuasi vertikal segera setelah gempa kuat", "Jangan tunggu peringatan resmi—segera naik", "Kenali titik evakuasi tsunami tertinggi", "Jangan kembali sebelum dinyatakan aman"],
+                color: "#EE5253",
+                bgColor: "rgba(238,82,83,0.08)",
+                icon: "AlertTriangle",
+              },
+              banjir: {
+                level: "siaga",
+                index: 58,
+                title: "Tingkat Risiko: SIAGA",
+                description: "Kota Palu memiliki risiko banjir bandang akibat topografi lembah dan curah hujan tinggi di pegunungan sekitarnya.",
+                factors: ["Topografi lembah sempit dan curam", "Sungai Palu dengan aliran deras", "Deforestasi di hulu sungai", "Curah hujan intensitas tinggi"],
+                actions: ["Waspadai banjir bandang saat hujan deras hulu", "Pantau debit Sungai Palu secara berkala", "Jauhi bantaran sungai saat cuaca ekstrem"],
+                color: "#FF9F43",
+                bgColor: "rgba(255,159,67,0.08)",
+                icon: "AlertTriangle",
+              },
+              rob: {
+                level: "waspada",
+                index: 30,
+                title: "Tingkat Risiko: WASPADA",
+                description: "Risiko rob di Palu relatif lebih rendah dibandingkan banjir dan tsunami, namun wilayah teluk perlu diwaspadai saat pasang tinggi.",
+                factors: ["Teluk semi-tertutup dengan pasang sedang", "Pemukiman nelayan di tepi teluk", "Dampak kenaikan muka air laut jangka panjang"],
+                actions: ["Monitor pasang surut air laut", "Perhatikan kondisi pantai saat pasang purnama", "Jaga jarak dari bibir pantai malam hari"],
+                color: "#FFC312",
+                bgColor: "rgba(255,195,18,0.08)",
+                icon: "AlertTriangle",
+              },
+            },
+          },
+
+          defaultRisks: {
+            banjir: {
+              level: "siaga",
+              index: 55,
+              title: "Tingkat Risiko: SIAGA",
+              description: "Wilayah ini memiliki risiko banjir pada kategori siaga. Diperlukan kewaspadaan dan persiapan yang memadai.",
+              factors: ["Curah hujan musiman tinggi", "Kapasitas drainase terbatas", "Kepadatan penduduk di daerah rendah"],
+              actions: ["Siapkan tas darurat", "Pantau informasi BMKG", "Kenali jalur evakuasi"],
+              color: "#FF9F43",
+              bgColor: "rgba(255,159,67,0.08)",
+              icon: "AlertTriangle",
+            },
+            rob: {
+              level: "waspada",
+              index: 40,
+              title: "Tingkat Risiko: WASPADA",
+              description: "Potensi banjir rob sedang di wilayah ini. Perlu pemantauan berkala kondisi pasang laut.",
+              factors: ["Wilayah pesisir aktif", "Pasang surut normal", "Perubahan iklim gradual"],
+              actions: ["Monitor pasang laut", "Perkuat infrastruktur pesisir", "Siapkan evakuasi"],
+              color: "#FFC312",
+              bgColor: "rgba(255,195,18,0.08)",
+              icon: "AlertTriangle",
+            },
+            gempa: {
+              level: "siaga",
+              index: 62,
+              title: "Tingkat Risiko: SIAGA",
+              description: "Wilayah ini berada di zona seismik aktif. Kesiapsiagaan gempa sangat dianjurkan.",
+              factors: ["Dekat zona subduksi", "Aktivitas seismik sedang", "Kualitas bangunan bervariasi"],
+              actions: ["Perkuat bangunan", "Latihan evakuasi gempa", "Simpan kit darurat"],
+              color: "#FF9F43",
+              bgColor: "rgba(255,159,67,0.08)",
+              icon: "AlertTriangle",
+            },
+            tsunami: {
+              level: "waspada",
+              index: 45,
+              title: "Tingkat Risiko: WASPADA",
+              description: "Risiko tsunami perlu diwaspadai di wilayah ini. Pahami tanda-tanda dan rute evakuasi.",
+              factors: ["Berhadapan dengan samudra aktif", "Zona subduksi regional", "Topografi pantai datar"],
+              actions: ["Kenali tanda tsunami", "Evakuasi vertikal segera", "Jangan tunggu air surut"],
+              color: "#FFC312",
+              bgColor: "rgba(255,195,18,0.08)",
+              icon: "AlertTriangle",
+            },
+          }, -->
+
     <script>
-        function riskApp() {
-            return {
-                scrolled: false,
-                wilayah: '',
-                bencana: '',
-                loading: false,
-                result: null,
-                activeTab: 'detail',
-                darkMode: document.documentElement.classList.contains('dark'),
-                mobileOpen: false,  // TAMBAHKAN INI
+      function riskApp() {
+        return {
+          scrolled: false,
+          wilayah: "",
+          bencana: "",
+          loading: false,
+          result: null,
+          activeTab: "detail",
+          darkMode: document.documentElement.classList.contains("dark"),
+          mobileOpen: false,
 
-                wilayahList: [
-                    'Kabupaten Demak, Jawa Tengah',
-                    'Kota Semarang, Jawa Tengah',
-                    'Kabupaten Pekalongan, Jawa Tengah',
-                    'Kota Palu, Sulawesi Tengah',
-                    'Kabupaten Aceh Besar, Aceh',
-                    'Kota Banda Aceh, Aceh',
-                    'Kabupaten Cilacap, Jawa Tengah',
-                    'Kota Padang, Sumatera Barat',
-                    'Kabupaten Lombok Barat, NTB',
-                    'Kota Manado, Sulawesi Utara'
+          wilayahList: [
+            "Kabupaten Demak, Jawa Tengah",
+            "Kota Semarang, Jawa Tengah",
+            "Kabupaten Pekalongan, Jawa Tengah",
+            "Kota Palu, Sulawesi Tengah",
+            "Kabupaten Aceh Besar, Aceh",
+            "Kota Banda Aceh, Aceh",
+            "Kabupaten Cilacap, Jawa Tengah",
+            "Kota Padang, Sumatera Barat",
+            "Kabupaten Lombok Barat, NTB",
+            "Kota Manado, Sulawesi Utara",
+          ],
+
+          bencanaList: [
+            { id: "banjir", label: "Banjir", icon: "waves" },
+            { id: "rob", label: "Rob / Banjir Pasang", icon: "wind" },
+            { id: "gempa", label: "Gempa Bumi", icon: "activity" },
+            { id: "tsunami", label: "Tsunami", icon: "zap" },
+          ],
+
+          riskDatabase: {
+            // ============================================================
+            // 1. KABUPATEN DEMAK, JAWA TENGAH
+            // ============================================================
+            "Kabupaten Demak, Jawa Tengah": {
+              banjir: {
+                level: "bahaya",
+                index: 85,
+                title: "Tingkat Risiko: BAHAYA",
+                description:
+                  "Kabupaten Demak merupakan wilayah dengan risiko banjir sangat tinggi. Subsidence tanah, kenaikan muka air laut, dan rapuhnya tanggul sungai mempercepat dan memperparah genangan. Terdapat 127 desa dengan kategori rawan bencana tinggi.",
+                factors: [
+                  "Penurunan tanah (land subsidence) 5–10 cm/tahun",
+                  "Sistem drainase yang tidak memadai",
+                  "Topografi rendah di bawah muka air laut",
+                  "Curah hujan tinggi (>200 mm/bulan)",
+                  "Tanggul Sungai Wulan rentan jebol meski hujan tidak terlalu deras",
+                  "127 desa masuk kategori rawan bencana tinggi sepanjang DAS",
                 ],
-
-                bencanaList: [
-                    { id: 'banjir', label: 'Banjir', icon: 'Waves' },
-                    { id: 'rob', label: 'Rob / Banjir Pasang', icon: 'Wind' },
-                    { id: 'gempa', label: 'Gempa Bumi', icon: 'Activity' },
-                    { id: 'tsunami', label: 'Tsunami', icon: 'Zap' }
+                actions: [
+                  "Siapkan rute evakuasi ke tempat lebih tinggi",
+                  "Buat tas darurat dengan dokumen penting",
+                  "Pantau info BMKG dan BPBD secara rutin",
+                  "Hindari area bantaran sungai saat hujan deras",
+                  "Waspadai kondisi tanggul Sungai Wulan — segera evakuasi jika ada retakan",
                 ],
+                color: "#EE5253",
+                bgColor: "rgba(238,82,83,0.08)",
+                icon: "alert-triangle",
+              },
+              rob: {
+                level: "bahaya",
+                index: 90,
+                title: "Tingkat Risiko: BAHAYA",
+                description:
+                  "Banjir rob di Demak sangat parah akibat kombinasi penurunan tanah dan kenaikan permukaan laut. Banyak kawasan permanen terendam 10 cm hingga lebih dari 1 meter. Secara regulasi rob tidak selalu dikategorikan bencana alam sehingga bantuan pemerintah bisa terbatas.",
+                factors: [
+                  "Penurunan muka tanah ekstrem di pesisir (land subsidence)",
+                  "Kenaikan permukaan laut regional",
+                  "Hilangnya mangrove pelindung pantai",
+                  "Pemompaan air tanah berlebihan",
+                  "Status hukum rob yang ambigu membatasi kewenangan BPBD dalam penanganan",
+                ],
+                actions: [
+                  "Pertimbangkan relokasi ke kawasan lebih aman",
+                  "Bangun tanggul penahan air di sekitar rumah",
+                  "Tinggikan tempat tidur, kompor, dan area memasak minimal 50 cm dari lantai",
+                  "Pastikan septic tank dan sumber air minum tidak terkontaminasi rob",
+                  "Terapkan PHBS ketat (cuci tangan, air minum matang) saat rob berlangsung",
+                ],
+                color: "#EE5253",
+                bgColor: "rgba(238,82,83,0.08)",
+                icon: "alert-triangle",
+              },
+              gempa: {
+                level: "siaga",
+                index: 55,
+                title: "Tingkat Risiko: SIAGA",
+                description: "Kabupaten Demak menghadapi ancaman ganda: Sesar Lasem yang melintas langsung di wilayah ini, serta potensi Megathrust Jawa Tengah–Jawa Timur dari selatan. Risiko tidak bisa dikategorikan rendah semata.",
+                factors: [
+                  "Dilintasi Sesar Lasem (sesar naik aktif, panjang ±69 km, melintasi Demak–Kudus–Pati)",
+                  "Potensi Megathrust Jawa Tengah–Jawa Timur dengan magnitudo target M8,9",
+                  "Tanah aluvial pesisir rentan likuifaksi saat gempa kuat",
+                  "Bangunan non-engineered dominan di wilayah pedesaan",
+                ],
+                actions: [
+                  "Perkuat konstruksi bangunan sesuai standar tahan gempa (SNI 1726)",
+                  "Ikuti latihan mitigasi gempa yang diselenggarakan BPBD",
+                  "Kenali titik aman di dalam (pojok struktur kuat) dan luar bangunan",
+                  "Waspadai potensi gempa lokal dari Sesar Lasem",
+                  "Pastikan rumah tidak berdiri di atas tanah aluvial tanpa fondasi memadai",
+                ],
+                color: "#FF9F43",
+                bgColor: "rgba(255,159,67,0.08)",
+                icon: "alert-triangle",
+              },
+              tsunami: {
+                level: "waspada",
+                index: 28,
+                title: "Tingkat Risiko: WASPADA",
+                description: "Risiko tsunami relatif lebih rendah karena menghadap Laut Jawa yang dangkal. Namun dengan meningkatnya potensi Megathrust Jawa, kewaspadaan tetap diperlukan.",
+                factors: [
+                  "Laut Jawa yang relatif dangkal meredam rambatan gelombang",
+                  "Tidak langsung berhadapan dengan samudra terbuka",
+                  "Potensi tsunami jauh tetap bisa terjadi jika Megathrust Jawa Tengah–Jawa Timur terpicu",
+                  "Potensi tsunami lokal dari aktivitas vulkanik bawah laut",
+                ],
+                actions: [
+                  "Kenali tanda-tanda awal tsunami (gempa kuat, air laut surut tiba-tiba)",
+                  "Segera ke tempat tinggi jika gempa besar dirasakan tanpa menunggu peringatan resmi",
+                  "Patuhi sistem peringatan dini resmi BMKG InaTEWS",
+                  "Jangan kembali ke pantai sebelum status aman diumumkan resmi",
+                ],
+                color: "#FFC312",
+                bgColor: "rgba(255,195,18,0.08)",
+                icon: "alert-triangle",
+              },
+            },
 
-                riskDatabase: {
-                    'Kabupaten Demak, Jawa Tengah': {
-                        banjir: {
-                            level: 'bahaya',
-                            index: 85,
-                            title: 'Tingkat Risiko: BAHAYA',
-                            description: 'Kabupaten Demak merupakan wilayah dengan risiko banjir sangat tinggi. Subsidence tanah dan kenaikan muka air laut mempercepat genangan di wilayah ini.',
-                            factors: [
-                                'Penurunan tanah (land subsidence) 5–10 cm/tahun',
-                                'Sistem drainase yang tidak memadai',
-                                'Topografi rendah di bawah muka air laut',
-                                'Curah hujan tinggi (>200 mm/bulan)'
-                            ],
-                            actions: [
-                                'Siapkan rute evakuasi ke tempat lebih tinggi',
-                                'Buat tas darurat dengan dokumen penting',
-                                'Pantau info BMKG dan BPBD secara rutin',
-                                'Hindari area bantaran sungai saat hujan deras'
-                            ],
-                            color: '#EE5253',
-                            bgColor: 'rgba(238,82,83,0.08)',
-                            icon: 'AlertTriangle'
-                        },
-                        rob: {
-                            level: 'bahaya',
-                            index: 90,
-                            title: 'Tingkat Risiko: BAHAYA',
-                            description: 'Banjir rob di Demak sangat parah akibat kombinasi penurunan tanah dan kenaikan permukaan laut. Banyak kawasan permanen terendam.',
-                            factors: [
-                                'Penurunan muka tanah ekstrem di pesisir',
-                                'Kenaikan permukaan laut regional',
-                                'Hilangnya mangrove pelindung pantai',
-                                'Pemompaan air tanah berlebihan'
-                            ],
-                            actions: [
-                                'Pertimbangkan relokasi ke kawasan lebih aman',
-                                'Bangun tanggul penahan air di sekitar rumah',
-                                'Ikuti program pemerintah untuk warga pesisir',
-                                'Simpan barang berharga di tempat tinggi'
-                            ],
-                            color: '#EE5253',
-                            bgColor: 'rgba(238,82,83,0.08)',
-                            icon: 'AlertTriangle'
-                        },
-                        gempa: {
-                            level: 'waspada',
-                            index: 35,
-                            title: 'Tingkat Risiko: WASPADA',
-                            description: 'Aktivitas seismik di Demak relatif rendah, namun tetap perlu kewaspadaan karena berada di Pulau Jawa yang berdekatan dengan zona subduksi.',
-                            factors: [
-                                'Zona seismik rendah–sedang',
-                                'Jarak sedang dari zona subduksi selatan Jawa',
-                                'Tanah aluvial yang rentan likuifaksi'
-                            ],
-                            actions: [
-                                'Perkuat konstruksi bangunan',
-                                'Ikuti latihan mitigasi gempa',
-                                'Ketahui titik aman di dalam dan luar bangunan'
-                            ],
-                            color: '#FFC312',
-                            bgColor: 'rgba(255,195,18,0.08)',
-                            icon: 'AlertTriangle'
-                        },
-                        tsunami: {
-                            level: 'waspada',
-                            index: 28,
-                            title: 'Tingkat Risiko: WASPADA',
-                            description: 'Risiko tsunami relatif rendah karena Demak menghadap Laut Jawa yang dangkal. Namun kewaspadaan tetap diperlukan.',
-                            factors: [
-                                'Laut Jawa yang dangkal meredam gelombang',
-                                'Tidak langsung berhadapan dengan samudra terbuka',
-                                'Potensi tsunami lokal dari Gunung Berapi bawah laut'
-                            ],
-                            actions: [
-                                'Kenali tanda-tanda awal tsunami',
-                                'Segera ke tempat tinggi jika gempa kuat',
-                                'Patuhi sistem peringatan dini resmi'
-                            ],
-                            color: '#FFC312',
-                            bgColor: 'rgba(255,195,18,0.08)',
-                            icon: 'AlertTriangle'
-                        }
-                    },
-                    'Kota Palu, Sulawesi Tengah': {
-                        gempa: {
-                            level: 'bahaya',
-                            index: 92,
-                            title: 'Tingkat Risiko: BAHAYA',
-                            description: 'Kota Palu berada di lembah sesar aktif Palu-Koro, salah satu sesar dengan pergeseran tercepat di Indonesia (~40mm/tahun). Risiko gempa sangat tinggi.',
-                            factors: [
-                                'Dilalui sesar aktif Palu-Koro',
-                                'Riwayat gempa M7.5 tahun 2018',
-                                'Topografi lembah sempit rentan amplifikasi',
-                                'Potensi likuifaksi di daerah aluvial'
-                            ],
-                            actions: [
-                                'Bangun shelter tahan gempa',
-                                'Ikuti drills evakuasi rutin BPBD',
-                                'Kenal jalur evakuasi terdekat',
-                                'Pasang pengamanan furniture dan objek berat'
-                            ],
-                            color: '#EE5253',
-                            bgColor: 'rgba(238,82,83,0.08)',
-                            icon: 'AlertTriangle'
-                        },
-                        tsunami: {
-                            level: 'bahaya',
-                            index: 95,
-                            title: 'Tingkat Risiko: BAHAYA',
-                            description: 'Teluk Palu sangat berbahaya terhadap tsunami karena bentuk teluk seperti corong (funnel) yang memperkuat gelombang. Tsunami 2018 mencapai 6m.',
-                            factors: [
-                                'Bentuk teluk memperkuat gelombang tsunami',
-                                'Sumber gempa dekat (sesar bawah laut)',
-                                'Populasi padat di tepi pantai',
-                                'Riwayat tsunami destruktif 2018'
-                            ],
-                            actions: [
-                                'Evakuasi vertikal segera setelah gempa kuat',
-                                'Jangan tunggu peringatan resmi—segera naik',
-                                'Kenali titik evakuasi tsunami tertinggi',
-                                'Jangan kembali sebelum dinyatakan aman'
-                            ],
-                            color: '#EE5253',
-                            bgColor: 'rgba(238,82,83,0.08)',
-                            icon: 'AlertTriangle'
-                        },
-                        banjir: {
-                            level: 'siaga',
-                            index: 58,
-                            title: 'Tingkat Risiko: SIAGA',
-                            description: 'Kota Palu memiliki risiko banjir bandang akibat topografi lembah dan curah hujan tinggi di pegunungan sekitarnya.',
-                            factors: [
-                                'Topografi lembah sempit dan curam',
-                                'Sungai Palu dengan aliran deras',
-                                'Deforestasi di hulu sungai',
-                                'Curah hujan intensitas tinggi'
-                            ],
-                            actions: [
-                                'Waspadai banjir bandang saat hujan deras hulu',
-                                'Pantau debit Sungai Palu secara berkala',
-                                'Jauhi bantaran sungai saat cuaca ekstrem'
-                            ],
-                            color: '#FF9F43',
-                            bgColor: 'rgba(255,159,67,0.08)',
-                            icon: 'AlertTriangle'
-                        },
-                        rob: {
-                            level: 'waspada',
-                            index: 30,
-                            title: 'Tingkat Risiko: WASPADA',
-                            description: 'Risiko rob di Palu relatif lebih rendah dibandingkan banjir dan tsunami, namun wilayah teluk perlu diwaspadai saat pasang tinggi.',
-                            factors: [
-                                'Teluk semi-tertutup dengan pasang sedang',
-                                'Pemukiman nelayan di tepi teluk',
-                                'Dampak kenaikan muka air laut jangka panjang'
-                            ],
-                            actions: [
-                                'Monitor pasang surut air laut',
-                                'Perhatikan kondisi pantai saat pasang purnama',
-                                'Jaga jarak dari bibir pantai malam hari'
-                            ],
-                            color: '#FFC312',
-                            bgColor: 'rgba(255,195,18,0.08)',
-                            icon: 'AlertTriangle'
-                        }
-                    }
-                },
+            // ============================================================
+            // 2. KOTA SEMARANG, JAWA TENGAH
+            // ============================================================
+            "Kota Semarang, Jawa Tengah": {
+              banjir: {
+                level: "bahaya",
+                index: 82,
+                title: "Tingkat Risiko: BAHAYA",
+                description:
+                  "Kota Semarang adalah salah satu kota paling rawan banjir di Indonesia. Kombinasi land subsidence ekstrem, topografi bowl (cekungan), dan sistem drainase yang kewalahan menjadikan banjir sebagai ancaman tahunan yang semakin parah.",
+                factors: [
+                  "Land subsidence 5–25 cm/tahun di kawasan utara dan pesisir",
+                  "Topografi cekungan (bowl) menyebabkan air terperangkap",
+                  "Sistem drainase Banjir Kanal Barat/Timur tidak mampu menampung debit ekstrem",
+                  "Curah hujan tinggi dengan intensitas 100–200 mm/hari saat musim hujan",
+                  "Rob memperparah banjir di kawasan Semarang Utara dan Genuk",
+                ],
+                actions: [
+                  "Pantau sistem peringatan dini banjir Kota Semarang via aplikasi SIAGA",
+                  "Kenali titik evakuasi BPBD Kota Semarang di kelurahan masing-masing",
+                  "Hindari kawasan Kaligawe, Genuk, dan Semarang Utara saat hujan deras",
+                  "Siapkan tas darurat dan dokumen penting di tempat mudah dijangkau",
+                  "Matikan listrik dari MCB utama jika air mulai masuk rumah",
+                ],
+                color: "#EE5253",
+                bgColor: "rgba(238,82,83,0.08)",
+                icon: "alert-triangle",
+              },
+              rob: {
+                level: "bahaya",
+                index: 88,
+                title: "Tingkat Risiko: BAHAYA",
+                description: "Rob di Semarang Utara, Genuk, dan Tanjung Mas termasuk yang terparah di Jawa. Land subsidence yang sangat cepat menyebabkan kawasan pesisir terendam secara permanen.",
+                factors: [
+                  "Land subsidence mencapai 25 cm/tahun di beberapa titik kawasan utara",
+                  "Kenaikan permukaan laut regional Laut Jawa",
+                  "Hilangnya mangrove dan tambak pelindung pantai",
+                  "Kawasan industri dan pelabuhan di atas tanah lunak",
+                  "Pompa polder tidak mampu mengimbangi laju subsidence",
+                ],
+                actions: [
+                  "Ikuti program relokasi pemerintah untuk kawasan terdampak permanen",
+                  "Tinggikan perabot dan instalasi listrik minimal 1 meter dari lantai",
+                  "Pantau prediksi pasang BMKG terutama saat bulan purnama",
+                  "Koordinasi dengan BPBD Kota Semarang untuk bantuan adaptasi",
+                  "Pertimbangkan asuransi properti untuk kawasan rawan rob",
+                ],
+                color: "#EE5253",
+                bgColor: "rgba(238,82,83,0.08)",
+                icon: "alert-triangle",
+              },
+              gempa: {
+                level: "siaga",
+                index: 58,
+                title: "Tingkat Risiko: SIAGA",
+                description: "Kota Semarang berada di zona seismik aktif dengan ancaman dari Sesar Lasem di utara dan potensi Megathrust dari selatan Jawa. Tanah lunak di kawasan pesisir memperkuat amplifikasi gelombang seismik.",
+                factors: [
+                  "Terpengaruh Sesar Lasem yang melintas di bagian utara Jawa Tengah",
+                  "Potensi Megathrust Jawa Tengah–Jawa Timur (M target 8,9)",
+                  "Tanah lunak aluvial memperkuat guncangan (amplifikasi seismik)",
+                  "Kepadatan bangunan tinggi dengan variasi kualitas konstruksi",
+                ],
+                actions: [
+                  "Lakukan audit struktural bangunan, terutama yang dibangun sebelum 2000",
+                  "Ikuti sosialisasi mitigasi gempa dari BPBD Kota Semarang",
+                  "Kenali DROP-COVER-HOLD ON dan praktikkan bersama keluarga",
+                  "Identifikasi titik kumpul terdekat di lingkungan tempat tinggal",
+                ],
+                color: "#FF9F43",
+                bgColor: "rgba(255,159,67,0.08)",
+                icon: "alert-triangle",
+              },
+              tsunami: {
+                level: "waspada",
+                index: 32,
+                title: "Tingkat Risiko: WASPADA",
+                description: "Risiko tsunami di Semarang relatif terbatas karena menghadap Laut Jawa yang dangkal. Namun dampak Megathrust dari selatan Jawa tetap perlu diantisipasi.",
+                factors: [
+                  "Laut Jawa yang dangkal meredam energi gelombang tsunami",
+                  "Tidak berhadapan langsung dengan zona subduksi aktif",
+                  "Potensi tsunami kiriman dari Megathrust Selatan Jawa",
+                  "Kawasan pesisir rendah berpotensi tergenang jika tsunami terjadi",
+                ],
+                actions: [
+                  "Pahami tanda-tanda awal tsunami meski berada di Laut Jawa",
+                  "Segera evakuasi ke tempat tinggi jika merasakan gempa sangat kuat",
+                  "Pantau informasi BMKG InaTEWS secara berkala",
+                  "Jangan kembali ke pantai sebelum ada pernyataan aman resmi",
+                ],
+                color: "#FFC312",
+                bgColor: "rgba(255,195,18,0.08)",
+                icon: "alert-triangle",
+              },
+            },
 
-                defaultRisks: {
-                    banjir: {
-                        level: 'siaga',
-                        index: 55,
-                        title: 'Tingkat Risiko: SIAGA',
-                        description: 'Wilayah ini memiliki risiko banjir pada kategori siaga. Diperlukan kewaspadaan dan persiapan yang memadai.',
-                        factors: [
-                            'Curah hujan musiman tinggi',
-                            'Kapasitas drainase terbatas',
-                            'Kepadatan penduduk di daerah rendah'
-                        ],
-                        actions: [
-                            'Siapkan tas darurat',
-                            'Pantau informasi BMKG',
-                            'Kenali jalur evakuasi'
-                        ],
-                        color: '#FF9F43',
-                        bgColor: 'rgba(255,159,67,0.08)',
-                        icon: 'AlertTriangle'
-                    },
-                    rob: {
-                        level: 'waspada',
-                        index: 40,
-                        title: 'Tingkat Risiko: WASPADA',
-                        description: 'Potensi banjir rob sedang di wilayah ini. Perlu pemantauan berkala kondisi pasang laut.',
-                        factors: ['Wilayah pesisir aktif', 'Pasang surut normal', 'Perubahan iklim gradual'],
-                        actions: ['Monitor pasang laut', 'Perkuat infrastruktur pesisir', 'Siapkan evakuasi'],
-                        color: '#FFC312',
-                        bgColor: 'rgba(255,195,18,0.08)',
-                        icon: 'AlertTriangle'
-                    },
-                    gempa: {
-                        level: 'siaga',
-                        index: 62,
-                        title: 'Tingkat Risiko: SIAGA',
-                        description: 'Wilayah ini berada di zona seismik aktif. Kesiapsiagaan gempa sangat dianjurkan.',
-                        factors: ['Dekat zona subduksi', 'Aktivitas seismik sedang', 'Kualitas bangunan bervariasi'],
-                        actions: ['Perkuat bangunan', 'Latihan evakuasi gempa', 'Simpan kit darurat'],
-                        color: '#FF9F43',
-                        bgColor: 'rgba(255,159,67,0.08)',
-                        icon: 'AlertTriangle'
-                    },
-                    tsunami: {
-                        level: 'waspada',
-                        index: 45,
-                        title: 'Tingkat Risiko: WASPADA',
-                        description: 'Risiko tsunami perlu diwaspadai di wilayah ini. Pahami tanda-tanda dan rute evakuasi.',
-                        factors: ['Berhadapan dengan samudra aktif', 'Zona subduksi regional', 'Topografi pantai datar'],
-                        actions: ['Kenali tanda tsunami', 'Evakuasi vertikal segera', 'Jangan tunggu air surut'],
-                        color: '#FFC312',
-                        bgColor: 'rgba(255,195,18,0.08)',
-                        icon: 'AlertTriangle'
-                    }
-                },
+            // ============================================================
+            // 3. KABUPATEN PEKALONGAN, JAWA TENGAH
+            // ============================================================
+            "Kabupaten Pekalongan, Jawa Tengah": {
+              banjir: {
+                level: "bahaya",
+                index: 80,
+                title: "Tingkat Risiko: BAHAYA",
+                description: "Kabupaten Pekalongan merupakan wilayah dengan risiko banjir sangat tinggi. Luapan Sungai Sengkarang dan Sungai Kupang menjadi penyebab utama banjir bandang yang berulang setiap tahun.",
+                factors: [
+                  "Luapan Sungai Sengkarang dan Sungai Kupang yang berulang",
+                  "Topografi dataran rendah pesisir utara Jawa",
+                  "Curah hujan tinggi di hulu pegunungan mengalir ke wilayah padat",
+                  "Kapasitas drainase perkotaan yang tidak memadai",
+                  "Land subsidence di kawasan utara 2–8 cm/tahun",
+                ],
+                actions: [
+                  "Pantau debit Sungai Sengkarang via pos pemantauan BBWS Pemali-Juana",
+                  "Siapkan jalur evakuasi ke kecamatan yang lebih tinggi (Kajen, Lebakbarang)",
+                  "Amankan dokumen penting dan barang berharga di lantai atas",
+                  "Ikuti arahan BPBD Kabupaten Pekalongan saat status siaga diumumkan",
+                  "Jangan menyeberangi sungai yang meluap meski terlihat dangkal",
+                ],
+                color: "#EE5253",
+                bgColor: "rgba(238,82,83,0.08)",
+                icon: "alert-triangle",
+              },
+              rob: {
+                level: "siaga",
+                index: 65,
+                title: "Tingkat Risiko: SIAGA",
+                description: "Rob di Kabupaten Pekalongan terjadi terutama di kecamatan pesisir seperti Wonokerto dan Siwalan. Kombinasi pasang tinggi dan land subsidence menyebabkan genangan yang semakin meluas.",
+                factors: ["Kecamatan pesisir (Wonokerto, Siwalan) rawan rob rutin", "Land subsidence aktif di kawasan utara", "Kenaikan permukaan laut Laut Jawa", "Berkurangnya vegetasi mangrove di garis pantai"],
+                actions: [
+                  "Monitor prediksi pasang surut BMKG tiap hari di kawasan pesisir",
+                  "Tinggikan instalasi listrik dan perabot penting",
+                  "Koordinasi dengan dinas perikanan dan kelautan untuk informasi pasang ekstrem",
+                  "Pertimbangkan penanaman kembali mangrove sebagai perlindungan jangka panjang",
+                ],
+                color: "#FF9F43",
+                bgColor: "rgba(255,159,67,0.08)",
+                icon: "alert-triangle",
+              },
+              gempa: {
+                level: "siaga",
+                index: 55,
+                title: "Tingkat Risiko: SIAGA",
+                description: "Kabupaten Pekalongan berada di zona pengaruh Sesar Lasem dan potensi Megathrust Selatan Jawa. Tanah aluvial di kawasan utara rentan terhadap likuifaksi.",
+                factors: ["Pengaruh Sesar Lasem dari utara Jawa Tengah", "Potensi Megathrust Jawa Tengah–Jawa Timur", "Tanah aluvial lunak di kawasan utara rentan likuifaksi", "Dominasi bangunan lama dengan konstruksi non-engineered"],
+                actions: [
+                  "Perkuat konstruksi bangunan sesuai SNI tahan gempa",
+                  "Latihan DROP-COVER-HOLD ON bersama keluarga",
+                  "Ketahui jalur evakuasi dari rumah ke titik kumpul terdekat",
+                  "Hindari berada di bawah objek berat saat gempa terasa",
+                ],
+                color: "#FF9F43",
+                bgColor: "rgba(255,159,67,0.08)",
+                icon: "alert-triangle",
+              },
+              tsunami: {
+                level: "waspada",
+                index: 30,
+                title: "Tingkat Risiko: WASPADA",
+                description: "Risiko tsunami di Pekalongan relatif rendah karena menghadap Laut Jawa yang dangkal. Namun kewaspadaan tetap diperlukan terhadap potensi tsunami kiriman dari selatan Jawa.",
+                factors: ["Laut Jawa yang dangkal meredam gelombang tsunami", "Tidak berhadapan langsung dengan zona subduksi", "Potensi tsunami jauh dari Megathrust Selatan Jawa"],
+                actions: ["Pahami tanda peringatan dini tsunami dari BMKG InaTEWS", "Evakuasi segera ke tempat tinggi jika merasakan gempa sangat kuat", "Jangan kembali ke pantai sebelum ada pernyataan aman resmi"],
+                color: "#FFC312",
+                bgColor: "rgba(255,195,18,0.08)",
+                icon: "alert-triangle",
+              },
+            },
 
-                levelConfig: {
-                    aman: { label: 'AMAN', color: '#1DD1A1', bg: 'rgba(29,209,161,0.1)', border: 'rgba(29,209,161,0.3)', icon: 'CheckCircle', description: 'Kondisi relatif aman, tetap jaga kewaspadaan' },
-                    waspada: { label: 'WASPADA', color: '#FFC312', bg: 'rgba(255,195,18,0.1)', border: 'rgba(255,195,18,0.3)', icon: 'AlertTriangle', description: 'Perlu waspada dan siapkan langkah antisipatif' },
-                    siaga: { label: 'SIAGA', color: '#FF9F43', bg: 'rgba(255,159,67,0.1)', border: 'rgba(255,159,67,0.3)', icon: 'AlertTriangle', description: 'Tingkatkan kesiapsiagaan, rencana evakuasi aktif' },
-                    bahaya: { label: 'BAHAYA', color: '#EE5253', bg: 'rgba(238,82,83,0.1)', border: 'rgba(238,82,83,0.3)', icon: 'AlertTriangle', description: 'Ancaman nyata, lakukan evakuasi jika diperlukan' }
-                },
+            // ============================================================
+            // 4. KOTA PALU, SULAWESI TENGAH
+            // ============================================================
+            "Kota Palu, Sulawesi Tengah": {
+              gempa: {
+                level: "bahaya",
+                index: 92,
+                title: "Tingkat Risiko: BAHAYA",
+                description:
+                  "Kota Palu berada di lembah Sesar Palu-Koro, salah satu sesar dengan pergeseran tercepat di Indonesia (~40 mm/tahun). Gempa M7.5 tahun 2018 menjadi bukti destruktivitas sesar ini. Risiko gempa tetap sangat tinggi dan bersifat permanen.",
+                factors: [
+                  "Dilalui Sesar Palu-Koro yang aktif dengan laju pergeseran ~40 mm/tahun",
+                  "Riwayat gempa destruktif M7.5 pada September 2018",
+                  "Topografi lembah sempit rentan amplifikasi gelombang seismik",
+                  "Potensi likuifaksi di kawasan aluvial (terbukti 2018 di Petobo & Balaroa)",
+                ],
+                actions: [
+                  "Bangun atau renovasi rumah sesuai standar tahan gempa",
+                  "Ikuti drills evakuasi rutin yang diselenggarakan BPBD Kota Palu",
+                  "Kenali jalur evakuasi terdekat dan pastikan seluruh anggota keluarga hafal",
+                  "Amankan furniture dan objek berat agar tidak roboh saat gempa",
+                  "Identifikasi apakah lokasi tempat tinggal berada di zona likuifaksi",
+                ],
+                color: "#EE5253",
+                bgColor: "rgba(238,82,83,0.08)",
+                icon: "alert-triangle",
+              },
+              tsunami: {
+                level: "bahaya",
+                index: 95,
+                title: "Tingkat Risiko: BAHAYA",
+                description:
+                  "Teluk Palu sangat berbahaya terhadap tsunami. Bentuk teluk seperti corong (funnel effect) memperkuat gelombang secara signifikan. Tsunami 2018 mencapai ketinggian 6 meter dan menghantam dalam hitungan menit setelah gempa.",
+                factors: [
+                  "Bentuk teluk menyerupai corong (funnel) yang memperkuat gelombang tsunami",
+                  "Sumber gempa sangat dekat — sesar aktif di bawah dan tepi teluk",
+                  "Populasi padat di tepi pantai Teluk Palu",
+                  "Riwayat tsunami destruktif 2018 dengan ketinggian gelombang hingga 6 meter",
+                  "Waktu tiba tsunami sangat singkat — hanya beberapa menit setelah gempa",
+                ],
+                actions: [
+                  "Evakuasi vertikal SEGERA setelah merasakan gempa kuat — jangan tunggu peringatan resmi",
+                  "Naiki bukit atau gedung evakuasi tsunami terdekat dalam waktu < 5 menit",
+                  "Kenali dan hafal titik-titik evakuasi tsunami yang telah ditandai BPBD",
+                  "Jangan kembali ke pantai atau dataran rendah sebelum dinyatakan aman secara resmi",
+                  "Latih seluruh keluarga skenario evakuasi tsunami secara berkala",
+                ],
+                color: "#EE5253",
+                bgColor: "rgba(238,82,83,0.08)",
+                icon: "alert-triangle",
+              },
+              banjir: {
+                level: "siaga",
+                index: 62,
+                title: "Tingkat Risiko: SIAGA",
+                description:
+                  "Kota Palu berstatus Siaga Darurat Bencana Banjir yang aktif hingga awal 2026. Banjir lumpur berulang terjadi akibat kombinasi topografi lembah, kerusakan hulu akibat tambang pasir, dan kapasitas drainase yang jauh di bawah kebutuhan.",
+                factors: [
+                  "Topografi lembah sempit dan curam yang mengkonsentrasi aliran air",
+                  "Sungai Palu dengan aliran deras saat hujan intensitas tinggi",
+                  "97 izin tambang pasir di sepanjang ±19 km pesisir Palu–Donggala merusak struktur tanah hulu",
+                  "Kapasitas drainase kota jauh di bawah kebutuhan",
+                  "Akumulasi sedimen pasca gempa 2018 di badan sungai mengurangi kapasitas tampung",
+                ],
+                actions: [
+                  "Waspadai banjir bandang dan banjir lumpur saat hujan deras dari arah perbukitan",
+                  "Pantau debit Sungai Palu dan informasi BPBD Kota Palu secara berkala",
+                  "Jauhi bantaran sungai dan gorong-gorong saat cuaca ekstrem",
+                  "Segera hubungi BPBD (0451-421-270) jika tampak aliran berlumpur dari perbukitan",
+                  "Siapkan tas siaga bencana sesuai imbauan BPBD Kota Palu",
+                ],
+                color: "#FF9F43",
+                bgColor: "rgba(255,159,67,0.08)",
+                icon: "alert-triangle",
+              },
+              rob: {
+                level: "waspada",
+                index: 30,
+                title: "Tingkat Risiko: WASPADA",
+                description: "Risiko rob di Palu relatif lebih rendah dibandingkan banjir dan tsunami, namun wilayah pesisir Teluk Palu perlu diwaspadai terutama saat pasang purnama dan kondisi cuaca ekstrem.",
+                factors: [
+                  "Teluk semi-tertutup dengan dinamika pasang sedang",
+                  "Pemukiman nelayan padat di tepi teluk",
+                  "Perubahan morfologi pantai pasca tsunami 2018 memengaruhi pola pasang",
+                  "Dampak kenaikan muka air laut jangka panjang akibat perubahan iklim",
+                ],
+                actions: [
+                  "Monitor informasi pasang surut dari BMKG secara berkala",
+                  "Perhatikan kondisi pantai saat pasang purnama (spring tide)",
+                  "Jaga jarak aman dari bibir pantai Teluk Palu pada malam hari",
+                  "Pantau perubahan garis pantai pasca rekonstruksi 2018",
+                ],
+                color: "#FFC312",
+                bgColor: "rgba(255,195,18,0.08)",
+                icon: "alert-triangle",
+              },
+            },
 
-                toggleTheme() {
-                    this.darkMode = !this.darkMode;
+            // ============================================================
+            // 5. KABUPATEN ACEH BESAR, ACEH
+            // ============================================================
+            "Kabupaten Aceh Besar, Aceh": {
+              tsunami: {
+                level: "bahaya",
+                index: 93,
+                title: "Tingkat Risiko: BAHAYA",
+                description:
+                  "Kabupaten Aceh Besar adalah salah satu wilayah paling rawan tsunami di Indonesia. Tsunami 2004 yang menghancurkan Aceh merupakan peringatan nyata. Wilayah ini berada langsung di atas zona subduksi Megathrust Sumatra.",
+                factors: [
+                  "Berada langsung di zona pengaruh Megathrust Sumatra bagian utara",
+                  "Riwayat tsunami 2004 dengan ketinggian gelombang 15–30 meter",
+                  "Topografi pantai barat yang rendah dan terbuka terhadap Samudra Hindia",
+                  "Waktu tiba tsunami bisa kurang dari 20–30 menit setelah gempa",
+                  "Kepadatan penduduk di kawasan pesisir yang rawan",
+                ],
+                actions: [
+                  "Hafalkan jalur evakuasi dan lokasi shelter tsunami terdekat",
+                  "Segera lari ke tempat tinggi tanpa menunggu sirene saat merasakan gempa kuat",
+                  "Latih seluruh anggota keluarga simulasi evakuasi tsunami minimal 2x setahun",
+                  "Pantau informasi BMKG InaTEWS dan pasang aplikasi peringatan dini di ponsel",
+                  "Jangan kembali ke pantai sebelum ada pernyataan aman resmi dari BMKG",
+                ],
+                color: "#EE5253",
+                bgColor: "rgba(238,82,83,0.08)",
+                icon: "alert-triangle",
+              },
+              gempa: {
+                level: "bahaya",
+                index: 90,
+                title: "Tingkat Risiko: BAHAYA",
+                description: "Kabupaten Aceh Besar berada di atas zona subduksi Megathrust Sumatra yang sangat aktif. Gempa besar berulang kali menghantam wilayah ini, termasuk gempa M9.1 tahun 2004.",
+                factors: [
+                  "Berada di atas zona subduksi Megathrust Sumatra Utara",
+                  "Riwayat gempa M9.1 tahun 2004 yang paling destruktif dalam sejarah modern",
+                  "Aktivitas seismik tinggi dan berulang di zona subduksi",
+                  "Potensi likuifaksi di kawasan aluvial pesisir",
+                  "Banyak bangunan belum memenuhi standar tahan gempa",
+                ],
+                actions: [
+                  "Pastikan bangunan memenuhi standar tahan gempa SNI 1726",
+                  "Latihan rutin DROP-COVER-HOLD ON di rumah dan tempat kerja",
+                  "Kenali tanda-tanda akan terjadi gempa besar dan siapkan respons cepat",
+                  "Simpan kit darurat yang mudah dibawa saat evakuasi mendadak",
+                  "Koordinasi dengan komunitas dan RT/RW untuk sistem peringatan lokal",
+                ],
+                color: "#EE5253",
+                bgColor: "rgba(238,82,83,0.08)",
+                icon: "alert-triangle",
+              },
+              banjir: {
+                level: "siaga",
+                index: 60,
+                title: "Tingkat Risiko: SIAGA",
+                description: "Banjir di Kabupaten Aceh Besar dipicu oleh curah hujan tinggi dari pegunungan Bukit Barisan. Sungai Aceh dan anak-anak sungainya kerap meluap pada musim hujan November–Januari.",
+                factors: [
+                  "Curah hujan tinggi di pegunungan Bukit Barisan mengalir ke dataran rendah",
+                  "Luapan Sungai Aceh dan sungai-sungai kecil saat musim hujan",
+                  "Deforestasi di hulu meningkatkan limpasan permukaan",
+                  "Kapasitas tampung waduk dan sungai yang terbatas",
+                ],
+                actions: [
+                  "Pantau peringatan dini banjir dari BPBD Aceh Besar",
+                  "Waspadai banjir bandang dari arah pegunungan saat hujan deras",
+                  "Siapkan rute evakuasi ke tempat lebih tinggi",
+                  "Jauhi bantaran sungai saat intensitas hujan tinggi",
+                ],
+                color: "#FF9F43",
+                bgColor: "rgba(255,159,67,0.08)",
+                icon: "alert-triangle",
+              },
+              rob: {
+                level: "waspada",
+                index: 38,
+                title: "Tingkat Risiko: WASPADA",
+                description: "Rob di Aceh Besar terutama terjadi di kawasan pesisir barat dan utara. Perubahan garis pantai pasca tsunami 2004 turut mempengaruhi pola pasang surut lokal.",
+                factors: [
+                  "Kawasan pesisir barat terbuka langsung ke Samudra Hindia",
+                  "Perubahan morfologi pantai pasca tsunami 2004",
+                  "Kenaikan muka air laut regional akibat perubahan iklim",
+                  "Beberapa kawasan pesisir mengalami penurunan elevasi pasca gempa",
+                ],
+                actions: [
+                  "Monitor prediksi pasang surut BMKG untuk kawasan pesisir",
+                  "Perhatikan kondisi pantai saat pasang purnama dan bulan baru",
+                  "Jaga jarak aman dari bibir pantai terutama saat malam hari",
+                  "Laporkan perubahan garis pantai signifikan ke dinas terkait",
+                ],
+                color: "#FFC312",
+                bgColor: "rgba(255,195,18,0.08)",
+                icon: "alert-triangle",
+              },
+            },
 
-                    if (this.darkMode) {
-                        document.documentElement.classList.add('dark');
-                        localStorage.setItem('theme', 'dark');
-                    } else {
-                        document.documentElement.classList.remove('dark');
-                        localStorage.setItem('theme', 'light');
-                    }
+            // ============================================================
+            // 6. KOTA BANDA ACEH, ACEH
+            // ============================================================
+            "Kota Banda Aceh, Aceh": {
+              tsunami: {
+                level: "bahaya",
+                index: 95,
+                title: "Tingkat Risiko: BAHAYA",
+                description: "Kota Banda Aceh adalah kota yang pernah dihancurkan tsunami 2004 dengan korban lebih dari 60.000 jiwa. Ancaman tsunami dari Megathrust Sumatra bersifat permanen dan bisa terjadi kapan saja.",
+                factors: [
+                  "Berada di garis terdepan zona subduksi Megathrust Sumatra Utara",
+                  "Riwayat tsunami 2004 dengan korban >60.000 jiwa di Banda Aceh",
+                  "Ketinggian kota yang rendah dan berbatasan langsung dengan Samudra Hindia",
+                  "Waktu tiba tsunami setelah gempa bawah laut bisa < 20 menit",
+                  "Kepadatan penduduk tinggi di kawasan dekat pantai",
+                ],
+                actions: [
+                  "Hafalkan minimal 2 jalur evakuasi dari rumah menuju tempat tinggi",
+                  "LANGSUNG lari tanpa membawa barang apapun saat merasakan gempa kuat",
+                  "Manfaatkan shelter tsunami vertikal yang telah dibangun pemerintah",
+                  "Pasang aplikasi InaTEWS BMKG dan aktifkan notifikasi gempa",
+                  "Ikut latihan evakuasi tsunami yang rutin diadakan BPBD Aceh",
+                ],
+                color: "#EE5253",
+                bgColor: "rgba(238,82,83,0.08)",
+                icon: "alert-triangle",
+              },
+              gempa: {
+                level: "bahaya",
+                index: 92,
+                title: "Tingkat Risiko: BAHAYA",
+                description: "Banda Aceh berada di zona seismik paling aktif di Indonesia. Selain ancaman Megathrust Sumatra, terdapat sesar-sesar lokal aktif di sekitar kota yang bisa menghasilkan gempa merusak.",
+                factors: [
+                  "Zona subduksi Megathrust Sumatra Utara sangat aktif",
+                  "Sesar Seulimeum dan sesar lokal aktif di sekitar Banda Aceh",
+                  "Riwayat gempa M9.1 tahun 2004 yang paling destruktif",
+                  "Tanah lunak aluvial di kawasan rendah memperkuat amplifikasi",
+                  "Aktivitas gempa susulan dan gempa baru terus terjadi",
+                ],
+                actions: [
+                  "Pastikan semua bangunan memenuhi standar tahan gempa",
+                  "DROP-COVER-HOLD ON saat gempa terjadi — jangan berlari keluar",
+                  "Setelah guncangan berhenti, segera evakuasi ke tempat tinggi antisipasi tsunami",
+                  "Pantau kondisi bangunan secara berkala untuk retakan struktural",
+                  "Daftarkan anggota keluarga rentan (lansia, anak) ke program evakuasi BPBD",
+                ],
+                color: "#EE5253",
+                bgColor: "rgba(238,82,83,0.08)",
+                icon: "alert-triangle",
+              },
+              banjir: {
+                level: "siaga",
+                index: 55,
+                title: "Tingkat Risiko: SIAGA",
+                description: "Banjir di Banda Aceh terjadi terutama di kawasan dataran rendah akibat luapan Sungai Krueng Aceh dan curah hujan tinggi. Drainase kota yang belum optimal memperparah genangan.",
+                factors: ["Luapan Sungai Krueng Aceh saat musim hujan", "Curah hujan tinggi November–Januari", "Topografi rendah di kawasan pusat kota", "Kapasitas drainase yang belum memadai di beberapa kecamatan"],
+                actions: [
+                  "Pantau debit Sungai Krueng Aceh via pos pemantauan BMKG",
+                  "Persiapkan tas darurat dan dokumen penting",
+                  "Hindari daerah langganan banjir saat hujan lebih dari 2 jam berturut-turut",
+                  "Ikuti arahan BPBD Kota Banda Aceh saat status siaga diumumkan",
+                ],
+                color: "#FF9F43",
+                bgColor: "rgba(255,159,67,0.08)",
+                icon: "alert-triangle",
+              },
+              rob: {
+                level: "siaga",
+                index: 50,
+                title: "Tingkat Risiko: SIAGA",
+                description: "Rob di Banda Aceh terjadi terutama di kawasan Ulee Lheue dan pantai barat yang berbatasan langsung dengan Samudra Hindia dan Selat Malaka.",
+                factors: [
+                  "Kawasan Ulee Lheue dan pantai barat berbatasan langsung dengan laut",
+                  "Perubahan elevasi daratan pasca gempa 2004 di beberapa titik",
+                  "Kenaikan permukaan laut Samudra Hindia",
+                  "Pasang purnama dapat mencapai kawasan permukiman nelayan",
+                ],
+                actions: [
+                  "Monitor prediksi pasang surut BMKG untuk kawasan pesisir Banda Aceh",
+                  "Waspada ekstra di kawasan Ulee Lheue dan pantai barat saat pasang tinggi",
+                  "Tinggikan perabot dan instalasi listrik di rumah kawasan pesisir",
+                  "Segera hubungi BPBD jika rob mencapai kawasan yang tidak biasa",
+                ],
+                color: "#FF9F43",
+                bgColor: "rgba(255,159,67,0.08)",
+                icon: "alert-triangle",
+              },
+            },
 
-                    // Reinitialize icons after theme change
-                    setTimeout(() => lucide.createIcons(), 50);
-                },
+            // ============================================================
+            // 7. KABUPATEN CILACAP, JAWA TENGAH
+            // ============================================================
+            "Kabupaten Cilacap, Jawa Tengah": {
+              tsunami: {
+                level: "bahaya",
+                index: 88,
+                title: "Tingkat Risiko: BAHAYA",
+                description: "Kabupaten Cilacap menghadap langsung Samudra Hindia dan berada di zona pengaruh Megathrust Jawa Tengah–Jawa Timur. Pantai selatan Cilacap termasuk zona merah tsunami nasional.",
+                factors: [
+                  "Berhadapan langsung dengan Samudra Hindia dan zona subduksi aktif",
+                  "Potensi Megathrust Jawa Tengah–Jawa Timur dengan magnitudo target M8,9",
+                  "Topografi pantai selatan yang relatif datar mempercepat penetrasi gelombang",
+                  "Kawasan industri dan pelabuhan padat di sepanjang pantai",
+                  "Waktu evakuasi terbatas — estimasi tiba gelombang 20–35 menit",
+                ],
+                actions: [
+                  "Segera evakuasi ke tempat tinggi saat merasakan gempa kuat dari arah selatan",
+                  "Kenali dan hafal jalur evakuasi tsunami yang sudah ditandai rambu resmi",
+                  "Manfaatkan shelter tsunami vertikal di kawasan industri dan permukiman",
+                  "Pantau informasi BMKG InaTEWS dan aktifkan notifikasi di ponsel",
+                  "Jangan kembali ke pantai meski gelombang pertama sudah reda",
+                ],
+                color: "#EE5253",
+                bgColor: "rgba(238,82,83,0.08)",
+                icon: "alert-triangle",
+              },
+              gempa: {
+                level: "bahaya",
+                index: 85,
+                title: "Tingkat Risiko: BAHAYA",
+                description: "Cilacap berada di garis depan ancaman Megathrust Selatan Jawa. Gempa-gempa besar dari zona subduksi Samudra Hindia berpotensi menghantam wilayah ini dengan intensitas tinggi.",
+                factors: [
+                  "Berada di zona pengaruh langsung Megathrust Jawa Tengah–Jawa Timur",
+                  "Jarak relatif dekat ke zona subduksi Samudra Hindia",
+                  "Riwayat gempa-gempa signifikan dari selatan Jawa",
+                  "Infrastruktur strategis (kilang minyak, PLTU) di kawasan rawan",
+                ],
+                actions: [
+                  "Pastikan bangunan memenuhi standar tahan gempa, terutama bangunan tinggi",
+                  "Siapkan rencana evakuasi keluarga yang mencakup skenario gempa + tsunami",
+                  "Latih DROP-COVER-HOLD ON secara rutin",
+                  "Identifikasi titik aman dan shelter di sekitar tempat tinggal",
+                ],
+                color: "#EE5253",
+                bgColor: "rgba(238,82,83,0.08)",
+                icon: "alert-triangle",
+              },
+              banjir: {
+                level: "siaga",
+                index: 62,
+                title: "Tingkat Risiko: SIAGA",
+                description: "Banjir di Cilacap terutama terjadi di kawasan sekitar muara Sungai Serayu dan Segara Anakan. Curah hujan tinggi di pegunungan menghasilkan banjir kiriman ke dataran rendah.",
+                factors: [
+                  "Luapan Sungai Serayu dan sungai-sungai kecil di musim hujan",
+                  "Pendangkalan Segara Anakan mengurangi kapasitas tampung air",
+                  "Curah hujan tinggi dari Pegunungan Serayu Selatan",
+                  "Sebagian wilayah berada di dataran rendah dekat muara sungai",
+                ],
+                actions: [
+                  "Pantau debit Sungai Serayu via pos BBWS Serayu-Opak",
+                  "Waspadai banjir kiriman dari hulu saat hujan deras di pegunungan",
+                  "Amankan dokumen penting dan siapkan tas darurat",
+                  "Ikuti arahan BPBD Kabupaten Cilacap saat status siaga diumumkan",
+                ],
+                color: "#FF9F43",
+                bgColor: "rgba(255,159,67,0.08)",
+                icon: "alert-triangle",
+              },
+              rob: {
+                level: "waspada",
+                index: 42,
+                title: "Tingkat Risiko: WASPADA",
+                description: "Rob di Cilacap terutama terjadi di kawasan Teluk Penyu dan sekitar Segara Anakan. Pasang tinggi dari Samudra Hindia bisa memasuki kawasan permukiman nelayan.",
+                factors: [
+                  "Teluk Penyu dan Segara Anakan rentan terhadap pasang tinggi",
+                  "Permukiman nelayan di sekitar laguna dan muara sungai",
+                  "Pendangkalan dan penyempitan Segara Anakan memperburuk genangan",
+                  "Kenaikan muka air laut Samudra Hindia jangka panjang",
+                ],
+                actions: [
+                  "Monitor prediksi pasang surut BMKG untuk perairan selatan Jawa",
+                  "Waspada saat pasang purnama dan bulan baru di kawasan Teluk Penyu",
+                  "Amankan perahu dan peralatan nelayan saat prediksi pasang ekstrem",
+                  "Koordinasi dengan komunitas nelayan untuk sistem peringatan lokal",
+                ],
+                color: "#FFC312",
+                bgColor: "rgba(255,195,18,0.08)",
+                icon: "alert-triangle",
+              },
+            },
 
-                get selectedBencana() {
-                    return this.bencanaList.find(b => b.id === this.bencana);
-                },
+            // ============================================================
+            // 8. KOTA PADANG, SUMATERA BARAT
+            // ============================================================
+            "Kota Padang, Sumatera Barat": {
+              tsunami: {
+                level: "bahaya",
+                index: 94,
+                title: "Tingkat Risiko: BAHAYA",
+                description: "Kota Padang adalah salah satu kota besar di Indonesia dengan risiko tsunami tertinggi. Berada persis di atas zona Megathrust Mentawai, Padang diprediksi akan terdampak parah jika megathrust ini terpicu.",
+                factors: [
+                  "Berada di atas zona Megathrust Mentawai dengan potensi M8,5–9,0",
+                  "Topografi kota yang rendah dan sempit antara pegunungan dan laut",
+                  "Kepadatan penduduk sangat tinggi di kawasan pesisir barat",
+                  "Waktu tiba tsunami diprediksi hanya 20–30 menit setelah gempa",
+                  "Jalur evakuasi terbatas karena topografi pegunungan di timur",
+                ],
+                actions: [
+                  "Hafalkan jalur evakuasi dan shelter tsunami yang sudah dibangun pemerintah",
+                  "LANGSUNG lari ke bukit atau shelter vertikal saat gempa kuat terasa",
+                  "Jangan menunggu peringatan resmi — bertindak atas inisiatif sendiri",
+                  "Pasang aplikasi BMKG InaTEWS dengan notifikasi aktif",
+                  "Ikuti simulasi evakuasi yang rutin diadakan BPBD Kota Padang",
+                ],
+                color: "#EE5253",
+                bgColor: "rgba(238,82,83,0.08)",
+                icon: "alert-triangle",
+              },
+              gempa: {
+                level: "bahaya",
+                index: 92,
+                title: "Tingkat Risiko: BAHAYA",
+                description: "Padang pernah diguncang gempa M7.9 pada 2009 yang menewaskan lebih dari 1.100 orang. Aktivitas seismik di zona Megathrust Mentawai tetap sangat tinggi hingga saat ini.",
+                factors: [
+                  "Megathrust Mentawai dengan potensi magnitudo M8,5–9,0 belum sepenuhnya terlepas",
+                  "Riwayat gempa M7.9 tahun 2009 yang destruktif",
+                  "Sesar-sesar aktif di darat turut mengancam wilayah kota",
+                  "Tanah lunak di kawasan pesisir memperkuat amplifikasi seismik",
+                  "Banyak bangunan lama yang belum diperkuat standar tahan gempa",
+                ],
+                actions: [
+                  "Lakukan retrofit atau rekonstruksi bangunan lama yang belum tahan gempa",
+                  "Latihan DROP-COVER-HOLD ON secara rutin di rumah dan kantor",
+                  "Siapkan kit darurat yang selalu siap di dekat pintu keluar",
+                  "Kenali titik evakuasi terdekat dan pastikan semua anggota keluarga tahu",
+                ],
+                color: "#EE5253",
+                bgColor: "rgba(238,82,83,0.08)",
+                icon: "alert-triangle",
+              },
+              banjir: {
+                level: "siaga",
+                index: 65,
+                title: "Tingkat Risiko: SIAGA",
+                description: "Banjir di Kota Padang kerap terjadi di kawasan muara sungai seperti Batang Arau dan Batang Kuranji, terutama saat curah hujan tinggi dari Bukit Barisan.",
+                factors: [
+                  "Luapan Sungai Batang Arau dan Batang Kuranji saat hujan deras",
+                  "Curah hujan sangat tinggi — Padang termasuk kota dengan curah hujan tertinggi di Indonesia",
+                  "Topografi sempit antara bukit dan pantai membatasi aliran air",
+                  "Kapasitas drainase perkotaan yang tidak memadai di beberapa kawasan",
+                ],
+                actions: [
+                  "Pantau peringatan dini banjir BPBD Kota Padang saat curah hujan tinggi",
+                  "Waspadai banjir bandang dari arah Bukit Barisan saat hujan deras >2 jam",
+                  "Siapkan tas darurat yang siap dibawa sewaktu-waktu",
+                  "Hindari kawasan bantaran sungai saat intensitas hujan sangat tinggi",
+                ],
+                color: "#FF9F43",
+                bgColor: "rgba(255,159,67,0.08)",
+                icon: "alert-triangle",
+              },
+              rob: {
+                level: "waspada",
+                index: 40,
+                title: "Tingkat Risiko: WASPADA",
+                description: "Rob di Padang terjadi terutama di kawasan Muara Padang dan Purus yang berbatasan langsung dengan Samudra Hindia. Pasang tinggi dapat memasuki kawasan permukiman dan pasar ikan.",
+                factors: [
+                  "Kawasan Muara Padang dan Purus berbatasan langsung dengan Samudra Hindia",
+                  "Pasang tinggi dari Samudra Hindia saat musim tertentu",
+                  "Permukiman nelayan dan pasar ikan di kawasan berisiko",
+                  "Kenaikan muka air laut jangka panjang memperparah rob",
+                ],
+                actions: [
+                  "Monitor prediksi pasang surut BMKG untuk perairan barat Sumatera",
+                  "Waspada di kawasan Muara Padang saat pasang purnama",
+                  "Tinggikan perabot dan instalasi listrik di rumah kawasan pesisir",
+                  "Segera hubungi BPBD jika rob mencapai kawasan yang tidak biasa",
+                ],
+                color: "#FFC312",
+                bgColor: "rgba(255,195,18,0.08)",
+                icon: "alert-triangle",
+              },
+            },
 
-                get levelConf() {
-                    return this.result ? this.levelConfig[this.result.level] : null;
-                },
+            // ============================================================
+            // 9. KABUPATEN LOMBOK BARAT, NTB
+            // ============================================================
+            "Kabupaten Lombok Barat, NTB": {
+              gempa: {
+                level: "bahaya",
+                index: 90,
+                title: "Tingkat Risiko: BAHAYA",
+                description: "Kabupaten Lombok Barat mengalami rangkaian gempa besar pada 2018 yang menewaskan lebih dari 500 orang. Wilayah ini berada di zona seismik aktif dengan ancaman dari Sesar Naik Flores dan zona subduksi.",
+                factors: [
+                  "Riwayat gempa M7.0 dan M6.9 tahun 2018 yang sangat destruktif",
+                  "Pengaruh Sesar Naik Flores (Flores Back-arc Thrust) yang aktif",
+                  "Zona subduksi Banda Arc di selatan memberikan tekanan seismik",
+                  "Banyak bangunan rusak akibat gempa 2018 belum sepenuhnya diperbaiki",
+                  "Tanah perbukitan rentan longsor dipicu gempa",
+                ],
+                actions: [
+                  "Pastikan rumah telah diperbaiki dan memenuhi standar konstruksi pasca gempa",
+                  "DROP-COVER-HOLD ON saat gempa terasa — jangan berlari keluar bangunan",
+                  "Waspadai potensi longsor di kawasan perbukitan pasca gempa",
+                  "Kenali jalur evakuasi dan titik kumpul yang sudah ditetapkan BPBD NTB",
+                  "Ikuti program rekonstruksi dan rehabilitasi pasca bencana pemerintah",
+                ],
+                color: "#EE5253",
+                bgColor: "rgba(238,82,83,0.08)",
+                icon: "alert-triangle",
+              },
+              tsunami: {
+                level: "bahaya",
+                index: 82,
+                title: "Tingkat Risiko: BAHAYA",
+                description: "Gempa 2018 di Lombok juga memicu tsunami kecil di beberapa titik pesisir utara. Ancaman tsunami dari Sesar Naik Flores dan zona subduksi selatan tetap ada.",
+                factors: [
+                  "Sesar Naik Flores berpotensi memicu tsunami lokal di pesisir utara",
+                  "Zona subduksi Banda Arc di selatan berpotensi tsunami",
+                  "Pantai barat dan utara Lombok Barat relatif rendah dan terbuka",
+                  "Riwayat tsunami kecil pasca gempa 2018",
+                ],
+                actions: [
+                  "Segera evakuasi ke tempat tinggi saat merasakan gempa kuat di kawasan pesisir",
+                  "Kenali tanda-tanda awal tsunami — air laut surut tiba-tiba atau suara gemuruh",
+                  "Pantau informasi BMKG InaTEWS secara aktif",
+                  "Jangan kembali ke pantai sebelum dinyatakan aman secara resmi",
+                ],
+                color: "#EE5253",
+                bgColor: "rgba(238,82,83,0.08)",
+                icon: "alert-triangle",
+              },
+              banjir: {
+                level: "siaga",
+                index: 55,
+                title: "Tingkat Risiko: SIAGA",
+                description: "Banjir di Lombok Barat dipicu curah hujan tinggi di musim hujan yang mengalir dari perbukitan ke dataran rendah. Beberapa kecamatan di bagian utara dan timur rentan terhadap banjir bandang.",
+                factors: [
+                  "Curah hujan tinggi di musim hujan November–Maret",
+                  "Topografi perbukitan menghasilkan aliran air deras ke dataran rendah",
+                  "Kapasitas sungai dan drainase yang terbatas",
+                  "Kerusakan vegetasi di lereng bukit meningkatkan limpasan",
+                ],
+                actions: [
+                  "Pantau peringatan dini banjir dari BPBD Kabupaten Lombok Barat",
+                  "Waspadai banjir bandang dari arah perbukitan saat hujan deras",
+                  "Siapkan tas darurat yang siap dibawa sewaktu-waktu",
+                  "Hindari crossing sungai yang meluap meski terlihat tidak dalam",
+                ],
+                color: "#FF9F43",
+                bgColor: "rgba(255,159,67,0.08)",
+                icon: "alert-triangle",
+              },
+              rob: {
+                level: "waspada",
+                index: 35,
+                title: "Tingkat Risiko: WASPADA",
+                description: "Rob di Lombok Barat terjadi terutama di kawasan pesisir barat yang berbatasan dengan Selat Lombok. Permukiman nelayan dan kawasan wisata pantai perlu mewaspadai pasang tinggi.",
+                factors: [
+                  "Kawasan pesisir barat berbatasan dengan Selat Lombok yang dinamis",
+                  "Permukiman nelayan dan resort wisata di garis pantai",
+                  "Pasang tinggi saat bulan purnama dapat memasuki kawasan rendah",
+                  "Kenaikan muka air laut jangka panjang",
+                ],
+                actions: [
+                  "Monitor prediksi pasang surut BMKG untuk perairan Selat Lombok",
+                  "Waspada di kawasan pantai saat pasang purnama",
+                  "Amankan perahu dan peralatan di darat saat prediksi pasang ekstrem",
+                  "Pastikan bangunan di tepi pantai memiliki elevasi yang memadai",
+                ],
+                color: "#FFC312",
+                bgColor: "rgba(255,195,18,0.08)",
+                icon: "alert-triangle",
+              },
+            },
 
-                handleAnalysis() {
-                    if (!this.wilayah || !this.bencana) return;
+            // ============================================================
+            // 10. KOTA MANADO, SULAWESI UTARA
+            // ============================================================
+            "Kota Manado, Sulawesi Utara": {
+              tsunami: {
+                level: "bahaya",
+                index: 85,
+                title: "Tingkat Risiko: BAHAYA",
+                description: "Kota Manado pernah diterjang tsunami pada 2009 akibat gempa M7.3. Berada di Teluk Manado yang dikelilingi zona seismik aktif, risiko tsunami di kota ini tergolong sangat tinggi.",
+                factors: [
+                  "Riwayat tsunami 2009 akibat gempa M7.3 yang menghantam pantai Manado",
+                  "Dikelilingi zona seismik aktif — Sulawesi Utara termasuk wilayah seismik tertinggi di Indonesia",
+                  "Teluk Manado memiliki potensi memperkuat gelombang tsunami dari barat",
+                  "Kawasan Malalayang, Boulevard, dan Tuminting berada di garis depan ancaman",
+                  "Populasi padat di kawasan pesisir teluk",
+                ],
+                actions: [
+                  "Segera lari ke perbukitan di timur kota saat gempa kuat terasa di kawasan pesisir",
+                  "Kenali jalur evakuasi resmi yang sudah ditandai BPBD Kota Manado",
+                  "Pantau informasi BMKG InaTEWS dan aktifkan notifikasi gempa",
+                  "Latih keluarga simulasi evakuasi tsunami minimal sekali setahun",
+                  "Jangan kembali ke pantai sebelum ada pernyataan aman resmi",
+                ],
+                color: "#EE5253",
+                bgColor: "rgba(238,82,83,0.08)",
+                icon: "alert-triangle",
+              },
+              gempa: {
+                level: "bahaya",
+                index: 88,
+                title: "Tingkat Risiko: BAHAYA",
+                description: "Sulawesi Utara merupakan salah satu daerah paling rawan gempa di Indonesia. Manado dikelilingi oleh sesar aktif dan berada dekat zona subduksi lempeng Filipina.",
+                factors: [
+                  "Dekat zona subduksi Lempeng Filipina dan Lempeng Eurasia",
+                  "Sesar aktif Manado dan sesar-sesar lokal di sekitar kota",
+                  "Aktivitas vulkanik Gunung Lokon dan Mahawu menambah risiko seismik",
+                  "Riwayat gempa-gempa merusak yang berulang",
+                  "Tanah lunak di kawasan pesisir memperkuat guncangan",
+                ],
+                actions: [
+                  "Pastikan bangunan memenuhi standar konstruksi tahan gempa",
+                  "DROP-COVER-HOLD ON saat gempa — jangan berlari keluar bangunan saat guncangan",
+                  "Siapkan kit darurat dan rencana evakuasi keluarga",
+                  "Waspadai potensi tsunami setelah gempa kuat di kawasan pesisir",
+                  "Kenali titik kumpul dan shelter terdekat dari lokasi tinggal",
+                ],
+                color: "#EE5253",
+                bgColor: "rgba(238,82,83,0.08)",
+                icon: "alert-triangle",
+              },
+              banjir: {
+                level: "siaga",
+                index: 68,
+                title: "Tingkat Risiko: SIAGA",
+                description: "Manado kerap dilanda banjir bandang terutama di kawasan Sario, Tikala, dan Tuminting. Curah hujan ekstrem dari pegunungan Minahasa mengalir deras ke kota yang berada di dataran rendah tepi teluk.",
+                factors: [
+                  "Curah hujan sangat tinggi dari pegunungan Minahasa",
+                  "Sungai Tondano dan sungai-sungai kecil meluap saat hujan ekstrem",
+                  "Topografi yang curam dari pegunungan ke pesisir mempercepat aliran air",
+                  "Urbanisasi dan penutupan lahan di hulu meningkatkan limpasan permukaan",
+                  "Kapasitas drainase kota yang belum memadai di beberapa kawasan",
+                ],
+                actions: [
+                  "Pantau peringatan dini banjir BPBD Kota Manado secara rutin",
+                  "Waspadai banjir bandang dari pegunungan saat hujan lebat >1 jam",
+                  "Hindari kawasan Sario dan Tikala saat intensitas hujan sangat tinggi",
+                  "Siapkan rute evakuasi ke tempat lebih tinggi dan aman",
+                  "Amankan dokumen penting dan barang berharga di tempat tinggi",
+                ],
+                color: "#FF9F43",
+                bgColor: "rgba(255,159,67,0.08)",
+                icon: "alert-triangle",
+              },
+              rob: {
+                level: "waspada",
+                index: 38,
+                title: "Tingkat Risiko: WASPADA",
+                description: "Rob di Manado terjadi di kawasan Tuminting, Calaca, dan sepanjang Boulevard yang berbatasan langsung dengan Teluk Manado. Pasang tinggi dari Laut Sulawesi dapat memasuki kawasan permukiman rendah.",
+                factors: [
+                  "Kawasan Tuminting dan Boulevard berbatasan langsung dengan Teluk Manado",
+                  "Pasang tinggi dari Laut Sulawesi saat musim tertentu",
+                  "Permukiman padat di tepi teluk dengan elevasi rendah",
+                  "Kenaikan muka air laut Laut Sulawesi jangka panjang",
+                ],
+                actions: [
+                  "Monitor prediksi pasang surut BMKG untuk perairan Teluk Manado",
+                  "Waspada di kawasan Boulevard dan Tuminting saat pasang purnama",
+                  "Tinggikan instalasi listrik dan perabot penting di rumah kawasan pesisir",
+                  "Laporkan perubahan kondisi pantai yang signifikan ke dinas terkait",
+                ],
+                color: "#FFC312",
+                bgColor: "rgba(255,195,18,0.08)",
+                icon: "alert-triangle",
+              },
+            },
+          },
+          defaultRisks: {
+            banjir: {
+              level: "siaga",
+              index: 55,
+              title: "Tingkat Risiko: SIAGA",
+              description: "Wilayah ini memiliki risiko banjir pada kategori siaga. Diperlukan kewaspadaan dan persiapan yang memadai.",
+              factors: ["Curah hujan musiman tinggi", "Kapasitas drainase terbatas", "Kepadatan penduduk di daerah rendah"],
+              actions: ["Siapkan tas darurat", "Pantau informasi BMKG", "Kenali jalur evakuasi"],
+              color: "#FF9F43",
+              bgColor: "rgba(255,159,67,0.08)",
+              icon: "AlertTriangle",
+            },
+            rob: {
+              level: "waspada",
+              index: 40,
+              title: "Tingkat Risiko: WASPADA",
+              description: "Potensi banjir rob sedang di wilayah ini. Perlu pemantauan berkala kondisi pasang laut.",
+              factors: ["Wilayah pesisir aktif", "Pasang surut normal", "Perubahan iklim gradual"],
+              actions: ["Monitor pasang laut", "Perkuat infrastruktur pesisir", "Siapkan evakuasi"],
+              color: "#FFC312",
+              bgColor: "rgba(255,195,18,0.08)",
+              icon: "AlertTriangle",
+            },
+            gempa: {
+              level: "siaga",
+              index: 62,
+              title: "Tingkat Risiko: SIAGA",
+              description: "Wilayah ini berada di zona seismik aktif. Kesiapsiagaan gempa sangat dianjurkan.",
+              factors: ["Dekat zona subduksi", "Aktivitas seismik sedang", "Kualitas bangunan bervariasi"],
+              actions: ["Perkuat bangunan", "Latihan evakuasi gempa", "Simpan kit darurat"],
+              color: "#FF9F43",
+              bgColor: "rgba(255,159,67,0.08)",
+              icon: "AlertTriangle",
+            },
+            tsunami: {
+              level: "waspada",
+              index: 45,
+              title: "Tingkat Risiko: WASPADA",
+              description: "Risiko tsunami perlu diwaspadai di wilayah ini. Pahami tanda-tanda dan rute evakuasi.",
+              factors: ["Berhadapan dengan samudra aktif", "Zona subduksi regional", "Topografi pantai datar"],
+              actions: ["Kenali tanda tsunami", "Evakuasi vertikal segera", "Jangan tunggu air surut"],
+              color: "#FFC312",
+              bgColor: "rgba(255,195,18,0.08)",
+              icon: "AlertTriangle",
+            },
+          },
 
-                    this.loading = true;
-                    this.result = null;
+          levelConfig: {
+            aman: { label: "AMAN", color: "#1DD1A1", bg: "rgba(29,209,161,0.1)", border: "rgba(29,209,161,0.3)", icon: "CheckCircle", description: "Kondisi relatif aman, tetap jaga kewaspadaan" },
+            waspada: { label: "WASPADA", color: "#FFC312", bg: "rgba(255,195,18,0.1)", border: "rgba(255,195,18,0.3)", icon: "AlertTriangle", description: "Perlu waspada dan siapkan langkah antisipatif" },
+            siaga: { label: "SIAGA", color: "#FF9F43", bg: "rgba(255,159,67,0.1)", border: "rgba(255,159,67,0.3)", icon: "AlertTriangle", description: "Tingkatkan kesiapsiagaan, rencana evakuasi aktif" },
+            bahaya: { label: "BAHAYA", color: "#EE5253", bg: "rgba(238,82,83,0.1)", border: "rgba(238,82,83,0.3)", icon: "AlertTriangle", description: "Ancaman nyata, lakukan evakuasi jika diperlukan" },
+          },
 
-                    setTimeout(() => {
-                        const data = this.riskDatabase[this.wilayah]?.[this.bencana] || this.defaultRisks[this.bencana];
-                        this.result = data;
-                        this.loading = false;
+          toggleTheme() {
+            this.darkMode = !this.darkMode;
 
-                        // Close mobile menu if open
-                        this.mobileMenuOpen = false;
-
-                        // Reinitialize Lucide icons after new content appears
-                        setTimeout(() => {
-                            lucide.createIcons();
-                        }, 50);
-                    }, 1400);
-                }
+            if (this.darkMode) {
+              document.documentElement.classList.add("dark");
+              localStorage.setItem("theme", "dark");
+            } else {
+              document.documentElement.classList.remove("dark");
+              localStorage.setItem("theme", "light");
             }
+
+            // Reinitialize icons after theme change
+            setTimeout(() => lucide.createIcons(), 50);
+          },
+
+          get selectedBencana() {
+            return this.bencanaList.find((b) => b.id === this.bencana);
+          },
+
+          get levelConf() {
+            return this.result ? this.levelConfig[this.result.level] : null;
+          },
+
+          handleAnalysis() {
+            if (!this.wilayah || !this.bencana) return;
+
+            this.loading = true;
+            this.result = null;
+
+            setTimeout(() => {
+              const data = this.riskDatabase[this.wilayah]?.[this.bencana] || this.defaultRisks[this.bencana];
+              this.result = data;
+              this.loading = false;
+
+              // Close mobile menu if open
+              this.mobileMenuOpen = false;
+
+              // Reinitialize Lucide icons after new content appears
+              setTimeout(() => {
+                lucide.createIcons();
+              }, 50);
+            }, 500);
+          },
+        };
+      }
+
+      // Initialize Lucide icons on page load
+      document.addEventListener("DOMContentLoaded", () => {
+        lucide.createIcons();
+      });
+
+      // Re-run after Alpine updates
+      document.addEventListener("alpine:initialized", () => {
+        lucide.createIcons();
+      });
+
+      // Close mobile menu on window resize (if going to desktop)
+      window.addEventListener("resize", () => {
+        if (window.innerWidth >= 768) {
+          // md breakpoint
+          const app = document.querySelector('[x-data="riskApp()"]')?.__x;
+          if (app && app.$data.mobileMenuOpen) {
+            app.$data.mobileMenuOpen = false;
+          }
         }
-
-        // Initialize Lucide icons on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
-        });
-
-        // Re-run after Alpine updates
-        document.addEventListener('alpine:initialized', () => {
-            lucide.createIcons();
-        });
-
-        // Close mobile menu on window resize (if going to desktop)
-        window.addEventListener('resize', () => {
-            if (window.innerWidth >= 768) { // md breakpoint
-                const app = document.querySelector('[x-data="riskApp()"]')?.__x;
-                if (app && app.$data.mobileMenuOpen) {
-                    app.$data.mobileMenuOpen = false;
-                }
-            }
-        });
+      });
     </script>
-</body>
-
+  </body>
 </html>
