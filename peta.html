@@ -1,14 +1,12 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id" class="light">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIAPBENCANA - Peta Risiko Bencana Pesisir</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RUANG AMAN - Peta Risiko Bencana</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -17,207 +15,209 @@
     <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
     <script>
-        (function () {
-            const saved = localStorage.getItem('theme');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            if (saved === 'dark' || (!saved && prefersDark)) {
-                document.documentElement.classList.remove('light');
-                document.documentElement.classList.add('dark');
-            }
-        })();
+      (function () {
+        const saved = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (saved === "dark" || (!saved && prefersDark)) {
+          document.documentElement.classList.remove("light");
+          document.documentElement.classList.add("dark");
+        }
+      })();
     </script>
 
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            scroll-behavior: smooth;
+      body {
+        font-family: "Poppins", sans-serif;
+        scroll-behavior: smooth;
+      }
+
+      :root {
+        --bg-page: #f1f2f6;
+        --bg-card: #ffffff;
+        --text-primary: #1b262c;
+        --text-muted: #6b7280;
+        --text-secondary: #7a8a96;
+        --border-card: #e5e7eb;
+        --bg-input: #ffffff;
+        --border-input: #e5e7eb;
+        --bg-item: #fafbfc;
+        --border-item: #e8ecef;
+        --stat-bg: #fafbfc;
+      }
+
+      html.dark {
+        --bg-page: #0d1b2a;
+        --bg-card: #1a2a3a;
+        --text-primary: #e8f4ff;
+        --text-muted: #8aafc8;
+        --text-secondary: #9bb8d4;
+        --border-card: #1f3a52;
+        --bg-input: #1f2f40;
+        --border-input: #1f3a52;
+        --bg-item: #162233;
+        --border-item: #1f3a52;
+        --stat-bg: #1a2a3a;
+      }
+
+      body {
+        background-color: var(--bg-page);
+        transition: background-color 0.3s ease;
+      }
+
+      .card-bg {
+        background-color: var(--bg-card);
+        border-color: var(--border-card);
+      }
+
+      .text-primary {
+        color: var(--text-primary);
+      }
+
+      .text-secondary {
+        color: var(--text-secondary);
+      }
+
+      .text-muted {
+        color: var(--text-muted);
+      }
+
+      .border-default {
+        border-color: var(--border-card);
+      }
+
+      .stat-bg {
+        background-color: var(--stat-bg);
+      }
+
+      @keyframes fadeSlide {
+        0% {
+          opacity: 0;
+          transform: translateY(10px);
         }
 
-        :root {
-            --bg-page: #F1F2F6;
-            --bg-card: #ffffff;
-            --text-primary: #1B262C;
-            --text-muted: #6b7280;
-            --text-secondary: #7a8a96;
-            --border-card: #e5e7eb;
-            --bg-input: #ffffff;
-            --border-input: #e5e7eb;
-            --bg-item: #fafbfc;
-            --border-item: #e8ecef;
-            --stat-bg: #fafbfc;
+        100% {
+          opacity: 1;
+          transform: translateY(0);
         }
+      }
 
-        html.dark {
-            --bg-page: #0d1b2a;
-            --bg-card: #1a2a3a;
-            --text-primary: #e8f4ff;
-            --text-muted: #8aafc8;
-            --text-secondary: #9bb8d4;
-            --border-card: #1f3a52;
-            --bg-input: #1f2f40;
-            --border-input: #1f3a52;
-            --bg-item: #162233;
-            --border-item: #1f3a52;
-            --stat-bg: #1a2a3a;
+      .animate-fade-slide {
+        animation: fadeSlide 0.6s ease-out forwards;
+      }
+
+      .animate-fade-left {
+        animation: fadeSlide 0.5s ease-out forwards;
+      }
+
+      .delay-100 {
+        animation-delay: 0.1s;
+      }
+
+      .delay-200 {
+        animation-delay: 0.2s;
+      }
+
+      .leaflet-container {
+        font-family: "Poppins", sans-serif !important;
+      }
+
+      .custom-marker {
+        background: transparent;
+        border: none;
+      }
+
+      .risk-marker {
+        width: 30px;
+        height: 30px;
+        border-radius: 50% 50% 50% 0;
+        transform: rotate(-45deg);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .leaflet-popup-content {
+        margin: 10px 15px;
+        font-family: "Poppins", sans-serif;
+      }
+
+      .leaflet-popup-content-wrapper {
+        border-radius: 12px;
+        background: var(--bg-card);
+        color: var(--text-primary);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .leaflet-popup-tip {
+        background: var(--bg-card);
+      }
+
+      html.dark .leaflet-tile-pane {
+        filter: brightness(0.7) invert(1) contrast(1.2) hue-rotate(180deg);
+      }
+
+      html.dark .leaflet-control-attribution {
+        background: rgba(0, 0, 0, 0.6) !important;
+        color: #888 !important;
+      }
+
+      html.dark .leaflet-control-attribution a {
+        color: #1dd1a1 !important;
+      }
+
+      .evacuation-route-line {
+        stroke-dasharray: 12, 6;
+        animation: dashMove 1.5s linear infinite;
+      }
+
+      @keyframes dashMove {
+        to {
+          stroke-dashoffset: -18;
         }
+      }
 
-        body {
-            background-color: var(--bg-page);
-            transition: background-color 0.3s ease;
+      #routeLoadingOverlay {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(10, 61, 98, 0.9);
+        color: white;
+        font-size: 11px;
+        padding: 8px 14px;
+        border-radius: 20px;
+        z-index: 1000;
+        display: none;
+        align-items: center;
+        gap: 8px;
+        font-family: "Poppins", sans-serif;
+      }
+
+      #routeLoadingOverlay.visible {
+        display: flex;
+      }
+
+      .spinner {
+        width: 14px;
+        height: 14px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-top-color: #1dd1a1;
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
         }
+      }
 
-        .card-bg {
-            background-color: var(--bg-card);
-            border-color: var(--border-card);
-        }
-
-        .text-primary {
-            color: var(--text-primary);
-        }
-
-        .text-secondary {
-            color: var(--text-secondary);
-        }
-
-        .text-muted {
-            color: var(--text-muted);
-        }
-
-        .border-default {
-            border-color: var(--border-card);
-        }
-
-        .stat-bg {
-            background-color: var(--stat-bg);
-        }
-
-        @keyframes fadeSlide {
-            0% {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .animate-fade-slide {
-            animation: fadeSlide 0.6s ease-out forwards;
-        }
-
-        .animate-fade-left {
-            animation: fadeSlide 0.5s ease-out forwards;
-        }
-
-        .delay-100 {
-            animation-delay: 0.1s;
-        }
-
-        .delay-200 {
-            animation-delay: 0.2s;
-        }
-
-        .leaflet-container {
-            font-family: 'Poppins', sans-serif !important;
-        }
-
-        .custom-marker {
-            background: transparent;
-            border: none;
-        }
-
-        .risk-marker {
-            width: 30px;
-            height: 30px;
-            border-radius: 50% 50% 50% 0;
-            transform: rotate(-45deg);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .leaflet-popup-content {
-            margin: 10px 15px;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .leaflet-popup-content-wrapper {
-            border-radius: 12px;
-            background: var(--bg-card);
-            color: var(--text-primary);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        .leaflet-popup-tip {
-            background: var(--bg-card);
-        }
-
-        html.dark .leaflet-tile-pane {
-            filter: brightness(0.7) invert(1) contrast(1.2) hue-rotate(180deg);
-        }
-
-        html.dark .leaflet-control-attribution {
-            background: rgba(0, 0, 0, 0.6) !important;
-            color: #888 !important;
-        }
-
-        html.dark .leaflet-control-attribution a {
-            color: #1DD1A1 !important;
-        }
-
-        .evacuation-route-line {
-            stroke-dasharray: 12, 6;
-            animation: dashMove 1.5s linear infinite;
-        }
-
-        @keyframes dashMove {
-            to {
-                stroke-dashoffset: -18;
-            }
-        }
-
-        #routeLoadingOverlay {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(10, 61, 98, 0.9);
-            color: white;
-            font-size: 11px;
-            padding: 8px 14px;
-            border-radius: 20px;
-            z-index: 1000;
-            display: none;
-            align-items: center;
-            gap: 8px;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        #routeLoadingOverlay.visible {
-            display: flex;
-        }
-
-        .spinner {
-            width: 14px;
-            height: 14px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-top-color: #1DD1A1;
-            border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .page-bg {
-            background-color: var(--bg-page);
-        }
+      .page-bg {
+        background-color: var(--bg-page);
+      }
     </style>
-</head>
+  </head>
 
-<body class="page-bg" x-data="{
+  <body
+    class="page-bg"
+    x-data="{
     scrolled: false,
     mobileOpen: false,
     darkMode: document.documentElement.classList.contains('dark'),
@@ -233,438 +233,402 @@
         }
         setTimeout(() => lucide.createIcons(), 50);
     }
-}" @scroll.window="scrolled = (window.pageYOffset > 20)">
-
-    <nav :class="scrolled ? 'bg-[#0A3D62]/95 border-b border-[#1DD1A1]/20 shadow-lg' : 'bg-[#0A3D62]'"
-        class="fixed top-0 left-0 right-0 z-[1000] backdrop-blur-md transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-[68px] flex items-center justify-between gap-3">
-            <a href="#" class="flex items-center gap-3 shrink-0">
-                <div
-                    class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center shadow-lg">
-                    <i data-lucide="shield" class="text-white w-5 h-5"></i>
-                </div>
-                <div class="text-white">
-                    <div class="font-extrabold text-base leading-none">SIAPBENCANA</div>
-                    <div class="text-[10px] text-[#1DD1A1] tracking-widest leading-none uppercase">Coastal Safety</div>
-                </div>
-            </a>
-            <div class="hidden md:flex items-center gap-5 lg:gap-6">
-                <a href="index.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1]">Home</a>
-                <a href="cek-risiko.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1]">Cek Risiko</a>
-                <a href="peta.html" class="text-sm font-medium text-[#1DD1A1]">Peta</a>
-                <a href="edukasi.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1]">Edukasi</a>
-                <a href="simulasi.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1]">Simulasi</a>
-                <a href="about.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1]">About</a>
-                <button @click="toggleTheme()"
-                    class="relative w-16 h-8 rounded-full transition-colors duration-300 focus:outline-none"
-                    :class="darkMode ? 'bg-[#1DD1A1]' : 'bg-gray-600'">
-                    <span
-                        class="absolute top-1 w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-300 flex items-center justify-center"
-                        :class="darkMode ? 'translate-x-8' : 'translate-x-1'">
-                        <i :data-lucide="darkMode ? 'moon' : 'sun'" class="w-3.5 h-3.5"
-                            :class="darkMode ? 'text-[#1DD1A1]' : 'text-yellow-500'"></i>
-                    </span>
-                </button>
-            </div>
-            <button @click="mobileOpen = !mobileOpen"
-                class="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 transition-all gap-1.5">
-                <span :class="mobileOpen ? 'rotate-45 translate-y-[7px]' : ''"
-                    class="block w-5 h-0.5 bg-white rounded-full transition-transform duration-200"></span>
-                <span :class="mobileOpen ? 'opacity-0 scale-x-0' : ''"
-                    class="block w-5 h-0.5 bg-white rounded-full transition-all duration-200"></span>
-                <span :class="mobileOpen ? '-rotate-45 -translate-y-[7px]' : ''"
-                    class="block w-5 h-0.5 bg-white rounded-full transition-transform duration-200"></span>
-            </button>
+}"
+    @scroll.window="scrolled = (window.pageYOffset > 20)"
+  >
+    <nav :class="scrolled ? 'bg-[#0A3D62]/95 border-b border-[#1DD1A1]/20 shadow-lg' : 'bg-[#0A3D62]'" class="fixed top-0 left-0 right-0 z-[1000] backdrop-blur-md transition-all duration-300">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 h-[68px] flex items-center justify-between gap-3">
+        <a href="#" class="flex items-center gap-3 shrink-0">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center shadow-lg">
+            <i data-lucide="shield" class="text-white w-5 h-5"></i>
+          </div>
+          <div class="text-white">
+            <div class="font-extrabold text-base leading-none">RUANG AMAN</div>
+            <div class="text-[10px] text-[#1DD1A1] tracking-widest leading-none uppercase">Water-Related Disaster Safety</div>
+          </div>
+        </a>
+        <div class="hidden md:flex items-center gap-5 lg:gap-6">
+          <a href="index.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1]">Home</a>
+          <a href="cek-risiko.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1]">Cek Risiko</a>
+          <a href="peta.html" class="text-sm font-medium text-[#1DD1A1]">Peta</a>
+          <a href="edukasi.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1]">Edukasi</a>
+          <a href="simulasi.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1]">Simulasi</a>
+          <a href="about.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1]">About</a>
+          <button @click="toggleTheme()" class="relative w-16 h-8 rounded-full transition-colors duration-300 focus:outline-none" :class="darkMode ? 'bg-[#1DD1A1]' : 'bg-gray-600'">
+            <span class="absolute top-1 w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-300 flex items-center justify-center" :class="darkMode ? 'translate-x-8' : 'translate-x-1'">
+              <i :data-lucide="darkMode ? 'moon' : 'sun'" class="w-3.5 h-3.5" :class="darkMode ? 'text-[#1DD1A1]' : 'text-yellow-500'"></i>
+            </span>
+          </button>
         </div>
-        <div x-show="mobileOpen" x-transition
-            class="md:hidden bg-[#0A3D62]/98 backdrop-blur-md border-t border-white/10 px-4 py-4">
-            <div class="flex flex-col gap-1">
-                <a href="index.html" @click="mobileOpen = false"
-                    class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1]">Home</a>
-                <a href="cek-risiko.html" @click="mobileOpen = false"
-                    class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1]">Cek
-                    Risiko</a>
-                <a href="peta.html" @click="mobileOpen = false"
-                    class="text-[#1DD1A1] font-semibold text-sm px-3 py-2.5 rounded-xl bg-white/5">Peta</a>
-                <a href="edukasi.html" @click="mobileOpen = false"
-                    class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1]">Edukasi</a>
-                <a href="simulasi.html" @click="mobileOpen = false"
-                    class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1]">Simulasi</a>
-                <a href="about.html" @click="mobileOpen = false"
-                    class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1]">About</a>
-            </div>
+        <button @click="mobileOpen = !mobileOpen" class="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 transition-all gap-1.5">
+          <span :class="mobileOpen ? 'rotate-45 translate-y-[7px]' : ''" class="block w-5 h-0.5 bg-white rounded-full transition-transform duration-200"></span>
+          <span :class="mobileOpen ? 'opacity-0 scale-x-0' : ''" class="block w-5 h-0.5 bg-white rounded-full transition-all duration-200"></span>
+          <span :class="mobileOpen ? '-rotate-45 -translate-y-[7px]' : ''" class="block w-5 h-0.5 bg-white rounded-full transition-transform duration-200"></span>
+        </button>
+      </div>
+      <div x-show="mobileOpen" x-transition class="md:hidden bg-[#0A3D62]/98 backdrop-blur-md border-t border-white/10 px-4 py-4">
+        <div class="flex flex-col gap-1">
+          <a href="index.html" @click="mobileOpen = false" class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1]">Home</a>
+          <a href="cek-risiko.html" @click="mobileOpen = false" class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1]">Cek Risiko</a>
+          <a href="peta.html" @click="mobileOpen = false" class="text-[#1DD1A1] font-semibold text-sm px-3 py-2.5 rounded-xl bg-white/5">Peta</a>
+          <a href="edukasi.html" @click="mobileOpen = false" class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1]">Edukasi</a>
+          <a href="simulasi.html" @click="mobileOpen = false" class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1]">Simulasi</a>
+          <a href="about.html" @click="mobileOpen = false" class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1]">About</a>
         </div>
+      </div>
     </nav>
 
     <main class="pt-[68px]">
-        <div class="bg-[#0A3D62] px-6 pt-12 pb-16 md:px-8">
-            <div class="max-w-7xl mx-auto">
-                <div class="animate-fade-slide opacity-0">
-                    <div
-                        class="inline-flex items-center gap-2 bg-[rgba(29,209,161,0.12)] border border-[rgba(29,209,161,0.25)] rounded-full px-4 py-1.5 mb-4">
-                        <i data-lucide="map-pin" class="text-[#1DD1A1] w-3.5 h-3.5"></i>
-                        <span class="text-[#1DD1A1] text-xs font-semibold tracking-wide">PETA INTERAKTIF</span>
-                    </div>
-                    <h1 class="text-white font-extrabold text-3xl md:text-4xl lg:text-5xl mb-3">Peta Risiko Bencana
-                        Pesisir</h1>
-                    <p class="text-white/65 text-sm md:text-base max-w-xl leading-relaxed">Jalur evakuasi ditampilkan
-                        mengikuti jalan aspal nyata yang bisa dilalui motor — powered by OpenStreetMap Routing.</p>
-                </div>
+      <div class="bg-[#0A3D62] px-6 pt-12 pb-16 md:px-8">
+        <div class="max-w-7xl mx-auto">
+          <div class="animate-fade-slide opacity-0">
+            <div class="inline-flex items-center gap-2 bg-[rgba(29,209,161,0.12)] border border-[rgba(29,209,161,0.25)] rounded-full px-4 py-1.5 mb-4">
+              <i data-lucide="map-pin" class="text-[#1DD1A1] w-3.5 h-3.5"></i>
+              <span class="text-[#1DD1A1] text-xs font-semibold tracking-wide">PETA INTERAKTIF</span>
             </div>
+            <h1 class="text-white font-extrabold text-3xl md:text-4xl lg:text-5xl mb-3">Peta Risiko Bencana</h1>
+            <p class="text-white/65 text-sm md:text-base max-w-xl leading-relaxed">Jalur evakuasi ditampilkan mengikuti jalan aspal nyata yang bisa dilalui kendaraan</p>
+          </div>
         </div>
+      </div>
 
-        <div class="max-w-7xl mx-auto -mt-10 px-4 md:px-6 pb-20">
-            <div class="grid grid-cols-1 lg:grid-cols-[280px,1fr] gap-5 items-start">
-
-                <!-- SIDEBAR -->
-                <div class="flex flex-col gap-4">
-                    <div class="card-bg rounded-xl shadow-md p-5 border border-default animate-fade-left opacity-0">
-                        <div class="flex items-center gap-2 mb-4">
-                            <i data-lucide="layers" class="w-4 h-4 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
-                            <h3 class="font-bold text-sm text-primary">Kontrol Layer</h3>
-                        </div>
-                        <div id="layerControls" class="space-y-2.5"></div>
-                    </div>
-
-                    <div class="card-bg rounded-xl shadow-md p-5 animate-fade-left opacity-0 delay-100">
-                        <h3 class="font-bold text-sm text-primary mb-4">Legenda</h3>
-                        <div id="legendColors"></div>
-                        <div class="border-t border-default pt-3 mt-2 space-y-2">
-                            <div class="flex items-center gap-2.5">
-                                <div class="w-6 h-[3px] bg-[#1DD1A1] rounded-full"></div>
-                                <span class="text-xs text-secondary">Jalur Evakuasi (Jalan Aspal Nyata)</span>
-                            </div>
-                            <div class="flex items-center gap-2.5">
-                                <div class="w-[14px] h-[14px] bg-[#FFC312] rounded flex items-center justify-center">
-                                    <i data-lucide="shield" class="w-2 h-2 text-white"></i>
-                                </div>
-                                <span class="text-xs text-secondary">Titik Aman / Shelter</span>
-                            </div>
-                            <div class="p-2 bg-[#1DD1A1]/10 rounded-lg mt-2">
-                                <p class="text-[10px] text-[#1DD1A1] font-semibold">Routing via OpenStreetMap</p>
-                                <p class="text-[10px] text-secondary">Jalur mengikuti jalan aspal yang bisa dilalui
-                                    motor</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="regionDetailCard"
-                        class="card-bg rounded-xl shadow-md p-5 border-l-4 border-transparent hidden"></div>
-
-                    <div x-show="selectedCoordinates" x-transition
-                        class="card-bg rounded-xl shadow-md p-5 border border-[#1DD1A1]">
-                        <div class="flex items-center gap-2 mb-3">
-                            <i data-lucide="map-pin" class="w-4 h-4 text-[#1DD1A1]"></i>
-                            <h3 class="font-bold text-sm text-primary">Koordinat Terpilih</h3>
-                        </div>
-                        <div class="text-xs text-secondary space-y-1">
-                            <p><span class="font-semibold">Lat:</span> <span x-text="selectedCoordinates?.lat"></span>
-                            </p>
-                            <p><span class="font-semibold">Lng:</span> <span x-text="selectedCoordinates?.lng"></span>
-                            </p>
-                            <p class="text-[10px] text-[#1DD1A1] mt-1">Ikuti jalur evakuasi yang tersedia</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- MAP AREA -->
-                <div class="card-bg rounded-2xl overflow-hidden shadow-xl animate-fade-left opacity-0 delay-200">
-                    <div class="bg-[#1B262C] px-5 py-3 flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                            <i data-lucide="navigation" class="w-4 h-4 text-[#1DD1A1]"></i>
-                            <span class="text-white text-xs font-semibold">Peta Risiko Jawa Timur & Sekitarnya</span>
-                            <span
-                                class="bg-[rgba(29,209,161,0.15)] text-[#1DD1A1] text-[10px] font-semibold px-2 py-0.5 rounded-full">LIVE</span>
-                        </div>
-                        <div class="flex gap-1.5">
-                            <button id="locateMeBtn"
-                                class="w-8 h-8 bg-white/10 border border-white/20 rounded-lg flex items-center justify-center text-white/80 hover:bg-[rgba(29,209,161,0.2)] transition"
-                                title="Lokasi Saya">
-                                <i data-lucide="target" class="w-3.5 h-3.5"></i>
-                            </button>
-                            <button id="fullscreenBtn"
-                                class="w-8 h-8 bg-white/10 border border-white/20 rounded-lg flex items-center justify-center text-white/80 hover:bg-[rgba(29,209,161,0.2)] transition"
-                                title="Layar Penuh">
-                                <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div style="position: relative;">
-                        <div id="map" style="height: 520px; width: 100%; z-index: 0;"></div>
-                        <div id="routeLoadingOverlay">
-                            <div class="spinner"></div>
-                            <span id="loadingText">Menghitung jalur evakuasi...</span>
-                        </div>
-                    </div>
-
-                    <div class="stat-bg border-t border-default px-6 py-4 grid grid-cols-4 gap-3">
-                        <div id="statBahaya"
-                            class="bg-[#EE5253]/10 border border-[#EE5253]/30 rounded-lg p-2.5 text-center"></div>
-                        <div id="statSiaga"
-                            class="bg-[#FF9F43]/10 border border-[#FF9F43]/30 rounded-lg p-2.5 text-center"></div>
-                        <div id="statWaspada"
-                            class="bg-[#FFC312]/10 border border-[#FFC312]/30 rounded-lg p-2.5 text-center"></div>
-                        <div id="statTitikAman"
-                            class="bg-[#1DD1A1]/10 border border-[#1DD1A1]/30 rounded-lg p-2.5 text-center"></div>
-                    </div>
-                </div>
+      <div class="max-w-7xl mx-auto -mt-10 px-4 md:px-6 pb-20">
+        <div class="grid grid-cols-1 lg:grid-cols-[280px,1fr] gap-5 items-start">
+          <!-- SIDEBAR -->
+          <div class="flex flex-col gap-4">
+            <div class="card-bg rounded-xl shadow-md p-5 border border-default animate-fade-left opacity-0">
+              <div class="flex items-center gap-2 mb-4">
+                <i data-lucide="layers" class="w-4 h-4 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
+                <h3 class="font-bold text-sm text-primary">Navigasi</h3>
+              </div>
+              <div id="layerControls" class="space-y-2.5"></div>
             </div>
+
+            <div class="card-bg rounded-xl shadow-md p-5 animate-fade-left opacity-0 delay-100">
+              <div class="flex items-center gap-2 mb-4">
+                <i data-lucide="map" class="w-4 h-4 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
+                <h3 class="font-bold text-sm text-primary">Legenda</h3>
+              </div>
+
+              <div id="legendColors"></div>
+              <div class="border-t border-default pt-3 mt-2 space-y-2">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-6 h-[3px] bg-[#1DD1A1] rounded-full"></div>
+                  <span class="text-xs text-secondary">Jalur Evakuasi (Jalan Aspal Nyata)</span>
+                </div>
+                <div class="flex items-center gap-2.5">
+                  <div class="w-[14px] h-[14px] bg-[#FFC312] rounded flex items-center justify-center">
+                    <i data-lucide="shield" class="w-2 h-2 text-white"></i>
+                  </div>
+                  <span class="text-xs text-secondary">Titik Aman / Shelter</span>
+                </div>
+                <div class="p-2 bg-[#1DD1A1]/10 rounded-lg mt-2">
+                  <p class="text-[10px] text-[#1DD1A1] font-semibold">Routing via OpenStreetMap</p>
+                  <p class="text-[10px] text-secondary">Jalur mengikuti jalan aspal yang bisa dilalui motor</p>
+                </div>
+              </div>
+            </div>
+
+            <div id="regionDetailCard" class="card-bg rounded-xl shadow-md p-5 border-l-4 border-transparent hidden"></div>
+
+            <div x-show="selectedCoordinates" x-transition class="card-bg rounded-xl shadow-md p-5 border border-[#1DD1A1]">
+              <div class="flex items-center gap-2 mb-3">
+                <i data-lucide="map-pin" class="w-4 h-4 text-[#1DD1A1]"></i>
+                <h3 class="font-bold text-sm text-primary">Koordinat Terpilih</h3>
+              </div>
+              <div class="text-xs text-secondary space-y-1">
+                <p><span class="font-semibold">Lat:</span> <span x-text="selectedCoordinates?.lat"></span></p>
+                <p><span class="font-semibold">Lng:</span> <span x-text="selectedCoordinates?.lng"></span></p>
+                <p class="text-[10px] text-[#1DD1A1] mt-1">Ikuti jalur evakuasi yang tersedia</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- MAP AREA -->
+          <div class="card-bg rounded-2xl overflow-hidden shadow-xl animate-fade-left opacity-0 delay-200">
+            <div class="bg-[#1B262C] px-5 py-3 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <i data-lucide="navigation" class="w-4 h-4 text-[#1DD1A1]"></i>
+                <span class="text-white text-xs font-semibold">Peta Risiko</span>
+                <span class="bg-[rgba(29,209,161,0.15)] text-[#1DD1A1] text-[10px] font-semibold px-2 py-0.5 rounded-full">LIVE</span>
+              </div>
+              <div class="flex gap-1.5">
+                <button id="locateMeBtn" class="w-8 h-8 bg-white/10 border border-white/20 rounded-lg flex items-center justify-center text-white/80 hover:bg-[rgba(29,209,161,0.2)] transition" title="Lokasi Saya">
+                  <i data-lucide="target" class="w-3.5 h-3.5"></i>
+                </button>
+                <button id="fullscreenBtn" class="w-8 h-8 bg-white/10 border border-white/20 rounded-lg flex items-center justify-center text-white/80 hover:bg-[rgba(29,209,161,0.2)] transition" title="Layar Penuh">
+                  <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+
+            <div style="position: relative">
+              <div id="map" style="height: 520px; width: 100%; z-index: 0"></div>
+              <div id="routeLoadingOverlay">
+                <div class="spinner"></div>
+                <span id="loadingText">Menghitung jalur evakuasi...</span>
+              </div>
+            </div>
+
+            <div class="stat-bg border-t border-default px-6 py-4 grid grid-cols-4 gap-3">
+              <div id="statBahaya" class="bg-[#EE5253]/10 border border-[#EE5253]/30 rounded-lg p-2.5 text-center"></div>
+              <div id="statSiaga" class="bg-[#FF9F43]/10 border border-[#FF9F43]/30 rounded-lg p-2.5 text-center"></div>
+              <div id="statWaspada" class="bg-[#FFC312]/10 border border-[#FFC312]/30 rounded-lg p-2.5 text-center"></div>
+              <div id="statTitikAman" class="bg-[#1DD1A1]/10 border border-[#1DD1A1]/30 rounded-lg p-2.5 text-center"></div>
+            </div>
+          </div>
         </div>
+      </div>
     </main>
 
     <!-- FOOTER -->
     <footer class="bg-[#1B262C] text-white pt-20">
-        <div class="max-w-7xl mx-auto px-6 pb-20 grid grid-cols-1 md:grid-cols-4 gap-12">
-            <div>
-                <div class="flex items-center gap-3 mb-6">
-                    <div
-                        class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center">
-                        <i data-lucide="shield" class="text-white"></i>
-                    </div>
-                    <div class="font-extrabold text-lg">SIAPBENCANA</div>
-                </div>
-                <p class="text-white/50 text-sm leading-relaxed">Platform kesiapsiagaan bencana pesisir berbasis risiko
-                    wilayah untuk Indonesia yang lebih aman.</p>
+      <div class="max-w-7xl mx-auto px-6 pb-20 grid grid-cols-1 md:grid-cols-4 gap-12">
+        <div>
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center">
+              <i data-lucide="shield" class="text-white"></i>
             </div>
-            <div>
-                <h5 class="font-bold mb-6">Navigasi</h5>
-                <ul class="space-y-4 text-sm text-white/50">
-                    <li><a href="#" class="hover:text-[#1DD1A1]">Cek Risiko</a></li>
-                    <li><a href="#" class="hover:text-[#1DD1A1]">Peta Interaktif</a></li>
-                    <li><a href="#" class="hover:text-[#1DD1A1]">Panduan Edukasi</a></li>
-                </ul>
-            </div>
-            <div>
-                <h5 class="font-bold mb-6">Kontak</h5>
-                <ul class="space-y-4 text-sm text-white/50">
-                    <li class="flex gap-2"><i data-lucide="mail" class="w-4 text-[#1DD1A1]"></i> info@siapbencana.go.id
-                    </li>
-                    <li class="flex gap-2"><i data-lucide="phone" class="w-4 text-[#1DD1A1]"></i> +62 21 1234 5678</li>
-                </ul>
-            </div>
-            <div>
-                <div class="bg-[#1DD1A1]/10 border border-[#1DD1A1]/20 p-6 rounded-2xl">
-                    <div class="text-[10px] font-bold text-[#1DD1A1] uppercase mb-1">Darurat</div>
-                    <div class="text-3xl font-black">119</div>
-                    <div class="text-[10px] text-white/40 mt-1 uppercase">BNPB Response</div>
-                </div>
-            </div>
+            <div class="font-extrabold text-lg">RUANG AMAN</div>
+          </div>
+          <p class="text-white/50 text-sm leading-relaxed">Platform terpadu untuk analisis dan informasi risiko bencana berbasis air guna mendukung kesiapsiagaan masyarakat.</p>
         </div>
-        <div class="border-t border-white/5 py-8 text-center text-[11px] text-white/30">
-            © 2026 SIAPBENCANA. Coastal Safety Platform Indonesia.
+        <div>
+          <h5 class="font-bold mb-6">Navigasi</h5>
+          <ul class="space-y-4 text-sm text-white/50">
+            <li><a href="cek-risiko.html" class="hover:text-[#1DD1A1] transition-colors">Cek Risiko</a></li>
+            <li><a href="peta.html" class="hover:text-[#1DD1A1] transition-colors">Peta Interaktif</a></li>
+            <li><a href="edukasi.html" class="hover:text-[#1DD1A1] transition-colors">Panduan Edukasi</a></li>
+            <li><a href="simulasi.html" class="hover:text-[#1DD1A1] transition-colors">Simulasi</a></li>
+            <li><a href="about.html" class="hover:text-[#1DD1A1] transition-colors">About</a></li>
+          </ul>
         </div>
+        <div>
+          <h5 class="font-bold mb-6">Kontak</h5>
+          <ul class="space-y-4 text-sm text-white/50">
+            <li class="flex gap-2"><i data-lucide="mail" class="w-4 text-[#1DD1A1]"></i> info@ruangaman.go.id</li>
+            <li class="flex gap-2"><i data-lucide="phone" class="w-4 text-[#1DD1A1]"></i> +62 21 1234 5678</li>
+          </ul>
+        </div>
+        <div>
+          <div class="bg-[#1DD1A1]/10 border border-[#1DD1A1]/20 p-6 rounded-2xl">
+            <div class="text-[10px] font-bold text-[#1DD1A1] uppercase mb-1">Darurat</div>
+            <div class="text-3xl font-black">117</div>
+            <div class="text-[10px] text-white/40 mt-1 uppercase">BNPB Response</div>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-white/5 py-8 text-center text-[11px] text-white/30">© 2026 RUANG AMAN. Water-Related Disasters Safety Platform Indonesia.</div>
     </footer>
 
     <script>
-        lucide.createIcons();
-        document.addEventListener('alpine:initialized', () => lucide.createIcons());
+      lucide.createIcons();
+      document.addEventListener("alpine:initialized", () => lucide.createIcons());
 
-        (function () {
-            const COASTAL_REGIONS = [
-                // Malang Selatan
-                { name: "Sendang Biru (Tamban)", lat: -8.4250, lng: 112.6850, level: "bahaya", type: "Tsunami", desc: "Kawasan pesisir selatan, sangat rawan tsunami" },
-                { name: "Tirtoyudo", lat: -8.3000, lng: 112.8333, level: "siaga", type: "Tsunami", desc: "Wilayah pesisir dengan risiko tsunami tinggi" },
-                { name: "Donomulyo", lat: -8.3167, lng: 112.4333, level: "siaga", type: "Tsunami", desc: "Zona siaga tsunami pesisir selatan" },
-                // Surabaya 
-                { name: "Kenjeran", lat: -7.2333, lng: 112.7833, level: "bahaya", type: "Banjir Rob", desc: "Kawasan pesisir utara, rob tinggi saat pasang" },
-                { name: "Bulak", lat: -7.2167, lng: 112.7667, level: "bahaya", type: "Banjir Rob", desc: "Daerah tambak, rawan rob ekstrem" },
-                { name: "Tambak Wedi", lat: -7.2000, lng: 112.7333, level: "bahaya", type: "Banjir Rob", desc: "Rob mencapai pemukiman" },
-                { name: "Wonokromo", lat: -7.3000, lng: 112.7333, level: "waspada", type: "Banjir Hujan", desc: "Dataran rendah, rawan genangan" },
-                { name: "Rungkut", lat: -7.3167, lng: 112.7667, level: "waspada", type: "Banjir Hujan", desc: "Kawasan industri, drainase terbatas" },
-                { name: "Asemrowo", lat: -7.2500, lng: 112.7167, level: "siaga", type: "Banjir Hujan", desc: "Daerah padat penduduk" },
-                { name: "Tandes", lat: -7.2500, lng: 112.6833, level: "siaga", type: "Banjir Hujan", desc: "Rawan banjir kiriman" },
-                // Pacitan
-                { name: "Pacitan Kota", lat: -8.2000, lng: 111.1000, level: "bahaya", type: "Tsunami", desc: "Kota pesisir, sangat rawan tsunami" },
-                { name: "Kebonagung", lat: -8.2167, lng: 111.1667, level: "bahaya", type: "Tsunami", desc: "Zona merah tsunami pesisir selatan" },
-                { name: "Ngadirojo", lat: -8.2167, lng: 111.3333, level: "bahaya", type: "Tsunami", desc: "Kawasan pesisir dengan risiko tinggi" },
-                { name: "Pringkuku", lat: -8.1833, lng: 110.9667, level: "siaga", type: "Tsunami", desc: "Kawasan rawan tsunami" },
-                // Indramayu
-                { name: "Karangsong", lat: -6.3333, lng: 108.3167, level: "bahaya", type: "Banjir Rob", desc: "Kawasan tambak, rob tinggi" },
-                { name: "Eretan", lat: -6.3333, lng: 108.3500, level: "bahaya", type: "Banjir Rob", desc: "Pesisir utara, rob mencapai rumah" },
-                { name: "Kandanghaur", lat: -6.3500, lng: 108.0667, level: "bahaya", type: "Banjir Rob", desc: "Zona merah rob pantura" },
-                { name: "Patrol", lat: -6.3000, lng: 108.0167, level: "siaga", type: "Banjir Rob", desc: "Kawasan pesisir rawan rob" },
-                { name: "Krangkeng", lat: -6.3500, lng: 108.1167, level: "siaga", type: "Banjir Rob", desc: "Daerah tambak dan pemukiman" },
-            ];
+      (function () {
+        const COASTAL_REGIONS = [
+          // Malang Selatan
+          { name: "Sendang Biru (Tamban)", lat: -8.425, lng: 112.685, level: "bahaya", type: "Tsunami", desc: "Kawasan pesisir selatan, sangat rawan tsunami" },
+          { name: "Tirtoyudo", lat: -8.3, lng: 112.8333, level: "siaga", type: "Tsunami", desc: "Wilayah pesisir dengan risiko tsunami tinggi" },
+          { name: "Donomulyo", lat: -8.3167, lng: 112.4333, level: "siaga", type: "Tsunami", desc: "Zona siaga tsunami pesisir selatan" },
+          // Surabaya
+          { name: "Kenjeran", lat: -7.2333, lng: 112.7833, level: "bahaya", type: "Banjir Rob", desc: "Kawasan pesisir utara, rob tinggi saat pasang" },
+          { name: "Bulak", lat: -7.2167, lng: 112.7667, level: "bahaya", type: "Banjir Rob", desc: "Daerah tambak, rawan rob ekstrem" },
+          { name: "Tambak Wedi", lat: -7.2, lng: 112.7333, level: "bahaya", type: "Banjir Rob", desc: "Rob mencapai pemukiman" },
+          { name: "Wonokromo", lat: -7.3, lng: 112.7333, level: "waspada", type: "Banjir Hujan", desc: "Dataran rendah, rawan genangan" },
+          { name: "Rungkut", lat: -7.3167, lng: 112.7667, level: "waspada", type: "Banjir Hujan", desc: "Kawasan industri, drainase terbatas" },
+          { name: "Asemrowo", lat: -7.25, lng: 112.7167, level: "siaga", type: "Banjir Hujan", desc: "Daerah padat penduduk" },
+          { name: "Tandes", lat: -7.25, lng: 112.6833, level: "siaga", type: "Banjir Hujan", desc: "Rawan banjir kiriman" },
+          // Pacitan
+          { name: "Pacitan Kota", lat: -8.2, lng: 111.1, level: "bahaya", type: "Tsunami", desc: "Kota pesisir, sangat rawan tsunami" },
+          { name: "Kebonagung", lat: -8.2167, lng: 111.1667, level: "bahaya", type: "Tsunami", desc: "Zona merah tsunami pesisir selatan" },
+          { name: "Ngadirojo", lat: -8.2167, lng: 111.3333, level: "bahaya", type: "Tsunami", desc: "Kawasan pesisir dengan risiko tinggi" },
+          { name: "Pringkuku", lat: -8.1833, lng: 110.9667, level: "siaga", type: "Tsunami", desc: "Kawasan rawan tsunami" },
+          // Indramayu
+          { name: "Karangsong", lat: -6.3333, lng: 108.3167, level: "bahaya", type: "Banjir Rob", desc: "Kawasan tambak, rob tinggi" },
+          { name: "Eretan", lat: -6.3333, lng: 108.35, level: "bahaya", type: "Banjir Rob", desc: "Pesisir utara, rob mencapai rumah" },
+          { name: "Kandanghaur", lat: -6.35, lng: 108.0667, level: "bahaya", type: "Banjir Rob", desc: "Zona merah rob pantura" },
+          { name: "Patrol", lat: -6.3, lng: 108.0167, level: "siaga", type: "Banjir Rob", desc: "Kawasan pesisir rawan rob" },
+          { name: "Krangkeng", lat: -6.35, lng: 108.1167, level: "siaga", type: "Banjir Rob", desc: "Daerah tambak dan pemukiman" },
+        ];
 
-            const SAFE_POINTS = [
-                { name: "Rest Area Pesona Wono Agung", lat: -8.362214, lng: 112.6590471, type: "Dataran Tinggi", desc: "Kawasan aman tsunami" },
-                { name: "Perbukitan Tirtoyudo", lat: -8.2333, lng: 112.7667, type: "Bukit Evakuasi", desc: "Dataran tinggi alami" },
-                { name: "Perbukitan Donomulyo", lat: -8.2500, lng: 112.5000, type: "Bukit Evakuasi", desc: "Ketinggian aman >30 mdpl" },
-                { name: "Lakarsantri (Surabaya Barat)", lat: -7.3167, lng: 112.6333, type: "Dataran Tinggi", desc: "Wilayah lebih tinggi, aman rob" },
-                { name: "Citraland Area", lat: -7.2833, lng: 112.6833, type: "Shelter Perumahan", desc: "Dataran tinggi, aman banjir" },
-                { name: "Nawangan (Dataran Tinggi)", lat: -8.0333, lng: 111.2000, type: "Bukit Evakuasi", desc: "Ketinggian >200 mdpl" },
-                { name: "Tulakan", lat: -8.1667, lng: 111.2667, type: "Titik Aman", desc: "Wilayah pesisir selatan" },
-                { name: "Perbukitan Pringkuku", lat: -8.0833, lng: 111.0667, type: "Bukit Alami", desc: "Titik aman tsunami" },
-                { name: "Gantar (Indramayu Selatan)", lat: -6.4667, lng: 108.2167, type: "Dataran Tinggi", desc: "Wilayah aman rob" },
-                { name: "Kantor Kecamatan Sindang", lat: -6.4167, lng: 108.2833, type: "Shelter BPBD", desc: "Titik evakuasi resmi" },
-                { name: "Kantor Kecamatan Patrol", lat: -6.3092507, lng: 107.9922969, type: "Kantor Kecamatan", desc: "Titik evakuasi resmi" },
-            ];
+        const SAFE_POINTS = [
+          { name: "Rest Area Pesona Wono Agung", lat: -8.362214, lng: 112.6590471, type: "Dataran Tinggi", desc: "Kawasan aman tsunami" },
+          { name: "Perbukitan Tirtoyudo", lat: -8.2333, lng: 112.7667, type: "Bukit Evakuasi", desc: "Dataran tinggi alami" },
+          { name: "Perbukitan Donomulyo", lat: -8.25, lng: 112.5, type: "Bukit Evakuasi", desc: "Ketinggian aman >30 mdpl" },
+          { name: "Lakarsantri (Surabaya Barat)", lat: -7.3167, lng: 112.6333, type: "Dataran Tinggi", desc: "Wilayah lebih tinggi, aman rob" },
+          { name: "Citraland Area", lat: -7.2833, lng: 112.6833, type: "Shelter Perumahan", desc: "Dataran tinggi, aman banjir" },
+          { name: "Nawangan (Dataran Tinggi)", lat: -8.0333, lng: 111.2, type: "Bukit Evakuasi", desc: "Ketinggian >200 mdpl" },
+          { name: "Tulakan", lat: -8.1667, lng: 111.2667, type: "Titik Aman", desc: "Wilayah pesisir selatan" },
+          { name: "Perbukitan Pringkuku", lat: -8.0833, lng: 111.0667, type: "Bukit Alami", desc: "Titik aman tsunami" },
+          { name: "Gantar (Indramayu Selatan)", lat: -6.4667, lng: 108.2167, type: "Dataran Tinggi", desc: "Wilayah aman rob" },
+          { name: "Kantor Kecamatan Sindang", lat: -6.4167, lng: 108.2833, type: "Shelter BPBD", desc: "Titik evakuasi resmi" },
+          { name: "Kantor Kecamatan Patrol", lat: -6.3092507, lng: 107.9922969, type: "Kantor Kecamatan", desc: "Titik evakuasi resmi" },
+        ];
 
-            const EVACUATION_PAIRS = [
-                // Malang Selatan
-                {
-                    name: "Jalur Evakuasi Sendang Biru → Perbukitan Gedangan",
-                    from: [-8.4250, 112.6850],
-                    to: [-8.362214, 112.6590471],
-                    desc: "Via Jalan Lintas Selatan - ±25 menit motor"
-                },
-                {
-                    name: "Jalur Evakuasi Tirtoyudo → Perbukitan Tirtoyudo",
-                    from: [-8.3000, 112.8333],
-                    to: [-8.2333, 112.7667],
-                    desc: "Via Jalan Kabupaten - ±20 menit motor"
-                },
-                {
-                    name: "Jalur Evakuasi Donomulyo → Perbukitan",
-                    from: [-8.3167, 112.4333],
-                    to: [-8.2500, 112.5000],
-                    desc: "Via Jalan Raya Donomulyo - ±15 menit motor"
-                },
-                {
-                    name: "Jalur Evakuasi Tulakan → Perbukitan",
-                    from: [-8.2167, 111.3333],
-                    to: [-8.1667, 111.2667],
-                    desc: "Via Jalan Raya"
-                },
-                // Surabaya
-                {
-                    name: "Jalur Evakuasi Kenjeran → Citraland",
-                    from: [-7.2333, 112.7833],
-                    to: [-7.2833, 112.6833],
-                    desc: "Via Jl. MERR - Mayjen Sungkono - ±20 menit motor"
-                },
-                {
-                    name: "Jalur Evakuasi Bulak → Lakarsantri",
-                    from: [-7.2167, 112.7667],
-                    to: [-7.3167, 112.6333],
-                    desc: "Via Jl. Manyar - Ahmad Yani - ±25 menit motor"
-                },
-                {
-                    name: "Jalur Evakuasi Tambak Wedi → Citraland",
-                    from: [-7.2000, 112.7333],
-                    to: [-7.2833, 112.6833],
-                    desc: "Via Jalan Arteri Surabaya - ±20 menit motor"
-                },
-                // Pacitan
-                {
-                    name: "Jalur Evakuasi Pacitan Kota → Nawangan",
-                    from: [-8.2000, 111.1000],
-                    to: [-8.0333, 111.2000],
-                    desc: "Via Jl. Pacitan-Nawangan - ±30 menit motor"
-                },
-                {
-                    name: "Jalur Evakuasi Pringkuku → Perbukitan",
-                    from: [-8.1833, 110.9667],
-                    to: [-8.0833, 111.0667],
-                    desc: "Via Jalan Kabupaten Pacitan - ±20 menit motor"
-                },
-                {
-                    name: "Jalur Evakuasi Kebonagung → Nawangan",
-                    from: [-8.2167, 111.1667],
-                    to: [-8.0333, 111.2000],
-                    desc: "Via Jalan Utama Pacitan - ±25 menit motor"
-                },
-                // Indramayu
-                {
-                    name: "Jalur Evakuasi Karangsong → Gantar",
-                    from: [-6.3333, 108.3167],
-                    to: [-6.4667, 108.2167],
-                    desc: "Via Jalan Pantura - Cipali - ±25 menit motor"
-                },
-                {
-                    name: "Jalur Evakuasi Eretan → Sindang",
-                    from: [-6.3333, 108.3500],
-                    to: [-6.4167, 108.2833],
-                    desc: "Via Jalan Alternatif Indramayu - ±20 menit motor"
-                },
-                {
-                    name: "Jalur Evakuasi Kandanghaur → Gantar",
-                    from: [-6.3500, 108.0667],
-                    to: [-6.4667, 108.2167],
-                    desc: "Via Jalan Pantura - ±30 menit motor"
-                },
-                {
-                    name: "Jalur Evakuasi Patrol → Kantor Kec. Patrol",
-                    from: [-6.3000, 108.0167],
-                    to: [-6.3092507,107.9922969],
-                    desc: "Via Jalan Pantura"
-                },
-                {
-                    name: "Jalur Evakuasi Krangkeng → Gantar",
-                    from: [-6.3500, 108.1167],
-                    to: [-6.4667, 108.2167],
-                    desc: "Via Jalan Alternatif Indramayu"
-                }
-            ];
+        const EVACUATION_PAIRS = [
+          // Malang Selatan
+          {
+            name: "Jalur Evakuasi Sendang Biru → Perbukitan Gedangan",
+            from: [-8.425, 112.685],
+            to: [-8.362214, 112.6590471],
+            desc: "Via Jalan Lintas Selatan - ±25 menit motor",
+          },
+          {
+            name: "Jalur Evakuasi Tirtoyudo → Perbukitan Tirtoyudo",
+            from: [-8.3, 112.8333],
+            to: [-8.2333, 112.7667],
+            desc: "Via Jalan Kabupaten - ±20 menit motor",
+          },
+          {
+            name: "Jalur Evakuasi Donomulyo → Perbukitan",
+            from: [-8.3167, 112.4333],
+            to: [-8.25, 112.5],
+            desc: "Via Jalan Raya Donomulyo - ±15 menit motor",
+          },
+          {
+            name: "Jalur Evakuasi Tulakan → Perbukitan",
+            from: [-8.2167, 111.3333],
+            to: [-8.1667, 111.2667],
+            desc: "Via Jalan Raya",
+          },
+          // Surabaya
+          {
+            name: "Jalur Evakuasi Kenjeran → Citraland",
+            from: [-7.2333, 112.7833],
+            to: [-7.2833, 112.6833],
+            desc: "Via Jl. MERR - Mayjen Sungkono - ±20 menit motor",
+          },
+          {
+            name: "Jalur Evakuasi Bulak → Lakarsantri",
+            from: [-7.2167, 112.7667],
+            to: [-7.3167, 112.6333],
+            desc: "Via Jl. Manyar - Ahmad Yani - ±25 menit motor",
+          },
+          {
+            name: "Jalur Evakuasi Tambak Wedi → Citraland",
+            from: [-7.2, 112.7333],
+            to: [-7.2833, 112.6833],
+            desc: "Via Jalan Arteri Surabaya - ±20 menit motor",
+          },
+          // Pacitan
+          {
+            name: "Jalur Evakuasi Pacitan Kota → Nawangan",
+            from: [-8.2, 111.1],
+            to: [-8.0333, 111.2],
+            desc: "Via Jl. Pacitan-Nawangan - ±30 menit motor",
+          },
+          {
+            name: "Jalur Evakuasi Pringkuku → Perbukitan",
+            from: [-8.1833, 110.9667],
+            to: [-8.0833, 111.0667],
+            desc: "Via Jalan Kabupaten Pacitan - ±20 menit motor",
+          },
+          {
+            name: "Jalur Evakuasi Kebonagung → Nawangan",
+            from: [-8.2167, 111.1667],
+            to: [-8.0333, 111.2],
+            desc: "Via Jalan Utama Pacitan - ±25 menit motor",
+          },
+          // Indramayu
+          {
+            name: "Jalur Evakuasi Karangsong → Gantar",
+            from: [-6.3333, 108.3167],
+            to: [-6.4667, 108.2167],
+            desc: "Via Jalan Pantura - Cipali - ±25 menit motor",
+          },
+          {
+            name: "Jalur Evakuasi Eretan → Sindang",
+            from: [-6.3333, 108.35],
+            to: [-6.4167, 108.2833],
+            desc: "Via Jalan Alternatif Indramayu - ±20 menit motor",
+          },
+          {
+            name: "Jalur Evakuasi Kandanghaur → Gantar",
+            from: [-6.35, 108.0667],
+            to: [-6.4667, 108.2167],
+            desc: "Via Jalan Pantura - ±30 menit motor",
+          },
+          {
+            name: "Jalur Evakuasi Patrol → Kantor Kec. Patrol",
+            from: [-6.3, 108.0167],
+            to: [-6.3092507, 107.9922969],
+            desc: "Via Jalan Pantura",
+          },
+          {
+            name: "Jalur Evakuasi Krangkeng → Gantar",
+            from: [-6.35, 108.1167],
+            to: [-6.4667, 108.2167],
+            desc: "Via Jalan Alternatif Indramayu",
+          },
+        ];
 
-            const RISK_COLORS = { bahaya: "#EE5253", siaga: "#FF9F43", waspada: "#FFC312", aman: "#1DD1A1" };
-            const RISK_LABELS = { bahaya: "Bahaya", siaga: "Siaga", waspada: "Waspada", aman: "Aman" };
+        const RISK_COLORS = { bahaya: "#EE5253", siaga: "#FF9F43", waspada: "#FFC312", aman: "#1DD1A1" };
+        const RISK_LABELS = { bahaya: "Bahaya", siaga: "Siaga", waspada: "Waspada", aman: "Aman" };
 
-            let map, markerCluster;
-            let routeLayers = [];
-            let safeMarkers = [];
-            let layers = { risikoZona: true, jalurEvakuasi: true, titikAman: true };
-            let routesLoaded = false;
+        let map, markerCluster;
+        let routeLayers = [];
+        let safeMarkers = [];
+        let layers = { risikoZona: true, jalurEvakuasi: true, titikAman: true };
+        let routesLoaded = false;
 
-            async function fetchOSRMRoute(fromLat, fromLng, toLat, toLng) {
-                const url = `https://router.project-osrm.org/route/v1/driving/${fromLng},${fromLat};${toLng},${toLat}?overview=full&geometries=geojson`;
-                try {
-                    const response = await fetch(url);
-                    if (!response.ok) throw new Error('OSRM API error');
-                    const data = await response.json();
-                    if (data.routes && data.routes.length > 0) {
-                        const route = data.routes[0];
-                        const coords = route.geometry.coordinates.map(c => [c[1], c[0]]);
-                        const distanceKm = (route.distance / 1000).toFixed(1);
-                        const durationMin = Math.round(route.duration / 60);
-                        return { coords, distanceKm, durationMin };
-                    }
-                } catch (e) {
-                    console.warn('OSRM fetch failed:', e);
-                }
-                return null;
+        async function fetchOSRMRoute(fromLat, fromLng, toLat, toLng) {
+          const url = `https://router.project-osrm.org/route/v1/driving/${fromLng},${fromLat};${toLng},${toLat}?overview=full&geometries=geojson`;
+          try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error("OSRM API error");
+            const data = await response.json();
+            if (data.routes && data.routes.length > 0) {
+              const route = data.routes[0];
+              const coords = route.geometry.coordinates.map((c) => [c[1], c[0]]);
+              const distanceKm = (route.distance / 1000).toFixed(1);
+              const durationMin = Math.round(route.duration / 60);
+              return { coords, distanceKm, durationMin };
             }
+          } catch (e) {
+            console.warn("OSRM fetch failed:", e);
+          }
+          return null;
+        }
 
-            async function drawRoute(pair, index, total) {
-                const overlay = document.getElementById('routeLoadingOverlay');
-                const loadingText = document.getElementById('loadingText');
-                overlay.classList.add('visible');
-                loadingText.textContent = `Memuat jalur ${index + 1}/${total}...`;
+        async function drawRoute(pair, index, total) {
+          const overlay = document.getElementById("routeLoadingOverlay");
+          const loadingText = document.getElementById("loadingText");
+          overlay.classList.add("visible");
+          loadingText.textContent = `Memuat jalur ${index + 1}/${total}...`;
 
-                const result = await fetchOSRMRoute(
-                    pair.from[0], pair.from[1],
-                    pair.to[0], pair.to[1]
-                );
+          const result = await fetchOSRMRoute(pair.from[0], pair.from[1], pair.to[0], pair.to[1]);
 
-                if (!result) {
-                    const fallback = L.polyline([pair.from, pair.to], {
-                        color: '#1DD1A1', weight: 3, opacity: 0.5,
-                        dashArray: '6,6'
-                    });
-                    fallback.addTo(map);
-                    routeLayers.push(fallback);
-                    return;
-                }
+          if (!result) {
+            const fallback = L.polyline([pair.from, pair.to], {
+              color: "#1DD1A1",
+              weight: 3,
+              opacity: 0.5,
+              dashArray: "6,6",
+            });
+            fallback.addTo(map);
+            routeLayers.push(fallback);
+            return;
+          }
 
-                const mainLine = L.polyline(result.coords, {
-                    color: '#1DD1A1',
-                    weight: 5,
-                    opacity: 0.9,
-                    lineCap: 'round',
-                    lineJoin: 'round'
-                });
+          const mainLine = L.polyline(result.coords, {
+            color: "#1DD1A1",
+            weight: 5,
+            opacity: 0.9,
+            lineCap: "round",
+            lineJoin: "round",
+          });
 
-                const animLine = L.polyline(result.coords, {
-                    color: '#ffffff',
-                    weight: 2,
-                    opacity: 0.7,
-                    lineCap: 'round',
-                    dashArray: '8,12',
-                    className: 'evacuation-route-line'
-                });
+          const animLine = L.polyline(result.coords, {
+            color: "#ffffff",
+            weight: 2,
+            opacity: 0.7,
+            lineCap: "round",
+            dashArray: "8,12",
+            className: "evacuation-route-line",
+          });
 
-                mainLine.bindPopup(`
+          mainLine.bindPopup(`
                 <div style="font-family: 'Poppins', sans-serif; min-width: 200px;">
                     <div style="color: #1DD1A1; font-weight: 700; font-size: 13px; margin-bottom: 6px;">
                         ${pair.name}
@@ -684,65 +648,73 @@
                 </div>
             `);
 
-                mainLine.addTo(map);
-                animLine.addTo(map);
-                routeLayers.push(mainLine, animLine);
+          mainLine.addTo(map);
+          animLine.addTo(map);
+          routeLayers.push(mainLine, animLine);
 
-                const startIcon = L.divIcon({
-                    className: '',
-                    html: `<div style="background:#EE5253; width:10px; height:10px; border-radius:50%; border:2px solid white; box-shadow:0 0 6px rgba(0,0,0,0.4);"></div>`,
-                    iconSize: [14, 14], iconAnchor: [7, 7]
-                });
-                const endIcon = L.divIcon({
-                    className: '',
-                    html: `<div style="background:#1DD1A1; width:12px; height:12px; border-radius:50%; border:2px solid white; box-shadow:0 0 8px rgba(29,209,161,0.6);"></div>`,
-                    iconSize: [16, 16], iconAnchor: [8, 8]
-                });
+          const startIcon = L.divIcon({
+            className: "",
+            html: `<div style="background:#EE5253; width:10px; height:10px; border-radius:50%; border:2px solid white; box-shadow:0 0 6px rgba(0,0,0,0.4);"></div>`,
+            iconSize: [14, 14],
+            iconAnchor: [7, 7],
+          });
+          const endIcon = L.divIcon({
+            className: "",
+            html: `<div style="background:#1DD1A1; width:12px; height:12px; border-radius:50%; border:2px solid white; box-shadow:0 0 8px rgba(29,209,161,0.6);"></div>`,
+            iconSize: [16, 16],
+            iconAnchor: [8, 8],
+          });
 
-                const startMarker = L.marker(pair.from, { icon: startIcon }).addTo(map);
-                const endMarker = L.marker(pair.to, { icon: endIcon }).addTo(map);
-                routeLayers.push(startMarker, endMarker);
-            }
+          const startMarker = L.marker(pair.from, { icon: startIcon }).addTo(map);
+          const endMarker = L.marker(pair.to, { icon: endIcon }).addTo(map);
+          routeLayers.push(startMarker, endMarker);
+        }
 
-            async function loadAllRoutes() {
-                if (routesLoaded) return;
-                const overlay = document.getElementById('routeLoadingOverlay');
+        async function loadAllRoutes() {
+          if (routesLoaded) return;
+          const overlay = document.getElementById("routeLoadingOverlay");
 
-                for (let i = 0; i < EVACUATION_PAIRS.length; i++) {
-                    await drawRoute(EVACUATION_PAIRS[i], i, EVACUATION_PAIRS.length);
-                    await new Promise(r => setTimeout(r, 300));
-                }
+          for (let i = 0; i < EVACUATION_PAIRS.length; i++) {
+            await drawRoute(EVACUATION_PAIRS[i], i, EVACUATION_PAIRS.length);
+            await new Promise((r) => setTimeout(r, 300));
+          }
 
-                overlay.classList.remove('visible');
-                routesLoaded = true;
+          overlay.classList.remove("visible");
+          routesLoaded = true;
 
-                const statusCard = document.getElementById('routeStatusCard');
-                const statusContent = document.getElementById('routeStatusContent');
-                statusCard.classList.remove('hidden');
-                statusContent.innerHTML = `
+          const statusCard = document.getElementById("routeStatusCard");
+          const statusContent = document.getElementById("routeStatusContent");
+          statusCard.classList.remove("hidden");
+          statusContent.innerHTML = `
                 <div style="color: #1DD1A1; font-weight: 600; margin-bottom: 4px;">${EVACUATION_PAIRS.length} jalur evakuasi dimuat</div>
                 <div style="color: var(--text-secondary);">Semua jalur mengikuti jalan aspal yang bisa dilalui motor, dihitung via OpenStreetMap Routing (OSRM).</div>
                 <div style="margin-top: 6px; font-size: 10px;">Klik jalur untuk melihat jarak & estimasi waktu.</div>
             `;
-                lucide.createIcons();
-            }
+          lucide.createIcons();
+        }
 
-            function clearRoutes() {
-                routeLayers.forEach(l => { try { map.removeLayer(l); } catch (e) { } });
-                routeLayers = [];
-                routesLoaded = false;
-            }
+        function clearRoutes() {
+          routeLayers.forEach((l) => {
+            try {
+              map.removeLayer(l);
+            } catch (e) {}
+          });
+          routeLayers = [];
+          routesLoaded = false;
+        }
 
-            function createRegionMarker(region) {
-                const color = RISK_COLORS[region.level];
-                const icon = L.divIcon({
-                    className: 'custom-marker',
-                    html: `<div class="risk-marker" style="background:${color}; border:2px solid white; width:28px; height:28px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); box-shadow:0 2px 8px rgba(0,0,0,0.35);"></div>`,
-                    iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -22]
-                });
+        function createRegionMarker(region) {
+          const color = RISK_COLORS[region.level];
+          const icon = L.divIcon({
+            className: "custom-marker",
+            html: `<div class="risk-marker" style="background:${color}; border:2px solid white; width:28px; height:28px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); box-shadow:0 2px 8px rgba(0,0,0,0.35);"></div>`,
+            iconSize: [28, 28],
+            iconAnchor: [14, 28],
+            popupAnchor: [0, -22],
+          });
 
-                const marker = L.marker([region.lat, region.lng], { icon });
-                marker.bindPopup(`
+          const marker = L.marker([region.lat, region.lng], { icon });
+          marker.bindPopup(`
                 <div style="font-family:'Poppins',sans-serif;">
                     <h3 style="font-weight:700; font-size:14px; margin-bottom:4px; color:${color};">${region.name}</h3>
                     <p style="font-size:11px; margin-bottom:8px; color:var(--text-secondary,#666);">${region.type}</p>
@@ -755,21 +727,21 @@
                 </div>
             `);
 
-                marker.on('click', () => {
-                    const alpineData = document.querySelector('[x-data]').__x.$data;
-                    alpineData.selectedCoordinates = { lat: region.lat.toFixed(6), lng: region.lng.toFixed(6) };
-                    showRegionDetail(region);
-                });
+          marker.on("click", () => {
+            const alpineData = document.querySelector("[x-data]").__x.$data;
+            alpineData.selectedCoordinates = { lat: region.lat.toFixed(6), lng: region.lng.toFixed(6) };
+            showRegionDetail(region);
+          });
 
-                return marker;
-            }
+          return marker;
+        }
 
-            function showRegionDetail(region) {
-                const card = document.getElementById('regionDetailCard');
-                const color = RISK_COLORS[region.level];
-                card.classList.remove('hidden');
-                card.style.borderLeftColor = color;
-                card.innerHTML = `
+        function showRegionDetail(region) {
+          const card = document.getElementById("regionDetailCard");
+          const color = RISK_COLORS[region.level];
+          card.classList.remove("hidden");
+          card.style.borderLeftColor = color;
+          card.innerHTML = `
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
                     <i data-lucide="map-pin" style="color:${color};" class="w-4 h-4"></i>
                     <h4 style="font-weight:700; font-size:13px; color:var(--text-primary);">${region.name}</h4>
@@ -789,20 +761,22 @@
                     </ul>
                 </div>
             `;
-                lucide.createIcons();
-            }
+          lucide.createIcons();
+        }
 
-            function addSafePoints() {
-                SAFE_POINTS.forEach(point => {
-                    const icon = L.divIcon({
-                        className: 'custom-marker',
-                        html: `<div style="background:#1DD1A1; width:28px; height:28px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); border:2px solid white; box-shadow:0 2px 10px rgba(29,209,161,0.4); display:flex; align-items:center; justify-content:center;">
+        function addSafePoints() {
+          SAFE_POINTS.forEach((point) => {
+            const icon = L.divIcon({
+              className: "custom-marker",
+              html: `<div style="background:#1DD1A1; width:28px; height:28px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); border:2px solid white; box-shadow:0 2px 10px rgba(29,209,161,0.4); display:flex; align-items:center; justify-content:center;">
                             <span style="transform:rotate(45deg); font-size:12px;"></span>
                            </div>`,
-                        iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -22]
-                    });
-                    const marker = L.marker([point.lat, point.lng], { icon });
-                    marker.bindPopup(`
+              iconSize: [28, 28],
+              iconAnchor: [14, 28],
+              popupAnchor: [0, -22],
+            });
+            const marker = L.marker([point.lat, point.lng], { icon });
+            marker.bindPopup(`
                     <div style="font-family:'Poppins',sans-serif;">
                         <h3 style="font-weight:700; font-size:13px; color:#1DD1A1; margin-bottom:4px;"> ${point.name}</h3>
                         <p style="font-size:11px; font-weight:600; color:#0A3D62; margin-bottom:4px;">${point.type}</p>
@@ -810,135 +784,144 @@
                         <p style="font-size:10px; color:#1DD1A1; margin-top:6px;">Dapat dicapai motor via jalan aspal</p>
                     </div>
                 `);
-                    marker.addTo(map);
-                    safeMarkers.push(marker);
-                });
-            }
+            marker.addTo(map);
+            safeMarkers.push(marker);
+          });
+        }
 
-            function removeSafePoints() {
-                safeMarkers.forEach(m => { try { map.removeLayer(m); } catch (e) { } });
-                safeMarkers = [];
-            }
+        function removeSafePoints() {
+          safeMarkers.forEach((m) => {
+            try {
+              map.removeLayer(m);
+            } catch (e) {}
+          });
+          safeMarkers = [];
+        }
 
-            function renderLayerControls() {
-                const config = {
-                    risikoZona: { label: "Zona Risiko", color: "#EE5253", desc: "Titik-titik rawan bencana di pesisir" },
-                    jalurEvakuasi: { label: "Jalur Evakuasi Motor", color: "#1DD1A1", desc: "Rute nyata via jalan aspal (OSRM)" },
-                    titikAman: { label: "Titik Aman / Shelter", color: "#FFC312", desc: "Shelter & bukit evakuasi >20 mdpl" }
-                };
+        function renderLayerControls() {
+          const config = {
+            risikoZona: { label: "Zona Risiko", color: "#EE5253", desc: "Titik-titik rawan bencana di pesisir" },
+            jalurEvakuasi: { label: "Jalur Evakuasi Motor", color: "#1DD1A1", desc: "Rute nyata via jalan aspal (OSRM)" },
+            titikAman: { label: "Titik Aman / Shelter", color: "#FFC312", desc: "Shelter & bukit evakuasi >20 mdpl" },
+          };
 
-                const div = document.getElementById('layerControls');
-                div.innerHTML = '';
+          const div = document.getElementById("layerControls");
+          div.innerHTML = "";
 
-                for (const [key, cfg] of Object.entries(config)) {
-                    const active = layers[key];
-                    const el = document.createElement('div');
-                    el.className = 'layer-item';
-                    el.dataset.layer = key;
-                    el.style.cssText = `
+          for (const [key, cfg] of Object.entries(config)) {
+            const active = layers[key];
+            const el = document.createElement("div");
+            el.className = "layer-item";
+            el.dataset.layer = key;
+            el.style.cssText = `
                     display:flex; align-items:center; gap:10px; padding:10px 12px;
                     border-radius:10px; cursor:pointer; transition:all 0.2s;
-                    background:${active ? cfg.color + '0f' : 'var(--bg-item)'};
-                    border:1.5px solid ${active ? cfg.color + '40' : 'var(--border-item)'};
+                    background:${active ? cfg.color + "0f" : "var(--bg-item)"};
+                    border:1.5px solid ${active ? cfg.color + "40" : "var(--border-item)"};
                 `;
-                    el.innerHTML = `
-                    <div style="width:34px; height:34px; border-radius:8px; background:${active ? cfg.color : 'var(--border-item)'}; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all 0.2s;">
-                        ${active ? '✓' : '–'}
+            el.innerHTML = `
+                    <div style="width:34px; height:34px; border-radius:8px; background:${active ? cfg.color : "var(--border-item)"}; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all 0.2s;">
+                        ${active ? "✓" : "–"}
                     </div>
                     <div style="flex:1;">
-                        <div style="font-weight:600; font-size:12px; color:${active ? 'var(--text-primary)' : 'var(--text-muted)'};">${cfg.label}</div>
+                        <div style="font-weight:600; font-size:12px; color:${active ? "var(--text-primary)" : "var(--text-muted)"};">${cfg.label}</div>
                         <div style="font-size:10px; color:var(--text-muted);">${cfg.desc}</div>
                     </div>
-                    <div style="width:16px; height:16px; border-radius:4px; border:2px solid ${active ? cfg.color : 'var(--border-input)'}; background:${active ? cfg.color : 'transparent'}; display:flex; align-items:center; justify-content:center;">
-                        ${active ? '<span style="color:white; font-size:10px; font-weight:bold;">✓</span>' : ''}
+                    <div style="width:16px; height:16px; border-radius:4px; border:2px solid ${active ? cfg.color : "var(--border-input)"}; background:${active ? cfg.color : "transparent"}; display:flex; align-items:center; justify-content:center;">
+                        ${active ? '<span style="color:white; font-size:10px; font-weight:bold;">✓</span>' : ""}
                     </div>
                 `;
-                    el.addEventListener('click', () => {
-                        layers[key] = !layers[key];
-                        handleLayerToggle(key, layers[key]);
-                        renderLayerControls();
-                    });
-                    div.appendChild(el);
-                }
-            }
+            el.addEventListener("click", () => {
+              layers[key] = !layers[key];
+              handleLayerToggle(key, layers[key]);
+              renderLayerControls();
+            });
+            div.appendChild(el);
+          }
+        }
 
-            function handleLayerToggle(key, active) {
-                if (key === 'risikoZona') {
-                    if (active) {
-                        COASTAL_REGIONS.forEach(r => {
-                            const m = createRegionMarker(r);
-                            markerCluster.addLayer(m);
-                        });
-                        map.addLayer(markerCluster);
-                    } else {
-                        markerCluster.clearLayers();
-                    }
-                }
-                if (key === 'jalurEvakuasi') {
-                    if (active) {
-                        loadAllRoutes();
-                    } else {
-                        clearRoutes();
-                    }
-                }
-                if (key === 'titikAman') {
-                    if (active) addSafePoints();
-                    else removeSafePoints();
-                }
+        function handleLayerToggle(key, active) {
+          if (key === "risikoZona") {
+            if (active) {
+              COASTAL_REGIONS.forEach((r) => {
+                const m = createRegionMarker(r);
+                markerCluster.addLayer(m);
+              });
+              map.addLayer(markerCluster);
+            } else {
+              markerCluster.clearLayers();
             }
+          }
+          if (key === "jalurEvakuasi") {
+            if (active) {
+              loadAllRoutes();
+            } else {
+              clearRoutes();
+            }
+          }
+          if (key === "titikAman") {
+            if (active) addSafePoints();
+            else removeSafePoints();
+          }
+        }
 
-            function renderLegend() {
-                const div = document.getElementById('legendColors');
-                div.innerHTML = Object.entries(RISK_COLORS).map(([level, color]) => `
+        function renderLegend() {
+          const div = document.getElementById("legendColors");
+          div.innerHTML = Object.entries(RISK_COLORS)
+            .map(
+              ([level, color]) => `
                 <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
                     <div style="width:12px; height:12px; border-radius:50%; background:${color}; box-shadow:0 0 6px ${color}80; flex-shrink:0;"></div>
                     <span style="font-size:12px; color:var(--text-secondary); font-weight:500;">Zona ${RISK_LABELS[level]}</span>
                     <div style="margin-left:auto; font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px; background:${color}18; color:${color};">${RISK_LABELS[level].toUpperCase()}</div>
                 </div>
-            `).join('');
-            }
+            `,
+            )
+            .join("");
+        }
 
-            function updateStats() {
-                const b = COASTAL_REGIONS.filter(r => r.level === 'bahaya').length;
-                const s = COASTAL_REGIONS.filter(r => r.level === 'siaga').length;
-                const w = COASTAL_REGIONS.filter(r => r.level === 'waspada').length;
-                const a = SAFE_POINTS.length;
-                document.getElementById('statBahaya').innerHTML = `<div style="font-weight:700; font-size:20px; color:#EE5253;">${b}</div><div style="font-size:11px; color:var(--text-secondary);">Bahaya</div>`;
-                document.getElementById('statSiaga').innerHTML = `<div style="font-weight:700; font-size:20px; color:#FF9F43;">${s}</div><div style="font-size:11px; color:var(--text-secondary);">Siaga</div>`;
-                document.getElementById('statWaspada').innerHTML = `<div style="font-weight:700; font-size:20px; color:#FFC312;">${w}</div><div style="font-size:11px; color:var(--text-secondary);">Waspada</div>`;
-                document.getElementById('statTitikAman').innerHTML = `<div style="font-weight:700; font-size:20px; color:#1DD1A1;">${a}</div><div style="font-size:11px; color:var(--text-secondary);">Titik Aman</div>`;
-            }
+        function updateStats() {
+          const b = COASTAL_REGIONS.filter((r) => r.level === "bahaya").length;
+          const s = COASTAL_REGIONS.filter((r) => r.level === "siaga").length;
+          const w = COASTAL_REGIONS.filter((r) => r.level === "waspada").length;
+          const a = SAFE_POINTS.length;
+          document.getElementById("statBahaya").innerHTML = `<div style="font-weight:700; font-size:20px; color:#EE5253;">${b}</div><div style="font-size:11px; color:var(--text-secondary);">Bahaya</div>`;
+          document.getElementById("statSiaga").innerHTML = `<div style="font-weight:700; font-size:20px; color:#FF9F43;">${s}</div><div style="font-size:11px; color:var(--text-secondary);">Siaga</div>`;
+          document.getElementById("statWaspada").innerHTML = `<div style="font-weight:700; font-size:20px; color:#FFC312;">${w}</div><div style="font-size:11px; color:var(--text-secondary);">Waspada</div>`;
+          document.getElementById("statTitikAman").innerHTML = `<div style="font-weight:700; font-size:20px; color:#1DD1A1;">${a}</div><div style="font-size:11px; color:var(--text-secondary);">Titik Aman</div>`;
+        }
 
-            function initMap() {
-                map = L.map('map').setView([-7.8000, 112.0000], 8);
+        function initMap() {
+          map = L.map("map").setView([-7.8, 112.0], 8);
 
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | SIAPBENCANA | Routing: OSRM',
-                    maxZoom: 19
-                }).addTo(map);
+          L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | RUANG AMAN | Routing: OSRM',
+            maxZoom: 19,
+          }).addTo(map);
 
-                markerCluster = L.markerClusterGroup({
-                    spiderfyOnMaxZoom: true,
-                    showCoverageOnHover: false,
-                    zoomToBoundsOnClick: true
-                });
+          markerCluster = L.markerClusterGroup({
+            spiderfyOnMaxZoom: true,
+            showCoverageOnHover: false,
+            zoomToBoundsOnClick: true,
+          });
 
-                COASTAL_REGIONS.forEach(r => markerCluster.addLayer(createRegionMarker(r)));
-                map.addLayer(markerCluster);
+          COASTAL_REGIONS.forEach((r) => markerCluster.addLayer(createRegionMarker(r)));
+          map.addLayer(markerCluster);
 
-                addSafePoints();
+          addSafePoints();
 
-                loadAllRoutes();
+          loadAllRoutes();
 
-                map.on('click', function (e) {
-                    const alpineData = document.querySelector('[x-data]').__x.$data;
-                    alpineData.selectedCoordinates = {
-                        lat: e.latlng.lat.toFixed(6),
-                        lng: e.latlng.lng.toFixed(6)
-                    };
-                    L.popup()
-                        .setLatLng(e.latlng)
-                        .setContent(`
+          map.on("click", function (e) {
+            const alpineData = document.querySelector("[x-data]").__x.$data;
+            alpineData.selectedCoordinates = {
+              lat: e.latlng.lat.toFixed(6),
+              lng: e.latlng.lng.toFixed(6),
+            };
+            L.popup()
+              .setLatLng(e.latlng)
+              .setContent(
+                `
                         <div style="font-family:'Poppins',sans-serif; font-size:12px;">
                             <strong>Koordinat yang dipilih</strong><br>
                             Lat: ${e.latlng.lat.toFixed(6)}<br>
@@ -947,36 +930,33 @@
                                 <span style="font-size:10px; color:#1DD1A1; font-weight:600;">🚗 Ikuti jalur hijau ke titik aman</span>
                             </div>
                         </div>
-                    `)
-                        .openOn(map);
-                });
-            }
+                    `,
+              )
+              .openOn(map);
+          });
+        }
 
-            document.addEventListener('DOMContentLoaded', function () {
-                initMap();
-                renderLegend();
-                renderLayerControls();
-                updateStats();
-                lucide.createIcons();
+        document.addEventListener("DOMContentLoaded", function () {
+          initMap();
+          renderLegend();
+          renderLayerControls();
+          updateStats();
+          lucide.createIcons();
 
-                document.getElementById('locateMeBtn')?.addEventListener('click', function () {
-                    map.locate({ setView: true, maxZoom: 16 });
-                    map.on('locationfound', function (e) {
-                        L.marker(e.latlng)
-                            .bindPopup('<span style="font-family:Poppins,sans-serif; font-size:12px;">📍 Lokasi Anda — Ikuti jalur evakuasi terdekat</span>')
-                            .addTo(map)
-                            .openPopup();
-                    });
-                    map.on('locationerror', () => alert('Tidak dapat menemukan lokasi Anda.'));
-                });
-
-                document.getElementById('fullscreenBtn')?.addEventListener('click', function () {
-                    const el = document.getElementById('map');
-                    if (el.requestFullscreen) el.requestFullscreen();
-                });
+          document.getElementById("locateMeBtn")?.addEventListener("click", function () {
+            map.locate({ setView: true, maxZoom: 16 });
+            map.on("locationfound", function (e) {
+              L.marker(e.latlng).bindPopup('<span style="font-family:Poppins,sans-serif; font-size:12px;">📍 Lokasi Anda — Ikuti jalur evakuasi terdekat</span>').addTo(map).openPopup();
             });
-        })();
-    </script>
-</body>
+            map.on("locationerror", () => alert("Tidak dapat menemukan lokasi Anda."));
+          });
 
+          document.getElementById("fullscreenBtn")?.addEventListener("click", function () {
+            const el = document.getElementById("map");
+            if (el.requestFullscreen) el.requestFullscreen();
+          });
+        });
+      })();
+    </script>
+  </body>
 </html>
