@@ -1,0 +1,579 @@
+<!doctype html>
+<html lang="id" class="light">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RUANG AMAN - Riwayat Peringatan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        * {
+            font-family: 'Inter', 'Poppins', sans-serif;
+        }
+
+        /* Light Mode - Default */
+        .page-bg {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        }
+
+        .card-bg {
+            background-color: #ffffff;
+            border-color: #e2e8f0;
+        }
+
+        .item-bg {
+            background-color: #ffffff;
+        }
+
+        .text-primary {
+            color: #0f172a;
+        }
+
+        .text-secondary {
+            color: #475569;
+        }
+
+        .text-muted {
+            color: #64748b;
+        }
+
+        .border-default {
+            border-color: #e2e8f0;
+        }
+
+        /* Dark Mode */
+        .dark .page-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+
+        .dark .card-bg {
+            background-color: #1e293b;
+            border-color: #334155;
+        }
+
+        .dark .item-bg {
+            background-color: #1e293b;
+        }
+
+        .dark .text-primary {
+            color: #f1f5f9;
+        }
+
+        .dark .text-secondary {
+            color: #94a3b8;
+        }
+
+        .dark .text-muted {
+            color: #94a3b8;
+        }
+
+        .dark .border-default {
+            border-color: #334155;
+        }
+
+        @keyframes fadeSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-slide {
+            animation: fadeSlide 0.6s ease-out forwards;
+        }
+
+        [x-cloak] {
+            display: none !important;
+        }
+
+        /* Status badge styles - Light Mode */
+        .status-siaga {
+            background-color: #FEF3C7;
+            color: #D97706;
+            border-color: #FDE68A;
+        }
+
+        .status-waspada {
+            background-color: #FEF9C3;
+            color: #CA8A04;
+            border-color: #FDE047;
+        }
+
+        .status-tanggap-darurat {
+            background-color: #FEE2E2;
+            color: #DC2626;
+            border-color: #FECACA;
+        }
+
+        .status-surut {
+            background-color: #D1FAE5;
+            color: #059669;
+            border-color: #A7F3D0;
+        }
+
+        .status-ditangani {
+            background-color: #E0E7FF;
+            color: #4F46E5;
+            border-color: #C7D2FE;
+        }
+
+        /* Dark Mode Status */
+        .dark .status-siaga {
+            background-color: rgba(255, 159, 67, 0.15);
+            color: #FF9F43;
+            border-color: rgba(255, 159, 67, 0.3);
+        }
+
+        .dark .status-waspada {
+            background-color: rgba(255, 195, 18, 0.15);
+            color: #FFC312;
+            border-color: rgba(255, 195, 18, 0.3);
+        }
+
+        .dark .status-tanggap-darurat {
+            background-color: rgba(238, 82, 83, 0.15);
+            color: #EE5253;
+            border-color: rgba(238, 82, 83, 0.3);
+        }
+
+        .dark .status-surut {
+            background-color: rgba(29, 209, 161, 0.15);
+            color: #1DD1A1;
+            border-color: rgba(29, 209, 161, 0.3);
+        }
+
+        .dark .status-ditangani {
+            background-color: rgba(10, 61, 98, 0.15);
+            color: #1DD1A1;
+            border-color: rgba(29, 209, 161, 0.3);
+        }
+
+        /* Jenis badge styles - Light Mode */
+        .type-banjir,
+        .type-banjir-luapan,
+        .type-banjir-bandang,
+        .type-banjir-lahar-hujan {
+            background-color: #E0F2FE;
+            color: #0284C7;
+        }
+
+        .type-rob {
+            background-color: #FEF3C7;
+            color: #D97706;
+        }
+
+        .type-abrasi-gelombang {
+            background-color: #D1FAE5;
+            color: #059669;
+        }
+
+        /* Dark Mode Jenis */
+        .dark .type-banjir,
+        .dark .type-banjir-luapan,
+        .dark .type-banjir-bandang,
+        .dark .type-banjir-lahar-hujan {
+            background-color: rgba(29, 209, 161, 0.15);
+            color: #1DD1A1;
+        }
+
+        .dark .type-rob {
+            background-color: rgba(255, 159, 67, 0.15);
+            color: #FF9F43;
+        }
+
+        .dark .type-abrasi-gelombang {
+            background-color: rgba(29, 209, 161, 0.15);
+            color: #1DD1A1;
+        }
+
+        /* Table hover effect */
+        .table-row-hover:hover {
+            background-color: #f8fafc;
+        }
+
+        .dark .table-row-hover:hover {
+            background-color: rgba(51, 65, 85, 0.5);
+        }
+
+        /* Select dropdown */
+        select {
+            background-color: #ffffff;
+            border-color: #e2e8f0;
+            color: #0f172a;
+        }
+
+        .dark select {
+            background-color: #1e293b;
+            border-color: #334155;
+            color: #f1f5f9;
+        }
+
+        select option {
+            background-color: #ffffff;
+            color: #0f172a;
+        }
+
+        .dark select option {
+            background-color: #1e293b;
+            color: #f1f5f9;
+        }
+    </style>
+
+    <script>
+        (function () {
+            const saved = localStorage.getItem("theme");
+            const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+            if (saved === "dark" || (!saved && prefersDark)) {
+                document.documentElement.classList.remove("light");
+                document.documentElement.classList.add("dark");
+            }
+        })();
+    </script>
+</head>
+
+<body x-data="riwayatApp()" @scroll.window="scrolled = (window.pageYOffset > 20)" :class="darkMode ? 'dark' : ''"
+    class="page-bg" x-cloak>
+    <!-- NAVBAR -->
+    <nav :class="scrolled ? 'bg-[#0A3D62]/95 border-b border-[#1DD1A1]/20 shadow-lg' : 'bg-[#0A3D62]'"
+        class="fixed top-0 left-0 right-0 z-[1000] backdrop-blur-md transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-[68px] flex items-center justify-between gap-3">
+            <a href="index.html" class="flex items-center gap-3 shrink-0">
+                <div
+                    class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center shadow-lg">
+                    <i data-lucide="shield" class="text-white w-5 h-5"></i>
+                </div>
+                <div class="text-white">
+                    <div class="font-extrabold text-base leading-none">RUANG AMAN</div>
+                    <div class="text-[10px] text-[#1DD1A1] tracking-widest leading-none uppercase">Water-Related
+                        Disaster Safety</div>
+                </div>
+            </a>
+
+            <div class="hidden md:flex items-center gap-5 lg:gap-6">
+                <a href="index.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1]">Home</a>
+                <a href="cek-risiko.html"
+                    class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Cek Risiko</a>
+                <a href="peta.html"
+                    class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Peta</a>
+                <a href="edukasi.html"
+                    class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Edukasi</a>
+                <a href="simulasi.html"
+                    class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Simulasi</a>
+                <a href="about.html"
+                    class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">About</a>
+
+                <button @click="toggleTheme()"
+                    class="relative w-16 h-8 rounded-full transition-colors duration-300 focus:outline-none"
+                    :class="darkMode ? 'bg-[#1DD1A1]' : 'bg-gray-600'"
+                    :title="darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+                    <span
+                        class="absolute top-1 w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-300 flex items-center justify-center"
+                        :class="darkMode ? 'translate-x-8' : 'translate-x-1'">
+                        <i :data-lucide="darkMode ? 'moon' : 'sun'" class="w-3.5 h-3.5"
+                            :class="darkMode ? 'text-[#1DD1A1]' : 'text-yellow-500'"></i>
+                    </span>
+                </button>
+            </div>
+
+            <button @click="mobileOpen = !mobileOpen"
+                class="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 transition-all gap-1.5"
+                aria-label="Toggle menu">
+                <span :class="mobileOpen ? 'rotate-45 translate-y-[7px]' : ''"
+                    class="block w-5 h-0.5 bg-white rounded-full transition-transform duration-200"></span>
+                <span :class="mobileOpen ? 'opacity-0 scale-x-0' : ''"
+                    class="block w-5 h-0.5 bg-white rounded-full transition-all duration-200"></span>
+                <span :class="mobileOpen ? '-rotate-45 -translate-y-[7px]' : ''"
+                    class="block w-5 h-0.5 bg-white rounded-full transition-transform duration-200"></span>
+            </button>
+        </div>
+
+        <div x-show="mobileOpen" x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 -translate-y-2"
+            class="md:hidden bg-[#0A3D62]/98 backdrop-blur-md border-t border-white/10 px-4 py-4">
+            <div class="flex flex-col gap-1">
+                <a href="index.html" @click="mobileOpen = false"
+                    class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Home</a>
+                <a href="cek-risiko.html" @click="mobileOpen = false"
+                    class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Cek
+                    Risiko</a>
+                <a href="peta.html" @click="mobileOpen = false"
+                    class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Peta</a>
+                <a href="edukasi.html" @click="mobileOpen = false"
+                    class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Edukasi</a>
+                <a href="simulasi.html" @click="mobileOpen = false"
+                    class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Simulasi</a>
+                <a href="about.html" @click="mobileOpen = false"
+                    class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">About</a>
+
+                <div class="flex items-center justify-between px-3 py-2.5 mt-2 border-t border-white/10 pt-3">
+                    <span class="text-sm font-medium text-white/80">Mode Tampilan</span>
+                    <button @click="toggleTheme()"
+                        class="relative w-16 h-8 rounded-full transition-colors duration-300 focus:outline-none flex items-center"
+                        :class="darkMode ? 'bg-[#1DD1A1]' : 'bg-gray-600'">
+                        <span
+                            class="absolute w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300 flex items-center justify-center"
+                            :class="darkMode ? 'translate-x-9' : 'translate-x-1'">
+                            <i :data-lucide="darkMode ? 'moon' : 'sun'" class="w-3.5 h-3.5"
+                                :class="darkMode ? 'text-[#1DD1A1]' : 'text-yellow-500'"></i>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="pt-[68px]">
+        <!-- Header -->
+        <div class="bg-[#0A3D62] px-6 pt-12 pb-16 md:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="animate-fade-slide opacity-0">
+                    <div
+                        class="inline-flex items-center gap-2 bg-[rgba(29,209,161,0.12)] border border-[rgba(29,209,161,0.25)] rounded-full px-4 py-1.5 mb-4">
+                        <i data-lucide="map-pin" class="text-[#1DD1A1] w-3.5 h-3.5"></i>
+                        <span class="text-[#1DD1A1] text-xs font-semibold tracking-wide">RIWAYAT PERINGATAN</span>
+                    </div>
+                    <h1 class="text-white font-extrabold text-3xl md:text-4xl lg:text-5xl mb-3">Peringatan Bencana</h1>
+                    <p class="text-white/65 text-sm md:text-base max-w-xl leading-relaxed">Daftar lengkap peringatan
+                        dini bencana berbasis air di Indonesia berdasarkan data BNPB, BMKG, dan ANTARA per 23 Maret
+                        2026.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="max-w-7xl mx-auto -mt-10 px-4 md:px-6 pb-20">
+            <!-- Riwayat Table Section -->
+            <div class="card-bg rounded-2xl p-6 md:p-8 shadow-lg border border-default mb-8">
+                <a href="index.html"
+                    class="text-[#0A3D62] dark:text-[#1DD1A1] font-bold text-sm flex items-center gap-1 hover:underline">
+                    <i data-lucide="arrow-left" class="w-4"></i> Kembali
+                </a>
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 gap-4 flex-wrap">
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold text-primary mt-3">Riwayat Kejadian Bencana</h2>
+                        <p class="text-xs text-secondary mt-1">Sumber: BNPB, BMKG, ANTARA | Diperbarui: 23 Maret 2026
+                        </p>
+                    </div>
+                    <div class="flex gap-3">
+                        <select x-model="filterJenis"
+                            class="text-sm px-3 py-2 rounded-xl border border-gray-200 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0A3D62] dark:focus:ring-[#1DD1A1]">
+                            <option value="all">Semua Jenis</option>
+                            <option value="Banjir">Banjir</option>
+                            <option value="Rob">Rob</option>
+                            <option value="Banjir Bandang">Banjir Bandang</option>
+                            <option value="Banjir Lahar Hujan">Banjir Lahar Hujan</option>
+                            <option value="Banjir Luapan">Banjir Luapan</option>
+                            <option value="Abrasi & Gelombang">Abrasi & Gelombang</option>
+                        </select>
+                        <select x-model="filterStatus"
+                            class="text-sm px-3 py-2 rounded-xl border border-gray-200 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0A3D62] dark:focus:ring-[#1DD1A1]">
+                            <option value="all">Semua Status</option>
+                            <option value="Siaga">Siaga</option>
+                            <option value="Waspada">Waspada</option>
+                            <option value="Tanggap Darurat">Tanggap Darurat</option>
+                            <option value="Surut">Surut</option>
+                            <option value="Ditangani">Ditangani</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Tabel Riwayat -->
+                <div class="space-y-4">
+                    <template x-for="(item, index) in filteredData" :key="index">
+                        <div class="item-bg border-l-4 border p-6 rounded-2xl flex items-center gap-6 flex-wrap group hover:translate-x-1 transition-all"
+                            :class="item.statusKelas === 'siaga' ? 'border-[#FF9F43]' : (item.statusKelas === 'waspada' ? 'border-[#FFC312]' : (item.statusKelas === 'tanggap-darurat' ? 'border-[#EE5253]' : 'border-[#1DD1A1]'))">
+
+                            <div class="w-10 h-10 rounded-xl flex items-center justify-center"
+                                :class="item.jenisKelas === 'rob' ? 'bg-[#FF9F43]/10 text-[#FF9F43]' : (item.jenisKelas === 'banjir' ? 'bg-[#0A3D62]/10 text-[#0A3D62] dark:text-[#1DD1A1]' : (item.jenisKelas === 'banjir-bandang' ? 'bg-[#EE5253]/10 text-[#EE5253]' : 'bg-[#FFC312]/10 text-[#FFC312]'))">
+                                <i :data-lucide="item.jenisKelas === 'rob' ? 'waves' : (item.jenisKelas === 'banjir' ? 'droplet' : (item.jenisKelas === 'banjir-bandang' ? 'zap' : 'activity'))"
+                                    class="w-5"></i>
+                            </div>
+
+                            <div class="flex-1 min-w-[200px]">
+                                <h4 class="font-bold text-primary text-sm" x-text="item.lokasi"></h4>
+                                <p class="text-muted text-xs mt-1" x-text="item.dampak"></p>
+                                <div class="flex gap-2 mt-2">
+                                    <span class="text-muted text-[10px]" x-text="item.tanggal"></span>
+                                    <span class="text-muted text-[10px]" x-text="item.jam"></span>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-3 flex-wrap">
+                                <span class="text-[10px] font-bold px-3 py-1 rounded-full border"
+                                    :class="item.statusKelas === 'siaga' ? 'bg-[#FF9F43]/10 text-[#FF9F43] border-[#FF9F43]/20' : (item.statusKelas === 'waspada' ? 'bg-[#FFC312]/10 text-[#FFC312] border-[#FFC312]/20' : (item.statusKelas === 'tanggap-darurat' ? 'bg-[#EE5253]/10 text-[#EE5253] border-[#EE5253]/20' : 'bg-[#1DD1A1]/10 text-[#1DD1A1] border-[#1DD1A1]/20'))"
+                                    x-text="item.status"></span>
+                                <span
+                                    class="bg-gray-100 dark:bg-white/10 text-muted text-[10px] px-3 py-1 rounded-full font-bold"
+                                    x-text="item.jenis"></span>
+                                <span class="text-muted text-[11px]" x-text="item.waktu"></span>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Empty State -->
+                <div x-show="filteredData.length === 0" class="text-center py-12">
+                    <i data-lucide="inbox" class="w-12 h-12 text-muted mx-auto mb-3"></i>
+                    <p class="text-muted">Tidak ada data untuk filter yang dipilih</p>
+                </div>
+
+                <!-- Info Footer -->
+                <div class="mt-6 pt-4 border-t border-default">
+                    <div class="flex flex-wrap gap-4 text-xs text-secondary">
+                        <span><span class="font-bold text-primary">WIB</span> = UTC+7 (Sumatera, Jawa, Kalbar,
+                            Kalteng)</span>
+                        <span><span class="font-bold text-primary">WITA</span> = UTC+8 (Kaltim, Bali, NTB, NTT,
+                            Sulawesi)</span>
+                        <span><span class="font-bold text-primary">WIT</span> = UTC+9 (Maluku, Papua)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#1B262C] text-white pt-16 sm:pt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 pb-16 sm:pb-20 grid grid-cols-1 md:grid-cols-4 gap-8 sm:gap-12">
+            <div class="col-span-1 md:col-span-1">
+                <div class="flex items-center gap-3 mb-6">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="shield" class="text-white"></i>
+                    </div>
+                    <div class="font-extrabold text-lg">RUANG AMAN</div>
+                </div>
+                <p class="text-white/50 text-sm leading-relaxed">Platform terpadu untuk analisis dan informasi risiko
+                    bencana berbasis air guna mendukung kesiapsiagaan masyarakat.</p>
+            </div>
+            <div>
+                <h5 class="font-bold mb-6">Navigasi</h5>
+                <ul class="space-y-4 text-sm text-white/50">
+                    <li><a href="cek-risiko.html" class="hover:text-[#1DD1A1] transition-colors">Cek Risiko</a></li>
+                    <li><a href="peta.html" class="hover:text-[#1DD1A1] transition-colors">Peta Interaktif</a></li>
+                    <li><a href="edukasi.html" class="hover:text-[#1DD1A1] transition-colors">Panduan Edukasi</a></li>
+                    <li><a href="simulasi.html" class="hover:text-[#1DD1A1] transition-colors">Simulasi</a></li>
+                    <li><a href="about.html" class="hover:text-[#1DD1A1] transition-colors">About</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="font-bold mb-6">Kontak</h5>
+                <ul class="space-y-4 text-sm text-white/50">
+                    <li class="flex gap-2"><i data-lucide="mail" class="w-4 text-[#1DD1A1] shrink-0"></i>
+                        info@ruangaman.go.id</li>
+                    <li class="flex gap-2"><i data-lucide="phone" class="w-4 text-[#1DD1A1] shrink-0"></i> +62 21 1234
+                        5678</li>
+                </ul>
+            </div>
+            <div>
+                <div class="bg-[#1DD1A1]/10 border border-[#1DD1A1]/20 p-6 rounded-2xl">
+                    <div class="text-[10px] font-bold text-[#1DD1A1] uppercase mb-1">Darurat</div>
+                    <div class="text-3xl font-black">117</div>
+                    <div class="text-[10px] text-white/40 mt-1 uppercase">BNPB Response</div>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-white/5 py-8 text-center text-[11px] text-white/30">© 2026 RUANG AMAN. Water-Related
+            Disasters Safety Platform Indonesia.</div>
+    </footer>
+
+    <script>
+        function riwayatApp() {
+            return {
+                scrolled: false,
+                mobileOpen: false,
+                darkMode: document.documentElement.classList.contains("dark"),
+                filterJenis: "all",
+                filterStatus: "all",
+
+                riwayatData: [
+                    { no: 1, tanggal: "23 Mar 2026", jam: "20.00–24.00 WIB", lokasi: "Kab. Demak, Jawa Tengah", jenis: "Rob", jenisKelas: "rob", status: "Siaga", statusKelas: "siaga", dampak: "30–50 cm, Kec. Sayung & Karanganyar. Dipicu pasang maksimum malam hari" },
+                    { no: 2, tanggal: "23–24 Mar 2026", jam: "23.00 WIB", lokasi: "Kab. Tangerang, Banten", jenis: "Rob", jenisKelas: "rob", status: "Siaga", statusKelas: "siaga", dampak: "Kec. Mauk, Teluknaga, Kosambi. Potensi rob pasang maksimum malam hari" },
+                    { no: 3, tanggal: "21 Mar 2026", jam: "10.00–14.00 WIT", lokasi: "Kab. Seram Bagian Barat, Maluku", jenis: "Banjir", jenisKelas: "banjir", status: "Surut", statusKelas: "surut", dampak: "177 KK terdampak. Desa Buano Utara & Desa Piru, Kec. Huamual Belakang & Seram Barat" },
+                    { no: 4, tanggal: "21 Mar 2026", jam: "08.00–12.00 WIB", lokasi: "Kota Depok, Jawa Barat", jenis: "Banjir", jenisKelas: "banjir", status: "Surut", statusKelas: "surut", dampak: "685 KK / 691 rumah terdampak, 17 jiwa mengungsi. Kel. Mekarsari & Tugu, Kec. Cimanggis" },
+                    { no: 5, tanggal: "20 Mar 2026", jam: "16.16 WIB", lokasi: "Kab. Magetan, Jawa Timur", jenis: "Banjir Luapan", jenisKelas: "banjir-luapan", status: "Surut", statusKelas: "surut", dampak: "31 KK / 31 unit rumah terendam. Desa Sukowinangun, Kec. Magetan. Dipicu hujan lebat sore hari" },
+                    { no: 6, tanggal: "20 Mar 2026", jam: "14.20 WITA", lokasi: "Kab. Bima, NTB", jenis: "Banjir", jenisKelas: "banjir", status: "Surut", statusKelas: "surut", dampak: "1.009 jiwa / 287 KK, 260 rumah, 3 fasilitas pendidikan. Desa Rada, Nggembe, Bre, Kananta" },
+                    { no: 7, tanggal: "20 Mar 2026", jam: "07.00–10.00 WIB", lokasi: "Kab. Mojokerto, Jawa Timur", jenis: "Banjir + Tanggul Jebol", jenisKelas: "banjir", status: "Surut", statusKelas: "surut", dampak: "275 jiwa mengungsi, 146 rumah, 1 tanggul jebol, 20+ ha sawah. Desa Kertosari & Jumenang" },
+                    { no: 8, tanggal: "18 Mar 2026", jam: "11.00–14.00 WIT", lokasi: "Kab. Waropen, Papua", jenis: "Abrasi & Gelombang", jenisKelas: "abrasi-gelombang", status: "Ditangani", statusKelas: "ditangani", dampak: "12 KK / 48 jiwa, 2 rumah rusak berat, 3 rusak ringan, 1 ruas jalan hampir putus. Kamp. Nonomi" },
+                    { no: 9, tanggal: "15 Mar 2026", jam: "20.00 WIB", lokasi: "Kab. Mojokerto, Jawa Timur", jenis: "Banjir + Tanggul Jebol", jenisKelas: "banjir", status: "Surut", statusKelas: "surut", dampak: "175 KK / 300 jiwa, 125 rumah, tanggul 15 m jebol, 32 ha sawah. Ketinggian 30–120 cm" },
+                    { no: 10, tanggal: "15 Mar 2026", jam: "16.00 WITA", lokasi: "Kab. Sumbawa, NTB", jenis: "Banjir Bandang", jenisKelas: "banjir-bandang", status: "Siaga", statusKelas: "siaga", dampak: "Dipicu hujan intensitas tinggi, listrik padam, tim gabungan di lokasi. Pendataan berlanjut" },
+                    { no: 11, tanggal: "14 Mar 2026", jam: "18.45 WIB", lokasi: "Kota Malang, Jawa Timur", jenis: "Banjir Luapan", jenisKelas: "banjir-luapan", status: "Surut", statusKelas: "surut", dampak: "Drainase & sungai meluap. Kec. Kedungkandang & Blimbing. Surut 15 Mar 2026" },
+                    { no: 12, tanggal: "12–17 Mar 2026", jam: "05.00–09.00 WIB", lokasi: "Jakarta Utara, DKI Jakarta", jenis: "Rob", jenisKelas: "rob", status: "Siaga", statusKelas: "siaga", dampak: "12 wilayah pesisir terdampak. Puncak pasang maks. 05.00–09.00 WIB. Perigee + pasang tinggi" },
+                    { no: 13, tanggal: "4 Mar 2026", jam: "14.00–17.00 WIB", lokasi: "Kota Semarang, Jawa Tengah", jenis: "Banjir Luapan Talud", jenisKelas: "banjir-luapan", status: "Surut", statusKelas: "surut", dampak: "Talud sungai jebol, 40 unit rumah & 1 pesantren terdampak. Kel. Mangkang Kulon, Kec. Tugu" },
+                    { no: 14, tanggal: "3–4 Mar 2026", jam: "15.00 WIB", lokasi: "Kab. Magelang, Jawa Tengah", jenis: "Banjir Lahar Hujan", jenisKelas: "banjir-lahar-hujan", status: "Tanggap Darurat", statusKelas: "tanggap-darurat", dampak: "3 tewas, 2 hilang, 6 luka. Kali Senowo meluap (curah hujan 144 mm). 3 truk + 4 jembatan rusak." },
+                    { no: 15, tanggal: "3 Mar 2026", jam: "08.00–12.00 WIB", lokasi: "Kab. Klaten, Jawa Tengah", jenis: "Banjir Luapan Talud", jenisKelas: "banjir-luapan", status: "Surut", statusKelas: "surut", dampak: "121 jiwa mengungsi, 1.000+ rumah, 13 sekolah, 1 faskes, 19 fasilitas ibadah. 5 kecamatan terdampak" },
+                    { no: 16, tanggal: "3 Mar 2026", jam: "09.00–12.00 WIB", lokasi: "Kab. Pasuruan, Jawa Timur", jenis: "Banjir", jenisKelas: "banjir", status: "Surut", statusKelas: "surut", dampak: "967 unit rumah di 9 kecamatan terdampak. Pompa air & perahu karet dikerahkan BPBD" },
+                    { no: 17, tanggal: "2 Mar 2026", jam: "14.00–17.00 WIB", lokasi: "Kab. Bondowoso, Jawa Timur", jenis: "Banjir", jenisKelas: "banjir", status: "Surut", statusKelas: "surut", dampak: "19 unit rumah terendam. Desa Wonosari, Kec. Wonosari. Dipicu drainase tersumbat sampah" },
+                    { no: 18, tanggal: "6–7 Mar 2026", jam: "20.00 WIB", lokasi: "Kec. Labuan, Kab. Pandeglang", jenis: "Rob", jenisKelas: "rob", status: "Waspada", statusKelas: "waspada", dampak: "Pesisir Selat Sunda Barat. Rob berulang 21–25 Mar pukul 10.00 & 20.00 WIB" },
+                    { no: 19, tanggal: "2 Jan 2026", jam: "13.00 WIB", lokasi: "Kab. Serang, Banten", jenis: "Banjir", jenisKelas: "banjir", status: "Surut", statusKelas: "surut", dampak: "100 KK / 100 unit rumah terdampak. Desa Ketos, Kec. Kibin. Dipicu hujan intensitas tinggi" },
+                    { no: 20, tanggal: "22 Jan 2026", jam: "06.00 WITA", lokasi: "Kab. Bima, NTB", jenis: "Banjir", jenisKelas: "banjir", status: "Surut", statusKelas: "surut", dampak: "Dipicu hujan deras dini hari, debit sungai naik drastis. Tim BPBD langsung ke lokasi" }
+                ],
+
+                get filteredData() {
+                    let data = [...this.riwayatData];
+                    if (this.filterJenis !== "all") {
+                        data = data.filter(item => item.jenis === this.filterJenis || item.jenis.includes(this.filterJenis));
+                    }
+                    if (this.filterStatus !== "all") {
+                        data = data.filter(item => item.status === this.filterStatus);
+                    }
+                    return data;
+                },
+
+                get totalKejadian() {
+                    return this.riwayatData.length;
+                },
+
+                get statBanjir() {
+                    return this.riwayatData.filter(item => item.jenis.includes("Banjir")).length;
+                },
+
+                get statRob() {
+                    return this.riwayatData.filter(item => item.jenis === "Rob").length;
+                },
+
+                get statBanjirBandang() {
+                    return this.riwayatData.filter(item => item.jenis === "Banjir Bandang" || item.jenis === "Banjir Lahar Hujan").length;
+                },
+
+                get statAbrasi() {
+                    return this.riwayatData.filter(item => item.jenis === "Abrasi & Gelombang").length;
+                },
+
+                toggleTheme() {
+                    this.darkMode = !this.darkMode;
+                    if (this.darkMode) {
+                        document.documentElement.classList.add("dark");
+                        localStorage.setItem("theme", "dark");
+                    } else {
+                        document.documentElement.classList.remove("dark");
+                        localStorage.setItem("theme", "light");
+                    }
+                    setTimeout(() => lucide.createIcons(), 50);
+                },
+
+                init() {
+                    lucide.createIcons();
+                }
+            };
+        }
+
+        document.addEventListener("DOMContentLoaded", () => lucide.createIcons());
+        document.addEventListener("alpine:initialized", () => lucide.createIcons());
+    </script>
+</body>
+
+</html>
