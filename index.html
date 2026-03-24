@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="id" class="light">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RUANG AMAN - Home</title>
-    <link rel="icon" type="image/png" href="logo_putih.png" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
@@ -23,7 +23,6 @@
         })();
     </script>
 
-    <!-- Animasi tambahan untuk hero baru -->
     <style>
         @keyframes scroll-x {
             from {
@@ -75,6 +74,44 @@
             }
         }
 
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse-custom {
+            0% {
+                opacity: 0.5;
+                transform: scale(0.8);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        .animate-pulse-custom {
+            animation: pulse-custom 0.8s infinite alternate;
+        }
+
         .animate-scroll {
             animation: scroll-x 20s linear infinite;
         }
@@ -104,10 +141,85 @@
             animation-delay: 1s;
         }
 
+        /* Dark mode wave colors */
+        html.dark .wave-path-1 {
+            fill: #0f172a;
+        }
+
+        html.dark .wave-path-2 {
+            fill: rgba(15, 23, 42, 0.6);
+        }
+
+        /* Light mode wave colors */
+        .wave-path-1 {
+            fill: #ffffff;
+        }
+
+        .wave-path-2 {
+            fill: rgba(255, 255, 255, 0.623);
+        }
+
+        .cta-gradient {
+            background: linear-gradient(135deg, #0A3D62 0%, #1565a0 100%);
+        }
+
+        html.dark .cta-gradient {
+            background: linear-gradient(135deg, #0A3D62 0%, #1e3a5f 100%);
+        }
+
         @media (max-width: 768px) {
             .hero-stats {
                 display: none;
             }
+        }
+
+        /* Card background for light/dark mode */
+        .card-bg {
+            background-color: #ffffff;
+        }
+
+        .dark .card-bg {
+            background-color: #1e293b;
+        }
+
+        .item-bg {
+            background-color: #ffffff;
+        }
+
+        .dark .item-bg {
+            background-color: #1e293b;
+        }
+
+        .section-alt-bg {
+            background-color: #ffffff;
+        }
+
+        .dark .section-alt-bg {
+            background-color: #0f172a;
+        }
+
+        .text-primary {
+            color: #0f172a;
+        }
+
+        .dark .text-primary {
+            color: #f1f5f9;
+        }
+
+        .text-muted {
+            color: #64748b;
+        }
+
+        .dark .text-muted {
+            color: #94a3b8;
+        }
+
+        .border-default {
+            border-color: #e2e8f0;
+        }
+
+        .dark .border-default {
+            border-color: #334155;
         }
     </style>
 </head>
@@ -127,34 +239,21 @@
         }
         setTimeout(() => lucide.createIcons(), 50);
     }
-}"
-    @scroll.window="scrolled = (window.pageYOffset > 20)"
-  >
-    <nav :class="scrolled ? 'bg-[#0A3D62]/95 border-b border-[#1DD1A1]/20 shadow-lg' : 'bg-[#0A3D62]'" class="fixed top-0 left-0 right-0 z-[1000] backdrop-blur-md transition-all duration-300">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 h-[68px] flex items-center justify-between gap-3">
-        <a href="#" class="flex items-center gap-3 shrink-0">
-          <!-- Logo memenuhi hampir seluruh box -->
-          <div class="w-10 h-10 rounded-[12px] bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center shadow-lg overflow-hidden">
-            <img src="logo_putih.png" alt="Logo" class="w-12 h-12 object-contain p-2" />
-          </div>
-          <div class="text-white">
-            <div class="font-extrabold text-base leading-none">RUANG AMAN</div>
-            <div class="text-[10px] text-[#1DD1A1] tracking-widest leading-none uppercase">Water-Related Disaster Safety</div>
-          </div>
-        </a>
+}" @scroll.window="scrolled = (window.pageYOffset > 20)" class="page-bg">
 
     <nav :class="scrolled ? 'bg-[#0A3D62]/95 border-b border-[#1DD1A1]/20 shadow-lg' : 'bg-[#0A3D62]'"
         class="fixed top-0 left-0 right-0 z-[1000] backdrop-blur-md transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 h-[68px] flex items-center justify-between gap-3">
 
-            <a href="#" class="flex items-center gap-3 shrink-0">
+            <a href="index.html" class="flex items-center gap-3 shrink-0">
                 <div
-                    class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center shadow-lg">
-                    <i data-lucide="shield" class="text-white w-5 h-5"></i>
+                    class="w-10 h-10 rounded-[12px] bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center shadow-lg overflow-hidden">
+                    <img src="logo_putih.png" alt="Logo" class="w-12 h-12 object-contain p-2" />
                 </div>
                 <div class="text-white">
-                    <div class="font-extrabold text-base leading-none">SIAPBENCANA</div>
-                    <div class="text-[10px] text-[#1DD1A1] tracking-widest leading-none uppercase">Coastal Safety</div>
+                    <div class="font-extrabold text-base leading-none">RUANG AMAN</div>
+                    <div class="text-[10px] text-[#1DD1A1] tracking-widest leading-none uppercase">Water-Related
+                        Disaster Safety</div>
                 </div>
             </a>
 
@@ -203,17 +302,18 @@
             x-transition:leave-end="opacity-0 -translate-y-2"
             class="md:hidden bg-[#0A3D62]/98 backdrop-blur-md border-t border-white/10 px-4 py-4">
             <div class="flex flex-col gap-1">
-                <a href="#" class="text-[#1DD1A1] font-semibold text-sm px-3 py-2.5 rounded-xl bg-white/5">Home</a>
-                <a href="cek-risiko.html"
+                <a href="index.html" @click="mobileOpen = false"
+                    class="text-[#1DD1A1] font-semibold text-sm px-3 py-2.5 rounded-xl bg-white/5">Home</a>
+                <a href="cek-risiko.html" @click="mobileOpen = false"
                     class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Cek
                     Risiko</a>
-                <a href="peta.html"
+                <a href="peta.html" @click="mobileOpen = false"
                     class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Peta</a>
-                <a href="edukasi.html"
+                <a href="edukasi.html" @click="mobileOpen = false"
                     class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Edukasi</a>
-                <a href="simulasi.html"
+                <a href="simulasi.html" @click="mobileOpen = false"
                     class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Simulasi</a>
-                <a href="about.html"
+                <a href="about.html" @click="mobileOpen = false"
                     class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">About</a>
 
                 <div class="flex items-center justify-between px-3 py-2.5 mt-2 border-t border-white/10 pt-3">
@@ -236,169 +336,195 @@
         </div>
     </nav>
 
-    <section
-      class="relative bg-[#0A3D62] min-h-[600px] overflow-hidden pt-[68px]"
-      style="
-        background:
-          linear-gradient(160deg, rgba(10, 61, 98, 0.92) 0%, rgba(27, 38, 44, 0.85) 60%, rgba(10, 61, 98, 0.75) 100%),
-          url(&quot;https://images.unsplash.com/photo-1711948784979-848571af3fa5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxvY2VhbiUyMHdhdmVzJTIwY29hc3RhbCUyMGFlcmlhbCUyMHZpZXclMjBJbmRvbmVzaWF8ZW58MXx8fHwxNzcxNjUzMzk5fDA&ixlib=rb-4.1.0&q=80&w=1080&quot;)
-            center/cover no-repeat;
-      "
-    >
-      <div class="absolute inset-0 bg-cover bg-center opacity-[0.18]" style="background-image: url(&quot;https://images.unsplash.com/photo-1728051104538-fd2236fd53a1?q=80&w=1080&quot;)"></div>
-      <!-- <div class="absolute inset-0 hero-gradient"></div> -->
+    <section class="relative bg-[#0A3D62] min-h-[600px] overflow-hidden pt-[68px]">
+        <div class="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1711948784979-848571af3fa5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxvY2VhbiUyMHdhdmVzJTIwY29hc3RhbCUyMGFlcmlhbCUyMHZpZXclMjBJbmRvbmVzaWF8ZW58MXx8fHwxNzcxNjUzMzk5fDA&ixlib=rb-4.1.0&q=80&w=1080"
+                class="w-full h-full object-cover" alt="Ocean view">
+            <div class="absolute inset-0 bg-gradient-to-b from-[#0A3D62]/80 via-[#0A3D62]/70 to-[#0A3D62]/85"></div>
+        </div>
 
-      <div class="absolute bottom-0 left-0 w-full leading-[0] block md:hidden">
-        <svg viewBox="0 0 1440 80" preserveAspectRatio="none" class="w-full h-20" style="fill: var(--bg-section-alt)">
-          <path d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z"></path>
-        </svg>
-      </div>
-
-      <div class="absolute bottom-0 left-0 w-full leading-[0] md:hidden">
-        <svg viewBox="0 0 1440 80" preserveAspectRatio="none" class="w-full h-20" style="fill: var(--bg-page)">
-          <path d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z"></path>
-        </svg>
-      </div>
-
-      <div class="relative max-w-7xl mx-auto px-6 py-20 md:py-32 md:px-20">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-15 items-center hero-grid">
-          <!-- Left content -->
-          <div>
-            <div class="mb-5 opacity-0 animate-[fadeInUp_0.5s_ease-out_forwards]">
-              <span class="inline-flex items-center gap-2 bg-[rgba(29,209,161,0.15)] border border-[rgba(29,209,161,0.3)] py-1.5 px-4 rounded-full text-[#1DD1A1] text-xs font-semibold">
-                <span class="w-2 h-2 rounded-full bg-[#1DD1A1] animate-pulse-custom inline-block"></span>
-                Platform Kesiapsiagaan & Edukasi
-              </span>
-            </div>
-
-            <h1 class="text-white text-4xl md:text-6xl font-extrabold leading-[1.15] mb-6 tracking-[-0.02em] opacity-0 animate-[fadeInUp_0.7s_ease-out_0.1s_forwards]">
-              Siap Sebelum <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#1DD1A1] to-[#00b894]">Bencana Datang</span>
-            </h1>
-
-            <p class="text-lg text-[rgba(241,242,246,0.8)] leading-relaxed mb-9 max-w-[480px] opacity-0 animate-[fadeInUp_0.6s_ease-out_0.2s_forwards]">
-              Platform terpadu untuk analisis dan informasi risiko bencana berbasis air guna mendukung kesiapsiagaan masyarakat.
-            </p>
-
-            <div class="flex gap-4 flex-wrap opacity-0 animate-[fadeInUp_0.6s_ease-out_0.3s_forwards]">
-              <a
-                href="cek-risiko.html"
-                class="py-4 px-8 rounded-[14px] border-none bg-gradient-to-r from-[#1DD1A1] to-[#00b894] text-[#0A3D61] text-base font-bold cursor-pointer transition-all duration-300 shadow-[0_8px_30px_rgba(29,209,161,0.4)] hover:shadow-[0_12px_40px_rgba(29,209,161,0.5)] hover:-translate-y-1 flex items-center gap-2"
-              >
-                <i data-lucide="shield" class="w-[18px] h-[18px]"></i>
-                Cek Risiko Wilayah
-              </a>
-              <a
-                href="peta.html"
-                class="py-4 px-8 rounded-[14px] border-[1.5px] border-white/30 bg-white/10 backdrop-blur text-white text-base font-semibold cursor-pointer transition-all duration-300 hover:bg-white/20 hover:-translate-y-1 flex items-center gap-2"
-              >
-                <i data-lucide="map" class="w-[18px] h-[18px]"></i>
-                Lihat Peta
-              </a>
-            </div>
-
-            <div class="mt-10 flex gap-6 flex-wrap opacity-0 animate-[fadeIn_0.5s_ease-out_0.5s_forwards]">
-              <div class="flex items-center gap-1.5"><i data-lucide="check-circle" class="w-4 h-4 text-[#1DD1A1]"></i><span class="text-xs text-[rgba(241,242,246,0.7)]">Data BMKG Real-time</span></div>
-              <div class="flex items-center gap-1.5"><i data-lucide="check-circle" class="w-4 h-4 text-[#1DD1A1]"></i><span class="text-xs text-[rgba(241,242,246,0.7)]">Berbasis Ilmu Pengetahuan</span></div>
-              <div class="flex items-center gap-1.5"><i data-lucide="check-circle" class="w-4 h-4 text-[#1DD1A1]"></i><span class="text-xs text-[rgba(241,242,246,0.7)]">Akses Gratis</span></div>
-            </div>
-          </div>
-
-          <!-- Right: Floating Stat Cards -->
-          <div class="relative hidden md:flex h-[400px] flex flex-col gap-4 items-end hero-stats">
-            <!-- Stat 1 -->
-            <div class="w-full max-w-[280px] opacity-0 animate-[fadeInUp_0.6s_ease-out_0.3s_forwards]">
-              <div class="bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-4 flex items-center gap-4 shadow-2xl animate-float">
-                <div class="w-12 h-12 rounded-[14px] bg-[rgba(238,82,83,0.12)] flex items-center justify-center shrink-0">
-                  <i data-lucide="users" class="w-[22px] h-[22px]" style="color: #ee5253"></i>
-                </div>
+        <div class="relative max-w-7xl mx-auto px-6 py-20 md:py-32 md:px-20">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-15 items-center">
                 <div>
-                  <div class="font-['Poppins'] text-white text-2xl font-extrabold leading-tight">4,9 Juta+</div>
-                  <div class="text-xs text-[rgba(241,242,246,0.6)] mt-0.5">Penduduk Terdampak</div>
+                    <div class="mb-5">
+                        <span
+                            class="inline-flex items-center gap-2 bg-[rgba(29,209,161,0.15)] border border-[rgba(29,209,161,0.3)] py-1.5 px-4 rounded-full text-[#1DD1A1] text-xs font-semibold">
+                            <span class="w-2 h-2 rounded-full bg-[#1DD1A1] animate-pulse-custom inline-block"></span>
+                            Platform Kesiapsiagaan & Edukasi
+                        </span>
+                    </div>
+
+                    <h1 class="text-white text-4xl md:text-6xl font-extrabold leading-[1.15] mb-6 tracking-[-0.02em]">
+                        Siap Sebelum <span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-[#1DD1A1] to-[#00b894]">Bencana
+                            Datang</span>
+                    </h1>
+
+                    <p class="text-lg text-[rgba(241,242,246,0.8)] leading-relaxed mb-9 max-w-[480px]">
+                        Platform terpadu untuk analisis dan informasi risiko bencana berbasis air guna mendukung
+                        kesiapsiagaan masyarakat.
+                    </p>
+
+                    <div class="flex gap-4 flex-wrap">
+                        <a href="cek-risiko.html"
+                            class="py-4 px-8 rounded-[14px] border-none bg-gradient-to-r from-[#1DD1A1] to-[#00b894] text-[#0A3D61] text-base font-bold cursor-pointer transition-all duration-300 shadow-[0_8px_30px_rgba(29,209,161,0.4)] hover:shadow-[0_12px_40px_rgba(29,209,161,0.5)] hover:-translate-y-1 flex items-center gap-2">
+                            <i data-lucide="shield" class="w-[18px] h-[18px]"></i>
+                            Cek Risiko Wilayah
+                        </a>
+                        <a href="peta.html"
+                            class="py-4 px-8 rounded-[14px] border-[1.5px] border-white/30 bg-white/10 backdrop-blur text-white text-base font-semibold cursor-pointer transition-all duration-300 hover:bg-white/20 hover:-translate-y-1 flex items-center gap-2">
+                            <i data-lucide="map" class="w-[18px] h-[18px]"></i>
+                            Lihat Peta
+                        </a>
+                    </div>
+
+                    <div class="mt-10 flex gap-6 flex-wrap">
+                        <div class="flex items-center gap-1.5"><i data-lucide="check-circle"
+                                class="w-4 h-4 text-[#1DD1A1]"></i><span
+                                class="text-xs text-[rgba(241,242,246,0.7)]">Data BMKG Real-time</span></div>
+                        <div class="flex items-center gap-1.5"><i data-lucide="check-circle"
+                                class="w-4 h-4 text-[#1DD1A1]"></i><span
+                                class="text-xs text-[rgba(241,242,246,0.7)]">Berbasis Ilmu Pengetahuan</span></div>
+                        <div class="flex items-center gap-1.5"><i data-lucide="check-circle"
+                                class="w-4 h-4 text-[#1DD1A1]"></i><span
+                                class="text-xs text-[rgba(241,242,246,0.7)]">Akses Gratis</span></div>
+                    </div>
                 </div>
-              </div>
-            </div>
-            <!-- Stat 2 -->
-            <div class="w-full max-w-[280px] opacity-0 animate-[fadeInUp_0.6s_ease-out_0.45s_forwards]">
-              <div class="bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-4 flex items-center gap-4 shadow-2xl animate-float-delay-1">
-                <div class="w-12 h-12 rounded-[14px] bg-[rgba(255,159,67,0.12)] flex items-center justify-center shrink-0">
-                  <i data-lucide="building2" class="w-[22px] h-[22px]" style="color: #ff9f43"></i>
+
+                <!-- Right: Floating Stat Cards -->
+                <div class="relative hidden lg:flex flex-col gap-4 items-end hero-stats">
+                    <!-- Stat 1 -->
+                    <div class="w-full max-w-[280px]">
+                        <div
+                            class="bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-4 flex items-center gap-4 shadow-2xl animate-float">
+                            <div
+                                class="w-12 h-12 rounded-[14px] bg-[rgba(238,82,83,0.12)] flex items-center justify-center shrink-0">
+                                <i data-lucide="users" class="w-[22px] h-[22px]" style="color: #ee5253"></i>
+                            </div>
+                            <div>
+                                <div class="font-['Poppins'] text-white text-2xl font-extrabold leading-tight">4,9 Juta+
+                                </div>
+                                <div class="text-xs text-[rgba(241,242,246,0.6)] mt-0.5">Penduduk Terdampak</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Stat 2 -->
+                    <div class="w-full max-w-[280px]">
+                        <div
+                            class="bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-4 flex items-center gap-4 shadow-2xl animate-float-delay-1">
+                            <div
+                                class="w-12 h-12 rounded-[14px] bg-[rgba(255,159,67,0.12)] flex items-center justify-center shrink-0">
+                                <i data-lucide="building2" class="w-[22px] h-[22px]" style="color: #ff9f43"></i>
+                            </div>
+                            <div>
+                                <div class="font-['Poppins'] text-white text-2xl font-extrabold leading-tight">2.535+
+                                </div>
+                                <div class="text-xs text-[rgba(241,242,246,0.6)] mt-0.5">Kejadian Bencana 2025</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Stat 3 -->
+                    <div class="w-full max-w-[280px]">
+                        <div
+                            class="bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-4 flex items-center gap-4 shadow-2xl animate-float-delay-2">
+                            <div
+                                class="w-12 h-12 rounded-[14px] bg-[rgba(29,209,161,0.12)] flex items-center justify-center shrink-0">
+                                <i data-lucide="waves" class="w-[22px] h-[22px]" style="color: #1dd1a1"></i>
+                            </div>
+                            <div>
+                                <div class="font-['Poppins'] text-white text-2xl font-extrabold leading-tight">99.093 km
+                                </div>
+                                <div class="text-xs text-[rgba(241,242,246,0.6)] mt-0.5">Garis Pantai</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full max-w-[280px]">
+                        <div
+                            class="bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-4 flex items-center gap-4 shadow-2xl animate-float-delay-3">
+                            <div
+                                class="w-12 h-12 rounded-[14px] bg-[rgba(255,195,18,0.12)] flex items-center justify-center shrink-0">
+                                <i data-lucide="alert-triangle" class="w-[22px] h-[22px]" style="color:#FFC312"></i>
+                            </div>
+                            <div>
+                                <div class="font-['Poppins'] text-white text-2xl font-extrabold leading-tight">38
+                                    Provinsi</div>
+                                <div class="text-xs text-[rgba(241,242,246,0.6)] mt-0.5">Zona Bahaya Aktif</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                  <div class="font-['Poppins'] text-white text-2xl font-extrabold leading-tight">2.535+</div>
-                  <div class="text-xs text-[rgba(241,242,246,0.6)] mt-0.5">Kejadian Bencana 2025</div>
-                </div>
-              </div>
-            </div>
-            <!-- Stat 3 -->
-            <div class="w-full max-w-[280px] opacity-0 animate-[fadeInUp_0.6s_ease-out_0.6s_forwards]">
-              <div class="bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-4 flex items-center gap-4 shadow-2xl animate-float-delay-2">
-                <div class="w-12 h-12 rounded-[14px] bg-[rgba(29,209,161,0.12)] flex items-center justify-center shrink-0">
-                  <i data-lucide="waves" class="w-[22px] h-[22px]" style="color: #1dd1a1"></i>
-                </div>
-                <div>
-                  <div class="font-['Poppins'] text-white text-2xl font-extrabold leading-tight">99.093 km</div>
-                  <div class="text-xs text-[rgba(241,242,246,0.6)] mt-0.5">Garis Pantai</div>
-                </div>
-              </div>
             </div>
         </div>
-      </div>
-      <!-- <div class="absolute bottom-0 left-0 right-0 overflow-hidden leading-none">
-            <svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="block w-full h-[120px]">
-                <path class="wave-path-1" fill="#F1F2F6"
+
+        <!-- Wave SVG - Full width dan responsif dark mode -->
+        <div class="absolute bottom-0 left-0 right-0 w-full leading-none">
+            <svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="block w-full h-[80px] md:h-[120px]">
+                <path class="wave-path-1"
                     d="M0,60 C240,100 480,20 720,60 C960,100 1200,20 1440,60 L1440,120 L0,120 Z" />
-                <path class="wave-path-2" fill="rgba(241,242,246,0.5)"
+                <path class="wave-path-2"
                     d="M0,80 C360,40 720,100 1080,60 C1260,40 1380,80 1440,80 L1440,120 L0,120 Z" />
             </svg>
-        </div> -->
+        </div>
     </section>
 
-    <!-- Sisanya tetap (statistik kecil, fitur, dll) -->
-    <section class="max-w-7xl mx-auto px-6 md:px-20 pb-16 md:hidden">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10 relative z-10">
-        <!-- Stat 1: Jiwa Terpapar -->
-        <div class="card-bg p-6 rounded-2xl shadow-xl border flex items-center gap-4 hover:-translate-y-1 transition-all">
-          <div class="w-12 h-12 rounded-xl bg-[#EE5253]/10 flex items-center justify-center text-[#EE5253]">
-            <i data-lucide="users" class="w-6 h-6"></i>
-          </div>
-          <div>
-            <div class="text-xl font-bold text-primary">4,9 Juta+</div>
-            <div class="text-xs text-muted">Penduduk Terdampak</div>
-          </div>
-        </div>
-        <!-- Stat 2: Pulau Berisiko -->
-        <div class="card-bg p-6 rounded-2xl shadow-xl border flex items-center gap-4 hover:-translate-y-1 transition-all">
-          <div class="w-12 h-12 rounded-xl bg-[#FF9F43]/10 flex items-center justify-center text-[#FF9F43]">
-            <i data-lucide="building2" class="w-6 h-6"></i>
-          </div>
-          <div>
-            <div class="text-xl font-bold text-primary">2.535+</div>
-            <div class="text-xs text-muted">Kejadian Bencana 2025</div>
-          </div>
-        </div>
-        <!-- Stat 3: Garis Pantai -->
-        <div class="card-bg p-6 rounded-2xl shadow-xl border flex items-center gap-4 hover:-translate-y-1 transition-all">
-          <div class="w-12 h-12 rounded-xl bg-[#1DD1A1]/10 flex items-center justify-center text-[#1DD1A1]">
-            <i data-lucide="waves" class="w-6 h-6"></i>
-          </div>
-          <div>
-            <div class="text-xl font-bold text-primary">99.093 km</div>
-            <div class="text-xs text-muted">Garis Pantai</div>
-          </div>
+    <!-- Sisanya tetap dengan penyesuaian link -->
+    <section class="section-alt-bg max-w-7xl mx-auto px-6 md:px-20 pb-16 lg:hidden">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
+            <!-- Stat 1: Jiwa Terpapar -->
+            <div
+                class="card-bg p-6 rounded-2xl shadow-xl border flex items-center gap-4 hover:-translate-y-1 transition-all">
+                <div class="w-12 h-12 rounded-xl bg-[#EE5253]/10 flex items-center justify-center text-[#EE5253]">
+                    <i data-lucide="users" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <div class="text-xl font-bold text-primary">4,9 Juta+</div>
+                    <div class="text-xs text-muted">Penduduk Terdampak</div>
+                </div>
+            </div>
+            <!-- Stat 2: Pulau Berisiko -->
+            <div
+                class="card-bg p-6 rounded-2xl shadow-xl border flex items-center gap-4 hover:-translate-y-1 transition-all">
+                <div class="w-12 h-12 rounded-xl bg-[#FF9F43]/10 flex items-center justify-center text-[#FF9F43]">
+                    <i data-lucide="building2" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <div class="text-xl font-bold text-primary">2.535+</div>
+                    <div class="text-xs text-muted">Kejadian Bencana 2025</div>
+                </div>
+            </div>
+            <div
+                class="card-bg p-6 rounded-2xl shadow-xl border flex items-center gap-4 hover:-translate-y-1 transition-all">
+                <div class="w-12 h-12 rounded-xl bg-[#1DD1A1]/10 flex items-center justify-center text-[#1DD1A1]">
+                    <i data-lucide="waves" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <div class="text-xl font-bold text-primary">99.093 km</div>
+                    <div class="text-xs text-muted">Garis Pantai</div>
+                </div>
+            </div>
+            <div
+                class="card-bg p-6 rounded-2xl shadow-xl border flex items-center gap-4 hover:-translate-y-1 transition-all">
+                <div class="w-12 h-12 rounded-xl bg-[#FFC312]/10 flex items-center justify-center text-[#FFC312]">
+                    <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <div class="text-xl font-bold text-primary">38 Provinsi</div>
+                    <div class="text-xs text-muted">Zona Bahaya Aktif</div>
+                </div>
+            </div>
         </div>
     </section>
 
     <section class="section-alt-bg py-20 px-6">
-      <div class="max-w-7xl mx-auto px-6 md:px-20 pb-16">
-        <div class="text-center mb-14">
-          <span class="bg-[#0A3D62]/5 dark:bg-[#1DD1A1]/10 text-[#0A3D62] dark:text-[#1DD1A1] text-[10px] font-black tracking-widest px-4 py-1.5 rounded-full uppercase"> Ancaman Bahaya</span>
-          <h2 class="text-3xl md:text-4xl font-bold text-primary mt-4 mb-3">Empat Ancaman Utama<span class="text-[#0A3D62] dark:text-[#1DD1A1]"> Bencana Berbasis Air </span></h2>
-          <p class="text-muted max-w-lg mx-auto text-sm leading-relaxed">Indonesia memiliki 99.000+ km garis pantai yang rentan terhadap berbagai ancaman bencana hidrometeorologi dan geologi.</p>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div class="item-bg border p-8 rounded-2xl hover:-translate-y-1 hover:border-[#0A3D62]/30 dark:hover:border-[#1DD1A1]/30 transition-all">
-            <div class="w-12 h-12 bg-[#0A3D62]/10 rounded-xl flex items-center justify-center text-[#0A3D62] dark:text-[#1DD1A1] mb-6">
-              <i data-lucide="waves"></i>
+        <div class="max-w-7xl mx-auto px-6 md:px-20 pb-16">
+            <div class="text-center mb-14">
+                <span
+                    class="bg-[#0A3D62]/5 dark:bg-[#1DD1A1]/10 text-[#0A3D62] dark:text-[#1DD1A1] text-[10px] font-black tracking-widest px-4 py-1.5 rounded-full uppercase">Ancaman
+                    Bahaya</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-primary mt-4 mb-3">Empat Ancaman Utama <span
+                        class="text-[#0A3D62] dark:text-[#1DD1A1]">Bencana Berbasis Air</span></h2>
+                <p class="text-muted max-w-lg mx-auto text-sm leading-relaxed">Indonesia memiliki 99.000+ km garis
+                    pantai yang rentan terhadap berbagai ancaman bencana hidrometeorologi dan geologi.</p>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div
@@ -543,7 +669,7 @@
                         Terkini</span>
                     <h2 class="text-3xl font-bold text-primary mt-4">Status Wilayah Real-Time</h2>
                 </div>
-                <a href="#"
+                <a href="riwayat-peringatan.html"
                     class="text-[#0A3D62] dark:text-[#1DD1A1] font-bold text-sm flex items-center gap-1 hover:underline">
                     Lihat Semua <i data-lucide="arrow-right" class="w-4"></i>
                 </a>
@@ -588,42 +714,70 @@
     </section>
 
     <section class="max-w-7xl mx-auto px-6 md:px-20 pb-16 py-24">
-      <div class="cta-gradient rounded-[32px] p-12 md:p-14 text-center relative overflow-hidden shadow-2xl">
-        <div class="absolute -top-24 -right-24 w-64 h-64 bg-[#1DD1A1]/10 rounded-full blur-3xl"></div>
-        <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
-        <div class="relative z-10">
-          <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-6 leading-tight">Ketahui Risiko di <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#1DD1A1] to-[#7efdd8]">Wilayah Anda</span> Sekarang</h2>
-          <p class="text-white/70 text-lg mb-10 max-w-xl mx-auto leading-relaxed">Jangan tunggu bencana datang. Cek tingkat risiko wilayah Anda dan dapatkan rekomendasi keselamatan yang tepat.</p>
-          <div class="flex flex-wrap justify-center gap-5">
-            <a href="cek-risiko.html" class="bg-gradient-to-r from-[#1DD1A1] to-[#17b88d] text-[#0A3D61] px-6 py-3 rounded-xl font-bold flex items-center gap-2 shadow-xl hover:-translate-y-1 transition-all">
-              <i data-lucide="shield" class="w-5 h-5"></i> Mulai Analisis Risiko
-            </a>
-            <a href="edukasi.html" class="bg-white/10 border border-white/30 backdrop-blur-md text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-white/20 transition-all">
-              Panduan Keselamatan <i data-lucide="arrow-right" class="w-4 h-4"></i
-            ></a>
-          </div>
+        <div class="cta-gradient rounded-[32px] p-12 md:p-14 text-center relative overflow-hidden shadow-2xl">
+            <div class="absolute -top-24 -right-24 w-64 h-64 bg-[#1DD1A1]/10 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
+            <div class="relative z-10">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-6 leading-tight">Ketahui Risiko di <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-[#1DD1A1] to-[#7efdd8]">Wilayah
+                        Anda</span> Sekarang</h2>
+                <p class="text-white/70 text-lg mb-10 max-w-xl mx-auto leading-relaxed">Jangan tunggu bencana datang.
+                    Cek tingkat risiko wilayah Anda dan dapatkan rekomendasi keselamatan yang tepat.</p>
+                <div class="flex flex-wrap justify-center gap-5">
+                    <a href="cek-risiko.html"
+                        class="bg-gradient-to-r from-[#1DD1A1] to-[#17b88d] text-[#0A3D61] px-6 py-3 rounded-xl font-bold flex items-center gap-2 shadow-xl hover:-translate-y-1 transition-all">
+                        <i data-lucide="shield" class="w-5 h-5"></i> Mulai Analisis Risiko
+                    </a>
+                    <a href="edukasi.html"
+                        class="bg-white/10 border border-white/30 backdrop-blur-md text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-white/20 transition-all">
+                        Panduan Keselamatan <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+                </div>
+            </div>
         </div>
     </section>
 
-    <footer class="footer-section text-white pt-20">
-      <div class="max-w-7xl mx-auto px-6 pb-20 grid grid-cols-1 md:grid-cols-4 gap-12">
-        <div class="col-span-1">
-          <div class="flex items-center gap-3 mb-6">
-            <!--opsi 1 logo-->
-            <!-- <img src="logo_putih.png" alt="Ruang Aman Logo" class="w-10 h-10 object-contain" /> -->
-
-            <!--opsi 2 logo-->
-            <div class="w-10 h-10 rounded-[12px] bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center shadow-lg overflow-hidden">
-              <img src="logo_putih.png" alt="Logo" class="w-12 h-12 object-contain p-2" />
+    <footer class="bg-[#1B262C] text-white pt-20">
+        <div class="max-w-7xl mx-auto px-6 pb-20 grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div>
+                <div class="flex items-center gap-3 mb-6">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center">
+                        <i data-lucide="shield" class="text-white"></i>
+                    </div>
+                    <div class="font-extrabold text-lg">RUANG AMAN</div>
+                </div>
+                <p class="text-white/50 text-sm leading-relaxed">Platform terpadu untuk analisis dan informasi risiko
+                    bencana
+                    berbasis air guna mendukung kesiapsiagaan masyarakat.</p>
+            </div>
+            <div>
+                <h5 class="font-bold mb-6">Navigasi</h5>
+                <ul class="space-y-4 text-sm text-white/50">
+                    <li><a href="cek-risiko.html" class="hover:text-[#1DD1A1] transition-colors">Cek Risiko</a></li>
+                    <li><a href="peta.html" class="hover:text-[#1DD1A1] transition-colors">Peta Interaktif</a></li>
+                    <li><a href="edukasi.html" class="hover:text-[#1DD1A1] transition-colors">Panduan Edukasi</a></li>
+                    <li><a href="simulasi.html" class="hover:text-[#1DD1A1] transition-colors">Simulasi</a></li>
+                    <li><a href="about.html" class="hover:text-[#1DD1A1] transition-colors">About</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="font-bold mb-6">Kontak</h5>
+                <ul class="space-y-4 text-sm text-white/50">
+                    <li class="flex gap-2"><i data-lucide="mail" class="w-4 text-[#1DD1A1]"></i> info@ruangaman.go.id
+                    </li>
+                    <li class="flex gap-2"><i data-lucide="phone" class="w-4 text-[#1DD1A1]"></i> +62 21 1234 5678</li>
+                </ul>
+            </div>
+            <div>
+                <div class="bg-[#1DD1A1]/10 border border-[#1DD1A1]/20 p-6 rounded-2xl">
+                    <div class="text-[10px] font-bold text-[#1DD1A1] uppercase mb-1">Darurat</div>
+                    <div class="text-3xl font-black">117</div>
+                    <div class="text-[10px] text-white/40 mt-1 uppercase">BNPB Response</div>
+                </div>
             </div>
         </div>
-        <div>
-          <div class="bg-[#1DD1A1]/10 border border-[#1DD1A1]/20 p-6 rounded-2xl">
-            <div class="text-[10px] font-bold text-[#1DD1A1] uppercase mb-1">Darurat</div>
-            <div class="text-3xl font-black">117</div>
-            <div class="text-[10px] text-white/40 mt-1 uppercase">BNPB Response</div>
-          </div>
-        </div>
+        <div class="border-t border-white/5 py-8 text-center text-[11px] text-white/30">© 2026 RUANG AMAN. Water-Related
+            Disasters Safety Platform Indonesia.</div>
     </footer>
 
     <script>
