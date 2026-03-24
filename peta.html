@@ -239,7 +239,7 @@
   >
     <nav :class="scrolled ? 'bg-[#0A3D62]/95 border-b border-[#1DD1A1]/20 shadow-lg' : 'bg-[#0A3D62]'" class="fixed top-0 left-0 right-0 z-[1000] backdrop-blur-md transition-all duration-300">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 h-[68px] flex items-center justify-between gap-3">
-        <a href="#" class="flex items-center gap-3 shrink-0">
+        <a href="index.html" class="flex items-center gap-3 shrink-0">
           <div class="w-10 h-10 rounded-[12px] bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center shadow-lg overflow-hidden">
             <img src="logo_putih.png" alt="Logo" class="w-12 h-12 object-contain p-2" />
           </div>
@@ -313,12 +313,16 @@
 
               <div id="legendColors"></div>
               <div class="border-t border-default pt-3 mt-2 space-y-2">
+
                 <div class="flex items-center gap-2.5">
-                  <div class="w-6 h-[3px] bg-[#1DD1A1] rounded-full"></div>
+                  <div class="w-6 h-[3px] bg-[#FFC312] rounded-full"></div>
+                  <!-- GANTI: #1DD1A1 → #FFC312 -->
                   <span class="text-xs text-secondary">Jalur Evakuasi (Jalan Aspal Nyata)</span>
                 </div>
+
                 <div class="flex items-center gap-2.5">
-                  <div class="w-[14px] h-[14px] bg-[#FFC312] rounded flex items-center justify-center">
+                  <div class="w-[14px] h-[14px] bg-[#1DD1A1] rounded flex items-center justify-center">
+                    <!-- GANTI: #FFC312 → #1DD1A1 -->
                     <i data-lucide="shield" class="w-2 h-2 text-white"></i>
                   </div>
                   <span class="text-xs text-secondary">Titik Aman / Shelter</span>
@@ -428,139 +432,525 @@
 
       (function () {
         const COASTAL_REGIONS = [
-          // Malang Selatan
-          { name: "Sendang Biru (Tamban)", lat: -8.425, lng: 112.685, level: "bahaya", type: "Tsunami", desc: "Kawasan pesisir selatan, sangat rawan tsunami" },
-          { name: "Tirtoyudo", lat: -8.3, lng: 112.8333, level: "siaga", type: "Tsunami", desc: "Wilayah pesisir dengan risiko tsunami tinggi" },
-          { name: "Donomulyo", lat: -8.3167, lng: 112.4333, level: "siaga", type: "Tsunami", desc: "Zona siaga tsunami pesisir selatan" },
-          // Surabaya
-          { name: "Kenjeran", lat: -7.2333, lng: 112.7833, level: "bahaya", type: "Banjir Rob", desc: "Kawasan pesisir utara, rob tinggi saat pasang" },
-          { name: "Bulak", lat: -7.2167, lng: 112.7667, level: "bahaya", type: "Banjir Rob", desc: "Daerah tambak, rawan rob ekstrem" },
-          { name: "Tambak Wedi", lat: -7.2, lng: 112.7333, level: "bahaya", type: "Banjir Rob", desc: "Rob mencapai pemukiman" },
-          { name: "Wonokromo", lat: -7.3, lng: 112.7333, level: "waspada", type: "Banjir Hujan", desc: "Dataran rendah, rawan genangan" },
-          { name: "Rungkut", lat: -7.3167, lng: 112.7667, level: "waspada", type: "Banjir Hujan", desc: "Kawasan industri, drainase terbatas" },
-          { name: "Asemrowo", lat: -7.25, lng: 112.7167, level: "siaga", type: "Banjir Hujan", desc: "Daerah padat penduduk" },
-          { name: "Tandes", lat: -7.25, lng: 112.6833, level: "siaga", type: "Banjir Hujan", desc: "Rawan banjir kiriman" },
-          // Pacitan
-          { name: "Pacitan Kota", lat: -8.2, lng: 111.1, level: "bahaya", type: "Tsunami", desc: "Kota pesisir, sangat rawan tsunami" },
-          { name: "Kebonagung", lat: -8.2167, lng: 111.1667, level: "bahaya", type: "Tsunami", desc: "Zona merah tsunami pesisir selatan" },
-          { name: "Ngadirojo", lat: -8.2167, lng: 111.3333, level: "bahaya", type: "Tsunami", desc: "Kawasan pesisir dengan risiko tinggi" },
-          { name: "Pringkuku", lat: -8.1833, lng: 110.9667, level: "siaga", type: "Tsunami", desc: "Kawasan rawan tsunami" },
-          // Indramayu
-          { name: "Karangsong", lat: -6.3333, lng: 108.3167, level: "bahaya", type: "Banjir Rob", desc: "Kawasan tambak, rob tinggi" },
-          { name: "Eretan", lat: -6.3333, lng: 108.35, level: "bahaya", type: "Banjir Rob", desc: "Pesisir utara, rob mencapai rumah" },
-          { name: "Kandanghaur", lat: -6.35, lng: 108.0667, level: "bahaya", type: "Banjir Rob", desc: "Zona merah rob pantura" },
-          { name: "Patrol", lat: -6.3, lng: 108.0167, level: "siaga", type: "Banjir Rob", desc: "Kawasan pesisir rawan rob" },
-          { name: "Krangkeng", lat: -6.35, lng: 108.1167, level: "siaga", type: "Banjir Rob", desc: "Daerah tambak dan pemukiman" },
+          // Kabupaten Demak, Jawa Tengah
+          {
+            name: "Kabupaten Demak, Jawa Tengah",
+            lat: -6.894,
+            lng: 110.639,
+            level: "bahaya",
+            type: "Banjir & Rob",
+            desc: "Risiko banjir dan rob sangat tinggi. 127 desa rawan bencana, land subsidence 5-10 cm/tahun, tanggul Sungai Wulan rentan jebol.",
+          },
+
+          // Kota Semarang, Jawa Tengah
+          {
+            name: "Kota Semarang, Jawa Tengah",
+            lat: -6.966,
+            lng: 110.417,
+            level: "bahaya",
+            type: "Banjir & Rob",
+            desc: "Risiko banjir dan rob tertinggi di Jawa. Land subsidence 5-25 cm/tahun, topografi cekungan, kawasan utara terendam permanen.",
+          },
+
+          // Kabupaten Pekalongan, Jawa Tengah
+          {
+            name: "Kabupaten Pekalongan, Jawa Tengah",
+            lat: -6.889,
+            lng: 109.675,
+            level: "bahaya",
+            type: "Banjir",
+            desc: "Luapan Sungai Sengkarang dan Sungai Kupang. Banjir bandang berulang setiap tahun, topografi dataran rendah pesisir utara.",
+          },
+
+          // Kota Palu, Sulawesi Tengah
+          {
+            name: "Kota Palu, Sulawesi Tengah",
+            lat: -0.895,
+            lng: 119.871,
+            level: "bahaya",
+            type: "Gempa & Tsunami",
+            desc: "Dilalui Sesar Palu-Koro (laju 40 mm/tahun). Teluk Palu bentuk corong memperkuat gelombang tsunami. Riwayat gempa M7.5 & tsunami 2018.",
+          },
+
+          // Kabupaten Aceh Besar, Aceh
+          {
+            name: "Kabupaten Aceh Besar, Aceh",
+            lat: 5.383,
+            lng: 95.383,
+            level: "bahaya",
+            type: "Tsunami & Gempa",
+            desc: "Wilayah paling rawan tsunami di Indonesia. Berada di atas Megathrust Sumatra, riwayat tsunami 2004 dengan gelombang 15-30 meter.",
+          },
+
+          // Kota Banda Aceh, Aceh
+          {
+            name: "Kota Banda Aceh, Aceh",
+            lat: 5.548,
+            lng: 95.324,
+            level: "bahaya",
+            type: "Tsunami & Gempa",
+            desc: "Kota yang dihancurkan tsunami 2004 dengan korban >60.000 jiwa. Ancaman Megathrust Sumatra bersifat permanen, waktu tiba <20 menit.",
+          },
+
+          // Kabupaten Cilacap, Jawa Tengah
+          {
+            name: "Kabupaten Cilacap, Jawa Tengah",
+            lat: -7.734,
+            lng: 109.008,
+            level: "bahaya",
+            type: "Tsunami",
+            desc: "Menghadap langsung Samudra Hindia. Potensi Megathrust Jawa Tengah-Jawa Timur M8,9. Zona merah tsunami nasional.",
+          },
+
+          // Kota Padang, Sumatera Barat
+          {
+            name: "Kota Padang, Sumatera Barat",
+            lat: -0.947,
+            lng: 100.417,
+            level: "bahaya",
+            type: "Tsunami & Gempa",
+            desc: "Kota besar dengan risiko tsunami tertinggi. Berada di atas Megathrust Mentawai, waktu tiba tsunami 20-30 menit setelah gempa.",
+          },
+
+          // Kabupaten Lombok Barat, NTB
+          {
+            name: "Kabupaten Lombok Barat, NTB",
+            lat: -8.656,
+            lng: 116.128,
+            level: "bahaya",
+            type: "Gempa",
+            desc: "Rangkaian gempa M7.0 dan M6.9 tahun 2018 korban >500 jiwa. Dipengaruhi Sesar Naik Flores dan zona subduksi aktif.",
+          },
+
+          // Kota Manado, Sulawesi Utara
+          {
+            name: "Kota Manado, Sulawesi Utara",
+            lat: 1.493,
+            lng: 124.841,
+            level: "bahaya",
+            type: "Tsunami & Gempa",
+            desc: "Pernah tsunami 2009 akibat gempa M7.3. Dikelilingi zona seismik aktif, Teluk Manado berpotensi memperkuat gelombang.",
+          },
         ];
 
         const SAFE_POINTS = [
-          { name: "Rest Area Pesona Wono Agung", lat: -8.362214, lng: 112.6590471, type: "Dataran Tinggi", desc: "Kawasan aman tsunami" },
-          { name: "Perbukitan Tirtoyudo", lat: -8.2333, lng: 112.7667, type: "Bukit Evakuasi", desc: "Dataran tinggi alami" },
-          { name: "Perbukitan Donomulyo", lat: -8.25, lng: 112.5, type: "Bukit Evakuasi", desc: "Ketinggian aman >30 mdpl" },
-          { name: "Lakarsantri (Surabaya Barat)", lat: -7.3167, lng: 112.6333, type: "Dataran Tinggi", desc: "Wilayah lebih tinggi, aman rob" },
-          { name: "Citraland Area", lat: -7.2833, lng: 112.6833, type: "Shelter Perumahan", desc: "Dataran tinggi, aman banjir" },
-          { name: "Nawangan (Dataran Tinggi)", lat: -8.0333, lng: 111.2, type: "Bukit Evakuasi", desc: "Ketinggian >200 mdpl" },
-          { name: "Tulakan", lat: -8.1667, lng: 111.2667, type: "Titik Aman", desc: "Wilayah pesisir selatan" },
-          { name: "Perbukitan Pringkuku", lat: -8.0833, lng: 111.0667, type: "Bukit Alami", desc: "Titik aman tsunami" },
-          { name: "Gantar (Indramayu Selatan)", lat: -6.4667, lng: 108.2167, type: "Dataran Tinggi", desc: "Wilayah aman rob" },
-          { name: "Kantor Kecamatan Sindang", lat: -6.4167, lng: 108.2833, type: "Shelter BPBD", desc: "Titik evakuasi resmi" },
-          { name: "Kantor Kecamatan Patrol", lat: -6.3092507, lng: 107.9922969, type: "Kantor Kecamatan", desc: "Titik evakuasi resmi" },
+          // ==================== KABUPATEN DEMAK, JAWA TENGAH ====================
+          {
+            name: "Bukit Soko (Mranggen)",
+            lat: -7.012,
+            lng: 110.522,
+            type: "Bukit Evakuasi",
+            desc: "Ketinggian >50 mdpl, titik evakuasi resmi untuk banjir dan rob",
+          },
+          {
+            name: "Perbukitan Gajah (Gajah)",
+            lat: -6.928,
+            lng: 110.633,
+            type: "Dataran Tinggi",
+            desc: "Wilayah lebih tinggi dari banjir, aman untuk evakuasi massal",
+          },
+
+          // ==================== KOTA SEMARANG, JAWA TENGAH ====================
+          {
+            name: "Gedung BPBD Kota Semarang",
+            lat: -6.983,
+            lng: 110.417,
+            type: "Shelter Resmi",
+            desc: "Pusat koordinasi bencana, titik evakuasi vertikal",
+          },
+          {
+            name: "Perbukitan Tembalang",
+            lat: -7.05,
+            lng: 110.433,
+            type: "Bukit Evakuasi",
+            desc: "Ketinggian 150-300 mdpl, aman dari banjir dan rob",
+          },
+
+          // ==================== KABUPATEN PEKALONGAN, JAWA TENGAH ====================
+          {
+            name: "Perbukitan Lebakbarang",
+            lat: -7.138,
+            lng: 109.657,
+            type: "Bukit Evakuasi",
+            desc: "Ketinggian >200 mdpl, jalur evakuasi dari Kecamatan Kajen",
+          },
+          {
+            name: "Perbukitan Karanganyar",
+            lat: -7.083,
+            lng: 109.633,
+            type: "Dataran Tinggi",
+            desc: "Wilayah aman banjir bandang, titik kumpul resmi",
+          },
+
+          // ==================== KOTA PALU, SULAWESI TENGAH ====================
+          {
+            name: "Shelter Tsunami Taman Ria",
+            lat: -0.886,
+            lng: 119.856,
+            type: "Shelter Vertikal",
+            desc: "Bangunan evakuasi tsunami 3 lantai, kapasitas 1000 orang",
+          },
+          {
+            name: "Perbukitan Lolu",
+            lat: -0.905,
+            lng: 119.881,
+            type: "Bukit Evakuasi",
+            desc: "Ketinggian >80 mdpl, lokasi evakuasi tsunami dan likuifaksi",
+          },
+          {
+            name: "Gedung Graha Palu",
+            lat: -0.895,
+            lng: 119.87,
+            type: "Shelter Vertikal",
+            desc: "Gedung tinggi, titik evakuasi tsunami untuk pusat kota",
+          },
+
+          // ==================== KABUPATEN ACEH BESAR, ACEH ====================
+          {
+            name: "Bukit Lhoknga",
+            lat: 5.461,
+            lng: 95.275,
+            type: "Bukit Evakuasi",
+            desc: "Ketinggian 150 mdpl, shelter tsunami pasca 2004",
+          },
+          {
+            name: "Perbukitan Jantho",
+            lat: 5.335,
+            lng: 95.584,
+            type: "Bukit Alami",
+            desc: "Wilayah dataran tinggi, aman dari tsunami",
+          },
+          {
+            name: "Gedung Pemerintah Aceh Besar",
+            lat: 5.383,
+            lng: 95.383,
+            type: "Shelter BPBD",
+            desc: "Pusat evakuasi resmi, titik kumpul masyarakat",
+          },
+
+          // ==================== KOTA BANDA ACEH, ACEH ====================
+          {
+            name: "Bukit Tsunami Ulee Lheue",
+            lat: 5.55,
+            lng: 95.3,
+            type: "Bukit Evakuasi",
+            desc: "Monumen tsunami dan titik evakuasi vertikal alami",
+          },
+          {
+            name: "Gedung Baiturrahman",
+            lat: 5.548,
+            lng: 95.324,
+            type: "Shelter Vertikal",
+            desc: "Bangunan tinggi di pusat kota, titik evakuasi tsunami",
+          },
+          {
+            name: "Perbukitan Lamteh",
+            lat: 5.533,
+            lng: 95.35,
+            type: "Bukit Evakuasi",
+            desc: "Ketinggian >40 mdpl, aman dari gelombang tsunami",
+          },
+
+          // ==================== KABUPATEN CILACAP, JAWA TENGAH ====================
+          {
+            name: "Bukit Karangtalun",
+            lat: -7.724,
+            lng: 109.006,
+            type: "Bukit Evakuasi",
+            desc: "Ketinggian 80 mdpl, titik evakuasi tsunami utama",
+          },
+          {
+            name: "Perbukitan Gandrungmangu",
+            lat: -7.583,
+            lng: 108.85,
+            type: "Dataran Tinggi",
+            desc: "Wilayah aman tsunami, jalur evakuasi via jalan utama",
+          },
+          {
+            name: "Shelter Vertikal Cilacap",
+            lat: -7.734,
+            lng: 109.008,
+            type: "Shelter Vertikal",
+            desc: "Gedung evakuasi 4 lantai di kawasan pelabuhan",
+          },
+
+          // ==================== KOTA PADANG, SUMATERA BARAT ====================
+          {
+            name: "Bukit Padang",
+            lat: -0.928,
+            lng: 100.367,
+            type: "Bukit Evakuasi",
+            desc: "Ketinggian 100 mdpl, titik evakuasi tsunami utama",
+          },
+          {
+            name: "Shelter Tsunami Purus",
+            lat: -0.947,
+            lng: 100.35,
+            type: "Shelter Vertikal",
+            desc: "Bangunan evakuasi di kawasan Pantai Purus",
+          },
+          {
+            name: "Perbukitan Lubuk Kilangan",
+            lat: -0.967,
+            lng: 100.417,
+            type: "Bukit Alami",
+            desc: "Wilayah perbukitan timur, aman dari tsunami dan banjir",
+          },
+          {
+            name: "Gedung Universitas Andalas",
+            lat: -0.883,
+            lng: 100.35,
+            type: "Shelter Vertikal",
+            desc: "Bangunan tinggi kampus, titik evakuasi massal",
+          },
+
+          // ==================== KABUPATEN LOMBOK BARAT, NTB ====================
+          {
+            name: "Perbukitan Senggigi",
+            lat: -8.494,
+            lng: 116.046,
+            type: "Bukit Evakuasi",
+            desc: "Ketinggian 150 mdpl, aman dari tsunami dan longsor",
+          },
+          {
+            name: "Bukit Mataram",
+            lat: -8.6,
+            lng: 116.117,
+            type: "Bukit Alami",
+            desc: "Titik evakuasi gempa dan tsunami untuk wilayah barat",
+          },
+          {
+            name: "Gedung Pemkab Lombok Barat",
+            lat: -8.656,
+            lng: 116.128,
+            type: "Shelter BPBD",
+            desc: "Pusat koordinasi bencana dan titik kumpul resmi",
+          },
+
+          // ==================== KOTA MANADO, SULAWESI UTARA ====================
+          {
+            name: "Bukit Malalayang",
+            lat: 1.47,
+            lng: 124.79,
+            type: "Bukit Evakuasi",
+            desc: "Ketinggian 80 mdpl, titik evakuasi tsunami untuk kawasan pesisir",
+          },
+          {
+            name: "Shelter Tsunami Boulevard",
+            lat: 1.493,
+            lng: 124.841,
+            type: "Shelter Vertikal",
+            desc: "Gedung evakuasi di kawasan Megamas, kapasitas 500 orang",
+          },
+          {
+            name: "Perbukitan Tikala",
+            lat: 1.5,
+            lng: 124.867,
+            type: "Bukit Evakuasi",
+            desc: "Wilayah perbukitan timur, aman dari tsunami dan banjir bandang",
+          },
+          {
+            name: "Gedung Graha Manado",
+            lat: 1.487,
+            lng: 124.84,
+            type: "Shelter Vertikal",
+            desc: "Bangunan tinggi pusat kota, titik evakuasi tsunami",
+          },
         ];
 
         const EVACUATION_PAIRS = [
-          // Malang Selatan
+          // ==================== KABUPATEN DEMAK, JAWA TENGAH ====================
           {
-            name: "Jalur Evakuasi Sendang Biru → Perbukitan Gedangan",
-            from: [-8.425, 112.685],
-            to: [-8.362214, 112.6590471],
-            desc: "Via Jalan Lintas Selatan - ±25 menit motor",
+            name: "Jalur Evakuasi Demak Kota → Bukit Soko (Mranggen)",
+            from: [-6.894, 110.639],
+            to: [-7.012, 110.522],
+            desc: "Via Jl. Raya Demak - Mranggen, ±30 menit motor | Evakuasi banjir & rob",
           },
           {
-            name: "Jalur Evakuasi Tirtoyudo → Perbukitan Tirtoyudo",
-            from: [-8.3, 112.8333],
-            to: [-8.2333, 112.7667],
-            desc: "Via Jalan Kabupaten - ±20 menit motor",
+            name: "Jalur Evakuasi Karanganyar → Perbukitan Gajah",
+            from: [-6.928, 110.633],
+            to: [-6.9, 110.6],
+            desc: "Via Jalan Alternatif Karanganyar, ±20 menit motor | Titik aman banjir",
+          },
+
+          // ==================== KOTA SEMARANG, JAWA TENGAH ====================
+          {
+            name: "Jalur Evakuasi Semarang Utara → Perbukitan Tembalang",
+            from: [-6.966, 110.417],
+            to: [-7.05, 110.433],
+            desc: "Via Jl. MT Haryono - Jl. Tembalang, ±35 menit motor | Evakuasi banjir & rob",
           },
           {
-            name: "Jalur Evakuasi Donomulyo → Perbukitan",
-            from: [-8.3167, 112.4333],
-            to: [-8.25, 112.5],
-            desc: "Via Jalan Raya Donomulyo - ±15 menit motor",
+            name: "Jalur Evakuasi Genuk → Gedung BPBD Kota Semarang",
+            from: [-6.95, 110.45],
+            to: [-6.983, 110.417],
+            desc: "Via Jl. Kaligawe - Jl. Pemuda, ±25 menit motor | Shelter resmi",
+          },
+
+          // ==================== KABUPATEN PEKALONGAN, JAWA TENGAH ====================
+          {
+            name: "Jalur Evakuasi Pekalongan Kota → Perbukitan Lebakbarang",
+            from: [-6.889, 109.675],
+            to: [-7.138, 109.657],
+            desc: "Via Jl. Raya Pekalongan - Kajen, ±45 menit motor | Evakuasi banjir bandang",
           },
           {
-            name: "Jalur Evakuasi Tulakan → Perbukitan",
-            from: [-8.2167, 111.3333],
-            to: [-8.1667, 111.2667],
-            desc: "Via Jalan Raya",
+            name: "Jalur Evakuasi Kajen → Perbukitan Karanganyar",
+            from: [-7.033, 109.683],
+            to: [-7.083, 109.633],
+            desc: "Via Jalan Kabupaten Pekalongan, ±20 menit motor | Titik aman banjir",
           },
-          // Surabaya
+
+          // ==================== KOTA PALU, SULAWESI TENGAH ====================
           {
-            name: "Jalur Evakuasi Kenjeran → Citraland",
-            from: [-7.2333, 112.7833],
-            to: [-7.2833, 112.6833],
-            desc: "Via Jl. MERR - Mayjen Sungkono - ±20 menit motor",
-          },
-          {
-            name: "Jalur Evakuasi Bulak → Lakarsantri",
-            from: [-7.2167, 112.7667],
-            to: [-7.3167, 112.6333],
-            desc: "Via Jl. Manyar - Ahmad Yani - ±25 menit motor",
+            name: "Jalur Evakuasi Pantai Talise → Shelter Taman Ria",
+            from: [-0.886, 119.856],
+            to: [-0.886, 119.865],
+            desc: "Via Jl. Maluku - Jl. Moh. Yamin, ±10 menit motor | Evakuasi tsunami",
           },
           {
-            name: "Jalur Evakuasi Tambak Wedi → Citraland",
-            from: [-7.2, 112.7333],
-            to: [-7.2833, 112.6833],
-            desc: "Via Jalan Arteri Surabaya - ±20 menit motor",
-          },
-          // Pacitan
-          {
-            name: "Jalur Evakuasi Pacitan Kota → Nawangan",
-            from: [-8.2, 111.1],
-            to: [-8.0333, 111.2],
-            desc: "Via Jl. Pacitan-Nawangan - ±30 menit motor",
+            name: "Jalur Evakuasi Pesisir Selatan → Perbukitan Lolu",
+            from: [-0.9, 119.87],
+            to: [-0.905, 119.881],
+            desc: "Via Jl. Sungai Bantaya, ±15 menit motor | Jalur evakuasi vertikal",
           },
           {
-            name: "Jalur Evakuasi Pringkuku → Perbukitan",
-            from: [-8.1833, 110.9667],
-            to: [-8.0833, 111.0667],
-            desc: "Via Jalan Kabupaten Pacitan - ±20 menit motor",
+            name: "Jalur Evakuasi Pusat Kota → Gedung Graha Palu",
+            from: [-0.895, 119.87],
+            to: [-0.9, 119.875],
+            desc: "Via Jl. Hasanudin - Jl. Merdeka, ±8 menit motor | Shelter vertikal",
+          },
+
+          // ==================== KABUPATEN ACEH BESAR, ACEH ====================
+          {
+            name: "Jalur Evakuasi Lhoknga → Bukit Lhoknga",
+            from: [5.461, 95.275],
+            to: [5.468, 95.28],
+            desc: "Via Jl. Lhoknga - Keude, ±12 menit motor | Shelter tsunami utama",
           },
           {
-            name: "Jalur Evakuasi Kebonagung → Nawangan",
-            from: [-8.2167, 111.1667],
-            to: [-8.0333, 111.2],
-            desc: "Via Jalan Utama Pacitan - ±25 menit motor",
-          },
-          // Indramayu
-          {
-            name: "Jalur Evakuasi Karangsong → Gantar",
-            from: [-6.3333, 108.3167],
-            to: [-6.4667, 108.2167],
-            desc: "Via Jalan Pantura - Cipali - ±25 menit motor",
+            name: "Jalur Evakuasi Jantho → Perbukitan Jantho",
+            from: [5.4, 95.5],
+            to: [5.335, 95.584],
+            desc: "Via Jl. Banda Aceh - Calang, ±25 menit motor | Dataran tinggi aman",
           },
           {
-            name: "Jalur Evakuasi Eretan → Sindang",
-            from: [-6.3333, 108.35],
-            to: [-6.4167, 108.2833],
-            desc: "Via Jalan Alternatif Indramayu - ±20 menit motor",
+            name: "Jalur Evakuasi Pesisir Aceh Besar → Gedung Pemkab",
+            from: [5.5, 95.35],
+            to: [5.383, 95.383],
+            desc: "Via Jl. Lintas Barat, ±20 menit motor | Shelter resmi BPBD",
+          },
+
+          // ==================== KOTA BANDA ACEH, ACEH ====================
+          {
+            name: "Jalur Evakuasi Ulee Lheue → Bukit Tsunami",
+            from: [5.55, 95.3],
+            to: [5.56, 95.305],
+            desc: "Via Jl. Sultan Iskandar Muda, ±8 menit motor | Evakuasi tsunami cepat",
           },
           {
-            name: "Jalur Evakuasi Kandanghaur → Gantar",
-            from: [-6.35, 108.0667],
-            to: [-6.4667, 108.2167],
-            desc: "Via Jalan Pantura - ±30 menit motor",
+            name: "Jalur Evakuasi Pesisir Kota → Gedung Baiturrahman",
+            from: [5.548, 95.324],
+            to: [5.555, 95.33],
+            desc: "Via Jl. Tgk. H. M. Daud Beureueh, ±10 menit motor | Shelter vertikal",
           },
           {
-            name: "Jalur Evakuasi Patrol → Kantor Kec. Patrol",
-            from: [-6.3, 108.0167],
-            to: [-6.3092507, 107.9922969],
-            desc: "Via Jalan Pantura",
+            name: "Jalur Evakuasi Lambaro → Perbukitan Lamteh",
+            from: [5.52, 95.34],
+            to: [5.533, 95.35],
+            desc: "Via Jl. Soekarno-Hatta, ±15 menit motor | Bukit evakuasi alami",
+          },
+
+          // ==================== KABUPATEN CILACAP, JAWA TENGAH ====================
+          {
+            name: "Jalur Evakuasi Pantai Teluk Penyu → Bukit Karangtalun",
+            from: [-7.734, 109.008],
+            to: [-7.724, 109.006],
+            desc: "Via Jl. Gatot Subroto, ±12 menit motor | Evakuasi tsunami prioritas",
           },
           {
-            name: "Jalur Evakuasi Krangkeng → Gantar",
-            from: [-6.35, 108.1167],
-            to: [-6.4667, 108.2167],
-            desc: "Via Jalan Alternatif Indramayu",
+            name: "Jalur Evakuasi Cilacap Selatan → Perbukitan Gandrungmangu",
+            from: [-7.7, 109.0],
+            to: [-7.583, 108.85],
+            desc: "Via Jl. Raya Cilacap - Kebumen, ±35 menit motor | Titik aman tsunami",
+          },
+          {
+            name: "Jalur Evakuasi Pelabuhan → Shelter Vertikal Cilacap",
+            from: [-7.734, 109.008],
+            to: [-7.73, 109.005],
+            desc: "Via Jl. Yos Sudarso, ±5 menit motor | Shelter vertikal 4 lantai",
+          },
+
+          // ==================== KOTA PADANG, SUMATERA BARAT ====================
+          {
+            name: "Jalur Evakuasi Pantai Purus → Bukit Padang",
+            from: [-0.947, 100.35],
+            to: [-0.928, 100.367],
+            desc: "Via Jl. Jend. Sudirman, ±20 menit motor | Evakuasi tsunami",
+          },
+          {
+            name: "Jalur Evakuasi Muara Padang → Shelter Tsunami Purus",
+            from: [-0.95, 100.34],
+            to: [-0.947, 100.35],
+            desc: "Via Jl. Kampung Pondok, ±8 menit motor | Shelter vertikal terdekat",
+          },
+          {
+            name: "Jalur Evakuasi Air Pacah → Perbukitan Lubuk Kilangan",
+            from: [-0.967, 100.417],
+            to: [-0.98, 100.42],
+            desc: "Via Jl. Bypass, ±15 menit motor | Bukit evakuasi timur",
+          },
+          {
+            name: "Jalur Evakuasi Kampus Unand → Gedung Unand Limau Manih",
+            from: [-0.883, 100.35],
+            to: [-0.89, 100.36],
+            desc: "Via Jl. Limau Manih, ±10 menit motor | Shelter massal kampus",
+          },
+
+          // ==================== KABUPATEN LOMBOK BARAT, NTB ====================
+          {
+            name: "Jalur Evakuasi Senggigi → Perbukitan Senggigi",
+            from: [-8.494, 116.046],
+            to: [-8.5, 116.03],
+            desc: "Via Jl. Raya Senggigi, ±15 menit motor | Evakuasi tsunami & gempa",
+          },
+          {
+            name: "Jalur Evakuasi Mataram → Bukit Mataram",
+            from: [-8.6, 116.117],
+            to: [-8.59, 116.1],
+            desc: "Via Jl. Langko - Jl. Pejanggik, ±20 menit motor | Bukit evakuasi alami",
+          },
+          {
+            name: "Jalur Evakuasi Gerung → Gedung Pemkab Lombok Barat",
+            from: [-8.656, 116.128],
+            to: [-8.67, 116.13],
+            desc: "Via Jl. Raya Gerung, ±12 menit motor | Shelter resmi BPBD",
+          },
+
+          // ==================== KOTA MANADO, SULAWESI UTARA ====================
+          {
+            name: "Jalur Evakuasi Megamas → Bukit Malalayang",
+            from: [1.493, 124.841],
+            to: [1.47, 124.79],
+            desc: "Via Jl. Piere Tendean - Jl. Malalayang, ±25 menit motor | Evakuasi tsunami",
+          },
+          {
+            name: "Jalur Evakuasi Boulevard → Shelter Tsunami Boulevard",
+            from: [1.493, 124.841],
+            to: [1.495, 124.845],
+            desc: "Via Jl. Piere Tendean, ±5 menit motor | Shelter vertikal Megamas",
+          },
+          {
+            name: "Jalur Evakuasi Tikala → Perbukitan Tikala",
+            from: [1.5, 124.867],
+            to: [1.51, 124.88],
+            desc: "Via Jl. Tikala Baru, ±15 menit motor | Bukit evakuasi timur",
+          },
+          {
+            name: "Jalur Evakuasi Pusat Kota → Gedung Graha Manado",
+            from: [1.487, 124.84],
+            to: [1.49, 124.842],
+            desc: "Via Jl. Sam Ratulangi, ±8 menit motor | Shelter vertikal pusat kota",
           },
         ];
 
@@ -602,7 +992,7 @@
 
           if (!result) {
             const fallback = L.polyline([pair.from, pair.to], {
-              color: "#1DD1A1",
+              color: "#FFC312",
               weight: 3,
               opacity: 0.5,
               dashArray: "6,6",
@@ -613,7 +1003,7 @@
           }
 
           const mainLine = L.polyline(result.coords, {
-            color: "#1DD1A1",
+            color: "#FFC312",
             weight: 5,
             opacity: 0.9,
             lineCap: "round",
@@ -801,9 +1191,9 @@
 
         function renderLayerControls() {
           const config = {
-            risikoZona: { label: "Zona Risiko", color: "#EE5253", desc: "Titik-titik rawan bencana di pesisir" },
-            jalurEvakuasi: { label: "Jalur Evakuasi Motor", color: "#1DD1A1", desc: "Rute nyata via jalan aspal (OSRM)" },
-            titikAman: { label: "Titik Aman / Shelter", color: "#FFC312", desc: "Shelter & bukit evakuasi >20 mdpl" },
+            risikoZona: { label: "Zona Risiko", color: "#EE5253", desc: "Titik-titik rawan bencana" },
+            jalurEvakuasi: { label: "Jalur Evakuasi Motor", color: "#FFC312", desc: "Rute nyata via jalan aspal (OSRM)" },
+            titikAman: { label: "Titik Aman / Shelter", color: "#1DD1A1", desc: "Shelter & bukit evakuasi >20 mdpl" },
           };
 
           const div = document.getElementById("layerControls");
