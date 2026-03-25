@@ -12,7 +12,6 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <script>
-      // Initialize theme before page renders to avoid flash
       (function () {
         const saved = localStorage.getItem("theme");
         const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -209,7 +208,7 @@
                     <i :data-lucide="result.icon" class="w-5 h-5 text-white"></i>
                   </div>
                   <div>
-                    <div class="text-xs font-semibold text-secondary uppercase tracking-wide mb-1" x-text="wilayah + ' · ' + (selectedBencana?.label || '')"></div>
+                    <div class="text-xs font-semibold text-secondary uppercase tracking-wide mb-1" x-text="wilayah"></div>
                     <div class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold text-white" :style="{ background: result.color }">STATUS: <span x-text="levelConf.label" class="ml-1"></span></div>
                   </div>
                 </div>
@@ -348,180 +347,6 @@
       <div class="border-t border-white/5 py-8 text-center text-[11px] text-white/30">© 2026 RUANG AMAN. Water-Related Disasters Safety Platform Indonesia.</div>
     </footer>
 
-    <!-- <script>
-      function riskApp() {
-        return {
-          scrolled: false,
-          wilayah: "",
-          bencana: "",
-          loading: false,
-          result: null,
-          activeTab: "detail",
-          darkMode: document.documentElement.classList.contains("dark"),
-          mobileOpen: false, // TAMBAHKAN INI
-
-          wilayahList: [
-            "Kabupaten Demak, Jawa Tengah",
-            "Kota Semarang, Jawa Tengah",
-            "Kabupaten Pekalongan, Jawa Tengah",
-            "Kota Palu, Sulawesi Tengah",
-            "Kabupaten Aceh Besar, Aceh",
-            "Kota Banda Aceh, Aceh",
-            "Kabupaten Cilacap, Jawa Tengah",
-            "Kota Padang, Sumatera Barat",
-            "Kabupaten Lombok Barat, NTB",
-            "Kota Manado, Sulawesi Utara",
-          ],
-
-          bencanaList: [
-            { id: "banjir", label: "Banjir", icon: "Waves" },
-            { id: "rob", label: "Rob / Banjir Pasang", icon: "Wind" },
-            { id: "gempa", label: "Gempa Bumi", icon: "Activity" },
-            { id: "tsunami", label: "Tsunami", icon: "Zap" },
-          ],
-
-          riskDatabase: {
-            "Kabupaten Demak, Jawa Tengah": {
-              banjir: {
-                level: "bahaya",
-                index: 85,
-                title: "Tingkat Risiko: BAHAYA",
-                description: "Kabupaten Demak merupakan wilayah dengan risiko banjir sangat tinggi. Subsidence tanah dan kenaikan muka air laut mempercepat genangan di wilayah ini.",
-                factors: ["Penurunan tanah (land subsidence) 5–10 cm/tahun", "Sistem drainase yang tidak memadai", "Topografi rendah di bawah muka air laut", "Curah hujan tinggi (>200 mm/bulan)"],
-                actions: ["Siapkan rute evakuasi ke tempat lebih tinggi", "Buat tas darurat dengan dokumen penting", "Pantau info BMKG dan BPBD secara rutin", "Hindari area bantaran sungai saat hujan deras"],
-                color: "#EE5253",
-                bgColor: "rgba(238,82,83,0.08)",
-                icon: "AlertTriangle",
-              },
-              rob: {
-                level: "bahaya",
-                index: 90,
-                title: "Tingkat Risiko: BAHAYA",
-                description: "Banjir rob di Demak sangat parah akibat kombinasi penurunan tanah dan kenaikan permukaan laut. Banyak kawasan permanen terendam.",
-                factors: ["Penurunan muka tanah ekstrem di pesisir", "Kenaikan permukaan laut regional", "Hilangnya mangrove pelindung pantai", "Pemompaan air tanah berlebihan"],
-                actions: ["Pertimbangkan relokasi ke kawasan lebih aman", "Bangun tanggul penahan air di sekitar rumah", "Ikuti program pemerintah untuk warga pesisir", "Simpan barang berharga di tempat tinggi"],
-                color: "#EE5253",
-                bgColor: "rgba(238,82,83,0.08)",
-                icon: "AlertTriangle",
-              },
-              gempa: {
-                level: "waspada",
-                index: 35,
-                title: "Tingkat Risiko: WASPADA",
-                description: "Aktivitas seismik di Demak relatif rendah, namun tetap perlu kewaspadaan karena berada di Pulau Jawa yang berdekatan dengan zona subduksi.",
-                factors: ["Zona seismik rendah–sedang", "Jarak sedang dari zona subduksi selatan Jawa", "Tanah aluvial yang rentan likuifaksi"],
-                actions: ["Perkuat konstruksi bangunan", "Ikuti latihan mitigasi gempa", "Ketahui titik aman di dalam dan luar bangunan"],
-                color: "#FFC312",
-                bgColor: "rgba(255,195,18,0.08)",
-                icon: "AlertTriangle",
-              },
-              tsunami: {
-                level: "waspada",
-                index: 28,
-                title: "Tingkat Risiko: WASPADA",
-                description: "Risiko tsunami relatif rendah karena Demak menghadap Laut Jawa yang dangkal. Namun kewaspadaan tetap diperlukan.",
-                factors: ["Laut Jawa yang dangkal meredam gelombang", "Tidak langsung berhadapan dengan samudra terbuka", "Potensi tsunami lokal dari Gunung Berapi bawah laut"],
-                actions: ["Kenali tanda-tanda awal tsunami", "Segera ke tempat tinggi jika gempa kuat", "Patuhi sistem peringatan dini resmi"],
-                color: "#FFC312",
-                bgColor: "rgba(255,195,18,0.08)",
-                icon: "AlertTriangle",
-              },
-            },
-            "Kota Palu, Sulawesi Tengah": {
-              gempa: {
-                level: "bahaya",
-                index: 92,
-                title: "Tingkat Risiko: BAHAYA",
-                description: "Kota Palu berada di lembah sesar aktif Palu-Koro, salah satu sesar dengan pergeseran tercepat di Indonesia (~40mm/tahun). Risiko gempa sangat tinggi.",
-                factors: ["Dilalui sesar aktif Palu-Koro", "Riwayat gempa M7.5 tahun 2018", "Topografi lembah sempit rentan amplifikasi", "Potensi likuifaksi di daerah aluvial"],
-                actions: ["Bangun shelter tahan gempa", "Ikuti drills evakuasi rutin BPBD", "Kenal jalur evakuasi terdekat", "Pasang pengamanan furniture dan objek berat"],
-                color: "#EE5253",
-                bgColor: "rgba(238,82,83,0.08)",
-                icon: "AlertTriangle",
-              },
-              tsunami: {
-                level: "bahaya",
-                index: 95,
-                title: "Tingkat Risiko: BAHAYA",
-                description: "Teluk Palu sangat berbahaya terhadap tsunami karena bentuk teluk seperti corong (funnel) yang memperkuat gelombang. Tsunami 2018 mencapai 6m.",
-                factors: ["Bentuk teluk memperkuat gelombang tsunami", "Sumber gempa dekat (sesar bawah laut)", "Populasi padat di tepi pantai", "Riwayat tsunami destruktif 2018"],
-                actions: ["Evakuasi vertikal segera setelah gempa kuat", "Jangan tunggu peringatan resmi—segera naik", "Kenali titik evakuasi tsunami tertinggi", "Jangan kembali sebelum dinyatakan aman"],
-                color: "#EE5253",
-                bgColor: "rgba(238,82,83,0.08)",
-                icon: "AlertTriangle",
-              },
-              banjir: {
-                level: "siaga",
-                index: 58,
-                title: "Tingkat Risiko: SIAGA",
-                description: "Kota Palu memiliki risiko banjir bandang akibat topografi lembah dan curah hujan tinggi di pegunungan sekitarnya.",
-                factors: ["Topografi lembah sempit dan curam", "Sungai Palu dengan aliran deras", "Deforestasi di hulu sungai", "Curah hujan intensitas tinggi"],
-                actions: ["Waspadai banjir bandang saat hujan deras hulu", "Pantau debit Sungai Palu secara berkala", "Jauhi bantaran sungai saat cuaca ekstrem"],
-                color: "#FF9F43",
-                bgColor: "rgba(255,159,67,0.08)",
-                icon: "AlertTriangle",
-              },
-              rob: {
-                level: "waspada",
-                index: 30,
-                title: "Tingkat Risiko: WASPADA",
-                description: "Risiko rob di Palu relatif lebih rendah dibandingkan banjir dan tsunami, namun wilayah teluk perlu diwaspadai saat pasang tinggi.",
-                factors: ["Teluk semi-tertutup dengan pasang sedang", "Pemukiman nelayan di tepi teluk", "Dampak kenaikan muka air laut jangka panjang"],
-                actions: ["Monitor pasang surut air laut", "Perhatikan kondisi pantai saat pasang purnama", "Jaga jarak dari bibir pantai malam hari"],
-                color: "#FFC312",
-                bgColor: "rgba(255,195,18,0.08)",
-                icon: "AlertTriangle",
-              },
-            },
-          },
-
-          defaultRisks: {
-            banjir: {
-              level: "siaga",
-              index: 55,
-              title: "Tingkat Risiko: SIAGA",
-              description: "Wilayah ini memiliki risiko banjir pada kategori siaga. Diperlukan kewaspadaan dan persiapan yang memadai.",
-              factors: ["Curah hujan musiman tinggi", "Kapasitas drainase terbatas", "Kepadatan penduduk di daerah rendah"],
-              actions: ["Siapkan tas darurat", "Pantau informasi BMKG", "Kenali jalur evakuasi"],
-              color: "#FF9F43",
-              bgColor: "rgba(255,159,67,0.08)",
-              icon: "AlertTriangle",
-            },
-            rob: {
-              level: "waspada",
-              index: 40,
-              title: "Tingkat Risiko: WASPADA",
-              description: "Potensi banjir rob sedang di wilayah ini. Perlu pemantauan berkala kondisi pasang laut.",
-              factors: ["Wilayah pesisir aktif", "Pasang surut normal", "Perubahan iklim gradual"],
-              actions: ["Monitor pasang laut", "Perkuat infrastruktur pesisir", "Siapkan evakuasi"],
-              color: "#FFC312",
-              bgColor: "rgba(255,195,18,0.08)",
-              icon: "AlertTriangle",
-            },
-            gempa: {
-              level: "siaga",
-              index: 62,
-              title: "Tingkat Risiko: SIAGA",
-              description: "Wilayah ini berada di zona seismik aktif. Kesiapsiagaan gempa sangat dianjurkan.",
-              factors: ["Dekat zona subduksi", "Aktivitas seismik sedang", "Kualitas bangunan bervariasi"],
-              actions: ["Perkuat bangunan", "Latihan evakuasi gempa", "Simpan kit darurat"],
-              color: "#FF9F43",
-              bgColor: "rgba(255,159,67,0.08)",
-              icon: "AlertTriangle",
-            },
-            tsunami: {
-              level: "waspada",
-              index: 45,
-              title: "Tingkat Risiko: WASPADA",
-              description: "Risiko tsunami perlu diwaspadai di wilayah ini. Pahami tanda-tanda dan rute evakuasi.",
-              factors: ["Berhadapan dengan samudra aktif", "Zona subduksi regional", "Topografi pantai datar"],
-              actions: ["Kenali tanda tsunami", "Evakuasi vertikal segera", "Jangan tunggu air surut"],
-              color: "#FFC312",
-              bgColor: "rgba(255,195,18,0.08)",
-              icon: "AlertTriangle",
-            },
-          }, -->
-
     <script>
       function riskApp() {
         return {
@@ -555,9 +380,6 @@
           ],
 
           riskDatabase: {
-            // ============================================================
-            // 1. KABUPATEN DEMAK, JAWA TENGAH
-            // ============================================================
             "Kabupaten Demak, Jawa Tengah": {
               banjir: {
                 level: "bahaya",
@@ -653,9 +475,6 @@
               },
             },
 
-            // ============================================================
-            // 2. KOTA SEMARANG, JAWA TENGAH
-            // ============================================================
             "Kota Semarang, Jawa Tengah": {
               banjir: {
                 level: "bahaya",
@@ -748,9 +567,6 @@
               },
             },
 
-            // ============================================================
-            // 3. KABUPATEN PEKALONGAN, JAWA TENGAH
-            // ============================================================
             "Kabupaten Pekalongan, Jawa Tengah": {
               banjir: {
                 level: "bahaya",
@@ -820,9 +636,6 @@
               },
             },
 
-            // ============================================================
-            // 4. KOTA PALU, SULAWESI TENGAH
-            // ============================================================
             "Kota Palu, Sulawesi Tengah": {
               gempa: {
                 level: "bahaya",
@@ -918,9 +731,6 @@
               },
             },
 
-            // ============================================================
-            // 5. KABUPATEN ACEH BESAR, ACEH
-            // ============================================================
             "Kabupaten Aceh Besar, Aceh": {
               tsunami: {
                 level: "bahaya",
@@ -1013,9 +823,6 @@
               },
             },
 
-            // ============================================================
-            // 6. KOTA BANDA ACEH, ACEH
-            // ============================================================
             "Kota Banda Aceh, Aceh": {
               tsunami: {
                 level: "bahaya",
@@ -1102,9 +909,6 @@
               },
             },
 
-            // ============================================================
-            // 7. KABUPATEN CILACAP, JAWA TENGAH
-            // ============================================================
             "Kabupaten Cilacap, Jawa Tengah": {
               tsunami: {
                 level: "bahaya",
@@ -1194,9 +998,6 @@
               },
             },
 
-            // ============================================================
-            // 8. KOTA PADANG, SUMATERA BARAT
-            // ============================================================
             "Kota Padang, Sumatera Barat": {
               tsunami: {
                 level: "bahaya",
@@ -1287,9 +1088,6 @@
               },
             },
 
-            // ============================================================
-            // 9. KABUPATEN LOMBOK BARAT, NTB
-            // ============================================================
             "Kabupaten Lombok Barat, NTB": {
               gempa: {
                 level: "bahaya",
@@ -1379,9 +1177,6 @@
               },
             },
 
-            // ============================================================
-            // 10. KOTA MANADO, SULAWESI UTARA
-            // ============================================================
             "Kota Manado, Sulawesi Utara": {
               tsunami: {
                 level: "bahaya",
@@ -1540,7 +1335,6 @@
               localStorage.setItem("theme", "light");
             }
 
-            // Reinitialize icons after theme change
             setTimeout(() => lucide.createIcons(), 50);
           },
 
@@ -1562,11 +1356,8 @@
               const data = this.riskDatabase[this.wilayah]?.[this.bencana] || this.defaultRisks[this.bencana];
               this.result = data;
               this.loading = false;
-
-              // Close mobile menu if open
               this.mobileMenuOpen = false;
 
-              // Reinitialize Lucide icons after new content appears
               setTimeout(() => {
                 lucide.createIcons();
               }, 50);
@@ -1575,20 +1366,16 @@
         };
       }
 
-      // Initialize Lucide icons on page load
       document.addEventListener("DOMContentLoaded", () => {
         lucide.createIcons();
       });
 
-      // Re-run after Alpine updates
       document.addEventListener("alpine:initialized", () => {
         lucide.createIcons();
       });
 
-      // Close mobile menu on window resize (if going to desktop)
       window.addEventListener("resize", () => {
         if (window.innerWidth >= 768) {
-          // md breakpoint
           const app = document.querySelector('[x-data="riskApp()"]')?.__x;
           if (app && app.$data.mobileMenuOpen) {
             app.$data.mobileMenuOpen = false;

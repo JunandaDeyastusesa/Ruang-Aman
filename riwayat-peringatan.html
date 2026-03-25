@@ -207,13 +207,15 @@
         }
 
         /* Select dropdown */
-        select {
+        select,
+        input[type="date"] {
             background-color: #ffffff;
             border-color: #e2e8f0;
             color: #0f172a;
         }
 
-        .dark select {
+        .dark select,
+        .dark input[type="date"] {
             background-color: #1e293b;
             border-color: #334155;
             color: #f1f5f9;
@@ -227,6 +229,14 @@
         .dark select option {
             background-color: #1e293b;
             color: #f1f5f9;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(0.5);
+        }
+
+        .dark input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(0.8);
         }
     </style>
 
@@ -270,6 +280,7 @@
                     class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Edukasi</a>
                 <a href="simulasi.html"
                     class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Simulasi</a>
+                <a href="riwayat.html" class="text-sm font-medium text-[#1DD1A1]">Riwayat</a>
                 <a href="about.html"
                     class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">About</a>
 
@@ -315,6 +326,8 @@
                     class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Edukasi</a>
                 <a href="simulasi.html" @click="mobileOpen = false"
                     class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Simulasi</a>
+                <a href="riwayat.html" @click="mobileOpen = false"
+                    class="text-[#1DD1A1] font-semibold text-sm px-3 py-2.5 rounded-xl bg-white/5">Riwayat</a>
                 <a href="about.html" @click="mobileOpen = false"
                     class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">About</a>
 
@@ -358,17 +371,26 @@
         <div class="max-w-7xl mx-auto -mt-10 px-4 md:px-6 pb-20">
             <!-- Riwayat Table Section -->
             <div class="card-bg rounded-2xl p-6 md:p-8 shadow-lg border border-default mb-8">
-                <a href="index.html"
-                    class="text-[#0A3D62] dark:text-[#1DD1A1] font-bold text-sm flex items-center gap-1 hover:underline">
-                    <i data-lucide="arrow-left" class="w-4"></i> Kembali
-                </a>
+                <div class="flex justify-between items-center mb-4 flex-wrap gap-3">
+                    <a href="index.html"
+                        class="text-[#0A3D62] dark:text-[#1DD1A1] font-bold text-sm flex items-center gap-1 hover:underline">
+                        <i data-lucide="arrow-left" class="w-4"></i> Kembali
+                    </a>
+                    <div class="flex gap-2">
+                        <button @click="resetAllFilters"
+                            class="text-xs px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-600 transition-all">
+                            Reset Semua Filter
+                        </button>
+                    </div>
+                </div>
+
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 gap-4 flex-wrap">
                     <div>
-                        <h2 class="text-2xl md:text-3xl font-bold text-primary mt-3">Riwayat Kejadian Bencana</h2>
+                        <h2 class="text-2xl md:text-3xl font-bold text-primary">Riwayat Kejadian Bencana</h2>
                         <p class="text-xs text-secondary mt-1">Sumber: BNPB, BMKG, ANTARA | Diperbarui: 23 Maret 2026
                         </p>
                     </div>
-                    <div class="flex gap-3">
+                    <div class="flex flex-wrap gap-3">
                         <select x-model="filterJenis"
                             class="text-sm px-3 py-2 rounded-xl border border-gray-200 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0A3D62] dark:focus:ring-[#1DD1A1]">
                             <option value="all">Semua Jenis</option>
@@ -391,15 +413,42 @@
                     </div>
                 </div>
 
-                <!-- Tabel Riwayat -->
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 gap-4 flex-wrap">
+                    <div class="flex gap-3 flex-wrap">
+
+                        <!-- Filter Tanggal Mulai -->
+                        <div class="relative">
+                            <input type="date" x-model="filterTanggalMulai"
+                                class="text-sm px-3 py-2 rounded-xl border border-gray-200 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0A3D62] dark:focus:ring-[#1DD1A1]"
+                                placeholder="Dari Tanggal">
+                        </div>
+                        <!-- Filter Tanggal Akhir -->
+                        <div class="relative">
+                            <input type="date" x-model="filterTanggalAkhir"
+                                class="text-sm px-3 py-2 rounded-xl border border-gray-200 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0A3D62] dark:focus:ring-[#1DD1A1]"
+                                placeholder="Sampai Tanggal">
+                        </div>
+                        <!-- Tombol Reset Tanggal -->
+                        <button @click="resetFilterTanggal"
+                            class="text-sm px-3 py-2 rounded-xl border border-gray-200 bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-slate-700 dark:border-slate-600 dark:text-white dark:hover:bg-slate-600 transition-all">
+                            Reset Tanggal
+                        </button>
+                    </div>
+                    <div class="text-sm text-secondary">
+                        Menampilkan <span x-text="filteredData.length"></span> dari <span
+                            x-text="riwayatData.length"></span> data
+                    </div>
+                </div>
+
+                <!-- Tabel Riwayat dalam bentuk Card -->
                 <div class="space-y-4">
                     <template x-for="(item, index) in filteredData" :key="index">
                         <div class="item-bg border-l-4 border p-6 rounded-2xl flex items-center gap-6 flex-wrap group hover:translate-x-1 transition-all"
                             :class="item.statusKelas === 'siaga' ? 'border-[#FF9F43]' : (item.statusKelas === 'waspada' ? 'border-[#FFC312]' : (item.statusKelas === 'tanggap-darurat' ? 'border-[#EE5253]' : 'border-[#1DD1A1]'))">
 
                             <div class="w-10 h-10 rounded-xl flex items-center justify-center"
-                                :class="item.jenisKelas === 'rob' ? 'bg-[#FF9F43]/10 text-[#FF9F43]' : (item.jenisKelas === 'banjir' ? 'bg-[#0A3D62]/10 text-[#0A3D62] dark:text-[#1DD1A1]' : (item.jenisKelas === 'banjir-bandang' ? 'bg-[#EE5253]/10 text-[#EE5253]' : 'bg-[#FFC312]/10 text-[#FFC312]'))">
-                                <i :data-lucide="item.jenisKelas === 'rob' ? 'waves' : (item.jenisKelas === 'banjir' ? 'droplet' : (item.jenisKelas === 'banjir-bandang' ? 'zap' : 'activity'))"
+                                :class="item.jenisKelas === 'rob' ? 'bg-[#FF9F43]/10 text-[#FF9F43]' : (item.jenisKelas === 'banjir' ? 'bg-[#0A3D62]/10 text-[#0A3D62] dark:text-[#1DD1A1]' : (item.jenisKelas === 'banjir-bandang' ? 'bg-[#EE5253]/10 text-[#EE5253]' : (item.jenisKelas === 'abrasi-gelombang' ? 'bg-[#1DD1A1]/10 text-[#1DD1A1]' : 'bg-[#FFC312]/10 text-[#FFC312]')))">
+                                <i :data-lucide="item.jenisKelas === 'rob' ? 'waves' : (item.jenisKelas === 'banjir' ? 'droplet' : (item.jenisKelas === 'banjir-bandang' ? 'zap' : (item.jenisKelas === 'abrasi-gelombang' ? 'wind' : 'activity')))"
                                     class="w-5"></i>
                             </div>
 
@@ -407,17 +456,17 @@
                                 <h4 class="font-bold text-primary text-sm" x-text="item.lokasi"></h4>
                                 <p class="text-muted text-xs mt-1" x-text="item.dampak"></p>
                                 <div class="flex gap-2 mt-2">
-                                    <span class="text-muted text-[10px]" x-text="item.tanggal"></span>
-                                    <span class="text-muted text-[10px]" x-text="item.jam"></span>
+                                    <span class="text-muted text-[12px]" x-text="item.tanggal"></span>
+                                    <span class="text-muted text-[12px]" x-text="item.jam"></span>
                                 </div>
                             </div>
 
                             <div class="flex items-center gap-3 flex-wrap">
-                                <span class="text-[10px] font-bold px-3 py-1 rounded-full border"
+                                <span class="text-[13px] font-bold px-3 py-1 rounded-full border"
                                     :class="item.statusKelas === 'siaga' ? 'bg-[#FF9F43]/10 text-[#FF9F43] border-[#FF9F43]/20' : (item.statusKelas === 'waspada' ? 'bg-[#FFC312]/10 text-[#FFC312] border-[#FFC312]/20' : (item.statusKelas === 'tanggap-darurat' ? 'bg-[#EE5253]/10 text-[#EE5253] border-[#EE5253]/20' : 'bg-[#1DD1A1]/10 text-[#1DD1A1] border-[#1DD1A1]/20'))"
                                     x-text="item.status"></span>
                                 <span
-                                    class="bg-gray-100 dark:bg-white/10 text-muted text-[10px] px-3 py-1 rounded-full font-bold"
+                                    class="bg-gray-100 dark:bg-white/10 text-muted text-[13px] px-3 py-1 rounded-full font-bold"
                                     x-text="item.jenis"></span>
                                 <span class="text-muted text-[11px]" x-text="item.waktu"></span>
                             </div>
@@ -466,6 +515,7 @@
                     <li><a href="peta.html" class="hover:text-[#1DD1A1] transition-colors">Peta Interaktif</a></li>
                     <li><a href="edukasi.html" class="hover:text-[#1DD1A1] transition-colors">Panduan Edukasi</a></li>
                     <li><a href="simulasi.html" class="hover:text-[#1DD1A1] transition-colors">Simulasi</a></li>
+                    <li><a href="riwayat.html" class="hover:text-[#1DD1A1] transition-colors">Riwayat</a></li>
                     <li><a href="about.html" class="hover:text-[#1DD1A1] transition-colors">About</a></li>
                 </ul>
             </div>
@@ -498,59 +548,108 @@
                 darkMode: document.documentElement.classList.contains("dark"),
                 filterJenis: "all",
                 filterStatus: "all",
+                filterTanggalMulai: "",
+                filterTanggalAkhir: "",
 
+                // Data riwayat lengkap
                 riwayatData: [
-                    { no: 1, tanggal: "23 Mar 2026", jam: "20.00–24.00 WIB", lokasi: "Kab. Demak, Jawa Tengah", jenis: "Rob", jenisKelas: "rob", status: "Siaga", statusKelas: "siaga", dampak: "30–50 cm, Kec. Sayung & Karanganyar. Dipicu pasang maksimum malam hari" },
-                    { no: 2, tanggal: "23–24 Mar 2026", jam: "23.00 WIB", lokasi: "Kab. Tangerang, Banten", jenis: "Rob", jenisKelas: "rob", status: "Siaga", statusKelas: "siaga", dampak: "Kec. Mauk, Teluknaga, Kosambi. Potensi rob pasang maksimum malam hari" },
-                    { no: 3, tanggal: "21 Mar 2026", jam: "10.00–14.00 WIT", lokasi: "Kab. Seram Bagian Barat, Maluku", jenis: "Banjir", jenisKelas: "banjir", status: "Surut", statusKelas: "surut", dampak: "177 KK terdampak. Desa Buano Utara & Desa Piru, Kec. Huamual Belakang & Seram Barat" },
-                    { no: 4, tanggal: "21 Mar 2026", jam: "08.00–12.00 WIB", lokasi: "Kota Depok, Jawa Barat", jenis: "Banjir", jenisKelas: "banjir", status: "Surut", statusKelas: "surut", dampak: "685 KK / 691 rumah terdampak, 17 jiwa mengungsi. Kel. Mekarsari & Tugu, Kec. Cimanggis" },
-                    { no: 5, tanggal: "20 Mar 2026", jam: "16.16 WIB", lokasi: "Kab. Magetan, Jawa Timur", jenis: "Banjir Luapan", jenisKelas: "banjir-luapan", status: "Surut", statusKelas: "surut", dampak: "31 KK / 31 unit rumah terendam. Desa Sukowinangun, Kec. Magetan. Dipicu hujan lebat sore hari" },
-                    { no: 6, tanggal: "20 Mar 2026", jam: "14.20 WITA", lokasi: "Kab. Bima, NTB", jenis: "Banjir", jenisKelas: "banjir", status: "Surut", statusKelas: "surut", dampak: "1.009 jiwa / 287 KK, 260 rumah, 3 fasilitas pendidikan. Desa Rada, Nggembe, Bre, Kananta" },
-                    { no: 7, tanggal: "20 Mar 2026", jam: "07.00–10.00 WIB", lokasi: "Kab. Mojokerto, Jawa Timur", jenis: "Banjir + Tanggul Jebol", jenisKelas: "banjir", status: "Surut", statusKelas: "surut", dampak: "275 jiwa mengungsi, 146 rumah, 1 tanggul jebol, 20+ ha sawah. Desa Kertosari & Jumenang" },
-                    { no: 8, tanggal: "18 Mar 2026", jam: "11.00–14.00 WIT", lokasi: "Kab. Waropen, Papua", jenis: "Abrasi & Gelombang", jenisKelas: "abrasi-gelombang", status: "Ditangani", statusKelas: "ditangani", dampak: "12 KK / 48 jiwa, 2 rumah rusak berat, 3 rusak ringan, 1 ruas jalan hampir putus. Kamp. Nonomi" },
-                    { no: 9, tanggal: "15 Mar 2026", jam: "20.00 WIB", lokasi: "Kab. Mojokerto, Jawa Timur", jenis: "Banjir + Tanggul Jebol", jenisKelas: "banjir", status: "Surut", statusKelas: "surut", dampak: "175 KK / 300 jiwa, 125 rumah, tanggul 15 m jebol, 32 ha sawah. Ketinggian 30–120 cm" },
-                    { no: 10, tanggal: "15 Mar 2026", jam: "16.00 WITA", lokasi: "Kab. Sumbawa, NTB", jenis: "Banjir Bandang", jenisKelas: "banjir-bandang", status: "Siaga", statusKelas: "siaga", dampak: "Dipicu hujan intensitas tinggi, listrik padam, tim gabungan di lokasi. Pendataan berlanjut" },
-                    { no: 11, tanggal: "14 Mar 2026", jam: "18.45 WIB", lokasi: "Kota Malang, Jawa Timur", jenis: "Banjir Luapan", jenisKelas: "banjir-luapan", status: "Surut", statusKelas: "surut", dampak: "Drainase & sungai meluap. Kec. Kedungkandang & Blimbing. Surut 15 Mar 2026" },
-                    { no: 12, tanggal: "12–17 Mar 2026", jam: "05.00–09.00 WIB", lokasi: "Jakarta Utara, DKI Jakarta", jenis: "Rob", jenisKelas: "rob", status: "Siaga", statusKelas: "siaga", dampak: "12 wilayah pesisir terdampak. Puncak pasang maks. 05.00–09.00 WIB. Perigee + pasang tinggi" },
-                    { no: 13, tanggal: "4 Mar 2026", jam: "14.00–17.00 WIB", lokasi: "Kota Semarang, Jawa Tengah", jenis: "Banjir Luapan Talud", jenisKelas: "banjir-luapan", status: "Surut", statusKelas: "surut", dampak: "Talud sungai jebol, 40 unit rumah & 1 pesantren terdampak. Kel. Mangkang Kulon, Kec. Tugu" },
-                    { no: 14, tanggal: "3–4 Mar 2026", jam: "15.00 WIB", lokasi: "Kab. Magelang, Jawa Tengah", jenis: "Banjir Lahar Hujan", jenisKelas: "banjir-lahar-hujan", status: "Tanggap Darurat", statusKelas: "tanggap-darurat", dampak: "3 tewas, 2 hilang, 6 luka. Kali Senowo meluap (curah hujan 144 mm). 3 truk + 4 jembatan rusak." },
-                    { no: 15, tanggal: "3 Mar 2026", jam: "08.00–12.00 WIB", lokasi: "Kab. Klaten, Jawa Tengah", jenis: "Banjir Luapan Talud", jenisKelas: "banjir-luapan", status: "Surut", statusKelas: "surut", dampak: "121 jiwa mengungsi, 1.000+ rumah, 13 sekolah, 1 faskes, 19 fasilitas ibadah. 5 kecamatan terdampak" },
-                    { no: 16, tanggal: "3 Mar 2026", jam: "09.00–12.00 WIB", lokasi: "Kab. Pasuruan, Jawa Timur", jenis: "Banjir", jenisKelas: "banjir", status: "Surut", statusKelas: "surut", dampak: "967 unit rumah di 9 kecamatan terdampak. Pompa air & perahu karet dikerahkan BPBD" },
-                    { no: 17, tanggal: "2 Mar 2026", jam: "14.00–17.00 WIB", lokasi: "Kab. Bondowoso, Jawa Timur", jenis: "Banjir", jenisKelas: "banjir", status: "Surut", statusKelas: "surut", dampak: "19 unit rumah terendam. Desa Wonosari, Kec. Wonosari. Dipicu drainase tersumbat sampah" },
-                    { no: 18, tanggal: "6–7 Mar 2026", jam: "20.00 WIB", lokasi: "Kec. Labuan, Kab. Pandeglang", jenis: "Rob", jenisKelas: "rob", status: "Waspada", statusKelas: "waspada", dampak: "Pesisir Selat Sunda Barat. Rob berulang 21–25 Mar pukul 10.00 & 20.00 WIB" },
-                    { no: 19, tanggal: "2 Jan 2026", jam: "13.00 WIB", lokasi: "Kab. Serang, Banten", jenis: "Banjir", jenisKelas: "banjir", status: "Surut", statusKelas: "surut", dampak: "100 KK / 100 unit rumah terdampak. Desa Ketos, Kec. Kibin. Dipicu hujan intensitas tinggi" },
-                    { no: 20, tanggal: "22 Jan 2026", jam: "06.00 WITA", lokasi: "Kab. Bima, NTB", jenis: "Banjir", jenisKelas: "banjir", status: "Surut", statusKelas: "surut", dampak: "Dipicu hujan deras dini hari, debit sungai naik drastis. Tim BPBD langsung ke lokasi" }
+                    { no: 1, tanggal: "23 Mar 2026", jam: "20.00–24.00 WIB", lokasi: "Kab. Demak, Jawa Tengah", jenis: "Rob", jenisKelas: "rob", status: "Siaga", statusKelas: "siaga", dampak: "30–50 cm, Kec. Sayung & Karanganyar. Dipicu pasang maksimum malam hari", waktu: "2 jam lalu" },
+                    { no: 2, tanggal: "23–24 Mar 2026", jam: "23.00 WIB", lokasi: "Kab. Tangerang, Banten", jenis: "Rob", jenisKelas: "rob", status: "Siaga", statusKelas: "siaga", dampak: "Kec. Mauk, Teluknaga, Kosambi. Potensi rob pasang maksimum malam hari", waktu: "5 jam lalu" },
+                    { no: 3, tanggal: "21 Mar 2026", jam: "10.00–14.00 WIT", lokasi: "Kab. Seram Bagian Barat, Maluku", jenis: "Banjir", jenisKelas: "banjir", status: "Surut", statusKelas: "surut", dampak: "177 KK terdampak. Desa Buano Utara & Desa Piru, Kec. Huamual Belakang & Seram Barat", waktu: "3 hari lalu" },
+                    { no: 4, tanggal: "21 Mar 2026", jam: "08.00–12.00 WIB", lokasi: "Kota Depok, Jawa Barat", jenis: "Banjir", jenisKelas: "banjir", status: "Surut", statusKelas: "surut", dampak: "685 KK / 691 rumah terdampak, 17 jiwa mengungsi. Kel. Mekarsari & Tugu, Kec. Cimanggis", waktu: "3 hari lalu" },
+                    { no: 5, tanggal: "20 Mar 2026", jam: "16.16 WIB", lokasi: "Kab. Magetan, Jawa Timur", jenis: "Banjir Luapan", jenisKelas: "banjir-luapan", status: "Surut", statusKelas: "surut", dampak: "31 KK / 31 unit rumah terendam. Desa Sukowinangun, Kec. Magetan. Dipicu hujan lebat sore hari", waktu: "4 hari lalu" },
+                    { no: 6, tanggal: "20 Mar 2026", jam: "14.20 WITA", lokasi: "Kab. Bima, NTB", jenis: "Banjir", jenisKelas: "banjir", status: "Surut", statusKelas: "surut", dampak: "1.009 jiwa / 287 KK, 260 rumah, 3 fasilitas pendidikan. Desa Rada, Nggembe, Bre, Kananta", waktu: "4 hari lalu" },
+                    { no: 7, tanggal: "20 Mar 2026", jam: "07.00–10.00 WIB", lokasi: "Kab. Mojokerto, Jawa Timur", jenis: "Banjir + Tanggul Jebol", jenisKelas: "banjir", status: "Surut", statusKelas: "surut", dampak: "275 jiwa mengungsi, 146 rumah, 1 tanggul jebol, 20+ ha sawah. Desa Kertosari & Jumenang", waktu: "4 hari lalu" },
+                    { no: 8, tanggal: "18 Mar 2026", jam: "11.00–14.00 WIT", lokasi: "Kab. Waropen, Papua", jenis: "Abrasi & Gelombang", jenisKelas: "abrasi-gelombang", status: "Ditangani", statusKelas: "ditangani", dampak: "12 KK / 48 jiwa, 2 rumah rusak berat, 3 rusak ringan, 1 ruas jalan hampir putus. Kamp. Nonomi", waktu: "6 hari lalu" },
+                    { no: 9, tanggal: "15 Mar 2026", jam: "20.00 WIB", lokasi: "Kab. Mojokerto, Jawa Timur", jenis: "Banjir + Tanggul Jebol", jenisKelas: "banjir", status: "Surut", statusKelas: "surut", dampak: "175 KK / 300 jiwa, 125 rumah, tanggul 15 m jebol, 32 ha sawah. Ketinggian 30–120 cm", waktu: "9 hari lalu" },
+                    { no: 10, tanggal: "15 Mar 2026", jam: "16.00 WITA", lokasi: "Kab. Sumbawa, NTB", jenis: "Banjir Bandang", jenisKelas: "banjir-bandang", status: "Siaga", statusKelas: "siaga", dampak: "Dipicu hujan intensitas tinggi, listrik padam, tim gabungan di lokasi. Pendataan berlanjut", waktu: "9 hari lalu" },
+                    { no: 11, tanggal: "14 Mar 2026", jam: "18.45 WIB", lokasi: "Kota Malang, Jawa Timur", jenis: "Banjir Luapan", jenisKelas: "banjir-luapan", status: "Surut", statusKelas: "surut", dampak: "Drainase & sungai meluap. Kec. Kedungkandang & Blimbing. Surut 15 Mar 2026", waktu: "10 hari lalu" },
+                    { no: 12, tanggal: "12–17 Mar 2026", jam: "05.00–09.00 WIB", lokasi: "Jakarta Utara, DKI Jakarta", jenis: "Rob", jenisKelas: "rob", status: "Siaga", statusKelas: "siaga", dampak: "12 wilayah pesisir terdampak. Puncak pasang maks. 05.00–09.00 WIB. Perigee + pasang tinggi", waktu: "12 hari lalu" },
+                    { no: 13, tanggal: "4 Mar 2026", jam: "14.00–17.00 WIB", lokasi: "Kota Semarang, Jawa Tengah", jenis: "Banjir Luapan Talud", jenisKelas: "banjir-luapan", status: "Surut", statusKelas: "surut", dampak: "Talud sungai jebol, 40 unit rumah & 1 pesantren terdampak. Kel. Mangkang Kulon, Kec. Tugu", waktu: "20 hari lalu" },
+                    { no: 14, tanggal: "3–4 Mar 2026", jam: "15.00 WIB", lokasi: "Kab. Magelang, Jawa Tengah", jenis: "Banjir Lahar Hujan", jenisKelas: "banjir-lahar-hujan", status: "Tanggap Darurat", statusKelas: "tanggap-darurat", dampak: "3 tewas, 2 hilang, 6 luka. Kali Senowo meluap (curah hujan 144 mm). 3 truk + 4 jembatan rusak.", waktu: "21 hari lalu" },
+                    { no: 15, tanggal: "3 Mar 2026", jam: "08.00–12.00 WIB", lokasi: "Kab. Klaten, Jawa Tengah", jenis: "Banjir Luapan Talud", jenisKelas: "banjir-luapan", status: "Surut", statusKelas: "surut", dampak: "121 jiwa mengungsi, 1.000+ rumah, 13 sekolah, 1 faskes, 19 fasilitas ibadah. 5 kecamatan terdampak", waktu: "21 hari lalu" },
+                    { no: 16, tanggal: "3 Mar 2026", jam: "09.00–12.00 WIB", lokasi: "Kab. Pasuruan, Jawa Timur", jenis: "Banjir", jenisKelas: "banjir", status: "Surut", statusKelas: "surut", dampak: "967 unit rumah di 9 kecamatan terdampak. Pompa air & perahu karet dikerahkan BPBD", waktu: "21 hari lalu" },
+                    { no: 17, tanggal: "2 Mar 2026", jam: "14.00–17.00 WIB", lokasi: "Kab. Bondowoso, Jawa Timur", jenis: "Banjir", jenisKelas: "banjir", status: "Surut", statusKelas: "surut", dampak: "19 unit rumah terendam. Desa Wonosari, Kec. Wonosari. Dipicu drainase tersumbat sampah", waktu: "22 hari lalu" },
+                    { no: 18, tanggal: "6–7 Mar 2026", jam: "20.00 WIB", lokasi: "Kec. Labuan, Kab. Pandeglang", jenis: "Rob", jenisKelas: "rob", status: "Waspada", statusKelas: "waspada", dampak: "Pesisir Selat Sunda Barat. Rob berulang 21–25 Mar pukul 10.00 & 20.00 WIB", waktu: "18 hari lalu" },
+                    { no: 19, tanggal: "2 Jan 2026", jam: "13.00 WIB", lokasi: "Kab. Serang, Banten", jenis: "Banjir", jenisKelas: "banjir", status: "Surut", statusKelas: "surut", dampak: "100 KK / 100 unit rumah terdampak. Desa Ketos, Kec. Kibin. Dipicu hujan intensitas tinggi", waktu: "3 bulan lalu" },
+                    { no: 20, tanggal: "22 Jan 2026", jam: "06.00 WITA", lokasi: "Kab. Bima, NTB", jenis: "Banjir", jenisKelas: "banjir", status: "Surut", statusKelas: "surut", dampak: "Dipicu hujan deras dini hari, debit sungai naik drastis. Tim BPBD langsung ke lokasi", waktu: "2 bulan lalu" }
                 ],
 
+                // Fungsi untuk mengubah format tanggal dari string "23 Mar 2026" atau "23–24 Mar 2026" ke Date object
+                parseTanggal(tanggalStr) {
+                    const bulanMap = {
+                        'Jan': 0, 'Feb': 1, 'Mar': 2, 'Apr': 3, 'Mei': 4, 'Jun': 5,
+                        'Jul': 6, 'Agu': 7, 'Sep': 8, 'Okt': 9, 'Nov': 10, 'Des': 11
+                    };
+
+                    // Handle range tanggal seperti "12–17 Mar 2026"
+                    if (tanggalStr.includes('–')) {
+                        const startDateStr = tanggalStr.split('–')[0] + ' ' + tanggalStr.split(' ').slice(-2).join(' ');
+                        return this.parseTanggal(startDateStr);
+                    }
+
+                    const parts = tanggalStr.split(' ');
+                    if (parts.length === 3) {
+                        const day = parseInt(parts[0]);
+                        const month = bulanMap[parts[1]];
+                        const year = parseInt(parts[2]);
+                        if (!isNaN(day) && month !== undefined && !isNaN(year)) {
+                            return new Date(year, month, day);
+                        }
+                    }
+                    return null;
+                },
+
+                // Filter data berdasarkan tanggal, jenis, dan status
                 get filteredData() {
                     let data = [...this.riwayatData];
+
+                    // Filter berdasarkan jenis
                     if (this.filterJenis !== "all") {
                         data = data.filter(item => item.jenis === this.filterJenis || item.jenis.includes(this.filterJenis));
                     }
+
+                    // Filter berdasarkan status
                     if (this.filterStatus !== "all") {
                         data = data.filter(item => item.status === this.filterStatus);
                     }
+
+                    // Filter berdasarkan rentang tanggal
+                    if (this.filterTanggalMulai || this.filterTanggalAkhir) {
+                        data = data.filter(item => {
+                            const itemDate = this.parseTanggal(item.tanggal);
+                            if (!itemDate) return true;
+
+                            if (this.filterTanggalMulai && this.filterTanggalAkhir) {
+                                const startDate = new Date(this.filterTanggalMulai);
+                                const endDate = new Date(this.filterTanggalAkhir);
+                                return itemDate >= startDate && itemDate <= endDate;
+                            } else if (this.filterTanggalMulai) {
+                                const startDate = new Date(this.filterTanggalMulai);
+                                return itemDate >= startDate;
+                            } else if (this.filterTanggalAkhir) {
+                                const endDate = new Date(this.filterTanggalAkhir);
+                                return itemDate <= endDate;
+                            }
+                            return true;
+                        });
+                    }
+
                     return data;
                 },
 
-                get totalKejadian() {
-                    return this.riwayatData.length;
+                // Reset filter tanggal
+                resetFilterTanggal() {
+                    this.filterTanggalMulai = "";
+                    this.filterTanggalAkhir = "";
                 },
 
-                get statBanjir() {
-                    return this.riwayatData.filter(item => item.jenis.includes("Banjir")).length;
-                },
-
-                get statRob() {
-                    return this.riwayatData.filter(item => item.jenis === "Rob").length;
-                },
-
-                get statBanjirBandang() {
-                    return this.riwayatData.filter(item => item.jenis === "Banjir Bandang" || item.jenis === "Banjir Lahar Hujan").length;
-                },
-
-                get statAbrasi() {
-                    return this.riwayatData.filter(item => item.jenis === "Abrasi & Gelombang").length;
+                // Reset semua filter
+                resetAllFilters() {
+                    this.filterJenis = "all";
+                    this.filterStatus = "all";
+                    this.filterTanggalMulai = "";
+                    this.filterTanggalAkhir = "";
                 },
 
                 toggleTheme() {
