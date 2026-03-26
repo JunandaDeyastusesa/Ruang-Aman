@@ -519,25 +519,53 @@
                   <span id="affected">3.600</span>
                   <span class="text-[10px] font-normal">jiwa</span>
                 </div>
-                <div class="text-[11px] text-muted dark:text-gray-400">Terdampak</div>
+                <div class="text-[11px] text-muted dark:text-gray-500">Terdampak</div>
               </div>
 
-              <div class="stat-bg rounded-xl p-3 text-center dark:border-gray-700"
+              <div class="stat-bg rounded-xl p-3 text-center dark:border-gray-700 relative group"
                 style="border: 1px solid var(--border-card)">
+
+                <div class="absolute top-2 right-2">
+                  <div class="relative inline-block">
+                    <i data-lucide="info"
+                      class="w-3.5 h-3.5 text-muted dark:text-gray-500 cursor-help hover:text-[#0A3D62] dark:hover:text-[#1DD1A1] transition-colors"></i>
+                    <div
+                      class="absolute bottom-full right-0 mb-2 w-56 p-2 bg-gray-900 text-white text-xs rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 pointer-events-none">
+                      <div class="leading-relaxed text-gray-300">
+                        Perkiraan durasi banjir berdasarkan intensitas hujan dan pasang laut.
+                      </div>
+                      <div class="absolute bottom-0 right-3 translate-y-full w-2 h-2 bg-gray-900 rotate-45"></div>
+                    </div>
+                  </div>
+                </div>
+
                 <i data-lucide="activity" class="w-5 h-5 mx-auto mb-1.5 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
                 <div class="font-bold text-base text-[#1E293B] dark:text-white">
                   <span id="duration">9</span> <span class="text-[10px] font-normal">jam</span>
                 </div>
-                <div class="text-[11px] text-muted dark:text-gray-400">Durasi</div>
+                <div class="text-[11px] text-muted dark:text-gray-500">Durasi</div>
               </div>
 
-              <div class="stat-bg rounded-xl p-3 text-center dark:border-gray-700"
+              <div class="stat-bg rounded-xl p-3 text-center dark:border-gray-700 relative group"
                 style="border: 1px solid var(--border-card)">
-                <i data-lucide="trending-up" class="w-5 h-5 mx-auto mb-1.5 text-[#6B7C8A] dark:text-gray-400"></i>
+                <div class="absolute top-2 right-2">
+                  <div class="relative inline-block">
+                    <i data-lucide="info"
+                      class="w-3.5 h-3.5 text-muted dark:text-gray-500 cursor-help hover:text-[#0A3D62] dark:hover:text-[#1DD1A1] transition-colors"></i>
+                    <div
+                      class="absolute bottom-full right-0 mb-2 w-56 p-2 bg-gray-900 text-white text-xs rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 pointer-events-none">
+                      <div class="leading-relaxed text-gray-300">
+                        Jumlah infrastruktur terdampak (jalan, jembatan, sekolah, faskes, gardu listrik, dll).
+                      </div>
+                      <div class="absolute bottom-0 right-3 translate-y-full w-2 h-2 bg-gray-900 rotate-45"></div>
+                    </div>
+                  </div>
+                </div>
+                <i data-lucide="trending-up" class="w-5 h-5 mx-auto mb-1.5 text-[#6B7C8A] dark:text-gray-500"></i>
                 <div class="font-bold text-base text-[#1E293B] dark:text-white">
                   <span id="infra">24</span> <span class="text-[10px] font-normal">titik</span>
                 </div>
-                <div class="text-[11px] text-muted dark:text-gray-400">Infrastruktur</div>
+                <div class="text-[11px] text-muted dark:text-gray-500">Infrastruktur</div>
               </div>
             </div>
           </div>
@@ -547,16 +575,16 @@
               <i data-lucide="bar-chart-2" class="w-5 h-5 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
               <h3 class="font-bold text-primary">Proyeksi 24 Jam Ke Depan</h3>
             </div>
-            <div class="w-full h-48">
+            <div class="w-full h-80">
               <canvas id="floodChart"></canvas>
             </div>
             <div class="flex gap-5 justify-center mt-4 text-xs">
               <div class="flex items-center gap-1.5"><span id="legendLine1" class="w-5 h-0.5 rounded"
-                  style="background: #1dd1a1"></span><span class="text-muted dark:text-gray-400">Ketinggian
+                  style="background: #1dd1a1"></span><span class="text-muted dark:text-gray-500">Ketinggian
                   Genangan</span></div>
               <div class="flex items-center gap-1.5"><span id="legendLine2"
-                  class="w-5 h-0.5 rounded bg-[#0A3D62] dark:bg-white"></span><span
-                  class="text-muted dark:text-gray-400">Intensitas Hujan</span></div>
+                  class="w-5 h-0.5 rounded dark:bg-white"></span><span
+                  class="text-muted dark:text-gray-500">Intensitas Hujan</span></div>
             </div>
           </div>
         </div>
@@ -758,16 +786,37 @@
               backgroundColor: "#1B262C",
               titleColor: "white",
               bodyColor: "#ddd",
+              callbacks: {
+                label: function (context) {
+                  let label = context.dataset.label || '';
+                  let value = context.raw;
+                  return `${label}: ${value} ${context.dataset.label === 'Ketinggian (cm)' ? 'cm' : 'mm'}`;
+                }
+              }
             },
           },
           scales: {
             x: {
               grid: { display: false },
-              ticks: { color: "#9aabb5", font: { size: 10 } },
+              ticks: { color: "#9aabb5", font: { size: 12 } },
+              title: {
+                display: true,
+                text: 'Waktu (Jam)',
+                color: document.documentElement.classList.contains("dark") ? "#9CA3AF" : "#6B7280",
+                font: { size: 12, weight: 'normal' },
+                padding: { top: 8 }
+              }
             },
             y: {
               grid: { color: document.documentElement.classList.contains("dark") ? "#1f3a52" : "#f0f2f4" },
-              ticks: { color: "#9aabb5", font: { size: 10 } },
+              ticks: { color: "#9aabb5", font: { size: 12 } },
+              title: {
+                display: true,
+                text: 'Ketinggian genangan (cm)',
+                color: document.documentElement.classList.contains("dark") ? "#9CA3AF" : "#6B7280",
+                font: { size: 12, weight: 'normal' },
+                padding: { bottom: 8 }
+              }
             },
           },
         },
