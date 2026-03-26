@@ -458,140 +458,45 @@
 
     (function () {
       const COASTAL_REGIONS = [
-        // Malang Selatan
-        { name: "Sendang Biru (Tamban)", lat: -8.425, lng: 112.685, level: "bahaya", type: "Tsunami", desc: "Kawasan pesisir selatan, sangat rawan tsunami" },
-        { name: "Tirtoyudo", lat: -8.3, lng: 112.8333, level: "siaga", type: "Tsunami", desc: "Wilayah pesisir dengan risiko tsunami tinggi" },
-        { name: "Donomulyo", lat: -8.3167, lng: 112.4333, level: "siaga", type: "Tsunami", desc: "Zona siaga tsunami pesisir selatan" },
-        // Surabaya
-        { name: "Kenjeran", lat: -7.2333, lng: 112.7833, level: "bahaya", type: "Banjir Rob", desc: "Kawasan pesisir utara, rob tinggi saat pasang" },
-        { name: "Bulak", lat: -7.2167, lng: 112.7667, level: "bahaya", type: "Banjir Rob", desc: "Daerah tambak, rawan rob ekstrem" },
-        { name: "Tambak Wedi", lat: -7.2, lng: 112.7333, level: "bahaya", type: "Banjir Rob", desc: "Rob mencapai pemukiman" },
-        { name: "Wonokromo", lat: -7.3, lng: 112.7333, level: "waspada", type: "Banjir Hujan", desc: "Dataran rendah, rawan genangan" },
-        { name: "Rungkut", lat: -7.3167, lng: 112.7667, level: "waspada", type: "Banjir Hujan", desc: "Kawasan industri, drainase terbatas" },
-        { name: "Asemrowo", lat: -7.25, lng: 112.7167, level: "siaga", type: "Banjir Hujan", desc: "Daerah padat penduduk" },
-        { name: "Tandes", lat: -7.25, lng: 112.6833, level: "siaga", type: "Banjir Hujan", desc: "Rawan banjir kiriman" },
-        // Pacitan
-        { name: "Pacitan Kota", lat: -8.2, lng: 111.1, level: "bahaya", type: "Tsunami", desc: "Kota pesisir, sangat rawan tsunami" },
-        { name: "Kebonagung", lat: -8.2167, lng: 111.1667, level: "bahaya", type: "Tsunami", desc: "Zona merah tsunami pesisir selatan" },
-        { name: "Ngadirojo", lat: -8.2167, lng: 111.3333, level: "bahaya", type: "Tsunami", desc: "Kawasan pesisir dengan risiko tinggi" },
-        { name: "Pringkuku", lat: -8.1833, lng: 110.9667, level: "siaga", type: "Tsunami", desc: "Kawasan rawan tsunami" },
-        // Indramayu
-        { name: "Karangsong", lat: -6.3333, lng: 108.3167, level: "bahaya", type: "Banjir Rob", desc: "Kawasan tambak, rob tinggi" },
-        { name: "Eretan", lat: -6.3333, lng: 108.35, level: "bahaya", type: "Banjir Rob", desc: "Pesisir utara, rob mencapai rumah" },
-        { name: "Kandanghaur", lat: -6.35, lng: 108.0667, level: "bahaya", type: "Banjir Rob", desc: "Zona merah rob pantura" },
-        { name: "Patrol", lat: -6.3, lng: 108.0167, level: "siaga", type: "Banjir Rob", desc: "Kawasan pesisir rawan rob" },
-        { name: "Krangkeng", lat: -6.35, lng: 108.1167, level: "siaga", type: "Banjir Rob", desc: "Daerah tambak dan pemukiman" },
+        { name: "Kota Semarang (Utara)", lat: -6.966, lng: 110.417, level: "bahaya", type: "Banjir & Rob", desc: "Kawasan pesisir Semarang, land subsidence tinggi, banjir rob rutin." },
+        { name: "Kabupaten Demak (Karanganyar)", lat: -6.894, lng: 110.639, level: "bahaya", type: "Banjir Bandang", desc: "Sungai Wulan meluap, 127 desa rawan." },
+        { name: "Kota Pekalongan", lat: -6.889, lng: 109.675, level: "siaga", type: "Banjir Pasang", desc: "Dataran rendah pesisir, banjir tahunan." },
+        { name: "Kota Palu (Pantai Talise)", lat: -0.886, lng: 119.856, level: "bahaya", type: "Tsunami", desc: "Teluk Palu bentuk corong, riwayat tsunami 2018." },
+        { name: "Kab. Aceh Besar (Lhoknga)", lat: 5.461, lng: 95.275, level: "bahaya", type: "Tsunami", desc: "Zona megathrust Sumatra, kawasan paling rawan." },
+        { name: "Kota Banda Aceh (Ulee Lheue)", lat: 5.55, lng: 95.3, level: "bahaya", type: "Tsunami", desc: "Pernah diterjang tsunami 2004, waktu tiba cepat." },
+        { name: "Kab. Cilacap (Teluk Penyu)", lat: -7.734, lng: 109.008, level: "bahaya", type: "Tsunami", desc: "Menghadap Samudra Hindia, zona merah nasional." },
+        { name: "Kota Padang (Purus)", lat: -0.947, lng: 100.35, level: "bahaya", type: "Tsunami", desc: "Kota padat penduduk, waktu evakuasi <25 menit." },
+        { name: "Kab. Lombok Barat (Senggigi)", lat: -8.494, lng: 116.046, level: "siaga", type: "Gempa & Tsunami", desc: "Zona sesar naik Flores, riwayat gempa 2018." },
+        { name: "Kota Manado (Megamas)", lat: 1.493, lng: 124.841, level: "waspada", type: "Tsunami", desc: "Teluk Manado potensi amplifikasi tsunami." },
+        { name: "Kab. Cirebon (Pesisir)", lat: -6.705, lng: 108.557, level: "siaga", type: "Banjir Rob", desc: "Abrasi dan rob mengancam pemukiman." },
       ];
 
       const SAFE_POINTS = [
-        { name: "Rest Area Pesona Wono Agung", lat: -8.362214, lng: 112.6590471, type: "Dataran Tinggi", desc: "Kawasan aman tsunami" },
-        { name: "Perbukitan Tirtoyudo", lat: -8.2333, lng: 112.7667, type: "Bukit Evakuasi", desc: "Dataran tinggi alami" },
-        { name: "Perbukitan Donomulyo", lat: -8.25, lng: 112.5, type: "Bukit Evakuasi", desc: "Ketinggian aman >30 mdpl" },
-        { name: "Lakarsantri (Surabaya Barat)", lat: -7.3167, lng: 112.6333, type: "Dataran Tinggi", desc: "Wilayah lebih tinggi, aman rob" },
-        { name: "Citraland Area", lat: -7.2833, lng: 112.6833, type: "Shelter Perumahan", desc: "Dataran tinggi, aman banjir" },
-        { name: "Nawangan (Dataran Tinggi)", lat: -8.0333, lng: 111.2, type: "Bukit Evakuasi", desc: "Ketinggian >200 mdpl" },
-        { name: "Tulakan", lat: -8.1667, lng: 111.2667, type: "Titik Aman", desc: "Wilayah pesisir selatan" },
-        { name: "Perbukitan Pringkuku", lat: -8.0833, lng: 111.0667, type: "Bukit Alami", desc: "Titik aman tsunami" },
-        { name: "Gantar (Indramayu Selatan)", lat: -6.4667, lng: 108.2167, type: "Dataran Tinggi", desc: "Wilayah aman rob" },
-        { name: "Kantor Kecamatan Sindang", lat: -6.4167, lng: 108.2833, type: "Shelter BPBD", desc: "Titik evakuasi resmi" },
-        { name: "Kantor Kecamatan Patrol", lat: -6.3092507, lng: 107.9922969, type: "Kantor Kecamatan", desc: "Titik evakuasi resmi" },
+        { name: "Bukit Tembalang (Semarang)", lat: -7.05, lng: 110.433, type: "Bukit Evakuasi", desc: "Ketinggian 150-250 mdpl, aman banjir & tsunami." },
+        { name: "Bukit Soko Mranggen (Demak)", lat: -7.012, lng: 110.522, type: "Bukit Alami", desc: "Elevasi >50m, shelter banjir rob." },
+        { name: "Perbukitan Lebakbarang (Pekalongan)", lat: -7.138, lng: 109.657, type: "Perbukitan", desc: "Jalur evakuasi dari Kajen." },
+        { name: "Shelter Taman Ria (Palu)", lat: -0.886, lng: 119.865, type: "Shelter Vertikal", desc: "Gedung evakuasi 3 lantai, kapasitas 1000." },
+        { name: "Bukit Lhoknga (Aceh Besar)", lat: 5.468, lng: 95.28, type: "Bukit Alami", desc: "Titik evakuasi tsunami 150 mdpl." },
+        { name: "Bukit Tsunami Ulee Lheue (Banda Aceh)", lat: 5.56, lng: 95.305, type: "Bukit Monumen", desc: "Monumen & jalur evakuasi cepat." },
+        { name: "Bukit Karangtalun (Cilacap)", lat: -7.724, lng: 109.006, type: "Bukit Strategis", desc: "Titik evakuasi tsunami utama." },
+        { name: "Bukit Padang (Padang)", lat: -0.928, lng: 100.367, type: "Bukit Evakuasi", desc: "Ketinggian 100m, aman tsunami." },
+        { name: "Perbukitan Senggigi (Lombok Barat)", lat: -8.5, lng: 116.03, type: "Perbukitan", desc: "Elevasi >80 mdpl, jalur alternatif." },
+        { name: "Bukit Malalayang (Manado)", lat: 1.47, lng: 124.79, type: "Bukit", desc: "Pesisir aman, jalur via jalan raya." },
+        { name: "Perbukitan Cirebon (Gunung Sembung)", lat: -6.74, lng: 108.52, type: "Perbukitan", desc: "Wilayah perbukitan timur, aman banjir." },
       ];
 
       const EVACUATION_PAIRS = [
-        // Malang Selatan
-        {
-          name: "Jalur Evakuasi Sendang Biru → Perbukitan Gedangan",
-          from: [-8.425, 112.685],
-          to: [-8.362214, 112.6590471],
-          desc: "Via Jalan Lintas Selatan - ±25 menit motor",
-        },
-        {
-          name: "Jalur Evakuasi Tirtoyudo → Perbukitan Tirtoyudo",
-          from: [-8.3, 112.8333],
-          to: [-8.2333, 112.7667],
-          desc: "Via Jalan Kabupaten - ±20 menit motor",
-        },
-        {
-          name: "Jalur Evakuasi Donomulyo → Perbukitan",
-          from: [-8.3167, 112.4333],
-          to: [-8.25, 112.5],
-          desc: "Via Jalan Raya Donomulyo - ±15 menit motor",
-        },
-        {
-          name: "Jalur Evakuasi Tulakan → Perbukitan",
-          from: [-8.2167, 111.3333],
-          to: [-8.1667, 111.2667],
-          desc: "Via Jalan Raya",
-        },
-        // Surabaya
-        {
-          name: "Jalur Evakuasi Kenjeran → Citraland",
-          from: [-7.2333, 112.7833],
-          to: [-7.2833, 112.6833],
-          desc: "Via Jl. MERR - Mayjen Sungkono - ±20 menit motor",
-        },
-        {
-          name: "Jalur Evakuasi Bulak → Lakarsantri",
-          from: [-7.2167, 112.7667],
-          to: [-7.3167, 112.6333],
-          desc: "Via Jl. Manyar - Ahmad Yani - ±25 menit motor",
-        },
-        {
-          name: "Jalur Evakuasi Tambak Wedi → Citraland",
-          from: [-7.2, 112.7333],
-          to: [-7.2833, 112.6833],
-          desc: "Via Jalan Arteri Surabaya - ±20 menit motor",
-        },
-        // Pacitan
-        {
-          name: "Jalur Evakuasi Pacitan Kota → Nawangan",
-          from: [-8.2, 111.1],
-          to: [-8.0333, 111.2],
-          desc: "Via Jl. Pacitan-Nawangan - ±30 menit motor",
-        },
-        {
-          name: "Jalur Evakuasi Pringkuku → Perbukitan",
-          from: [-8.1833, 110.9667],
-          to: [-8.0833, 111.0667],
-          desc: "Via Jalan Kabupaten Pacitan - ±20 menit motor",
-        },
-        {
-          name: "Jalur Evakuasi Kebonagung → Nawangan",
-          from: [-8.2167, 111.1667],
-          to: [-8.0333, 111.2],
-          desc: "Via Jalan Utama Pacitan - ±25 menit motor",
-        },
-        // Indramayu
-        {
-          name: "Jalur Evakuasi Karangsong → Gantar",
-          from: [-6.3333, 108.3167],
-          to: [-6.4667, 108.2167],
-          desc: "Via Jalan Pantura - Cipali - ±25 menit motor",
-        },
-        {
-          name: "Jalur Evakuasi Eretan → Sindang",
-          from: [-6.3333, 108.35],
-          to: [-6.4167, 108.2833],
-          desc: "Via Jalan Alternatif Indramayu - ±20 menit motor",
-        },
-        {
-          name: "Jalur Evakuasi Kandanghaur → Gantar",
-          from: [-6.35, 108.0667],
-          to: [-6.4667, 108.2167],
-          desc: "Via Jalan Pantura - ±30 menit motor",
-        },
-        {
-          name: "Jalur Evakuasi Patrol → Kantor Kec. Patrol",
-          from: [-6.3, 108.0167],
-          to: [-6.3092507, 107.9922969],
-          desc: "Via Jalan Pantura",
-        },
-        {
-          name: "Jalur Evakuasi Krangkeng → Gantar",
-          from: [-6.35, 108.1167],
-          to: [-6.4667, 108.2167],
-          desc: "Via Jalan Alternatif Indramayu",
-        },
+        { from: [-6.966, 110.417], to: [-7.05, 110.433], name: "Semarang Utara → Bukit Tembalang", desc: "Via Jl. MT Haryono - Jl. Tembalang, jalan aspal." },
+        { from: [-6.894, 110.639], to: [-7.012, 110.522], name: "Demak Kota → Bukit Soko", desc: "Rute melalui Mranggen, jalan provinsi." },
+        { from: [-6.889, 109.675], to: [-7.138, 109.657], name: "Pekalongan → Lebakbarang", desc: "Jalan raya Pekalongan - Kajen - perbukitan." },
+        { from: [-0.886, 119.856], to: [-0.886, 119.865], name: "Pantai Talise → Shelter Taman Ria", desc: "Jalur cepat Jl. Maluku - Jl. Moh Yamin." },
+        { from: [5.461, 95.275], to: [5.468, 95.28], name: "Lhoknga → Bukit Lhoknga", desc: "Jalan desa ke bukit evakuasi." },
+        { from: [5.55, 95.3], to: [5.56, 95.305], name: "Ulee Lheue → Bukit Tsunami", desc: "Jalur evakuasi prioritas tsunami." },
+        { from: [-7.734, 109.008], to: [-7.724, 109.006], name: "Teluk Penyu → Bukit Karangtalun", desc: "Jalan Gatot Subroto naik ke perbukitan." },
+        { from: [-0.947, 100.35], to: [-0.928, 100.367], name: "Pantai Purus → Bukit Padang", desc: "Jalan Jend. Sudirman - arah timur." },
+        { from: [-8.494, 116.046], to: [-8.5, 116.03], name: "Senggigi → Perbukitan Senggigi", desc: "Jalan raya Senggigi naik ke bukit." },
+        { from: [1.493, 124.841], to: [1.47, 124.79], name: "Megamas Manado → Bukit Malalayang", desc: "Jalan Piere Tendean - Malalayang." },
+        { from: [-6.705, 108.557], to: [-6.74, 108.52], name: "Pesisir Cirebon → Gunung Sembung", desc: "Jalur alternatif ke perbukitan selatan." },
       ];
 
       const RISK_COLORS = { bahaya: "#EE5253", siaga: "#FF9F43", waspada: "#FFC312", aman: "#1DD1A1" };

@@ -244,38 +244,220 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <template x-for="(guide, idx) in disasterGuides" :key="idx">
-            <div class="rounded-xl border-2 transition-all disaster-guide-card"
-              :class="openAccordions.includes(idx) ? 'open' : ''">
-              <button @click="toggleAccordion(idx)" class="w-full p-5 flex items-center gap-3 text-left">
-                <div class="guide-icon-container">
-                  <i :data-lucide="guide.iconName" class="w-5 h-5" :style="{ color: guide.color }"></i>
+        <div class="hidden lg:block">
+          <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+            <template x-for="(guide, idx) in disasterGuides" :key="idx">
+              <div class="rounded-xl border-2 transition-all disaster-guide-card"
+                :class="openAccordions.includes(idx) ? 'open' : ''">
+                <button @click="toggleAccordion(idx)" class="w-full p-5 flex items-center gap-3 text-left">
+                  <div class="guide-icon-container">
+                    <i :data-lucide="guide.iconName" class="w-5 h-5" :style="{ color: guide.color }"></i>
+                  </div>
+                  <span class="flex-1 font-bold guide-title" x-text="guide.title"></span>
+                  <i :data-lucide="openAccordions.includes(idx) ? 'chevron-up' : 'chevron-down'"
+                    class="w-4 h-4 chevron-icon"></i>
+                </button>
+              </div>
+            </template>
+          </div>
+
+          <template x-for="(guide, idx) in disasterGuides" :key="'content-' + idx">
+            <div x-show="openAccordions.includes(idx)" x-collapse.duration.300ms class="overflow-hidden">
+              <div class="rounded-xl border-2 mt-4 disaster-guide-card open"
+                :style="{ borderColor: guide.color + '40' }">
+                <div class="px-5 pt-4 pb-5 space-y-2">
+                  <template x-for="(tip, i) in guide.tips" :key="i">
+                    <div class="flex gap-2 items-start">
+                      <div
+                        class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-white"
+                        :style="{ background: guide.color }" x-text="i + 1"></div>
+                      <span class="text-sm tip-text" x-text="tip"></span>
+                    </div>
+                  </template>
                 </div>
-                <span class="flex-1 font-bold guide-title" x-text="guide.title"></span>
-                <i :data-lucide="openAccordions.includes(idx) ? 'chevron-up' : 'chevron-down'"
-                  class="w-4 h-4 chevron-icon"></i>
-              </button>
+              </div>
             </div>
           </template>
         </div>
 
-        <template x-for="(guide, idx) in disasterGuides" :key="'content-' + idx">
-          <div x-show="openAccordions.includes(idx)" x-collapse.duration.300ms class="overflow-hidden">
-            <div class="rounded-xl border-2 mt-4 disaster-guide-card open" :style="{ borderColor: guide.color + '40' }">
-              <div class="px-5 pt-4 pb-5 space-y-2">
-                <template x-for="(tip, i) in guide.tips" :key="i">
-                  <div class="flex gap-2 items-start">
-                    <div
-                      class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-white"
-                      :style="{ background: guide.color }" x-text="i + 1"></div>
-                    <span class="text-sm tip-text" x-text="tip"></span>
-                  </div>
-                </template>
+        <div class="grid grid-cols-1 lg:hidden gap-4 ">
+          <div class="rounded-xl border-2 transition-all disaster-guide-card">
+            <button onclick="toggleAccordion(this)" class="w-full p-5 flex items-center gap-3 text-left">
+              <div class="w-10 h-10 rounded-xl guide-icon-container flex items-center justify-center">
+                <i data-lucide="waves" class="w-5 h-5 text-[#0A3D62]"></i>
+              </div>
+              <span class="flex-1 font-bold text-primary">Panduan Banjir</span>
+              <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400 transition-transform duration-300"></i>
+            </button>
+            <div class="accordion-content hidden overflow-hidden">
+              <div class="px-5 pb-5 pl-[26px] space-y-2">
+                <div class="flex gap-2 items-start">
+                  <div
+                    class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-white bg-[#0A3D62]">
+                    1</div>
+                  <span class="text-sm text-primary">Pantau informasi BMKG terkait curah hujan</span>
+                </div>
+                <div class="flex gap-2 items-start">
+                  <div
+                    class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-white bg-[#0A3D62]">
+                    2</div>
+                  <span class="text-sm text-primary">Siapkan sandbag/karung pasir untuk pintu</span>
+                </div>
+                <div class="flex gap-2 items-start">
+                  <div
+                    class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-white bg-[#0A3D62]">
+                    3</div>
+                  <span class="text-sm text-primary">Pindahkan barang berharga ke lantai atas</span>
+                </div>
+                <div class="flex gap-2 items-start">
+                  <div
+                    class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-white bg-[#0A3D62]">
+                    4</div>
+                  <span class="text-sm text-primary">Jangan mendekati saluran air yang meluap</span>
+                </div>
+                <div class="flex gap-2 items-start">
+                  <div
+                    class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-white bg-[#0A3D62]">
+                    5</div>
+                  <span class="text-sm text-primary">Waspadai arus deras meski genangan tampak kecil</span>
+                </div>
               </div>
             </div>
           </div>
-        </template>
+
+          <div class="rounded-xl border-2 transition-all disaster-guide-card">
+            <button onclick="toggleAccordion(this)" class="w-full p-5 flex items-center gap-3 text-left">
+              <div class="w-10 h-10 rounded-xl guide-icon-container flex items-center justify-center">
+                <i data-lucide="wind" class="w-5 h-5 text-[#1565a0]"></i>
+              </div>
+              <span class="flex-1 font-bold text-primary">Panduan Rob</span>
+              <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400 transition-transform duration-300"></i>
+            </button>
+            <div class="accordion-content hidden overflow-hidden">
+              <div class="px-5 pb-5 pl-[30px] space-y-2">
+                <div class="flex gap-2 items-start">
+                  <div
+                    class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-white bg-[#1565a0]">
+                    1</div>
+                  <span class="text-sm text-primary">Monitor prediksi pasang surut dari BMKG</span>
+                </div>
+                <div class="flex gap-2 items-start">
+                  <div
+                    class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-white bg-[#1565a0]">
+                    2</div>
+                  <span class="text-sm text-primary">Ketahui waktu pasang tertinggi di wilayah Anda</span>
+                </div>
+                <div class="flex gap-2 items-start">
+                  <div
+                    class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-white bg-[#1565a0]">
+                    3</div>
+                  <span class="text-sm text-primary">Tinggikan pondasi properti bertahap</span>
+                </div>
+                <div class="flex gap-2 items-start">
+                  <div
+                    class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-white bg-[#1565a0]">
+                    4</div>
+                  <span class="text-sm text-primary">Tanam mangrove di sepanjang pantai</span>
+                </div>
+                <div class="flex gap-2 items-start">
+                  <div
+                    class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-white bg-[#1565a0]">
+                    5</div>
+                  <span class="text-sm text-primary">Ikuti program BPBD untuk relokasi jika diperlukan</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-xl border-2 transition-all disaster-guide-card">
+            <button onclick="toggleAccordion(this)" class="w-full p-5 flex items-center gap-3 text-left">
+              <div class="w-10 h-10 rounded-xl guide-icon-container flex items-center justify-center">
+                <i data-lucide="activity" class="w-5 h-5 text-[#FF9F43]"></i>
+              </div>
+              <span class="flex-1 font-bold text-primary">Panduan Gempa</span>
+              <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400 transition-transform duration-300"></i>
+            </button>
+            <div class="accordion-content hidden overflow-hidden">
+              <div class="px-5 pb-5 pl-[30px] space-y-2">
+                <div class="flex gap-2 items-start">
+                  <div
+                    class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-white bg-[#FF9F43]">
+                    1</div>
+                  <span class="text-sm text-primary">DROP: Jatuhkan diri ke lantai</span>
+                </div>
+                <div class="flex gap-2 items-start">
+                  <div
+                    class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-white bg-[#FF9F43]">
+                    2</div>
+                  <span class="text-sm text-primary">COVER: Lindungi kepala di bawah meja kokoh</span>
+                </div>
+                <div class="flex gap-2 items-start">
+                  <div
+                    class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-white bg-[#FF9F43]">
+                    3</div>
+                  <span class="text-sm text-primary">HOLD ON: Pegang dan bertahan sampai guncangan berhenti</span>
+                </div>
+                <div class="flex gap-2 items-start">
+                  <div
+                    class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-white bg-[#FF9F43]">
+                    4</div>
+                  <span class="text-sm text-primary">Jauhi jendela, kaca, dan lemari</span>
+                </div>
+                <div class="flex gap-2 items-start">
+                  <div
+                    class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-white bg-[#FF9F43]">
+                    5</div>
+                  <span class="text-sm text-primary">Setelah gempa, waspadai gempa susulan</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-xl border-2 transition-all disaster-guide-card">
+            <button onclick="toggleAccordion(this)" class="w-full p-5 flex items-center gap-3 text-left">
+              <div class="w-10 h-10 rounded-xl guide-icon-container flex items-center justify-center">
+                <i data-lucide="zap" class="w-5 h-5 text-[#EE5253]"></i>
+              </div>
+              <span class="flex-1 font-bold text-primary">Panduan Tsunami</span>
+              <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400 transition-transform duration-300"></i>
+            </button>
+            <div class="accordion-content hidden overflow-hidden">
+              <div class="px-5 pb-5 pl-[30px] space-y-2">
+                <div class="flex gap-2 items-start">
+                  <div
+                    class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-white bg-[#EE5253]">
+                    1</div>
+                  <span class="text-sm text-primary">Rasakan gempa kuat? Segera menuju tempat tinggi</span>
+                </div>
+                <div class="flex gap-2 items-start">
+                  <div
+                    class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-white bg-[#EE5253]">
+                    2</div>
+                  <span class="text-sm text-primary">Jangan tunggu sirene — percayai instink Anda</span>
+                </div>
+                <div class="flex gap-2 items-start">
+                  <div
+                    class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-white bg-[#EE5253]">
+                    3</div>
+                  <span class="text-sm text-primary">Lari vertikal ke bukit/gedung tinggi sejauh mungkin</span>
+                </div>
+                <div class="flex gap-2 items-start">
+                  <div
+                    class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-white bg-[#EE5253]">
+                    4</div>
+                  <span class="text-sm text-primary">Jangan kembali meski laut terlihat surut</span>
+                </div>
+                <div class="flex gap-2 items-start">
+                  <div
+                    class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-white bg-[#EE5253]">
+                    5</div>
+                  <span class="text-sm text-primary">Tunggu pengumuman resmi sebelum kembali</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <div class="card-bg rounded-2xl p-8 shadow-lg mb-6">
@@ -388,20 +570,17 @@
         darkMode: document.documentElement.classList.contains("dark"),
 
         emergencyKit: [
-          { item: "Air minum (3 liter/orang/hari, untuk 3 hari)", category: "air" },
-          { item: "Makanan tahan lama (snack, biskuit, kaleng)", category: "makanan" },
-          { item: "Senter dan baterai cadangan", category: "peralatan" },
-          { item: "Radio portabel bertenaga baterai", category: "peralatan" },
-          { item: "P3K dan obat-obatan rutin", category: "kesehatan" },
-          { item: "Peluit darurat", category: "keamanan" },
-          { item: "Masker dan sanitizer", category: "kesehatan" },
-          { item: "Dokumen penting (KTP, KK, akte) dalam wadah tahan air", category: "dokumen" },
-          { item: "Uang tunai secukupnya", category: "keuangan" },
-          { item: "Pakaian ganti dan jas hujan", category: "pakaian" },
-          { item: "Selimut atau sleeping bag", category: "pakaian" },
-          { item: "Powerbank terisi penuh", category: "peralatan" },
-          { item: "Kontak darurat keluarga tertulis", category: "dokumen" },
-          { item: "Nomor telepon BPBD setempat", category: "dokumen" },
+          { item: "Surat-surat penting (surat tanah, surat kendaraan, ijazah, akta kelahiran dan lain-lain)", category: "dokumen" },
+          { item: "Sandang untuk tiga hari (pakaian dalam, celana panjang, jaket, selimut, handuk, jas hujan dan lain-lain)", category: "pakaian" },
+          { item: "Makanan ringan tahan lama (mi instan, biskuit, abon, cokelat dan lain-lain)", category: "makanan" },
+          { item: "Air minum (setidaknya cukup untuk kebutuhan selama kurang lebih tiga hari)", category: "air" },
+          { item: "Kotak P3K (obat-obatan pribadi dan obat-obatan umum lainnya)", category: "kesehatan" },
+          { item: "Radio/Handphone (radio/ponsel beserta baterai/charger/powerbank)", category: "peralatan" },
+          { item: "Perlengkapan mandi (sabun mandi, sikat gigi, odol, sisir, cotton bud dan lain-lain)", category: "kesehatan" },
+          { item: "Masker (alat bantu pernafasan untuk menyaring udara kotor/tercemar)", category: "kesehatan" },
+          { item: "Peluit (alat bantu untuk meminta pertolongan saat darurat)", category: "keamanan" },
+          { item: "Uang tunai secukupnya (untuk perbekalan selama kurang lebih tiga hari)", category: "keuangan" },
+          { item: "Alat bantu penerangan (senter, lampu kepala/headlamp, korek api, lilin dan lain-lain)", category: "peralatan" },
         ],
 
         guidelines: [
@@ -574,6 +753,49 @@
     });
 
     document.addEventListener("alpine:initialized", () => {
+      lucide.createIcons();
+    });
+  </script>
+
+  <script>
+    function toggleAccordion(button) {
+      const card = button.closest('.disaster-guide-card');
+      const content = card.querySelector('.accordion-content');
+      const icon = button.querySelector('i[data-lucide]');
+
+      // Toggle class active pada card
+      if (content.classList.contains('hidden')) {
+        // Tutup semua accordion lainnya (opsional, untuk hanya satu yang terbuka)
+        document.querySelectorAll('.disaster-guide-card .accordion-content').forEach(c => {
+          if (c !== content) {
+            c.classList.add('hidden');
+            const otherCard = c.closest('.disaster-guide-card');
+            otherCard.classList.remove('open');
+            const otherIcon = otherCard.querySelector('button i[data-lucide]');
+            if (otherIcon) {
+              lucide.createIcons();
+              otherIcon.setAttribute('data-lucide', 'chevron-down');
+            }
+          }
+        });
+
+        // Buka accordion yang diklik
+        content.classList.remove('hidden');
+        card.classList.add('open');
+        icon.setAttribute('data-lucide', 'chevron-up');
+      } else {
+        // Tutup accordion
+        content.classList.add('hidden');
+        card.classList.remove('open');
+        icon.setAttribute('data-lucide', 'chevron-down');
+      }
+
+      // Refresh icon
+      lucide.createIcons();
+    }
+
+    // Initialize Lucide icons
+    document.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
     });
   </script>
