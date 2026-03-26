@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RUANG AMAN - Peta Risiko Bencana</title>
-    <link rel="icon" type="image/png" href="logo_putih.png" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -26,223 +25,199 @@
       })();
     </script>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RUANG AMAN - Peta Risiko Bencana</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
-    rel="stylesheet" />
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
-  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-
-  <script>
-    (function () {
-      const saved = localStorage.getItem("theme");
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      if (saved === "dark" || (!saved && prefersDark)) {
-        document.documentElement.classList.remove("light");
-        document.documentElement.classList.add("dark");
-      }
-    })();
-  </script>
-
-  <style>
-    body {
-      font-family: "Poppins", sans-serif;
-      scroll-behavior: smooth;
-    }
-
-    :root {
-      --bg-page: #f1f2f6;
-      --bg-card: #ffffff;
-      --text-primary: #1b262c;
-      --text-muted: #6b7280;
-      --text-secondary: #7a8a96;
-      --border-card: #e5e7eb;
-      --bg-input: #ffffff;
-      --border-input: #e5e7eb;
-      --bg-item: #fafbfc;
-      --border-item: #e8ecef;
-      --stat-bg: #fafbfc;
-    }
-
-    html.dark {
-      --bg-page: #0d1b2a;
-      --bg-card: #1a2a3a;
-      --text-primary: #e8f4ff;
-      --text-muted: #8aafc8;
-      --text-secondary: #9bb8d4;
-      --border-card: #1f3a52;
-      --bg-input: #1f2f40;
-      --border-input: #1f3a52;
-      --bg-item: #162233;
-      --border-item: #1f3a52;
-      --stat-bg: #1a2a3a;
-    }
-
-    body {
-      background-color: var(--bg-page);
-      transition: background-color 0.3s ease;
-    }
-
-    .card-bg {
-      background-color: var(--bg-card);
-      border-color: var(--border-card);
-    }
-
-    .text-primary {
-      color: var(--text-primary);
-    }
-
-    .text-secondary {
-      color: var(--text-secondary);
-    }
-
-    .text-muted {
-      color: var(--text-muted);
-    }
-
-    .border-default {
-      border-color: var(--border-card);
-    }
-
-    .stat-bg {
-      background-color: var(--stat-bg);
-    }
-
-    @keyframes fadeSlide {
-      0% {
-        opacity: 0;
-        transform: translateY(10px);
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        scroll-behavior: smooth;
       }
 
-      100% {
-        opacity: 1;
-        transform: translateY(0);
+      :root {
+        --bg-page: #f1f2f6;
+        --bg-card: #ffffff;
+        --text-primary: #1b262c;
+        --text-muted: #6b7280;
+        --text-secondary: #7a8a96;
+        --border-card: #e5e7eb;
+        --bg-input: #ffffff;
+        --border-input: #e5e7eb;
+        --bg-item: #fafbfc;
+        --border-item: #e8ecef;
+        --stat-bg: #fafbfc;
       }
-    }
 
-    .animate-fade-slide {
-      animation: fadeSlide 0.6s ease-out forwards;
-    }
-
-    .animate-fade-left {
-      animation: fadeSlide 0.5s ease-out forwards;
-    }
-
-    .delay-100 {
-      animation-delay: 0.1s;
-    }
-
-    .delay-200 {
-      animation-delay: 0.2s;
-    }
-
-    .leaflet-container {
-      font-family: "Poppins", sans-serif !important;
-    }
-
-    .custom-marker {
-      background: transparent;
-      border: none;
-    }
-
-    .risk-marker {
-      width: 30px;
-      height: 30px;
-      border-radius: 50% 50% 50% 0;
-      transform: rotate(-45deg);
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    }
-
-    .leaflet-popup-content {
-      margin: 10px 15px;
-      font-family: "Poppins", sans-serif;
-    }
-
-    .leaflet-popup-content-wrapper {
-      border-radius: 12px;
-      background: var(--bg-card);
-      color: var(--text-primary);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    }
-
-    .leaflet-popup-tip {
-      background: var(--bg-card);
-    }
-
-    html.dark .leaflet-tile-pane {
-      filter: brightness(0.7) invert(1) contrast(1.2) hue-rotate(180deg);
-    }
-
-    html.dark .leaflet-control-attribution {
-      background: rgba(0, 0, 0, 0.6) !important;
-      color: #888 !important;
-    }
-
-    html.dark .leaflet-control-attribution a {
-      color: #1dd1a1 !important;
-    }
-
-    .evacuation-route-line {
-      stroke-dasharray: 12, 6;
-      animation: dashMove 1.5s linear infinite;
-    }
-
-    @keyframes dashMove {
-      to {
-        stroke-dashoffset: -18;
+      html.dark {
+        --bg-page: #0d1b2a;
+        --bg-card: #1a2a3a;
+        --text-primary: #e8f4ff;
+        --text-muted: #8aafc8;
+        --text-secondary: #9bb8d4;
+        --border-card: #1f3a52;
+        --bg-input: #1f2f40;
+        --border-input: #1f3a52;
+        --bg-item: #162233;
+        --border-item: #1f3a52;
+        --stat-bg: #1a2a3a;
       }
-    }
 
-    #routeLoadingOverlay {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: rgba(10, 61, 98, 0.9);
-      color: white;
-      font-size: 11px;
-      padding: 8px 14px;
-      border-radius: 20px;
-      z-index: 1000;
-      display: none;
-      align-items: center;
-      gap: 8px;
-      font-family: "Poppins", sans-serif;
-    }
-
-    #routeLoadingOverlay.visible {
-      display: flex;
-    }
-
-    .spinner {
-      width: 14px;
-      height: 14px;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      border-top-color: #1dd1a1;
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
+      body {
+        background-color: var(--bg-page);
+        transition: background-color 0.3s ease;
       }
-    }
 
-    .page-bg {
-      background-color: var(--bg-page);
-    }
-  </style>
-</head>
+      .card-bg {
+        background-color: var(--bg-card);
+        border-color: var(--border-card);
+      }
 
-<body class="page-bg" x-data="{
+      .text-primary {
+        color: var(--text-primary);
+      }
+
+      .text-secondary {
+        color: var(--text-secondary);
+      }
+
+      .text-muted {
+        color: var(--text-muted);
+      }
+
+      .border-default {
+        border-color: var(--border-card);
+      }
+
+      .stat-bg {
+        background-color: var(--stat-bg);
+      }
+
+      @keyframes fadeSlide {
+        0% {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .animate-fade-slide {
+        animation: fadeSlide 0.6s ease-out forwards;
+      }
+
+      .animate-fade-left {
+        animation: fadeSlide 0.5s ease-out forwards;
+      }
+
+      .delay-100 {
+        animation-delay: 0.1s;
+      }
+
+      .delay-200 {
+        animation-delay: 0.2s;
+      }
+
+      .leaflet-container {
+        font-family: "Poppins", sans-serif !important;
+      }
+
+      .custom-marker {
+        background: transparent;
+        border: none;
+      }
+
+      .risk-marker {
+        width: 30px;
+        height: 30px;
+        border-radius: 50% 50% 50% 0;
+        transform: rotate(-45deg);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .leaflet-popup-content {
+        margin: 10px 15px;
+        font-family: "Poppins", sans-serif;
+      }
+
+      .leaflet-popup-content-wrapper {
+        border-radius: 12px;
+        background: var(--bg-card);
+        color: var(--text-primary);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .leaflet-popup-tip {
+        background: var(--bg-card);
+      }
+
+      html.dark .leaflet-tile-pane {
+        filter: brightness(0.7) invert(1) contrast(1.2) hue-rotate(180deg);
+      }
+
+      html.dark .leaflet-control-attribution {
+        background: rgba(0, 0, 0, 0.6) !important;
+        color: #888 !important;
+      }
+
+      html.dark .leaflet-control-attribution a {
+        color: #1dd1a1 !important;
+      }
+
+      .evacuation-route-line {
+        stroke-dasharray: 12, 6;
+        animation: dashMove 1.5s linear infinite;
+      }
+
+      @keyframes dashMove {
+        to {
+          stroke-dashoffset: -18;
+        }
+      }
+
+      #routeLoadingOverlay {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(10, 61, 98, 0.9);
+        color: white;
+        font-size: 11px;
+        padding: 8px 14px;
+        border-radius: 20px;
+        z-index: 1000;
+        display: none;
+        align-items: center;
+        gap: 8px;
+        font-family: "Poppins", sans-serif;
+      }
+
+      #routeLoadingOverlay.visible {
+        display: flex;
+      }
+
+      .spinner {
+        width: 14px;
+        height: 14px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-top-color: #1dd1a1;
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .page-bg {
+        background-color: var(--bg-page);
+      }
+    </style>
+  </head>
+
+  <body
+    class="page-bg"
+    x-data="{
     scrolled: false,
     mobileOpen: false,
     darkMode: document.documentElement.classList.contains('dark'),
@@ -263,116 +238,85 @@
   >
     <nav :class="scrolled ? 'bg-[#0A3D62]/95 border-b border-[#1DD1A1]/20 shadow-lg' : 'bg-[#0A3D62]'" class="fixed top-0 left-0 right-0 z-[1000] backdrop-blur-md transition-all duration-300">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 h-[68px] flex items-center justify-between gap-3">
-        <a href="index.html" class="flex items-center gap-3 shrink-0">
-          <div class="w-10 h-10 rounded-[12px] bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center shadow-lg overflow-hidden">
+        <a href="#" class="flex items-center gap-3 shrink-0">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center shadow-lg">
             <img src="logo_putih.png" alt="Logo" class="w-12 h-12 object-contain p-2" />
           </div>
           <div class="text-white">
             <div class="font-extrabold text-base leading-none">RUANG AMAN</div>
             <div class="text-[10px] text-[#1DD1A1] tracking-widest leading-none uppercase">Water-Related Disaster Safety</div>
           </div>
+        </a>
+        <div class="hidden md:flex items-center gap-5 lg:gap-6">
+          <a href="index.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1]">Home</a>
+          <a href="cek-risiko.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1]">Cek Risiko</a>
+          <a href="peta.html" class="text-sm font-medium text-[#1DD1A1]">Peta</a>
+          <a href="edukasi.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1]">Edukasi</a>
+          <a href="simulasi.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1]">Simulasi</a>
+          <a href="about.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1]">About</a>
+          <button @click="toggleTheme()" class="relative w-16 h-8 rounded-full transition-colors duration-300 focus:outline-none" :class="darkMode ? 'bg-[#1DD1A1]' : 'bg-gray-600'">
+            <span class="absolute top-1 w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-300 flex items-center justify-center" :class="darkMode ? 'translate-x-8' : 'translate-x-1'">
+              <i :data-lucide="darkMode ? 'moon' : 'sun'" class="w-3.5 h-3.5" :class="darkMode ? 'text-[#1DD1A1]' : 'text-yellow-500'"></i>
+            </span>
+          </button>
         </div>
-      </a>
-      <div class="hidden md:flex items-center gap-5 lg:gap-6">
-        <a href="index.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1]">Home</a>
-        <a href="cek-risiko.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1]">Cek Risiko</a>
-        <a href="peta.html" class="text-sm font-medium text-[#1DD1A1]">Peta</a>
-        <a href="edukasi.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1]">Edukasi</a>
-        <a href="simulasi.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1]">Simulasi</a>
-        <a href="about.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1]">About</a>
-        <button @click="toggleTheme()"
-          class="relative w-16 h-8 rounded-full transition-colors duration-300 focus:outline-none"
-          :class="darkMode ? 'bg-[#1DD1A1]' : 'bg-gray-600'">
-          <span
-            class="absolute top-1 w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-300 flex items-center justify-center"
-            :class="darkMode ? 'translate-x-8' : 'translate-x-1'">
-            <i :data-lucide="darkMode ? 'moon' : 'sun'" class="w-3.5 h-3.5"
-              :class="darkMode ? 'text-[#1DD1A1]' : 'text-yellow-500'"></i>
-          </span>
+        <button @click="mobileOpen = !mobileOpen" class="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 transition-all gap-1.5">
+          <span :class="mobileOpen ? 'rotate-45 translate-y-[7px]' : ''" class="block w-5 h-0.5 bg-white rounded-full transition-transform duration-200"></span>
+          <span :class="mobileOpen ? 'opacity-0 scale-x-0' : ''" class="block w-5 h-0.5 bg-white rounded-full transition-all duration-200"></span>
+          <span :class="mobileOpen ? '-rotate-45 -translate-y-[7px]' : ''" class="block w-5 h-0.5 bg-white rounded-full transition-transform duration-200"></span>
         </button>
       </div>
-      <button @click="mobileOpen = !mobileOpen"
-        class="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 transition-all gap-1.5">
-        <span :class="mobileOpen ? 'rotate-45 translate-y-[7px]' : ''"
-          class="block w-5 h-0.5 bg-white rounded-full transition-transform duration-200"></span>
-        <span :class="mobileOpen ? 'opacity-0 scale-x-0' : ''"
-          class="block w-5 h-0.5 bg-white rounded-full transition-all duration-200"></span>
-        <span :class="mobileOpen ? '-rotate-45 -translate-y-[7px]' : ''"
-          class="block w-5 h-0.5 bg-white rounded-full transition-transform duration-200"></span>
-      </button>
-    </div>
-    <div x-show="mobileOpen" x-transition
-      class="md:hidden bg-[#0A3D62]/98 backdrop-blur-md border-t border-white/10 px-4 py-4">
-      <div class="flex flex-col gap-1">
-        <a href="index.html" @click="mobileOpen = false"
-          class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1]">Home</a>
-        <a href="cek-risiko.html" @click="mobileOpen = false"
-          class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1]">Cek
-          Risiko</a>
-        <a href="peta.html" @click="mobileOpen = false"
-          class="text-[#1DD1A1] font-semibold text-sm px-3 py-2.5 rounded-xl bg-white/5">Peta</a>
-        <a href="edukasi.html" @click="mobileOpen = false"
-          class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1]">Edukasi</a>
-        <a href="simulasi.html" @click="mobileOpen = false"
-          class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1]">Simulasi</a>
-        <a href="about.html" @click="mobileOpen = false"
-          class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1]">About</a>
-      </div>
-    </div>
-  </nav>
-
-  <main class="pt-[68px]">
-    <div class="bg-[#0A3D62] px-6 pt-12 pb-16 md:px-8">
-      <div class="max-w-7xl mx-auto">
-        <div class="animate-fade-slide opacity-0">
-          <div
-            class="inline-flex items-center gap-2 bg-[rgba(29,209,161,0.12)] border border-[rgba(29,209,161,0.25)] rounded-full px-4 py-1.5 mb-4">
-            <i data-lucide="map-pin" class="text-[#1DD1A1] w-3.5 h-3.5"></i>
-            <span class="text-[#1DD1A1] text-xs font-semibold tracking-wide">PETA INTERAKTIF</span>
-          </div>
-          <h1 class="text-white font-extrabold text-3xl md:text-4xl lg:text-5xl mb-3">Peta Risiko Bencana</h1>
-          <p class="text-white/65 text-sm md:text-base max-w-xl leading-relaxed">Jalur evakuasi ditampilkan mengikuti
-            jalan aspal nyata yang bisa dilalui kendaraan</p>
+      <div x-show="mobileOpen" x-transition class="md:hidden bg-[#0A3D62]/98 backdrop-blur-md border-t border-white/10 px-4 py-4">
+        <div class="flex flex-col gap-1">
+          <a href="index.html" @click="mobileOpen = false" class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1]">Home</a>
+          <a href="cek-risiko.html" @click="mobileOpen = false" class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1]">Cek Risiko</a>
+          <a href="peta.html" @click="mobileOpen = false" class="text-[#1DD1A1] font-semibold text-sm px-3 py-2.5 rounded-xl bg-white/5">Peta</a>
+          <a href="edukasi.html" @click="mobileOpen = false" class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1]">Edukasi</a>
+          <a href="simulasi.html" @click="mobileOpen = false" class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1]">Simulasi</a>
+          <a href="about.html" @click="mobileOpen = false" class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1]">About</a>
         </div>
       </div>
-    </div>
+    </nav>
 
-    <div class="max-w-7xl mx-auto -mt-10 px-4 md:px-6 pb-20">
-      <div class="grid grid-cols-1 lg:grid-cols-[280px,1fr] gap-5 items-start">
-        <!-- SIDEBAR -->
-        <div class="flex flex-col gap-4">
-          <div class="card-bg rounded-xl shadow-md p-5 border border-default animate-fade-left opacity-0">
-            <div class="flex items-center gap-2 mb-4">
-              <i data-lucide="layers" class="w-4 h-4 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
-              <h3 class="font-bold text-sm text-primary">Navigasi</h3>
+    <main class="pt-[68px]">
+      <div class="bg-[#0A3D62] px-6 pt-12 pb-16 md:px-8">
+        <div class="max-w-6xl mx-auto">
+          <div class="animate-fade-slide opacity-0">
+            <div class="inline-flex items-center gap-2 bg-[rgba(29,209,161,0.12)] border border-[rgba(29,209,161,0.25)] rounded-full px-4 py-1.5 mb-4">
+              <i data-lucide="map-pin" class="text-[#1DD1A1] w-3.5 h-3.5"></i>
+              <span class="text-[#1DD1A1] text-xs font-semibold tracking-wide">PETA INTERAKTIF</span>
             </div>
-            <div id="layerControls" class="space-y-2.5"></div>
+            <h1 class="text-white font-extrabold text-3xl md:text-4xl lg:text-5xl mb-3">Peta Risiko Bencana</h1>
+            <p class="text-white/65 text-sm md:text-base max-w-xl leading-relaxed">Jalur evakuasi ditampilkan mengikuti jalan aspal nyata yang bisa dilalui kendaraan</p>
           </div>
+        </div>
+      </div>
 
-          <div class="card-bg rounded-xl shadow-md p-5 animate-fade-left opacity-0 delay-100">
-            <div class="flex items-center gap-2 mb-4">
-              <i data-lucide="map" class="w-4 h-4 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
-              <h3 class="font-bold text-sm text-primary">Legenda</h3>
+      <div class="max-w-6xl mx-auto -mt-10 px-4 md:px-6 pb-20">
+        <div class="grid grid-cols-1 lg:grid-cols-[280px,1fr] gap-5 items-start">
+          <div class="flex flex-col gap-4">
+            <div class="card-bg rounded-xl shadow-md p-5 border border-default animate-fade-left opacity-0">
+              <div class="flex items-center gap-2 mb-4">
+                <i data-lucide="layers" class="w-4 h-4 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
+                <h3 class="font-bold text-sm text-primary">Navigasi</h3>
+              </div>
+              <div id="layerControls" class="space-y-2.5"></div>
             </div>
 
-            <div id="legendColors"></div>
-            <div class="border-t border-default pt-3 mt-2 space-y-2">
-              <div class="flex items-center gap-2.5">
-                <div class="w-6 h-[3px] bg-[#1DD1A1] rounded-full"></div>
-                <span class="text-xs text-secondary">Jalur Evakuasi (Jalan Aspal Nyata)</span>
+            <div class="card-bg rounded-xl shadow-md p-5 animate-fade-left opacity-0 delay-100">
+              <div class="flex items-center gap-2 mb-4">
+                <i data-lucide="map" class="w-4 h-4 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
+                <h3 class="font-bold text-sm text-primary">Legenda</h3>
               </div>
 
               <div id="legendColors"></div>
               <div class="border-t border-default pt-3 mt-2 space-y-2">
                 <div class="flex items-center gap-2.5">
-                  <div class="w-6 h-[3px] bg-[#FFC312] rounded-full"></div>
-                  <!-- GANTI: #1DD1A1 → #FFC312 -->
+                  <div class="w-6 h-[3px] bg-[#1DD1A1] rounded-full"></div>
                   <span class="text-xs text-secondary">Jalur Evakuasi (Jalan Aspal Nyata)</span>
                 </div>
-
                 <div class="flex items-center gap-2.5">
-                  <div class="w-[14px] h-[14px] bg-[#1DD1A1] rounded flex items-center justify-center">
-                    <!-- GANTI: #FFC312 → #1DD1A1 -->
+                  <div class="w-[14px] h-[14px] bg-[#FFC312] rounded flex items-center justify-center">
                     <i data-lucide="shield" class="w-2 h-2 text-white"></i>
                   </div>
                   <span class="text-xs text-secondary">Titik Aman / Shelter</span>
@@ -381,111 +325,94 @@
                   <p class="text-[10px] text-[#1DD1A1] font-semibold">Routing via OpenStreetMap</p>
                   <p class="text-[10px] text-secondary">Jalur mengikuti jalan aspal yang bisa dilalui motor</p>
                 </div>
-                <span class="text-xs text-secondary">Titik Aman / Shelter</span>
-              </div>
-              <div class="p-2 bg-[#1DD1A1]/10 rounded-lg mt-2">
-                <p class="text-[10px] text-[#1DD1A1] font-semibold">Routing via OpenStreetMap</p>
-                <p class="text-[10px] text-secondary">Jalur mengikuti jalan aspal yang bisa dilalui motor</p>
               </div>
             </div>
-          </div>
 
-          <div id="regionDetailCard" class="card-bg rounded-xl shadow-md p-5 border-l-4 border-transparent hidden">
-          </div>
+            <div id="regionDetailCard" class="card-bg rounded-xl shadow-md p-5 border-l-4 border-transparent hidden"></div>
 
-          <div x-show="selectedCoordinates" x-transition
-            class="card-bg rounded-xl shadow-md p-5 border border-[#1DD1A1]">
-            <div class="flex items-center gap-2 mb-3">
-              <i data-lucide="map-pin" class="w-4 h-4 text-[#1DD1A1]"></i>
-              <h3 class="font-bold text-sm text-primary">Koordinat Terpilih</h3>
-            </div>
-            <div class="text-xs text-secondary space-y-1">
-              <p><span class="font-semibold">Lat:</span> <span x-text="selectedCoordinates?.lat"></span></p>
-              <p><span class="font-semibold">Lng:</span> <span x-text="selectedCoordinates?.lng"></span></p>
-              <p class="text-[10px] text-[#1DD1A1] mt-1">Ikuti jalur evakuasi yang tersedia</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- MAP AREA -->
-        <div class="card-bg rounded-2xl overflow-hidden shadow-xl animate-fade-left opacity-0 delay-200">
-          <div class="bg-[#1B262C] px-5 py-3 flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <i data-lucide="navigation" class="w-4 h-4 text-[#1DD1A1]"></i>
-              <span class="text-white text-xs font-semibold">Peta Risiko</span>
-              <span
-                class="bg-[rgba(29,209,161,0.15)] text-[#1DD1A1] text-[10px] font-semibold px-2 py-0.5 rounded-full">LIVE</span>
-            </div>
-            <div class="flex gap-1.5">
-              <button id="locateMeBtn"
-                class="w-8 h-8 bg-white/10 border border-white/20 rounded-lg flex items-center justify-center text-white/80 hover:bg-[rgba(29,209,161,0.2)] transition"
-                title="Lokasi Saya">
-                <i data-lucide="target" class="w-3.5 h-3.5"></i>
-              </button>
-              <button id="fullscreenBtn"
-                class="w-8 h-8 bg-white/10 border border-white/20 rounded-lg flex items-center justify-center text-white/80 hover:bg-[rgba(29,209,161,0.2)] transition"
-                title="Layar Penuh">
-                <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
-              </button>
+            <div x-show="selectedCoordinates" x-transition class="card-bg rounded-xl shadow-md p-5 border border-[#1DD1A1]">
+              <div class="flex items-center gap-2 mb-3">
+                <i data-lucide="map-pin" class="w-4 h-4 text-[#1DD1A1]"></i>
+                <h3 class="font-bold text-sm text-primary">Koordinat Terpilih</h3>
+              </div>
+              <div class="text-xs text-secondary space-y-1">
+                <p><span class="font-semibold">Lat:</span> <span x-text="selectedCoordinates?.lat"></span></p>
+                <p><span class="font-semibold">Lng:</span> <span x-text="selectedCoordinates?.lng"></span></p>
+                <p class="text-[10px] text-[#1DD1A1] mt-1">Ikuti jalur evakuasi yang tersedia</p>
+              </div>
             </div>
           </div>
 
-          <div style="position: relative">
-            <div id="map" style="height: 520px; width: 100%; z-index: 0"></div>
-            <div id="routeLoadingOverlay">
-              <div class="spinner"></div>
-              <span id="loadingText">Menghitung jalur evakuasi...</span>
+          <div class="card-bg rounded-2xl overflow-hidden shadow-xl animate-fade-left opacity-0 delay-200">
+            <div class="bg-[#1B262C] px-5 py-3 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <i data-lucide="navigation" class="w-4 h-4 text-[#1DD1A1]"></i>
+                <span class="text-white text-xs font-semibold">Peta Risiko</span>
+                <span class="bg-[rgba(29,209,161,0.15)] text-[#1DD1A1] text-[10px] font-semibold px-2 py-0.5 rounded-full">LIVE</span>
+              </div>
+              <div class="flex gap-1.5">
+                <button id="locateMeBtn" class="w-8 h-8 bg-white/10 border border-white/20 rounded-lg flex items-center justify-center text-white/80 hover:bg-[rgba(29,209,161,0.2)] transition" title="Lokasi Saya">
+                  <i data-lucide="target" class="w-3.5 h-3.5"></i>
+                </button>
+                <button id="fullscreenBtn" class="w-8 h-8 bg-white/10 border border-white/20 rounded-lg flex items-center justify-center text-white/80 hover:bg-[rgba(29,209,161,0.2)] transition" title="Layar Penuh">
+                  <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
             </div>
-          </div>
 
-          <div class="stat-bg border-t border-default px-6 py-4 grid grid-cols-4 gap-3">
-            <div id="statBahaya" class="bg-[#EE5253]/10 border border-[#EE5253]/30 rounded-lg p-2.5 text-center"></div>
-            <div id="statSiaga" class="bg-[#FF9F43]/10 border border-[#FF9F43]/30 rounded-lg p-2.5 text-center"></div>
-            <div id="statWaspada" class="bg-[#FFC312]/10 border border-[#FFC312]/30 rounded-lg p-2.5 text-center"></div>
-            <div id="statTitikAman" class="bg-[#1DD1A1]/10 border border-[#1DD1A1]/30 rounded-lg p-2.5 text-center">
+            <div style="position: relative">
+              <div id="map" style="height: 520px; width: 100%; z-index: 0"></div>
+              <div id="routeLoadingOverlay">
+                <div class="spinner"></div>
+                <span id="loadingText">Menghitung jalur evakuasi...</span>
+              </div>
+            </div>
+
+            <div class="stat-bg border-t border-default px-6 py-4 grid grid-cols-4 gap-3">
+              <div id="statBahaya" class="bg-[#EE5253]/10 border border-[#EE5253]/30 rounded-lg p-2.5 text-center"></div>
+              <div id="statSiaga" class="bg-[#FF9F43]/10 border border-[#FF9F43]/30 rounded-lg p-2.5 text-center"></div>
+              <div id="statWaspada" class="bg-[#FFC312]/10 border border-[#FFC312]/30 rounded-lg p-2.5 text-center"></div>
+              <div id="statTitikAman" class="bg-[#1DD1A1]/10 border border-[#1DD1A1]/30 rounded-lg p-2.5 text-center"></div>
             </div>
           </div>
         </div>
       </div>
     </main>
 
-    <!-- FOOTER -->
     <footer class="bg-[#1B262C] text-white pt-20">
-      <div class="max-w-7xl mx-auto px-6 pb-20 grid grid-cols-1 md:grid-cols-4 gap-12">
+      <div class="max-w-6xl mx-auto px-6 pb-20 grid grid-cols-1 md:grid-cols-4 gap-12">
         <div>
           <div class="flex items-center gap-3 mb-6">
-            <div class="w-10 h-10 rounded-[12px] bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center shadow-lg overflow-hidden">
-              <img src="logo_putih.png" alt="Logo" class="w-12 h-12 object-contain p-2" />
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center">
+              <i data-lucide="shield" class="text-white"></i>
             </div>
             <div class="font-extrabold text-lg">RUANG AMAN</div>
           </div>
-          <div class="font-extrabold text-lg">RUANG AMAN</div>
+          <p class="text-white/50 text-sm leading-relaxed">Platform terpadu untuk analisis dan informasi risiko bencana berbasis air guna mendukung kesiapsiagaan masyarakat.</p>
         </div>
-        <p class="text-white/50 text-sm leading-relaxed">Platform terpadu untuk analisis dan informasi risiko bencana
-          berbasis air guna mendukung kesiapsiagaan masyarakat.</p>
-      </div>
-      <div>
-        <h5 class="font-bold mb-6">Navigasi</h5>
-        <ul class="space-y-4 text-sm text-white/50">
-          <li><a href="cek-risiko.html" class="hover:text-[#1DD1A1] transition-colors">Cek Risiko</a></li>
-          <li><a href="peta.html" class="hover:text-[#1DD1A1] transition-colors">Peta Interaktif</a></li>
-          <li><a href="edukasi.html" class="hover:text-[#1DD1A1] transition-colors">Panduan Edukasi</a></li>
-          <li><a href="simulasi.html" class="hover:text-[#1DD1A1] transition-colors">Simulasi</a></li>
-          <li><a href="about.html" class="hover:text-[#1DD1A1] transition-colors">About</a></li>
-        </ul>
-      </div>
-      <div>
-        <h5 class="font-bold mb-6">Kontak</h5>
-        <ul class="space-y-4 text-sm text-white/50">
-          <li class="flex gap-2"><i data-lucide="mail" class="w-4 text-[#1DD1A1]"></i> info@ruangaman.go.id</li>
-          <li class="flex gap-2"><i data-lucide="phone" class="w-4 text-[#1DD1A1]"></i> +62 21 1234 5678</li>
-        </ul>
-      </div>
-      <div>
-        <div class="bg-[#1DD1A1]/10 border border-[#1DD1A1]/20 p-6 rounded-2xl">
-          <div class="text-[10px] font-bold text-[#1DD1A1] uppercase mb-1">Darurat</div>
-          <div class="text-3xl font-black">117</div>
-          <div class="text-[10px] text-white/40 mt-1 uppercase">BNPB Response</div>
+        <div>
+          <h5 class="font-bold mb-6">Navigasi</h5>
+          <ul class="space-y-4 text-sm text-white/50">
+            <li><a href="cek-risiko.html" class="hover:text-[#1DD1A1] transition-colors">Cek Risiko</a></li>
+            <li><a href="peta.html" class="hover:text-[#1DD1A1] transition-colors">Peta Interaktif</a></li>
+            <li><a href="edukasi.html" class="hover:text-[#1DD1A1] transition-colors">Panduan Edukasi</a></li>
+            <li><a href="simulasi.html" class="hover:text-[#1DD1A1] transition-colors">Simulasi</a></li>
+            <li><a href="about.html" class="hover:text-[#1DD1A1] transition-colors">About</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="font-bold mb-6">Kontak</h5>
+          <ul class="space-y-4 text-sm text-white/50">
+            <li class="flex gap-2"><i data-lucide="mail" class="w-4 text-[#1DD1A1]"></i> info@ruangaman.go.id</li>
+            <li class="flex gap-2"><i data-lucide="phone" class="w-4 text-[#1DD1A1]"></i> +62 21 1234 5678</li>
+          </ul>
+        </div>
+        <div>
+          <div class="bg-[#1DD1A1]/10 border border-[#1DD1A1]/20 p-6 rounded-2xl">
+            <div class="text-[10px] font-bold text-[#1DD1A1] uppercase mb-1">Darurat</div>
+            <div class="text-3xl font-black">117</div>
+            <div class="text-[10px] text-white/40 mt-1 uppercase">BNPB Response</div>
+          </div>
         </div>
       </div>
       <div class="border-t border-white/5 py-8 text-center text-[11px] text-white/30">© 2026 RUANG AMAN. Water-Related Disasters Safety Platform Indonesia.</div>
@@ -496,111 +423,1178 @@
       document.addEventListener("alpine:initialized", () => lucide.createIcons());
 
       (function () {
-        // ==================== DATA REALISTIS ====================
         const COASTAL_REGIONS = [
-          { name: "Kabupaten Demak, Jawa Tengah", lat: -6.894, lng: 110.639, level: "bahaya", type: "Banjir & Rob", desc: "127 desa rawan, tanggul Sungai Wulan rawan jebol." },
-          { name: "Kota Semarang, Jawa Tengah", lat: -6.966, lng: 110.417, level: "bahaya", type: "Banjir & Rob", desc: "Land subsidence 5-25 cm/th, kawasan utara tergenang." },
-          { name: "Kabupaten Pekalongan, Jawa Tengah", lat: -6.889, lng: 109.675, level: "siaga", type: "Banjir Bandang", desc: "Luapan Sungai Sengkarang & Kupang setiap tahun." },
-          { name: "Kota Palu, Sulawesi Tengah", lat: -0.895, lng: 119.871, level: "bahaya", type: "Gempa & Tsunami", desc: "Sesar Palu-Koro aktif, tsunami 2018." },
-          { name: "Kabupaten Aceh Besar, Aceh", lat: 5.383, lng: 95.383, level: "bahaya", type: "Tsunami & Gempa", desc: "Megathrust Sumatra, zona paling rawan." },
-          { name: "Kota Banda Aceh, Aceh", lat: 5.548, lng: 95.324, level: "bahaya", type: "Tsunami", desc: "Tsunami 2004 korban >60rb, waktu tiba cepat." },
-          { name: "Kabupaten Cilacap, Jawa Tengah", lat: -7.734, lng: 109.008, level: "bahaya", type: "Tsunami", desc: "Menghadap Samudra Hindia, zona merah nasional." },
-          { name: "Kota Padang, Sumatera Barat", lat: -0.947, lng: 100.417, level: "bahaya", type: "Tsunami & Gempa", desc: "Waktu evakuasi <25 menit, kota padat penduduk." },
-          { name: "Kabupaten Lombok Barat, NTB", lat: -8.656, lng: 116.128, level: "siaga", type: "Gempa", desc: "Sesar Naik Flores, gempa 2018 M7.0." },
-          { name: "Kota Manado, Sulawesi Utara", lat: 1.493, lng: 124.841, level: "waspada", type: "Tsunami", desc: "Teluk Manado potensi amplifikasi gelombang." },
-        ];
+          // ==================== KABUPATEN DEMAK, JAWA TENGAH (4 titik) ====================
+          {
+            name: "Pusat Kota Demak",
+            lat: -6.894,
+            lng: 110.639,
+            level: "bahaya",
+            type: "Banjir & Rob",
+            desc: "Kawasan pusat pemerintahan, rawan banjir luapan Sungai Wulan.",
+            subRegion: "Demak Kota",
+          },
+          {
+            name: "Kecamatan Karanganyar",
+            lat: -6.92,
+            lng: 110.602,
+            level: "bahaya",
+            type: "Banjir",
+            desc: "Daerah dataran rendah, sering tergenang banjir tahunan.",
+            subRegion: "Karanganyar",
+          },
+          {
+            name: "Kecamatan Sayung",
+            lat: -6.938,
+            lng: 110.492,
+            level: "bahaya",
+            type: "Rob & Abrasi",
+            desc: "Kawasan pesisir utara, abrasi parah dan rob setiap tahun.",
+            subRegion: "Sayung",
+          },
+          {
+            name: "Kecamatan Wedung",
+            lat: -6.961,
+            lng: 110.548,
+            level: "siaga",
+            type: "Banjir",
+            desc: "Rawan banjir Sungai Wulan dan Sungai Serang.",
+            subRegion: "Wedung",
+          },
 
-        // ==================== TITIK AMAN (30 TITIK - 3 per wilayah) ====================
+          // ==================== KOTA SEMARANG, JAWA TENGAH (5 titik) ====================
+          {
+            name: "Semarang Utara - Tanjung Mas",
+            lat: -6.98,
+            lng: 110.405,
+            level: "bahaya",
+            type: "Rob & Banjir",
+            desc: "Kawasan pelabuhan, rob permanen, land subsidence ekstrem.",
+            subRegion: "Tanjung Mas",
+          },
+          {
+            name: "Semarang Utara - Pusat Kota",
+            lat: -6.966,
+            lng: 110.417,
+            level: "bahaya",
+            type: "Banjir & Rob",
+            desc: "Kawasan pusat kota Semarang bagian utara, rawan rob dan banjir tahunan.",
+            subRegion: "Semarang Utara",
+          },
+          {
+            name: "Kecamatan Genuk",
+            lat: -6.95,
+            lng: 110.432,
+            level: "bahaya",
+            type: "Banjir & Rob",
+            desc: "Kawasan industri dan pemukiman padat, banjir tahunan dan rob saat pasang laut.",
+            subRegion: "Genuk",
+          },
+          {
+            name: "Semarang Utara - Bandarharjo",
+            lat: -6.956,
+            lng: 110.426,
+            level: "bahaya",
+            type: "Rob",
+            desc: "Pemukiman padat, genangan rob hingga 50cm saat pasang.",
+            subRegion: "Bandarharjo",
+          },
+          {
+            name: "Kecamatan Tugu",
+            lat: -6.925,
+            lng: 110.368,
+            level: "siaga",
+            type: "Abrasi & Rob",
+            desc: "Wilayah pesisir barat, abrasi pantai mengancam.",
+            subRegion: "Tugu",
+          },
+          {
+            name: "Kecamatan Gayamsari",
+            lat: -6.972,
+            lng: 110.452,
+            level: "siaga",
+            type: "Banjir",
+            desc: "Rawan banjir luapan Kali Semarang dan Kali Banger.",
+            subRegion: "Gayamsari",
+          },
+
+          // ==================== KABUPATEN PEKALONGAN, JAWA TENGAH (4 titik) ====================
+          {
+            name: "Pekalongan Utara - Panjang Wetan",
+            lat: -6.875,
+            lng: 109.669,
+            level: "bahaya",
+            type: "Rob & Banjir",
+            desc: "Kawasan pesisir utara Pekalongan, rob dan banjir bandang tahunan.",
+            subRegion: "Panjang Wetan",
+          },
+          {
+            name: "Pekalongan Barat - Bendan Kergon",
+            lat: -6.889,
+            lng: 109.675,
+            level: "bahaya",
+            type: "Banjir Bandang",
+            desc: "Luapan Sungai Sengkarang, banjir cepat naik.",
+            subRegion: "Bendan Kergon",
+          },
+          {
+            name: "Kecamatan Kajen",
+            lat: -7.033,
+            lng: 109.683,
+            level: "siaga",
+            type: "Banjir",
+            desc: "Ibukota Kabupaten Pekalongan, rawan banjir Sungai Sengkarang.",
+            subRegion: "Kajen",
+          },
+          {
+            name: "Kecamatan Kesesi",
+            lat: -7.055,
+            lng: 109.635,
+            level: "waspada",
+            type: "Banjir",
+            desc: "Daerah pertanian, banjir luapan sungai saat hujan deras.",
+            subRegion: "Kesesi",
+          },
+
+          // ==================== KOTA PALU, SULAWESI TENGAH (4 titik) ====================
+          {
+            name: "Palu Barat - Balaroa",
+            lat: -0.895,
+            lng: 119.871,
+            level: "bahaya",
+            type: "Likuefaksi & Gempa",
+            desc: "Wilayah likuefaksi parah pasca gempa 2018.",
+            subRegion: "Balaroa",
+          },
+          {
+            name: "Palu Selatan - Petobo",
+            lat: -0.912,
+            lng: 119.878,
+            level: "bahaya",
+            type: "Likuefaksi",
+            desc: "Area likuefaksi terparah, tanah bergerak massif.",
+            subRegion: "Petobo",
+          },
+          {
+            name: "Palu Utara - Pantai Talise",
+            lat: -0.886,
+            lng: 119.856,
+            level: "bahaya",
+            type: "Tsunami",
+            desc: "Kawasan wisata pantai, zona merah tsunami.",
+            subRegion: "Talise",
+          },
+          {
+            name: "Palu Timur - Lere",
+            lat: -0.868,
+            lng: 119.888,
+            level: "siaga",
+            type: "Tsunami",
+            desc: "Pemukiman padat di teluk Palu, rawan tsunami.",
+            subRegion: "Lere",
+          },
+
+          // ==================== KABUPATEN ACEH BESAR, ACEH (4 titik) ====================
+          {
+            name: "Kecamatan Lhoknga",
+            lat: 5.461,
+            lng: 95.275,
+            level: "bahaya",
+            type: "Tsunami",
+            desc: "Hancur total tsunami 2004, zona prioritas evakuasi.",
+            subRegion: "Lhoknga",
+          },
+          {
+            name: "Kecamatan Lhoong",
+            lat: 5.314,
+            lng: 95.242,
+            level: "bahaya",
+            type: "Tsunami",
+            desc: "Wilayah pesisir barat Aceh Besar, akses jalan terbatas, risiko tsunami tinggi.",
+            subRegion: "Lhoong",
+          },
+          {
+            name: "Kecamatan Jantho",
+            lat: 5.383,
+            lng: 95.383,
+            level: "siaga",
+            type: "Gempa",
+            desc: "Dekat dengan jalur sesar aktif, risiko gempa tinggi.",
+            subRegion: "Jantho",
+          },
+          {
+            name: "Kecamatan Seulimeum",
+            lat: 5.435,
+            lng: 95.548,
+            level: "waspada",
+            type: "Gempa",
+            desc: "Daerah perbukitan, risiko tanah longsor pasca gempa dan gempa susulan.",
+            subRegion: "Seulimeum",
+          },
+
+          // ==================== KOTA BANDA ACEH, ACEH (3 titik) ====================
+          {
+            name: "Banda Aceh - Ulee Lheue",
+            lat: 5.55,
+            lng: 95.3,
+            level: "bahaya",
+            type: "Tsunami",
+            desc: "Pelabuhan perikanan, zona merah tsunami prioritas.",
+            subRegion: "Ulee Lheue",
+          },
+          {
+            name: "Banda Aceh - Punge Blang Cut",
+            lat: 5.548,
+            lng: 95.324,
+            level: "bahaya",
+            type: "Tsunami",
+            desc: "Pusat kota, waktu evakuasi tsunami <15 menit.",
+            subRegion: "Punge",
+          },
+          {
+            name: "Banda Aceh - Lamnyong",
+            lat: 5.535,
+            lng: 95.335,
+            level: "siaga",
+            type: "Gempa",
+            desc: "Daerah perbukitan timur Banda Aceh, risiko gempa tinggi dari Megathrust Sumatra.",
+            subRegion: "Lamnyong",
+          },
+
+          // ==================== KABUPATEN CILACAP, JAWA TENGAH (4 titik) ====================
+          {
+            name: "Cilacap Selatan - Teluk Penyu",
+            lat: -7.734,
+            lng: 109.008,
+            level: "bahaya",
+            type: "Tsunami",
+            desc: "Wisata pantai, zona merah tsunami Samudra Hindia.",
+            subRegion: "Teluk Penyu",
+          },
+          {
+            name: "Cilacap Tengah - Kebonmanis",
+            lat: -7.722,
+            lng: 109.015,
+            level: "bahaya",
+            type: "Tsunami",
+            desc: "Kawasan permukiman padat, evakuasi sulit.",
+            subRegion: "Kebonmanis",
+          },
+          {
+            name: "Kecamatan Adipala",
+            lat: -7.678,
+            lng: 109.164,
+            level: "siaga",
+            type: "Tsunami",
+            desc: "Pantai selatan Cilacap, potensi tsunami tinggi dengan jarak tempuh gelombang pendek.",
+            subRegion: "Adipala",
+          },
+          {
+            name: "Kecamatan Nusawungu",
+            lat: -7.65,
+            lng: 109.326,
+            level: "waspada",
+            type: "Banjir",
+            desc: "Rawan banjir Sungai Serayu dan Kali Ijo, genangan tahunan.",
+            subRegion: "Nusawungu",
+          },
+
+          // ==================== KOTA PADANG, SUMATERA BARAT (4 titik) ====================
+          {
+            name: "Padang Barat - Purus",
+            lat: -0.947,
+            lng: 100.35,
+            level: "bahaya",
+            type: "Tsunami",
+            desc: "Kawasan pantai padat, zona merah tsunami.",
+            subRegion: "Purus",
+          },
+          {
+            name: "Padang Utara - Air Tawar",
+            lat: -0.928,
+            lng: 100.367,
+            level: "bahaya",
+            type: "Tsunami",
+            desc: "Daerah pesisir utara Padang, zona merah tsunami dengan pemukiman padat.",
+            subRegion: "Air Tawar",
+          },
+          {
+            name: "Padang Selatan - Teluk Bayur",
+            lat: -0.985,
+            lng: 100.382,
+            level: "bahaya",
+            type: "Tsunami",
+            desc: "Pelabuhan utama Padang, risiko tsunami tinggi dengan waktu tiba <20 menit.",
+            subRegion: "Teluk Bayur",
+          },
+          {
+            name: "Padang Timur - Lubuk Buaya",
+            lat: -0.912,
+            lng: 100.418,
+            level: "siaga",
+            type: "Gempa",
+            desc: "Daerah perbukitan timur Padang, risiko gempa besar dari Sesar Sumatra.",
+            subRegion: "Lubuk Buaya",
+          },
+
+          // ==================== KABUPATEN LOMBOK BARAT, NTB (4 titik) ====================
+          {
+            name: "Kecamatan Sekotong",
+            lat: -8.756,
+            lng: 116.018,
+            level: "bahaya",
+            type: "Tsunami",
+            desc: "Kepulauan kecil di selatan Lombok, risiko tsunami tinggi dari Samudra Hindia.",
+            subRegion: "Sekotong",
+          },
+          {
+            name: "Kecamatan Lembar",
+            lat: -8.716,
+            lng: 116.085,
+            level: "bahaya",
+            type: "Tsunami",
+            desc: "Pelabuhan penyeberangan Lembar, zona merah tsunami dengan akses evakuasi terbatas.",
+            subRegion: "Lembar",
+          },
+          {
+            name: "Kecamatan Gerung",
+            lat: -8.656,
+            lng: 116.128,
+            level: "siaga",
+            type: "Gempa",
+            desc: "Ibukota kabupaten, rawan gempa Sesar Naik Flores.",
+            subRegion: "Gerung",
+          },
+          {
+            name: "Kecamatan Batu Layar",
+            lat: -8.508,
+            lng: 116.046,
+            level: "siaga",
+            type: "Gempa & Tsunami",
+            desc: "Kawasan wisata Senggigi, rawan gempa dan tsunami dengan kepadatan wisatawan tinggi.",
+            subRegion: "Batu Layar",
+          },
+
+          // ==================== KOTA MANADO, SULAWESI UTARA (3 titik) ====================
+          {
+            name: "Manado - Megamas",
+            lat: 1.493,
+            lng: 124.841,
+            level: "waspada",
+            type: "Tsunami",
+            desc: "Kawasan bisnis dan wisata, potensi tsunami.",
+            subRegion: "Megamas",
+          },
+          {
+            name: "Manado - Malalayang",
+            lat: 1.468,
+            lng: 124.788,
+            level: "waspada",
+            type: "Tsunami",
+            desc: "Daerah pesisir barat, rawan gelombang tinggi.",
+            subRegion: "Malalayang",
+          },
+          {
+            name: "Kecamatan Tikala",
+            lat: 1.512,
+            lng: 124.872,
+            level: "siaga",
+            type: "Banjir Bandang",
+            desc: "Rawan banjir bandang dari Sungai Tikala, pemukiman padat di bantaran sungai.",
+            subRegion: "Tikala",
+          },
+        ];
         const SAFE_POINTS = [
-          { name: "Bukit Soko - Mranggen", lat: -7.028, lng: 110.518, region: "Kabupaten Demak", type: "Bukit Evakuasi", desc: "Perbukitan selatan Mranggen, elevasi +75 mdpl, shelter utama banjir." },
-          { name: "Perbukitan Gajah - Gajah", lat: -6.942, lng: 110.628, region: "Kabupaten Demak", type: "Dataran Tinggi", desc: "Perbukitan timur Demak, ketinggian +50 mdpl." },
-          { name: "Bukit Karangawen - Karangawen", lat: -7.058, lng: 110.552, region: "Kabupaten Demak", type: "Bukit Evakuasi", desc: "Perbukitan selatan, jalur alternatif evakuasi." },
-          { name: "Bukit Tembalang", lat: -7.045, lng: 110.438, region: "Kota Semarang", type: "Bukit Evakuasi", desc: "Kawasan Tembalang, elevasi 150-250 mdpl." },
-          { name: "Bukit Gombel - Ngaliyan", lat: -7.018, lng: 110.375, region: "Kota Semarang", type: "Perbukitan", desc: "Perbukitan barat Semarang, via Jl. Soekarno-Hatta." },
-          { name: "Bukit Candi - Gunungpati", lat: -7.093, lng: 110.382, region: "Kota Semarang", type: "Bukit Evakuasi", desc: "Kawasan perbukitan selatan, elevasi 120 mdpl." },
-          { name: "Perbukitan Lebakbarang", lat: -7.132, lng: 109.665, region: "Kabupaten Pekalongan", type: "Bukit Evakuasi", desc: "Ketinggian >200 mdpl, evakuasi banjir bandang." },
-          { name: "Perbukitan Karanganyar - Kesesi", lat: -7.075, lng: 109.645, region: "Kabupaten Pekalongan", type: "Dataran Tinggi", desc: "Perbukitan selatan Pekalongan." },
-          { name: "Bukit Petungkriyono", lat: -7.158, lng: 109.702, region: "Kabupaten Pekalongan", type: "Bukit Evakuasi", desc: "Kawasan hutan lindung, elevasi 500-1000 mdpl." },
-          { name: "Shelter Tsunami Taman Ria", lat: -0.884, lng: 119.863, region: "Kota Palu", type: "Shelter Vertikal", desc: "Gedung 3 lantai, kapasitas 1000 orang." },
-          { name: "Perbukitan Lolu - Palu Selatan", lat: -0.912, lng: 119.878, region: "Kota Palu", type: "Bukit Evakuasi", desc: "Ketinggian >80 mdpl, aman tsunami." },
-          { name: "Bukit Nunu - Palu Timur", lat: -0.875, lng: 119.895, region: "Kota Palu", type: "Bukit Alami", desc: "Perbukitan timur, jalur evakuasi alternatif." },
-          { name: "Bukit Evakuasi Lhoknga", lat: 5.466, lng: 95.277, region: "Kabupaten Aceh Besar", type: "Bukit Alami", desc: "Bukit tsunami pasca 2004, ketinggian 80-150 mdpl." },
-          { name: "Perbukitan Jantho", lat: 5.331, lng: 95.588, region: "Kabupaten Aceh Besar", type: "Bukit Alami", desc: "Perbukitan Jantho, ketinggian 100-200 mdpl." },
-          { name: "Bukit Seulawah - Lembah Seulawah", lat: 5.448, lng: 95.622, region: "Kabupaten Aceh Besar", type: "Gunung", desc: "Kawasan pegunungan, elevasi >300 mdpl." },
-          { name: "Bukit Tsunami Ulee Lheue", lat: 5.558, lng: 95.303, region: "Kota Banda Aceh", type: "Bukit Evakuasi", desc: "Monumen tsunami, titik evakuasi vertikal alami." },
-          { name: "Gedung Baiturrahman - Pusat Kota", lat: 5.552, lng: 95.318, region: "Kota Banda Aceh", type: "Shelter Vertikal", desc: "Bangunan tinggi di pusat kota." },
-          { name: "Bukit Blang Padang - Lamnyong", lat: 5.535, lng: 95.335, region: "Kota Banda Aceh", type: "Perbukitan", desc: "Perbukitan timur Banda Aceh, elevasi +40 mdpl." },
-          { name: "Bukit Karangtalun", lat: -7.722, lng: 109.008, region: "Kabupaten Cilacap", type: "Bukit Evakuasi", desc: "Perbukitan selatan, ketinggian 60-80 mdpl." },
-          { name: "Perbukitan Gandrungmangu", lat: -7.575, lng: 108.852, region: "Kabupaten Cilacap", type: "Dataran Tinggi", desc: "Perbukitan utara Cilacap." },
-          { name: "Bukit Sidareja - Sidareja", lat: -7.487, lng: 108.792, region: "Kabupaten Cilacap", type: "Bukit Evakuasi", desc: "Perbukitan timur laut, jalur evakuasi alternatif." },
-          { name: "Bukit Padang - Air Pacah", lat: -0.925, lng: 100.372, region: "Kota Padang", type: "Bukit Evakuasi", desc: "Ketinggian 100-150 mdpl, evakuasi tsunami utama." },
-          { name: "Shelter Tsunami Purus", lat: -0.944, lng: 100.354, region: "Kota Padang", type: "Shelter Vertikal", desc: "Gedung evakuasi Pantai Purus." },
-          { name: "Bukit Koto Tangah - Lubuk Kilangan", lat: -0.912, lng: 100.418, region: "Kota Padang", type: "Bukit Evakuasi", desc: "Perbukitan timur Padang, elevasi +80 mdpl." },
-          { name: "Perbukitan Senggigi", lat: -8.508, lng: 116.035, region: "Kabupaten Lombok Barat", type: "Bukit Evakuasi", desc: "Ketinggian 80-150 mdpl, aman tsunami." },
-          { name: "Bukit Mataram - Gunung Sari", lat: -8.584, lng: 116.105, region: "Kabupaten Lombok Barat", type: "Bukit Alami", desc: "Perbukitan timur Mataram." },
-          { name: "Bukit Pusuk - Lembah Pusuk", lat: -8.448, lng: 116.072, region: "Kabupaten Lombok Barat", type: "Bukit Evakuasi", desc: "Perbukitan utara, jalur evakuasi wisata." },
-          { name: "Bukit Malalayang", lat: 1.468, lng: 124.788, region: "Kota Manado", type: "Bukit Evakuasi", desc: "Ketinggian 60-100 mdpl, shelter tsunami barat." },
-          { name: "Shelter Tsunami Megamas", lat: 1.497, lng: 124.844, region: "Kota Manado", type: "Shelter Vertikal", desc: "Gedung evakuasi kawasan Megamas." },
-          { name: "Bukit Tikala - Tikala", lat: 1.512, lng: 124.872, region: "Kota Manado", type: "Bukit Evakuasi", desc: "Perbukitan timur Manado, elevasi +70 mdpl." },
-        ];
+          // ==================== KABUPATEN DEMAK (3 titik aman) ====================
+          {
+            name: "Bukit Soko - Mranggen",
+            lat: -7.028,
+            lng: 110.518,
+            region: "Kabupaten Demak",
+            type: "Bukit Evakuasi",
+            desc: "Perbukitan selatan Mranggen, elevasi +75 mdpl, shelter utama banjir rob. Kapasitas 2000 orang, dilengkapi posko darurat.",
+            elevation: 75,
+            capacity: 2000,
+            facilities: ["Posko Darurat", "Lapangan Terbuka", "Sumur Bor"],
+          },
+          {
+            name: "Perbukitan Gajah - Gajah",
+            lat: -6.942,
+            lng: 110.628,
+            region: "Kabupaten Demak",
+            type: "Dataran Tinggi",
+            desc: "Perbukitan timur Demak, ketinggian +50 mdpl, jalur evakuasi alternatif. Area persawahan kering yang aman.",
+            elevation: 50,
+            capacity: 1500,
+            facilities: ["Lapangan Terbuka", "Sumber Air", "Jalur Evakuasi"],
+          },
+          {
+            name: "Bukit Karangawen - Karangawen",
+            lat: -7.058,
+            lng: 110.552,
+            region: "Kabupaten Demak",
+            type: "Bukit Evakuasi",
+            desc: "Perbukitan selatan Karangawen, elevasi +65 mdpl, shelter cadangan untuk wilayah selatan Demak.",
+            elevation: 65,
+            capacity: 1200,
+            facilities: ["Lapangan Terbuka", "Posko Siaga", "Area Parkir"],
+          },
 
-        // ==================== JALUR EVAKUASI (44 JALUR - 4-5 per wilayah) ====================
+          // ==================== KOTA SEMARANG (4 titik aman) ====================
+          {
+            name: "Bukit Tembalang",
+            lat: -7.045,
+            lng: 110.438,
+            region: "Kota Semarang",
+            type: "Bukit Evakuasi",
+            desc: "Kawasan perbukitan Tembalang, elevasi 150-250 mdpl, shelter utama banjir & tsunami. Akses via Jl. Tembalang Raya.",
+            elevation: 200,
+            capacity: 5000,
+            facilities: ["Gedung Serbaguna", "Lapangan", "Rumah Sakit", "Posko Utama"],
+          },
+          {
+            name: "Bukit Gombel - Ngaliyan",
+            lat: -7.018,
+            lng: 110.375,
+            region: "Kota Semarang",
+            type: "Perbukitan",
+            desc: "Perbukitan barat Semarang, elevasi 120 mdpl, shelter untuk wilayah Semarang Barat dan Tugu.",
+            elevation: 120,
+            capacity: 2500,
+            facilities: ["Lapangan", "Posko", "Area Evakuasi Vertikal"],
+          },
+          {
+            name: "Bukit Candi - Gunungpati",
+            lat: -7.093,
+            lng: 110.382,
+            region: "Kota Semarang",
+            type: "Bukit Evakuasi",
+            desc: "Kawasan perbukitan selatan, elevasi 120 mdpl, shelter alternatif untuk wilayah selatan Semarang.",
+            elevation: 120,
+            capacity: 1800,
+            facilities: ["Lapangan Terbuka", "Area Parkir", "Posko"],
+          },
+          {
+            name: "Gedung BPBD Kota Semarang",
+            lat: -6.983,
+            lng: 110.417,
+            region: "Kota Semarang",
+            type: "Shelter Vertikal",
+            desc: "Pusat koordinasi bencana, bangunan 4 lantai, shelter vertikal untuk evakuasi cepat. Kapasitas 500 orang.",
+            elevation: 15,
+            capacity: 500,
+            facilities: ["Posko Utama", "Gudang Logistik", "Ruang Medis"],
+          },
+
+          // ==================== KABUPATEN PEKALONGAN (3 titik aman) ====================
+          {
+            name: "Perbukitan Lebakbarang",
+            lat: -7.132,
+            lng: 109.665,
+            region: "Kabupaten Pekalongan",
+            type: "Bukit Evakuasi",
+            desc: "Perbukitan selatan Lebakbarang, ketinggian >200 mdpl, shelter utama banjir bandang. Akses via Kajen.",
+            elevation: 220,
+            capacity: 3000,
+            facilities: ["Posko Darurat", "Lapangan", "Sumber Air"],
+          },
+          {
+            name: "Perbukitan Karanganyar - Kesesi",
+            lat: -7.075,
+            lng: 109.645,
+            region: "Kabupaten Pekalongan",
+            type: "Dataran Tinggi",
+            desc: "Perbukitan selatan Pekalongan, elevasi 150 mdpl, shelter alternatif untuk wilayah Kesesi dan sekitarnya.",
+            elevation: 150,
+            capacity: 2000,
+            facilities: ["Lapangan Terbuka", "Posko", "Area Camping"],
+          },
+          {
+            name: "Bukit Petungkriyono",
+            lat: -7.158,
+            lng: 109.702,
+            region: "Kabupaten Pekalongan",
+            type: "Bukit Evakuasi",
+            desc: "Kawasan hutan lindung Petungkriyono, elevasi 500-1000 mdpl, shelter jarak jauh untuk evakuasi massal.",
+            elevation: 700,
+            capacity: 4000,
+            facilities: ["Hutan Lindung", "Sumber Mata Air", "Posko Hutan"],
+          },
+
+          // ==================== KOTA PALU (3 titik aman) ====================
+          {
+            name: "Shelter Tsunami Taman Ria",
+            lat: -0.884,
+            lng: 119.863,
+            region: "Kota Palu",
+            type: "Shelter Vertikal",
+            desc: "Gedung evakuasi 3 lantai, kapasitas 1000 orang, dilengkapi tangga darurat dan panel surya. Shelter utama tsunami.",
+            elevation: 12,
+            capacity: 1000,
+            facilities: ["Gedung 3 Lantai", "Panel Surya", "Toilet Darurat", "Gudang Logistik"],
+          },
+          {
+            name: "Perbukitan Lolu - Palu Selatan",
+            lat: -0.912,
+            lng: 119.878,
+            region: "Kota Palu",
+            type: "Bukit Evakuasi",
+            desc: "Perbukitan selatan Palu, ketinggian >80 mdpl, aman tsunami & likuifaksi. Akses via Jl. Bantaya.",
+            elevation: 85,
+            capacity: 2500,
+            facilities: ["Lapangan Terbuka", "Posko", "Area Evakuasi"],
+          },
+          {
+            name: "Bukit Nunu - Palu Timur",
+            lat: -0.875,
+            lng: 119.895,
+            region: "Kota Palu",
+            type: "Bukit Alami",
+            desc: "Perbukitan timur Palu, elevasi 70 mdpl, shelter alternatif untuk wilayah timur dan utara Palu.",
+            elevation: 70,
+            capacity: 1500,
+            facilities: ["Lapangan", "Posko Siaga", "Area Parkir"],
+          },
+
+          // ==================== KABUPATEN ACEH BESAR (3 titik aman) ====================
+          {
+            name: "Bukit Evakuasi Lhoknga",
+            lat: 5.466,
+            lng: 95.277,
+            region: "Kabupaten Aceh Besar",
+            type: "Bukit Alami",
+            desc: "Bukit tsunami pasca 2004, ketinggian 80-150 mdpl, jalur evakuasi utama. Monumen peringatan tsunami.",
+            elevation: 120,
+            capacity: 3000,
+            facilities: ["Monumen Tsunami", "Lapangan", "Posko", "Toilet Umum"],
+          },
+          {
+            name: "Perbukitan Jantho",
+            lat: 5.331,
+            lng: 95.588,
+            region: "Kabupaten Aceh Besar",
+            type: "Bukit Alami",
+            desc: "Perbukitan Jantho, ketinggian 100-200 mdpl, shelter untuk wilayah timur Aceh Besar.",
+            elevation: 150,
+            capacity: 2000,
+            facilities: ["Lapangan Terbuka", "Posko", "Sumber Air"],
+          },
+          {
+            name: "Bukit Seulawah - Lembah Seulawah",
+            lat: 5.448,
+            lng: 95.622,
+            region: "Kabupaten Aceh Besar",
+            type: "Gunung",
+            desc: "Kawasan pegunungan Seulawah, elevasi >300 mdpl, shelter jarak jauh untuk evakuasi massal.",
+            elevation: 350,
+            capacity: 5000,
+            facilities: ["Hutan Lindung", "Sumber Air Panas", "Posko Gunung"],
+          },
+
+          // ==================== KOTA BANDA ACEH (3 titik aman) ====================
+          {
+            name: "Bukit Tsunami Ulee Lheue",
+            lat: 5.558,
+            lng: 95.303,
+            region: "Kota Banda Aceh",
+            type: "Bukit Evakuasi",
+            desc: "Monumen tsunami Ulee Lheue, titik evakuasi vertikal alami, elevasi +15 mdpl. Shelter cepat untuk pantai barat.",
+            elevation: 18,
+            capacity: 800,
+            facilities: ["Monumen Tsunami", "Musholla", "Area Parkir", "Toilet"],
+          },
+          {
+            name: "Gedung Baiturrahman - Pusat Kota",
+            lat: 5.552,
+            lng: 95.318,
+            region: "Kota Banda Aceh",
+            type: "Shelter Vertikal",
+            desc: "Masjid Raya Baiturrahman, bangunan tinggi di pusat kota, titik kumpul evakuasi vertikal. Kapasitas 2000 orang.",
+            elevation: 12,
+            capacity: 2000,
+            facilities: ["Masjid Raya", "Lapangan", "Posko", "Dapur Umum"],
+          },
+          {
+            name: "Bukit Blang Padang - Lamnyong",
+            lat: 5.535,
+            lng: 95.335,
+            region: "Kota Banda Aceh",
+            type: "Perbukitan",
+            desc: "Perbukitan timur Banda Aceh, elevasi +40 mdpl, shelter alternatif untuk wilayah timur kota.",
+            elevation: 45,
+            capacity: 1500,
+            facilities: ["Lapangan Blang Padang", "Posko", "Area Parkir"],
+          },
+
+          // ==================== KABUPATEN CILACAP (3 titik aman) ====================
+          {
+            name: "Bukit Karangtalun",
+            lat: -7.722,
+            lng: 109.008,
+            region: "Kabupaten Cilacap",
+            type: "Bukit Evakuasi",
+            desc: "Perbukitan selatan Cilacap, ketinggian 60-80 mdpl, shelter tsunami utama. Akses via Jl. Gatot Subroto.",
+            elevation: 70,
+            capacity: 3000,
+            facilities: ["Posko Utama", "Lapangan", "Toilet Umum", "Gudang Logistik"],
+          },
+          {
+            name: "Perbukitan Gandrungmangu",
+            lat: -7.575,
+            lng: 108.852,
+            region: "Kabupaten Cilacap",
+            type: "Dataran Tinggi",
+            desc: "Perbukitan utara Cilacap, elevasi 100 mdpl, shelter untuk wilayah utara dan timur Cilacap.",
+            elevation: 100,
+            capacity: 2500,
+            facilities: ["Lapangan Terbuka", "Posko", "Area Perkebunan"],
+          },
+          {
+            name: "Bukit Sidareja - Sidareja",
+            lat: -7.487,
+            lng: 108.792,
+            region: "Kabupaten Cilacap",
+            type: "Bukit Evakuasi",
+            desc: "Perbukitan timur laut Cilacap, elevasi 120 mdpl, shelter alternatif untuk wilayah Sidareja.",
+            elevation: 120,
+            capacity: 1500,
+            facilities: ["Lapangan", "Posko", "Sumber Air"],
+          },
+
+          // ==================== KOTA PADANG (3 titik aman) ====================
+          {
+            name: "Bukit Padang - Air Pacah",
+            lat: -0.925,
+            lng: 100.372,
+            region: "Kota Padang",
+            type: "Bukit Evakuasi",
+            desc: "Perbukitan Air Pacah, ketinggian 100-150 mdpl, shelter tsunami utama untuk pusat kota.",
+            elevation: 125,
+            capacity: 4000,
+            facilities: ["Posko Utama", "Lapangan", "Rumah Sakit", "Area Parkir"],
+          },
+          {
+            name: "Shelter Tsunami Purus",
+            lat: -0.944,
+            lng: 100.354,
+            region: "Kota Padang",
+            type: "Shelter Vertikal",
+            desc: "Gedung evakuasi di kawasan Pantai Purus, kapasitas 500 orang. Shelter cepat untuk wilayah pantai barat.",
+            elevation: 8,
+            capacity: 500,
+            facilities: ["Gedung 4 Lantai", "Panel Surya", "Toilet Darurat"],
+          },
+          {
+            name: "Bukit Koto Tangah - Lubuk Kilangan",
+            lat: -0.912,
+            lng: 100.418,
+            region: "Kota Padang",
+            type: "Bukit Evakuasi",
+            desc: "Perbukitan timur Padang, elevasi +80 mdpl, shelter alternatif untuk wilayah timur dan selatan Padang.",
+            elevation: 85,
+            capacity: 2000,
+            facilities: ["Lapangan", "Posko", "Area Perbukitan"],
+          },
+
+          // ==================== KABUPATEN LOMBOK BARAT (3 titik aman) ====================
+          {
+            name: "Perbukitan Senggigi",
+            lat: -8.508,
+            lng: 116.035,
+            region: "Kabupaten Lombok Barat",
+            type: "Bukit Evakuasi",
+            desc: "Perbukitan Senggigi, ketinggian 80-150 mdpl, shelter utama tsunami dan gempa. Akses via Jl. Raya Senggigi.",
+            elevation: 110,
+            capacity: 3000,
+            facilities: ["Posko", "Lapangan", "Area Wisata", "Toilet Umum"],
+          },
+          {
+            name: "Bukit Mataram - Gunung Sari",
+            lat: -8.584,
+            lng: 116.105,
+            region: "Kabupaten Lombok Barat",
+            type: "Bukit Alami",
+            desc: "Perbukitan timur Mataram, elevasi +100 mdpl, shelter alternatif untuk wilayah timur Lombok Barat.",
+            elevation: 105,
+            capacity: 2000,
+            facilities: ["Lapangan Terbuka", "Posko", "Sumber Air"],
+          },
+          {
+            name: "Bukit Pusuk - Lembah Pusuk",
+            lat: -8.448,
+            lng: 116.072,
+            region: "Kabupaten Lombok Barat",
+            type: "Bukit Evakuasi",
+            desc: "Perbukitan utara Senggigi, elevasi 150 mdpl, shelter untuk wilayah utara dan wisatawan.",
+            elevation: 150,
+            capacity: 1500,
+            facilities: ["Area Wisata", "Lapangan", "Posko", "Parkir Luas"],
+          },
+
+          // ==================== KOTA MANADO (3 titik aman) ====================
+          {
+            name: "Bukit Malalayang",
+            lat: 1.468,
+            lng: 124.788,
+            region: "Kota Manado",
+            type: "Bukit Evakuasi",
+            desc: "Perbukitan Malalayang, ketinggian 60-100 mdpl, shelter tsunami untuk kawasan pesisir barat.",
+            elevation: 80,
+            capacity: 2000,
+            facilities: ["Lapangan", "Posko", "Area Perbukitan", "Jalur Evakuasi"],
+          },
+          {
+            name: "Shelter Tsunami Megamas",
+            lat: 1.497,
+            lng: 124.844,
+            region: "Kota Manado",
+            type: "Shelter Vertikal",
+            desc: "Gedung evakuasi di kawasan Megamas, kapasitas 500 orang, akses Jl. Piere Tendean. Shelter cepat tsunami.",
+            elevation: 10,
+            capacity: 500,
+            facilities: ["Gedung 4 Lantai", "Panel Surya", "Toilet Darurat", "Posko"],
+          },
+          {
+            name: "Bukit Tikala - Tikala",
+            lat: 1.512,
+            lng: 124.872,
+            region: "Kota Manado",
+            type: "Bukit Evakuasi",
+            desc: "Perbukitan timur Manado, elevasi +70 mdpl, shelter untuk wilayah timur dan evakuasi banjir bandang.",
+            elevation: 75,
+            capacity: 1500,
+            facilities: ["Lapangan", "Posko", "Area Perbukitan"],
+          },
+        ];
         const EVACUATION_PAIRS = [
-          { from: [-6.894, 110.639], to: [-7.028, 110.518], name: "Demak Kota → Bukit Soko", desc: "Via Jl. Raya Demak - Mranggen, ±15 km, jalur utama." },
-          { from: [-6.894, 110.639], to: [-6.942, 110.628], name: "Demak Kota → Perbukitan Gajah", desc: "Via Jl. Karanganyar - Gajah, ±12 km." },
-          { from: [-6.894, 110.639], to: [-7.058, 110.552], name: "Demak Kota → Bukit Karangawen", desc: "Via Jl. Demak - Karangawen, ±18 km." },
-          { from: [-6.92, 110.602], to: [-7.028, 110.518], name: "Karanganyar → Bukit Soko", desc: "Via jalur alternatif Karanganyar-Mranggen." },
+          // ==================== KABUPATEN DEMAK (4 jalur) ====================
+          {
+            from: [-6.894, 110.639],
+            to: [-7.028, 110.518],
+            name: "Pusat Kota Demak → Bukit Soko Mranggen",
+            desc: "Via Jl. Raya Demak - Mranggen, ±15 km, jalur utama evakuasi banjir.",
+            fromName: "Pusat Kota Demak",
+            toName: "Bukit Soko - Mranggen",
+          },
+          {
+            from: [-6.92, 110.602],
+            to: [-6.942, 110.628],
+            name: "Karanganyar → Perbukitan Gajah",
+            desc: "Via Jl. Karanganyar - Gajah, ±8 km, jalur alternatif ke timur.",
+            fromName: "Kecamatan Karanganyar",
+            toName: "Perbukitan Gajah",
+          },
+          {
+            from: [-6.938, 110.492],
+            to: [-7.028, 110.518],
+            name: "Sayung → Bukit Soko Mranggen",
+            desc: "Via Jl. Raya Sayung - Mranggen, ±18 km, evakuasi rob pesisir.",
+            fromName: "Kecamatan Sayung",
+            toName: "Bukit Soko - Mranggen",
+          },
+          {
+            from: [-6.961, 110.548],
+            to: [-7.058, 110.552],
+            name: "Wedung → Bukit Karangawen",
+            desc: "Via Jl. Wedung - Karangawen, ±12 km, jalur evakuasi selatan.",
+            fromName: "Kecamatan Wedung",
+            toName: "Bukit Karangawen",
+          },
 
-          { from: [-6.966, 110.417], to: [-7.045, 110.438], name: "Semarang Utara → Bukit Tembalang", desc: "Via Jl. MT Haryono - Tembalang, ±18 km." },
-          { from: [-6.966, 110.417], to: [-7.018, 110.375], name: "Semarang Utara → Bukit Gombel", desc: "Via Jl. Soekarno-Hatta, ±12 km." },
-          { from: [-6.966, 110.417], to: [-7.093, 110.382], name: "Semarang Utara → Bukit Candi", desc: "Via Jl. Kaligawe - Gunungpati, ±20 km." },
-          { from: [-6.95, 110.432], to: [-7.045, 110.438], name: "Genuk → Bukit Tembalang", desc: "Via Jl. Raya Genuk - Tembalang." },
-          { from: [-6.98, 110.405], to: [-7.018, 110.375], name: "Tanjung Mas → Bukit Gombel", desc: "Via Jl. RE Martadinata - Soekarno-Hatta." },
+          // ==================== KOTA SEMARANG (8 jalur) ====================
+          {
+            from: [-6.98, 110.405],
+            to: [-7.018, 110.375],
+            name: "Tanjung Mas → Bukit Gombel",
+            desc: "Via Jl. RE Martadinata - Jl. Soekarno-Hatta, ±8 km, evakuasi cepat rob.",
+            fromName: "Tanjung Mas",
+            toName: "Bukit Gombel - Ngaliyan",
+          },
+          {
+            from: [-6.966, 110.417],
+            to: [-6.983, 110.417],
+            name: "Semarang Utara → Gedung BPBD Semarang",
+            desc: "Via Jl. Kaligawe - Jl. Pemuda, ±5 km, shelter vertikal pusat kota.",
+            fromName: "Semarang Utara",
+            toName: "Gedung BPBD Kota Semarang",
+          },
+          {
+            from: [-6.95, 110.432],
+            to: [-6.983, 110.417],
+            name: "Genuk → Gedung BPBD Semarang",
+            desc: "Via Jl. Raya Genuk - Jl. Kaligawe, ±7 km, evakuasi cepat ke pusat kota.",
+            fromName: "Kecamatan Genuk",
+            toName: "Gedung BPBD Kota Semarang",
+          },
+          {
+            from: [-6.98, 110.405],
+            to: [-6.983, 110.417],
+            name: "Tanjung Mas → Gedung BPBD Semarang",
+            desc: "Via Jl. RE Martadinata - Jl. Pemuda, ±4 km, jalur terdekat.",
+            fromName: "Tanjung Mas",
+            toName: "Gedung BPBD Kota Semarang",
+          },
+          {
+            from: [-6.956, 110.426],
+            to: [-7.045, 110.438],
+            name: "Bandarharjo → Bukit Tembalang",
+            desc: "Via Jl. MT Haryono - Jl. Tembalang, ±15 km, jalur utama.",
+            fromName: "Bandarharjo",
+            toName: "Bukit Tembalang",
+          },
+          {
+            from: [-6.95, 110.432],
+            to: [-7.045, 110.438],
+            name: "Genuk → Bukit Tembalang",
+            desc: "Via Jl. Raya Genuk - Tembalang, ±16 km, evakuasi banjir rob.",
+            fromName: "Kecamatan Genuk",
+            toName: "Bukit Tembalang",
+          },
+          {
+            from: [-6.925, 110.368],
+            to: [-7.018, 110.375],
+            name: "Tugu → Bukit Gombel",
+            desc: "Via Jl. Raya Tugu - Ngaliyan, ±12 km, evakuasi abrasi pantai.",
+            fromName: "Kecamatan Tugu",
+            toName: "Bukit Gombel - Ngaliyan",
+          },
+          {
+            from: [-6.972, 110.452],
+            to: [-7.093, 110.382],
+            name: "Gayamsari → Bukit Candi",
+            desc: "Via Jl. Kaligawe - Gunungpati, ±18 km, jalur alternatif.",
+            fromName: "Kecamatan Gayamsari",
+            toName: "Bukit Candi - Gunungpati",
+          },
 
-          { from: [-6.889, 109.675], to: [-7.132, 109.665], name: "Pekalongan Kota → Lebakbarang", desc: "Via Jl. Raya Pekalongan - Kajen, ±30 km." },
-          { from: [-6.889, 109.675], to: [-7.075, 109.645], name: "Pekalongan Kota → Karanganyar", desc: "Via Jl. Kesesi, ±22 km." },
-          { from: [-6.889, 109.675], to: [-7.158, 109.702], name: "Pekalongan Kota → Petungkriyono", desc: "Via Jl. Kajen - Petungkriyono, ±35 km." },
-          { from: [-6.92, 109.69], to: [-7.132, 109.665], name: "Kajen → Lebakbarang", desc: "Jalur lokal Kajen - Lebakbarang." },
+          // ==================== KABUPATEN PEKALONGAN (4 jalur) ====================
+          {
+            from: [-6.875, 109.669],
+            to: [-7.132, 109.665],
+            name: "Panjang Wetan → Lebakbarang",
+            desc: "Via Jl. Raya Pekalongan - Kajen - Lebakbarang, ±32 km, evakuasi rob.",
+            fromName: "Panjang Wetan",
+            toName: "Perbukitan Lebakbarang",
+          },
+          {
+            from: [-6.889, 109.675],
+            to: [-7.075, 109.645],
+            name: "Bendan Kergon → Karanganyar",
+            desc: "Via Jl. Kesesi, ±22 km, jalur evakuasi banjir bandang.",
+            fromName: "Bendan Kergon",
+            toName: "Perbukitan Karanganyar",
+          },
+          {
+            from: [-7.033, 109.683],
+            to: [-7.158, 109.702],
+            name: "Kajen → Petungkriyono",
+            desc: "Via Jl. Kajen - Petungkriyono, ±18 km, jalur evakuasi pegunungan.",
+            fromName: "Kecamatan Kajen",
+            toName: "Bukit Petungkriyono",
+          },
+          {
+            from: [-7.055, 109.635],
+            to: [-7.075, 109.645],
+            name: "Kesesi → Karanganyar",
+            desc: "Via Jl. Kesesi - Karanganyar, ±5 km, evakuasi cepat banjir.",
+            fromName: "Kecamatan Kesesi",
+            toName: "Perbukitan Karanganyar",
+          },
 
-          { from: [-0.895, 119.871], to: [-0.884, 119.863], name: "Pusat Palu → Shelter Taman Ria", desc: "Via Jl. Maluku - Jl. Moh. Yamin, ±2 km." },
-          { from: [-0.895, 119.871], to: [-0.912, 119.878], name: "Pusat Palu → Perbukitan Lolu", desc: "Via Jl. Sungai Bantaya, ±3.5 km." },
-          { from: [-0.895, 119.871], to: [-0.875, 119.895], name: "Pusat Palu → Bukit Nunu", desc: "Via Jl. Diponegoro - Jl. Rajawali, ±4 km." },
-          { from: [-0.886, 119.856], to: [-0.884, 119.863], name: "Pantai Talise → Shelter Taman Ria", desc: "Jalur evakuasi pantai ke shelter." },
-          { from: [-0.905, 119.87], to: [-0.912, 119.878], name: "Palu Selatan → Bukit Lolu", desc: "Via Jl. Bantaya, evakuasi cepat." },
+          // ==================== KOTA PALU (4 jalur) ====================
+          {
+            from: [-0.895, 119.871],
+            to: [-0.884, 119.863],
+            name: "Balaroa → Shelter Taman Ria",
+            desc: "Via Jl. Maluku - Jl. Moh. Yamin, ±2 km, evakuasi gempa/tsunami.",
+            fromName: "Balaroa",
+            toName: "Shelter Tsunami Taman Ria",
+          },
+          {
+            from: [-0.912, 119.878],
+            to: [-0.912, 119.878],
+            name: "Petobo → Perbukitan Lolu",
+            desc: "Via Jl. Sungai Bantaya, ±1.5 km, evakuasi likuefaksi.",
+            fromName: "Petobo",
+            toName: "Perbukitan Lolu",
+          },
+          {
+            from: [-0.886, 119.856],
+            to: [-0.884, 119.863],
+            name: "Pantai Talise → Shelter Taman Ria",
+            desc: "Jalur evakuasi pantai ke shelter vertikal, ±0.8 km.",
+            fromName: "Pantai Talise",
+            toName: "Shelter Tsunami Taman Ria",
+          },
+          {
+            from: [-0.868, 119.888],
+            to: [-0.875, 119.895],
+            name: "Lere → Bukit Nunu",
+            desc: "Via Jl. Diponegoro - Jl. Rajawali, ±2 km, evakuasi tsunami.",
+            fromName: "Lere",
+            toName: "Bukit Nunu",
+          },
 
-          { from: [5.383, 95.383], to: [5.466, 95.277], name: "Jantho → Bukit Lhoknga", desc: "Via Jl. Banda Aceh - Calang, ±35 km." },
-          { from: [5.383, 95.383], to: [5.331, 95.588], name: "Jantho → Perbukitan Jantho", desc: "Jalur lokal ke dataran tinggi timur." },
-          { from: [5.383, 95.383], to: [5.448, 95.622], name: "Jantho → Bukit Seulawah", desc: "Via Jl. Jantho - Seulawah, ±25 km." },
-          { from: [5.42, 95.35], to: [5.466, 95.277], name: "Lhoknga → Bukit Evakuasi Lhoknga", desc: "Jalur evakuasi pantai ke bukit." },
+          // ==================== KABUPATEN ACEH BESAR (4 jalur) ====================
+          {
+            from: [5.461, 95.275],
+            to: [5.466, 95.277],
+            name: "Lhoknga → Bukit Evakuasi Lhoknga",
+            desc: "Jalur evakuasi cepat ke bukit tsunami, ±0.5 km.",
+            fromName: "Kecamatan Lhoknga",
+            toName: "Bukit Evakuasi Lhoknga",
+          },
+          {
+            from: [5.314, 95.242],
+            to: [5.466, 95.277],
+            name: "Lhoong → Bukit Lhoknga",
+            desc: "Via Jl. Banda Aceh - Calang, ±35 km, jalur utama evakuasi.",
+            fromName: "Kecamatan Lhoong",
+            toName: "Bukit Evakuasi Lhoknga",
+          },
+          {
+            from: [5.383, 95.383],
+            to: [5.331, 95.588],
+            name: "Jantho → Perbukitan Jantho",
+            desc: "Jalur lokal ke dataran tinggi timur, ±12 km.",
+            fromName: "Kecamatan Jantho",
+            toName: "Perbukitan Jantho",
+          },
+          {
+            from: [5.435, 95.548],
+            to: [5.448, 95.622],
+            name: "Seulimeum → Bukit Seulawah",
+            desc: "Via Jl. Jantho - Seulawah, ±15 km, evakuasi gempa.",
+            fromName: "Kecamatan Seulimeum",
+            toName: "Bukit Seulawah",
+          },
 
-          { from: [5.548, 95.324], to: [5.558, 95.303], name: "Banda Aceh Pusat → Bukit Ulee Lheue", desc: "Via Jl. Sultan Iskandar Muda, ±2.5 km." },
-          { from: [5.548, 95.324], to: [5.552, 95.318], name: "Banda Aceh → Gedung Baiturrahman", desc: "Shelter vertikal pusat kota, <10 menit." },
-          { from: [5.548, 95.324], to: [5.535, 95.335], name: "Banda Aceh → Bukit Blang Padang", desc: "Via Jl. TGK Chik Pante Kulu, ±3 km." },
-          { from: [5.56, 95.31], to: [5.558, 95.303], name: "Ulee Lheue → Bukit Tsunami", desc: "Jalur evakuasi pantai cepat." },
-          { from: [5.54, 95.315], to: [5.552, 95.318], name: "Lamnyong → Gedung Baiturrahman", desc: "Via Jl. Medan - Banda Aceh." },
+          // ==================== KOTA BANDA ACEH (5 jalur) ====================
+          {
+            from: [5.55, 95.3],
+            to: [5.558, 95.303],
+            name: "Ulee Lheue → Bukit Tsunami",
+            desc: "Via Jl. Sultan Iskandar Muda, ±1 km, evakuasi cepat tsunami.",
+            fromName: "Ulee Lheue",
+            toName: "Bukit Tsunami Ulee Lheue",
+          },
+          {
+            from: [5.55, 95.3],
+            to: [5.552, 95.318],
+            name: "Ulee Lheue → Gedung Baiturrahman",
+            desc: "Via Jl. Sultan Iskandar Muda - Jl. Tgk. H. M. Daud Beureueh, ±2 km, shelter vertikal pusat kota.",
+            fromName: "Ulee Lheue",
+            toName: "Gedung Baiturrahman",
+          },
+          {
+            from: [5.548, 95.324],
+            to: [5.535, 95.335],
+            name: "Punge → Bukit Blang Padang",
+            desc: "Via Jl. TGK Chik Pante Kulu, ±2.5 km, evakuasi ke perbukitan timur.",
+            fromName: "Punge Blang Cut",
+            toName: "Bukit Blang Padang",
+          },
+          {
+            from: [5.535, 95.335],
+            to: [5.552, 95.318],
+            name: "Lamnyong → Gedung Baiturrahman",
+            desc: "Via Jl. Medan - Banda Aceh, ±3 km, jalur evakuasi alternatif.",
+            fromName: "Lamnyong",
+            toName: "Gedung Baiturrahman",
+          },
+          {
+            from: [5.548, 95.324],
+            to: [5.552, 95.318],
+            name: "Punge → Gedung Baiturrahman",
+            desc: "Shelter vertikal pusat kota, ±0.5 km, evakuasi <10 menit.",
+            fromName: "Punge Blang Cut",
+            toName: "Gedung Baiturrahman",
+          },
 
-          { from: [-7.734, 109.008], to: [-7.722, 109.008], name: "Teluk Penyu → Bukit Karangtalun", desc: "Via Jl. Gatot Subroto, ±1.5 km." },
-          { from: [-7.734, 109.008], to: [-7.575, 108.852], name: "Teluk Penyu → Gandrungmangu", desc: "Via Jl. Raya Cilacap - Kebumen, ±35 km." },
-          { from: [-7.734, 109.008], to: [-7.487, 108.792], name: "Teluk Penyu → Bukit Sidareja", desc: "Via Jl. Raya Sidareja, ±45 km." },
-          { from: [-7.72, 109.0], to: [-7.722, 109.008], name: "Karangtalun → Bukit Karangtalun", desc: "Jalur lokal ke perbukitan." },
+          // ==================== KABUPATEN CILACAP (5 jalur) ====================
+          {
+            from: [-7.734, 109.008],
+            to: [-7.722, 109.008],
+            name: "Teluk Penyu → Bukit Karangtalun",
+            desc: "Via Jl. Gatot Subroto, ±1.2 km, evakuasi tsunami cepat.",
+            fromName: "Teluk Penyu",
+            toName: "Bukit Karangtalun",
+          },
+          {
+            from: [-7.722, 109.015],
+            to: [-7.722, 109.008],
+            name: "Kebonmanis → Bukit Karangtalun",
+            desc: "Jalur lokal ke perbukitan selatan, ±0.8 km.",
+            fromName: "Kebonmanis",
+            toName: "Bukit Karangtalun",
+          },
+          {
+            from: [-7.678, 109.164],
+            to: [-7.575, 108.852],
+            name: "Adipala → Gandrungmangu",
+            desc: "Via Jl. Raya Cilacap - Kebumen, ±28 km, evakuasi tsunami.",
+            fromName: "Kecamatan Adipala",
+            toName: "Perbukitan Gandrungmangu",
+          },
+          {
+            from: [-7.65, 109.326],
+            to: [-7.575, 108.852],
+            name: "Nusawungu → Gandrungmangu",
+            desc: "Via Jl. Raya Nusawungu - Gandrungmangu, ±32 km.",
+            fromName: "Kecamatan Nusawungu",
+            toName: "Perbukitan Gandrungmangu",
+          },
+          {
+            from: [-7.487, 108.792],
+            to: [-7.487, 108.792],
+            name: "Sidareja → Bukit Sidareja",
+            desc: "Jalur lokal ke perbukitan timur laut Cilacap, ±1 km, evakuasi tsunami.",
+            fromName: "Bukit Sidareja",
+            toName: "Bukit Sidareja - Sidareja",
+          },
 
-          { from: [-0.947, 100.417], to: [-0.925, 100.372], name: "Padang Pantai → Bukit Padang", desc: "Via Jl. Jend. Sudirman - Air Pacah, ±5 km." },
-          { from: [-0.947, 100.417], to: [-0.944, 100.354], name: "Padang Pantai → Shelter Purus", desc: "Via Jl. Kampung Pondok, ±2 km." },
-          { from: [-0.947, 100.417], to: [-0.912, 100.418], name: "Padang Pantai → Bukit Koto Tangah", desc: "Via Jl. Bypass - Lubuk Kilangan, ±7 km." },
-          { from: [-0.955, 100.38], to: [-0.925, 100.372], name: "Air Pacah → Bukit Padang", desc: "Jalur lokal evakuasi." },
-          { from: [-0.94, 100.34], to: [-0.944, 100.354], name: "Purus → Shelter Purus", desc: "Evakuasi vertikal Pantai Purus." },
+          // ==================== KOTA PADANG (6 jalur) ====================
+          {
+            from: [-0.947, 100.35],
+            to: [-0.944, 100.354],
+            name: "Purus → Shelter Tsunami Purus",
+            desc: "Evakuasi vertikal Pantai Purus, ±0.3 km, jalur terdekat, evakuasi <5 menit.",
+            fromName: "Purus",
+            toName: "Shelter Tsunami Purus",
+          },
+          {
+            from: [-0.928, 100.367],
+            to: [-0.944, 100.354],
+            name: "Air Tawar → Shelter Tsunami Purus",
+            desc: "Via Jl. Jend. Sudirman, ±2.5 km, evakuasi ke shelter vertikal.",
+            fromName: "Air Tawar",
+            toName: "Shelter Tsunami Purus",
+          },
+          {
+            from: [-0.985, 100.382],
+            to: [-0.944, 100.354],
+            name: "Teluk Bayur → Shelter Tsunami Purus",
+            desc: "Via Jl. Bypass - Jl. Khatib Sulaiman, ±5 km, evakuasi dari pelabuhan.",
+            fromName: "Teluk Bayur",
+            toName: "Shelter Tsunami Purus",
+          },
+          {
+            from: [-0.928, 100.367],
+            to: [-0.925, 100.372],
+            name: "Air Tawar → Bukit Padang",
+            desc: "Via Jl. Jend. Sudirman - Air Pacah, ±2 km, evakuasi tsunami.",
+            fromName: "Air Tawar",
+            toName: "Bukit Padang",
+          },
+          {
+            from: [-0.985, 100.382],
+            to: [-0.925, 100.372],
+            name: "Teluk Bayur → Bukit Padang",
+            desc: "Via Jl. Bypass - Jl. Air Pacah, ±7 km, evakuasi pelabuhan.",
+            fromName: "Teluk Bayur",
+            toName: "Bukit Padang",
+          },
+          {
+            from: [-0.912, 100.418],
+            to: [-0.912, 100.418],
+            name: "Lubuk Buaya → Bukit Koto Tangah",
+            desc: "Via Jl. Bypass - Lubuk Kilangan, ±3 km, evakuasi gempa.",
+            fromName: "Lubuk Buaya",
+            toName: "Bukit Koto Tangah",
+          },
 
-          { from: [-8.656, 116.128], to: [-8.508, 116.035], name: "Gerung → Perbukitan Senggigi", desc: "Via Jl. Raya Mataram - Senggigi, ±22 km." },
-          { from: [-8.656, 116.128], to: [-8.584, 116.105], name: "Gerung → Bukit Mataram", desc: "Via Jl. Langko - Gunung Sari, ±12 km." },
-          { from: [-8.656, 116.128], to: [-8.448, 116.072], name: "Gerung → Bukit Pusuk", desc: "Via Jl. Mataram - Pusuk, ±30 km." },
-          { from: [-8.59, 116.12], to: [-8.584, 116.105], name: "Mataram → Bukit Mataram", desc: "Jalur evakuasi pusat kota." },
+          // ==================== KABUPATEN LOMBOK BARAT (6 jalur) ====================
+          {
+            from: [-8.756, 116.018],
+            to: [-8.508, 116.035],
+            name: "Sekotong → Perbukitan Senggigi",
+            desc: "Via Jl. Raya Sekotong - Senggigi, ±35 km, evakuasi tsunami.",
+            fromName: "Kecamatan Sekotong",
+            toName: "Perbukitan Senggigi",
+          },
+          {
+            from: [-8.508, 116.046],
+            to: [-8.448, 116.072],
+            name: "Batu Layar → Bukit Pusuk",
+            desc: "Via Jl. Raya Senggigi - Pusuk, ±8 km, evakuasi ke perbukitan utara.",
+            fromName: "Kecamatan Batu Layar",
+            toName: "Bukit Pusuk",
+          },
+          {
+            from: [-8.656, 116.128],
+            to: [-8.448, 116.072],
+            name: "Gerung → Bukit Pusuk",
+            desc: "Via Jl. Mataram - Pusuk, ±25 km, jalur evakuasi jarak jauh.",
+            fromName: "Kecamatan Gerung",
+            toName: "Bukit Pusuk",
+          },
+          {
+            from: [-8.756, 116.018],
+            to: [-8.448, 116.072],
+            name: "Sekotong → Bukit Pusuk",
+            desc: "Via Jl. Raya Sekotong - Senggigi - Pusuk, ±40 km, evakuasi dari kepulauan.",
+            fromName: "Kecamatan Sekotong",
+            toName: "Bukit Pusuk",
+          },
+          {
+            from: [-8.716, 116.085],
+            to: [-8.508, 116.035],
+            name: "Lembar → Perbukitan Senggigi",
+            desc: "Via Jl. Raya Mataram - Senggigi, ±28 km.",
+            fromName: "Kecamatan Lembar",
+            toName: "Perbukitan Senggigi",
+          },
+          {
+            from: [-8.656, 116.128],
+            to: [-8.584, 116.105],
+            name: "Gerung → Bukit Mataram",
+            desc: "Via Jl. Langko - Gunung Sari, ±12 km, evakuasi gempa.",
+            fromName: "Kecamatan Gerung",
+            toName: "Bukit Mataram",
+          },
 
-          { from: [1.493, 124.841], to: [1.468, 124.788], name: "Megamas → Bukit Malalayang", desc: "Via Jl. Piere Tendean - Malalayang, ±6 km." },
-          { from: [1.493, 124.841], to: [1.497, 124.844], name: "Megamas → Shelter Megamas", desc: "Shelter vertikal kawasan Megamas." },
-          { from: [1.493, 124.841], to: [1.512, 124.872], name: "Megamas → Bukit Tikala", desc: "Via Jl. Sam Ratulangi - Tikala, ±5 km." },
-          { from: [1.475, 124.8], to: [1.468, 124.788], name: "Malalayang → Bukit Malalayang", desc: "Jalur evakuasi pesisir ke bukit." },
+          // ==================== KOTA MANADO (5 jalur) ====================
+          {
+            from: [1.493, 124.841],
+            to: [1.497, 124.844],
+            name: "Megamas → Shelter Tsunami Megamas",
+            desc: "Shelter vertikal di kawasan Megamas, ±0.5 km, evakuasi cepat tsunami.",
+            fromName: "Megamas",
+            toName: "Shelter Tsunami Megamas",
+          },
+          {
+            from: [1.468, 124.788],
+            to: [1.468, 124.788],
+            name: "Malalayang → Bukit Malalayang",
+            desc: "Via Jl. Piere Tendean, ±1 km, evakuasi tsunami pesisir.",
+            fromName: "Malalayang",
+            toName: "Bukit Malalayang",
+          },
+          {
+            from: [1.468, 124.788],
+            to: [1.497, 124.844],
+            name: "Malalayang → Shelter Tsunami Megamas",
+            desc: "Via Jl. Piere Tendean, ±5 km, evakuasi ke shelter vertikal pusat kota.",
+            fromName: "Malalayang",
+            toName: "Shelter Tsunami Megamas",
+          },
+          {
+            from: [1.512, 124.872],
+            to: [1.512, 124.872],
+            name: "Tikala → Bukit Tikala",
+            desc: "Via Jl. Sam Ratulangi - Tikala Baru, ±2 km, evakuasi banjir bandang.",
+            fromName: "Tikala",
+            toName: "Bukit Tikala",
+          },
+          {
+            from: [1.493, 124.841],
+            to: [1.512, 124.872],
+            name: "Megamas → Bukit Tikala",
+            desc: "Via Jl. Sam Ratulangi, ±3 km, jalur evakuasi alternatif ke perbukitan timur.",
+            fromName: "Megamas",
+            toName: "Bukit Tikala",
+          },
         ];
-
         const RISK_COLORS = { bahaya: "#EE5253", siaga: "#FF9F43", waspada: "#FFC312", aman: "#1DD1A1" };
         const RISK_LABELS = { bahaya: "Bahaya", siaga: "Siaga", waspada: "Waspada", aman: "Aman" };
 
@@ -626,21 +1620,20 @@
           } catch (e) {
             console.warn("OSRM fetch failed:", e);
           }
-        } catch (e) {
-          console.warn("OSRM fetch failed:", e);
+          return null;
         }
-        return null;
-      }
 
-      async function drawRoute(pair, index, total) {
-        const overlay = document.getElementById("routeLoadingOverlay");
-        const loadingText = document.getElementById("loadingText");
-        overlay.classList.add("visible");
-        loadingText.textContent = `Memuat jalur ${index + 1}/${total}...`;
+        async function drawRoute(pair, index, total) {
+          const overlay = document.getElementById("routeLoadingOverlay");
+          const loadingText = document.getElementById("loadingText");
+          overlay.classList.add("visible");
+          loadingText.textContent = `Memuat jalur ${index + 1}/${total}...`;
+
+          const result = await fetchOSRMRoute(pair.from[0], pair.from[1], pair.to[0], pair.to[1]);
 
           if (!result) {
             const fallback = L.polyline([pair.from, pair.to], {
-              color: "#FFC312",
+              color: "#1DD1A1",
               weight: 3,
               opacity: 0.5,
               dashArray: "6,6",
@@ -651,190 +1644,178 @@
           }
 
           const mainLine = L.polyline(result.coords, {
-            color: "#FFC312",
+            color: "#1DD1A1",
             weight: 5,
             opacity: 0.9,
             lineCap: "round",
             lineJoin: "round",
           });
-          fallback.addTo(map);
-          routeLayers.push(fallback);
-          return;
+
+          const animLine = L.polyline(result.coords, {
+            color: "#ffffff",
+            weight: 2,
+            opacity: 0.7,
+            lineCap: "round",
+            dashArray: "8,12",
+            className: "evacuation-route-line",
+          });
+
+          mainLine.bindPopup(`
+                    <div style="font-family: 'Poppins', sans-serif; min-width: 200px;">
+                        <div style="color: #1DD1A1; font-weight: 700; font-size: 13px; margin-bottom: 6px;">
+                            ${pair.name}
+                        </div>
+                        <div style="font-size: 11px; color: var(--text-muted, #666); margin-bottom: 4px;">${pair.desc}</div>
+                        <div style="display: flex; gap: 8px; margin-top: 8px;">
+                            <span style="background: #1DD1A1; color: white; font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 20px;">
+                                ${result.distanceKm} km
+                            </span>
+                            <span style="background: #0A3D62; color: white; font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 20px;">
+                                ⏱${result.durationMin} menit
+                            </span>
+                        </div>
+                        <div style="font-size: 10px; color: #1DD1A1; margin-top: 8px; padding: 6px; background: rgba(29,209,161,0.1); border-radius: 6px;">
+                            Jalur mengikuti jalan aspal nyata via OpenStreetMap
+                        </div>
+                    </div>
+                `);
+
+          mainLine.addTo(map);
+          animLine.addTo(map);
+          routeLayers.push(mainLine, animLine);
+
+          const startIcon = L.divIcon({
+            className: "",
+            html: `<div style="background:#EE5253; width:10px; height:10px; border-radius:50%; border:2px solid white; box-shadow:0 0 6px rgba(0,0,0,0.4);"></div>`,
+            iconSize: [14, 14],
+            iconAnchor: [7, 7],
+          });
+          const endIcon = L.divIcon({
+            className: "",
+            html: `<div style="background:#1DD1A1; width:12px; height:12px; border-radius:50%; border:2px solid white; box-shadow:0 0 8px rgba(29,209,161,0.6);"></div>`,
+            iconSize: [16, 16],
+            iconAnchor: [8, 8],
+          });
+
+          const startMarker = L.marker(pair.from, { icon: startIcon }).addTo(map);
+          const endMarker = L.marker(pair.to, { icon: endIcon }).addTo(map);
+          routeLayers.push(startMarker, endMarker);
         }
 
-        const mainLine = L.polyline(result.coords, {
-          color: "#1DD1A1",
-          weight: 5,
-          opacity: 0.9,
-          lineCap: "round",
-          lineJoin: "round",
-        });
+        async function loadAllRoutes() {
+          if (routesLoaded) return;
+          const overlay = document.getElementById("routeLoadingOverlay");
 
-        const animLine = L.polyline(result.coords, {
-          color: "#ffffff",
-          weight: 2,
-          opacity: 0.7,
-          lineCap: "round",
-          dashArray: "8,12",
-          className: "evacuation-route-line",
-        });
+          for (let i = 0; i < EVACUATION_PAIRS.length; i++) {
+            await drawRoute(EVACUATION_PAIRS[i], i, EVACUATION_PAIRS.length);
+            await new Promise((r) => setTimeout(r, 300));
+          }
 
-        mainLine.bindPopup(`
-                <div style="font-family: 'Poppins', sans-serif; min-width: 200px;">
-                    <div style="color: #1DD1A1; font-weight: 700; font-size: 13px; margin-bottom: 6px;">
-                        ${pair.name}
-                    </div>
-                    <div style="font-size: 11px; color: var(--text-muted, #666); margin-bottom: 4px;">${pair.desc}</div>
-                    <div style="display: flex; gap: 8px; margin-top: 8px;">
-                        <span style="background: #1DD1A1; color: white; font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 20px;">
-                            ${result.distanceKm} km
-                        </span>
-                        <span style="background: #0A3D62; color: white; font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 20px;">
-                            ⏱${result.durationMin} menit
-                        </span>
-                    </div>
-                    <div style="font-size: 10px; color: #1DD1A1; margin-top: 8px; padding: 6px; background: rgba(29,209,161,0.1); border-radius: 6px;">
-                        Jalur mengikuti jalan aspal nyata via OpenStreetMap
-                    </div>
-                </div>
-            `);
+          overlay.classList.remove("visible");
+          routesLoaded = true;
 
-        mainLine.addTo(map);
-        animLine.addTo(map);
-        routeLayers.push(mainLine, animLine);
-
-        const startIcon = L.divIcon({
-          className: "",
-          html: `<div style="background:#EE5253; width:10px; height:10px; border-radius:50%; border:2px solid white; box-shadow:0 0 6px rgba(0,0,0,0.4);"></div>`,
-          iconSize: [14, 14],
-          iconAnchor: [7, 7],
-        });
-        const endIcon = L.divIcon({
-          className: "",
-          html: `<div style="background:#1DD1A1; width:12px; height:12px; border-radius:50%; border:2px solid white; box-shadow:0 0 8px rgba(29,209,161,0.6);"></div>`,
-          iconSize: [16, 16],
-          iconAnchor: [8, 8],
-        });
-
-        const startMarker = L.marker(pair.from, { icon: startIcon }).addTo(map);
-        const endMarker = L.marker(pair.to, { icon: endIcon }).addTo(map);
-        routeLayers.push(startMarker, endMarker);
-      }
-
-      async function loadAllRoutes() {
-        if (routesLoaded) return;
-        const overlay = document.getElementById("routeLoadingOverlay");
-
-        for (let i = 0; i < EVACUATION_PAIRS.length; i++) {
-          await drawRoute(EVACUATION_PAIRS[i], i, EVACUATION_PAIRS.length);
-          await new Promise((r) => setTimeout(r, 300));
+          const statusCard = document.getElementById("routeStatusCard");
+          const statusContent = document.getElementById("routeStatusContent");
+          statusCard.classList.remove("hidden");
+          statusContent.innerHTML = `
+                    <div style="color: #1DD1A1; font-weight: 600; margin-bottom: 4px;">${EVACUATION_PAIRS.length} jalur evakuasi dimuat</div>
+                    <div style="color: var(--text-secondary);">Semua jalur mengikuti jalan aspal yang bisa dilalui motor, dihitung via OpenStreetMap Routing (OSRM).</div>
+                    <div style="margin-top: 6px; font-size: 10px;">Klik jalur untuk melihat jarak & estimasi waktu.</div>
+                `;
+          lucide.createIcons();
         }
 
-        overlay.classList.remove("visible");
-        routesLoaded = true;
+        function clearRoutes() {
+          routeLayers.forEach((l) => {
+            try {
+              map.removeLayer(l);
+            } catch (e) {}
+          });
+          routeLayers = [];
+          routesLoaded = false;
+        }
 
-        const statusCard = document.getElementById("routeStatusCard");
-        const statusContent = document.getElementById("routeStatusContent");
-        statusCard.classList.remove("hidden");
-        statusContent.innerHTML = `
-                <div style="color: #1DD1A1; font-weight: 600; margin-bottom: 4px;">${EVACUATION_PAIRS.length} jalur evakuasi dimuat</div>
-                <div style="color: var(--text-secondary);">Semua jalur mengikuti jalan aspal yang bisa dilalui motor, dihitung via OpenStreetMap Routing (OSRM).</div>
-                <div style="margin-top: 6px; font-size: 10px;">Klik jalur untuk melihat jarak & estimasi waktu.</div>
-            `;
-        lucide.createIcons();
-      }
-
-      function clearRoutes() {
-        routeLayers.forEach((l) => {
-          try {
-            map.removeLayer(l);
-          } catch (e) { }
-        });
-        routeLayers = [];
-        routesLoaded = false;
-      }
-
-      function createRegionMarker(region) {
-        const color = RISK_COLORS[region.level];
-        const icon = L.divIcon({
-          className: "custom-marker",
-          html: `<div class="risk-marker" style="background:${color}; border:2px solid white; width:28px; height:28px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); box-shadow:0 2px 8px rgba(0,0,0,0.35);"></div>`,
-          iconSize: [28, 28],
-          iconAnchor: [14, 28],
-          popupAnchor: [0, -22],
-        });
-
-        const marker = L.marker([region.lat, region.lng], { icon });
-        marker.bindPopup(`
-                <div style="font-family:'Poppins',sans-serif;">
-                    <h3 style="font-weight:700; font-size:14px; margin-bottom:4px; color:${color};">${region.name}</h3>
-                    <p style="font-size:11px; margin-bottom:8px; color:var(--text-secondary,#666);">${region.type}</p>
-                    <span style="font-size:11px; font-weight:600; padding:3px 10px; border-radius:20px; background:${color}20; color:${color};">${RISK_LABELS[region.level]}</span>
-                    <p style="font-size:11px; margin-top:8px; color:var(--text-muted,#888);">${region.desc}</p>
-                    <div style="margin-top:8px; padding:8px; background:rgba(29,209,161,0.1); border-radius:8px;">
-                        <p style="font-size:10px; font-weight:600; color:#1DD1A1; margin-bottom:3px;">RUTE EVAKUASI:</p>
-                        <p style="font-size:10px; color:var(--text-secondary,#666);">Ikuti jalur hijau ke titik aman terdekat</p>
-                    </div>
-                </div>
-            `);
-
-        marker.on("click", () => {
-          const alpineData = document.querySelector("[x-data]").__x.$data;
-          alpineData.selectedCoordinates = { lat: region.lat.toFixed(6), lng: region.lng.toFixed(6) };
-          showRegionDetail(region);
-        });
-
-        return marker;
-      }
-
-      function showRegionDetail(region) {
-        const card = document.getElementById("regionDetailCard");
-        const color = RISK_COLORS[region.level];
-        card.classList.remove("hidden");
-        card.style.borderLeftColor = color;
-        card.innerHTML = `
-                <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
-                    <i data-lucide="map-pin" style="color:${color};" class="w-4 h-4"></i>
-                    <h4 style="font-weight:700; font-size:13px; color:var(--text-primary);">${region.name}</h4>
-                </div>
-                <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px;">
-                    <span style="font-size:11px; font-weight:700; padding:4px 10px; border-radius:20px; background:${color}18; color:${color};">${RISK_LABELS[region.level]}</span>
-                    <span style="font-size:11px; font-weight:600; padding:4px 10px; border-radius:20px; background:rgba(10,61,98,0.07); color:#0A3D62;">${region.type}</span>
-                </div>
-                <p style="font-size:11px; color:var(--text-secondary,#666); margin-bottom:8px;">${region.desc}</p>
-                <div style="padding:10px; background:rgba(29,209,161,0.1); border-radius:8px;">
-                    <p style="font-size:11px; font-weight:600; color:#1DD1A1; margin-bottom:6px;">PETUNJUK EVAKUASI:</p>
-                    <ul style="font-size:10px; color:var(--text-secondary,#666); padding-left:16px; line-height:1.8;">
-                        <li>Ikuti jalur hijau di peta</li>
-                        <li>Jangan melewati sawah/pantai</li>
-                        <li>Target: 15-30 menit ke tempat aman</li>
-                        <li>Patuhi rambu jalur evakuasi</li>
-                    </ul>
-                </div>
-            `;
-        lucide.createIcons();
-      }
-
-      function addSafePoints() {
-        SAFE_POINTS.forEach((point) => {
+        function createRegionMarker(region) {
+          const color = RISK_COLORS[region.level];
           const icon = L.divIcon({
             className: "custom-marker",
-            html: `<div style="background:#1DD1A1; width:28px; height:28px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); border:2px solid white; box-shadow:0 2px 10px rgba(29,209,161,0.4); display:flex; align-items:center; justify-content:center;">
-                            <span style="transform:rotate(45deg); font-size:12px;"></span>
-                           </div>`,
+            html: `<div class="risk-marker" style="background:${color}; border:2px solid white; width:28px; height:28px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); box-shadow:0 2px 8px rgba(0,0,0,0.35);"></div>`,
             iconSize: [28, 28],
             iconAnchor: [14, 28],
             popupAnchor: [0, -22],
           });
-          const marker = L.marker([point.lat, point.lng], { icon });
+
+          const marker = L.marker([region.lat, region.lng], { icon });
           marker.bindPopup(`
                     <div style="font-family:'Poppins',sans-serif;">
-                        <h3 style="font-weight:700; font-size:13px; color:#1DD1A1; margin-bottom:4px;"> ${point.name}</h3>
-                        <p style="font-size:11px; font-weight:600; color:#0A3D62; margin-bottom:4px;">${point.type}</p>
-                        <p style="font-size:11px; color:var(--text-muted,#888);">${point.desc}</p>
-                        <p style="font-size:10px; color:#1DD1A1; margin-top:6px;">Dapat dicapai motor via jalan aspal</p>
+                        <h3 style="font-weight:700; font-size:14px; margin-bottom:4px; color:${color};">${region.name}</h3>
+                        <p style="font-size:11px; margin-bottom:8px; color:var(--text-secondary,#666);">${region.type}</p>
+                        <span style="font-size:11px; font-weight:600; padding:3px 10px; border-radius:20px; background:${color}20; color:${color};">${RISK_LABELS[region.level]}</span>
+                        <p style="font-size:11px; margin-top:8px; color:var(--text-muted,#888);">${region.desc}</p>
+                        <div style="margin-top:8px; padding:8px; background:rgba(29,209,161,0.1); border-radius:8px;">
+                            <p style="font-size:10px; font-weight:600; color:#1DD1A1; margin-bottom:3px;">RUTE EVAKUASI:</p>
+                            <p style="font-size:10px; color:var(--text-secondary,#666);">Ikuti jalur hijau ke titik aman terdekat</p>
+                        </div>
                     </div>
                 `);
+
+          marker.on("click", () => {
+            const alpineData = document.querySelector("[x-data]").__x.$data;
+            alpineData.selectedCoordinates = { lat: region.lat.toFixed(6), lng: region.lng.toFixed(6) };
+            showRegionDetail(region);
+          });
+
+          return marker;
+        }
+
+        function showRegionDetail(region) {
+          const card = document.getElementById("regionDetailCard");
+          const color = RISK_COLORS[region.level];
+          card.classList.remove("hidden");
+          card.style.borderLeftColor = color;
+          card.innerHTML = `
+                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+                        <i data-lucide="map-pin" style="color:${color};" class="w-4 h-4"></i>
+                        <h4 style="font-weight:700; font-size:13px; color:var(--text-primary);">${region.name}</h4>
+                    </div>
+                    <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px;">
+                        <span style="font-size:11px; font-weight:700; padding:4px 10px; border-radius:20px; background:${color}18; color:${color};">${RISK_LABELS[region.level]}</span>
+                        <span style="font-size:11px; font-weight:600; padding:4px 10px; border-radius:20px; background:rgba(10,61,98,0.07); color:#0A3D62;">${region.type}</span>
+                    </div>
+                    <p style="font-size:11px; color:var(--text-secondary,#666); margin-bottom:8px;">${region.desc}</p>
+                    <div style="padding:10px; background:rgba(29,209,161,0.1); border-radius:8px;">
+                        <p style="font-size:11px; font-weight:600; color:#1DD1A1; margin-bottom:6px;">PETUNJUK EVAKUASI:</p>
+                        <ul style="font-size:10px; color:var(--text-secondary,#666); padding-left:16px; line-height:1.8;">
+                            <li>Ikuti jalur hijau di peta</li>
+                            <li>Jangan melewati sawah/pantai</li>
+                            <li>Target: 15-30 menit ke tempat aman</li>
+                            <li>Patuhi rambu jalur evakuasi</li>
+                        </ul>
+                    </div>
+                `;
+          lucide.createIcons();
+        }
+
+        function addSafePoints() {
+          SAFE_POINTS.forEach((point) => {
+            const icon = L.divIcon({
+              className: "custom-marker",
+              html: `<div style="background:#1DD1A1; width:28px; height:28px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); border:2px solid white; box-shadow:0 2px 10px rgba(29,209,161,0.4); display:flex; align-items:center; justify-content:center;">
+                                <span style="transform:rotate(45deg); font-size:12px;"></span>
+                               </div>`,
+              iconSize: [28, 28],
+              iconAnchor: [14, 28],
+              popupAnchor: [0, -22],
+            });
+            const marker = L.marker([point.lat, point.lng], { icon });
+            marker.bindPopup(`
+                        <div style="font-family:'Poppins',sans-serif;">
+                            <h3 style="font-weight:700; font-size:13px; color:#1DD1A1; margin-bottom:4px;"> ${point.name}</h3>
+                            <p style="font-size:11px; font-weight:600; color:#0A3D62; margin-bottom:4px;">${point.type}</p>
+                            <p style="font-size:11px; color:var(--text-muted,#888);">${point.desc}</p>
+                            <p style="font-size:10px; color:#1DD1A1; margin-top:6px;">Dapat dicapai motor via jalan aspal</p>
+                        </div>
+                    `);
             marker.addTo(map);
             safeMarkers.push(marker);
           });
@@ -851,180 +1832,163 @@
 
         function renderLayerControls() {
           const config = {
-            risikoZona: { label: "Zona Risiko", color: "#EE5253", desc: "Titik-titik rawan bencana" },
-            jalurEvakuasi: { label: "Jalur Evakuasi Motor", color: "#FFC312", desc: "Rute nyata via jalan aspal (OSRM)" },
-            titikAman: { label: "Titik Aman / Shelter", color: "#1DD1A1", desc: "Shelter & bukit evakuasi >20 mdpl" },
+            risikoZona: { label: "Zona Risiko", color: "#EE5253", desc: "Titik-titik rawan bencana di pesisir" },
+            jalurEvakuasi: { label: "Jalur Evakuasi Motor", color: "#1DD1A1", desc: "Rute nyata via jalan aspal (OSRM)" },
+            titikAman: { label: "Titik Aman / Shelter", color: "#FFC312", desc: "Shelter & bukit evakuasi >20 mdpl" },
           };
 
-      function removeSafePoints() {
-        safeMarkers.forEach((m) => {
-          try {
-            map.removeLayer(m);
-          } catch (e) { }
-        });
-        safeMarkers = [];
-      }
+          const div = document.getElementById("layerControls");
+          div.innerHTML = "";
 
-      function renderLayerControls() {
-        const config = {
-          risikoZona: { label: "Zona Risiko", color: "#EE5253", desc: "Titik-titik rawan bencana di pesisir" },
-          jalurEvakuasi: { label: "Jalur Evakuasi Motor", color: "#1DD1A1", desc: "Rute nyata via jalan aspal (OSRM)" },
-          titikAman: { label: "Titik Aman / Shelter", color: "#FFC312", desc: "Shelter & bukit evakuasi >20 mdpl" },
-        };
-
-        const div = document.getElementById("layerControls");
-        div.innerHTML = "";
-
-        for (const [key, cfg] of Object.entries(config)) {
-          const active = layers[key];
-          const el = document.createElement("div");
-          el.className = "layer-item";
-          el.dataset.layer = key;
-          el.style.cssText = `
-                    display:flex; align-items:center; gap:10px; padding:10px 12px;
-                    border-radius:10px; cursor:pointer; transition:all 0.2s;
-                    background:${active ? cfg.color + "0f" : "var(--bg-item)"};
-                    border:1.5px solid ${active ? cfg.color + "40" : "var(--border-item)"};
-                `;
-          el.innerHTML = `
-                    <div style="width:34px; height:34px; border-radius:8px; background:${active ? cfg.color : "var(--border-item)"}; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all 0.2s;">
-                        ${active ? "✓" : "–"}
-                    </div>
-                    <div style="flex:1;">
-                        <div style="font-weight:600; font-size:12px; color:${active ? "var(--text-primary)" : "var(--text-muted)"};">${cfg.label}</div>
-                        <div style="font-size:10px; color:var(--text-muted);">${cfg.desc}</div>
-                    </div>
-                    <div style="width:16px; height:16px; border-radius:4px; border:2px solid ${active ? cfg.color : "var(--border-input)"}; background:${active ? cfg.color : "transparent"}; display:flex; align-items:center; justify-content:center;">
-                        ${active ? '<span style="color:white; font-size:10px; font-weight:bold;">✓</span>' : ""}
-                    </div>
-                `;
-          el.addEventListener("click", () => {
-            layers[key] = !layers[key];
-            handleLayerToggle(key, layers[key]);
-            renderLayerControls();
-          });
-          div.appendChild(el);
-        }
-      }
-
-      function handleLayerToggle(key, active) {
-        if (key === "risikoZona") {
-          if (active) {
-            COASTAL_REGIONS.forEach((r) => {
-              const m = createRegionMarker(r);
-              markerCluster.addLayer(m);
-            });
-            map.addLayer(markerCluster);
-          } else {
-            markerCluster.clearLayers();
-          }
-        }
-        if (key === "jalurEvakuasi") {
-          if (active) {
-            loadAllRoutes();
-          } else {
-            clearRoutes();
-          }
-        }
-        if (key === "titikAman") {
-          if (active) addSafePoints();
-          else removeSafePoints();
-        }
-      }
-
-      function renderLegend() {
-        const div = document.getElementById("legendColors");
-        div.innerHTML = Object.entries(RISK_COLORS)
-          .map(
-            ([level, color]) => `
-                <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
-                    <div style="width:12px; height:12px; border-radius:50%; background:${color}; box-shadow:0 0 6px ${color}80; flex-shrink:0;"></div>
-                    <span style="font-size:12px; color:var(--text-secondary); font-weight:500;">Zona ${RISK_LABELS[level]}</span>
-                    <div style="margin-left:auto; font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px; background:${color}18; color:${color};">${RISK_LABELS[level].toUpperCase()}</div>
-                </div>
-            `,
-          )
-          .join("");
-      }
-
-      function updateStats() {
-        const b = COASTAL_REGIONS.filter((r) => r.level === "bahaya").length;
-        const s = COASTAL_REGIONS.filter((r) => r.level === "siaga").length;
-        const w = COASTAL_REGIONS.filter((r) => r.level === "waspada").length;
-        const a = SAFE_POINTS.length;
-        document.getElementById("statBahaya").innerHTML = `<div style="font-weight:700; font-size:20px; color:#EE5253;">${b}</div><div style="font-size:11px; color:var(--text-secondary);">Bahaya</div>`;
-        document.getElementById("statSiaga").innerHTML = `<div style="font-weight:700; font-size:20px; color:#FF9F43;">${s}</div><div style="font-size:11px; color:var(--text-secondary);">Siaga</div>`;
-        document.getElementById("statWaspada").innerHTML = `<div style="font-weight:700; font-size:20px; color:#FFC312;">${w}</div><div style="font-size:11px; color:var(--text-secondary);">Waspada</div>`;
-        document.getElementById("statTitikAman").innerHTML = `<div style="font-weight:700; font-size:20px; color:#1DD1A1;">${a}</div><div style="font-size:11px; color:var(--text-secondary);">Titik Aman</div>`;
-      }
-
-      function initMap() {
-        map = L.map("map").setView([-7.8, 112.0], 8);
-
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | RUANG AMAN | Routing: OSRM',
-          maxZoom: 19,
-        }).addTo(map);
-
-        markerCluster = L.markerClusterGroup({
-          spiderfyOnMaxZoom: true,
-          showCoverageOnHover: false,
-          zoomToBoundsOnClick: true,
-        });
-
-        COASTAL_REGIONS.forEach((r) => markerCluster.addLayer(createRegionMarker(r)));
-        map.addLayer(markerCluster);
-
-        addSafePoints();
-
-        loadAllRoutes();
-
-        map.on("click", function (e) {
-          const alpineData = document.querySelector("[x-data]").__x.$data;
-          alpineData.selectedCoordinates = {
-            lat: e.latlng.lat.toFixed(6),
-            lng: e.latlng.lng.toFixed(6),
-          };
-          L.popup()
-            .setLatLng(e.latlng)
-            .setContent(
-              `
-                        <div style="font-family:'Poppins',sans-serif; font-size:12px;">
-                            <strong>Koordinat yang dipilih</strong><br>
-                            Lat: ${e.latlng.lat.toFixed(6)}<br>
-                            Lng: ${e.latlng.lng.toFixed(6)}<br>
-                            <div style="margin-top:8px; padding:6px; background:rgba(29,209,161,0.12); border-radius:6px;">
-                                <span style="font-size:10px; color:#1DD1A1; font-weight:600;">🚗 Ikuti jalur hijau ke titik aman</span>
-                            </div>
+          for (const [key, cfg] of Object.entries(config)) {
+            const active = layers[key];
+            const el = document.createElement("div");
+            el.className = "layer-item";
+            el.dataset.layer = key;
+            el.style.cssText = `
+                        display:flex; align-items:center; gap:10px; padding:10px 12px;
+                        border-radius:10px; cursor:pointer; transition:all 0.2s;
+                        background:${active ? cfg.color + "0f" : "var(--bg-item)"};
+                        border:1.5px solid ${active ? cfg.color + "40" : "var(--border-item)"};
+                    `;
+            el.innerHTML = `
+                        <div style="width:34px; height:34px; border-radius:8px; background:${active ? cfg.color : "var(--border-item)"}; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all 0.2s;">
+                            ${active ? "✓" : "–"}
                         </div>
-                    `,
+                        <div style="flex:1;">
+                            <div style="font-weight:600; font-size:12px; color:${active ? "var(--text-primary)" : "var(--text-muted)"};">${cfg.label}</div>
+                            <div style="font-size:10px; color:var(--text-muted);">${cfg.desc}</div>
+                        </div>
+                        <div style="width:16px; height:16px; border-radius:4px; border:2px solid ${active ? cfg.color : "var(--border-input)"}; background:${active ? cfg.color : "transparent"}; display:flex; align-items:center; justify-content:center;">
+                            ${active ? '<span style="color:white; font-size:10px; font-weight:bold;">✓</span>' : ""}
+                        </div>
+                    `;
+            el.addEventListener("click", () => {
+              layers[key] = !layers[key];
+              handleLayerToggle(key, layers[key]);
+              renderLayerControls();
+            });
+            div.appendChild(el);
+          }
+        }
+
+        function handleLayerToggle(key, active) {
+          if (key === "risikoZona") {
+            if (active) {
+              COASTAL_REGIONS.forEach((r) => {
+                const m = createRegionMarker(r);
+                markerCluster.addLayer(m);
+              });
+              map.addLayer(markerCluster);
+            } else {
+              markerCluster.clearLayers();
+            }
+          }
+          if (key === "jalurEvakuasi") {
+            if (active) {
+              loadAllRoutes();
+            } else {
+              clearRoutes();
+            }
+          }
+          if (key === "titikAman") {
+            if (active) addSafePoints();
+            else removeSafePoints();
+          }
+        }
+
+        function renderLegend() {
+          const div = document.getElementById("legendColors");
+          div.innerHTML = Object.entries(RISK_COLORS)
+            .map(
+              ([level, color]) => `
+                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+                        <div style="width:12px; height:12px; border-radius:50%; background:${color}; box-shadow:0 0 6px ${color}80; flex-shrink:0;"></div>
+                        <span style="font-size:12px; color:var(--text-secondary); font-weight:500;">Zona ${RISK_LABELS[level]}</span>
+                        <div style="margin-left:auto; font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px; background:${color}18; color:${color};">${RISK_LABELS[level].toUpperCase()}</div>
+                    </div>
+                `,
             )
-            .openOn(map);
-        });
-      }
+            .join("");
+        }
 
-      document.addEventListener("DOMContentLoaded", function () {
-        initMap();
-        renderLegend();
-        renderLayerControls();
-        updateStats();
-        lucide.createIcons();
+        function updateStats() {
+          const b = COASTAL_REGIONS.filter((r) => r.level === "bahaya").length;
+          const s = COASTAL_REGIONS.filter((r) => r.level === "siaga").length;
+          const w = COASTAL_REGIONS.filter((r) => r.level === "waspada").length;
+          const a = SAFE_POINTS.length;
+          document.getElementById("statBahaya").innerHTML = `<div style="font-weight:700; font-size:20px; color:#EE5253;">${b}</div><div style="font-size:11px; color:var(--text-secondary);">Bahaya</div>`;
+          document.getElementById("statSiaga").innerHTML = `<div style="font-weight:700; font-size:20px; color:#FF9F43;">${s}</div><div style="font-size:11px; color:var(--text-secondary);">Siaga</div>`;
+          document.getElementById("statWaspada").innerHTML = `<div style="font-weight:700; font-size:20px; color:#FFC312;">${w}</div><div style="font-size:11px; color:var(--text-secondary);">Waspada</div>`;
+          document.getElementById("statTitikAman").innerHTML = `<div style="font-weight:700; font-size:20px; color:#1DD1A1;">${a}</div><div style="font-size:11px; color:var(--text-secondary);">Titik Aman</div>`;
+        }
 
-        document.getElementById("locateMeBtn")?.addEventListener("click", function () {
-          map.locate({ setView: true, maxZoom: 16 });
-          map.on("locationfound", function (e) {
-            L.marker(e.latlng).bindPopup('<span style="font-family:Poppins,sans-serif; font-size:12px;">📍 Lokasi Anda — Ikuti jalur evakuasi terdekat</span>').addTo(map).openPopup();
+        function initMap() {
+          map = L.map("map").setView([-7.8, 112.0], 8);
+
+          L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | RUANG AMAN | Routing: OSRM',
+            maxZoom: 19,
+          }).addTo(map);
+
+          markerCluster = L.markerClusterGroup({
+            spiderfyOnMaxZoom: true,
+            showCoverageOnHover: false,
+            zoomToBoundsOnClick: true,
           });
-          map.on("locationerror", () => alert("Tidak dapat menemukan lokasi Anda."));
-        });
 
-        document.getElementById("fullscreenBtn")?.addEventListener("click", function () {
-          const el = document.getElementById("map");
-          if (el.requestFullscreen) el.requestFullscreen();
-        });
-      });
-    })();
-  </script>
-</body>
+          COASTAL_REGIONS.forEach((r) => markerCluster.addLayer(createRegionMarker(r)));
+          map.addLayer(markerCluster);
 
+          addSafePoints();
+
+          loadAllRoutes();
+
+          map.on("click", function (e) {
+            const alpineData = document.querySelector("[x-data]").__x.$data;
+            alpineData.selectedCoordinates = {
+              lat: e.latlng.lat.toFixed(6),
+              lng: e.latlng.lng.toFixed(6),
+            };
+            L.popup()
+              .setLatLng(e.latlng)
+              .setContent(
+                `
+                            <div style="font-family:'Poppins',sans-serif; font-size:12px;">
+                                <strong>Koordinat yang dipilih</strong><br>
+                                Lat: ${e.latlng.lat.toFixed(6)}<br>
+                                Lng: ${e.latlng.lng.toFixed(6)}<br>
+                                <div style="margin-top:8px; padding:6px; background:rgba(29,209,161,0.12); border-radius:6px;">
+                                    <span style="font-size:10px; color:#1DD1A1; font-weight:600;">🚗 Ikuti jalur hijau ke titik aman</span>
+                                </div>
+                            </div>
+                        `,
+              )
+              .openOn(map);
+          });
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+          initMap();
+          renderLegend();
+          renderLayerControls();
+          updateStats();
+          lucide.createIcons();
+
+          document.getElementById("locateMeBtn")?.addEventListener("click", function () {
+            map.locate({ setView: true, maxZoom: 16 });
+            map.on("locationfound", function (e) {
+              L.marker(e.latlng).bindPopup('<span style="font-family:Poppins,sans-serif; font-size:12px;">📍 Lokasi Anda — Ikuti jalur evakuasi terdekat</span>').addTo(map).openPopup();
+            });
+            map.on("locationerror", () => alert("Tidak dapat menemukan lokasi Anda."));
+          });
+
+          document.getElementById("fullscreenBtn")?.addEventListener("click", function () {
+            const el = document.getElementById("map");
+            if (el.requestFullscreen) el.requestFullscreen();
+          });
+        });
+      })();
+    </script>
+  </body>
 </html>
