@@ -1,210 +1,233 @@
 <!doctype html>
 <html lang="id" class="light">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RUANG AMAN - Simulasi Dampak Bencana</title>
-    <link rel="icon" type="image/png" href="logo_putih.png" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="style.css" />
-    <!-- Chart.js untuk grafik -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
-    <script>
-      (function () {
-        const saved = localStorage.getItem("theme");
-        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        if (saved === "dark" || (!saved && prefersDark)) {
-          document.documentElement.classList.remove("light");
-          document.documentElement.classList.add("dark");
-        }
-      })();
-    </script>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RUANG AMAN - Simulasi Dampak Bencana</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
-    <style>
-      body {
-        font-family: 'Poppins', sans-serif;
-        scroll-behavior: smooth;
+  <script>
+    (function () {
+      const saved = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (saved === "dark" || (!saved && prefersDark)) {
+        document.documentElement.classList.remove("light");
+        document.documentElement.classList.add("dark");
+      }
+    })();
+  </script>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    :root {
+      --bg-page: #F1F2F6;
+      --bg-card: #ffffff;
+      --bg-section-alt: #ffffff;
+      --text-primary: #1B262C;
+      --text-muted: #6b7280;
+      --border-card: #e5e7eb;
+      --bg-item: #fafbfc;
+      --border-item: #e8ecef;
+      --footer-bg: #1B262C;
+      --footer-text: rgba(255, 255, 255, 0.5);
+      --slider-bg: #e8ecef;
+      --stat-bg: #fafbfc;
+    }
+
+    html.dark {
+      --bg-page: #0d1b2a;
+      --bg-card: #1a2a3a;
+      --bg-section-alt: #132035;
+      --text-primary: #e8f4ff;
+      --text-muted: #8aafc8;
+      --border-card: #1f3a52;
+      --bg-item: #162233;
+      --border-item: #1f3a52;
+      --footer-bg: #091525;
+      --footer-text: rgba(255, 255, 255, 0.4);
+      --slider-bg: #1f3a52;
+      --stat-bg: #1a2a3a;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .hero-gradient {
+      background: linear-gradient(135deg, rgba(10, 61, 98, 0.95) 0%, rgba(10, 61, 98, 0.7) 60%, rgba(10, 61, 98, 0.55) 100%);
+    }
+
+    .cta-gradient {
+      background: linear-gradient(135deg, #0A3D62 0%, #1565a0 100%);
+    }
+
+    @keyframes pulse-soft {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
       }
 
-      :root {
-        --bg-page: #F1F2F6;
-        --bg-card: #ffffff;
-        --bg-section-alt: #ffffff;
-        --text-primary: #1B262C;
-        --text-muted: #6b7280;
-        --border-card: #e5e7eb;
-        --bg-item: #fafbfc;
-        --border-item: #e8ecef;
-        --footer-bg: #1B262C;
-        --footer-text: rgba(255, 255, 255, 0.5);
-        --slider-bg: #e8ecef;
-        --stat-bg: #fafbfc;
+      50% {
+        opacity: 0.5;
+        transform: scale(1.1);
       }
+    }
 
-      html.dark {
-        --bg-page: #0d1b2a;
-        --bg-card: #1a2a3a;
-        --bg-section-alt: #132035;
-        --text-primary: #e8f4ff;
-        --text-muted: #8aafc8;
-        --border-card: #1f3a52;
-        --bg-item: #162233;
-        --border-item: #1f3a52;
-        --footer-bg: #091525;
-        --footer-text: rgba(255, 255, 255, 0.4);
-        --slider-bg: #1f3a52;
-        --stat-bg: #1a2a3a;
-      }
+    .animate-pulse-custom {
+      animation: pulse-soft 2s infinite;
+    }
 
-      body {
-        background-color: var(--bg-page);
-        transition: background-color 0.3s ease, color 0.3s ease;
-      }
+    *,
+    *::before,
+    *::after {
+      transition: background-color 0.25s ease, border-color 0.25s ease, color 0.15s ease;
+    }
 
-      .hero-gradient {
-        background: linear-gradient(135deg, rgba(10, 61, 98, 0.95) 0%, rgba(10, 61, 98, 0.7) 60%, rgba(10, 61, 98, 0.55) 100%);
-      }
+    *:hover {
+      transition: background-color 0.25s ease, border-color 0.25s ease, color 0.15s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
 
-      .cta-gradient {
-        background: linear-gradient(135deg, #0A3D62 0%, #1565a0 100%);
-      }
+    .card-bg {
+      background-color: var(--bg-card);
+      border-color: var(--border-card);
+    }
 
-      @keyframes pulse-soft {
-        0%, 100% { opacity: 1; transform: scale(1); }
-        50% { opacity: 0.5; transform: scale(1.1); }
-      }
+    .item-bg {
+      background-color: var(--bg-item);
+      border-color: var(--border-item);
+    }
 
-      .animate-pulse-custom {
-        animation: pulse-soft 2s infinite;
-      }
+    .text-primary {
+      color: var(--text-primary);
+    }
 
-      *,
-      *::before,
-      *::after {
-        transition: background-color 0.25s ease, border-color 0.25s ease, color 0.15s ease;
-      }
+    .text-muted {
+      color: var(--text-muted);
+    }
 
-      *:hover {
-        transition: background-color 0.25s ease, border-color 0.25s ease, color 0.15s ease, transform 0.2s ease, box-shadow 0.2s ease;
-      }
+    .section-alt-bg {
+      background-color: var(--bg-section-alt);
+    }
 
-      .card-bg {
-        background-color: var(--bg-card);
-        border-color: var(--border-card);
-      }
+    .page-bg {
+      background-color: var(--bg-page);
+    }
 
-      .item-bg {
-        background-color: var(--bg-item);
-        border-color: var(--border-item);
-      }
+    #mobile-menu {
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
 
-      .text-primary {
-        color: var(--text-primary);
-      }
+    #mobile-menu.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-8px);
+    }
 
-      .text-muted {
-        color: var(--text-muted);
-      }
+    #mobile-menu:not(.hidden) {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-      .section-alt-bg {
-        background-color: var(--bg-section-alt);
-      }
+    .footer-section {
+      background-color: var(--footer-bg);
+    }
 
-      .page-bg {
-        background-color: var(--bg-page);
-      }
+    /* Custom slider styling */
+    .custom-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      background: var(--slider-bg);
+      border-radius: 3px;
+      outline: none;
+    }
 
-      #mobile-menu {
-        transition: opacity 0.25s ease, transform 0.25s ease;
-      }
+    .custom-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: white;
+      border: 2.5px solid;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      margin-top: -7px;
+    }
 
-      #mobile-menu.hidden {
+    .custom-slider::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: white;
+      border: 2.5px solid;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+    }
+
+    .slider-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      border-radius: 3px;
+      pointer-events: none;
+      transition: width 0.1s ease;
+    }
+
+    .meter-fill {
+      transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .transition-left {
+      transition: left 0.1s ease;
+    }
+
+    @keyframes fadeInUp {
+      0% {
         opacity: 0;
-        pointer-events: none;
-        transform: translateY(-8px);
+        transform: translateY(20px);
       }
 
-      #mobile-menu:not(.hidden) {
+      100% {
         opacity: 1;
         transform: translateY(0);
       }
+    }
 
-      .footer-section {
-        background-color: var(--footer-bg);
+    @keyframes slideInLeft {
+      0% {
+        opacity: 0;
+        transform: translateX(-20px);
       }
 
-      /* Custom slider styling */
-      .custom-slider {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 100%;
-        height: 6px;
-        background: var(--slider-bg);
-        border-radius: 3px;
-        outline: none;
+      100% {
+        opacity: 1;
+        transform: translateX(0);
       }
+    }
 
-      .custom-slider::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: white;
-        border: 2.5px solid;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-        cursor: pointer;
-        margin-top: -7px;
-      }
-
-      .custom-slider::-moz-range-thumb {
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: white;
-        border: 2.5px solid;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-        cursor: pointer;
-      }
-
-      .slider-fill {
-        position: absolute;
-        left: 0;
-        top: 0;
-        height: 100%;
-        border-radius: 3px;
-        pointer-events: none;
-        transition: width 0.1s ease;
-      }
-
-      .meter-fill {
-        transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-
-      .transition-left {
-        transition: left 0.1s ease;
-      }
-
-      @keyframes fadeInUp {
-        0% { opacity: 0; transform: translateY(20px); }
-        100% { opacity: 1; transform: translateY(0); }
-      }
-
-      @keyframes slideInLeft {
-        0% { opacity: 0; transform: translateX(-20px); }
-        100% { opacity: 1; transform: translateX(0); }
-      }
-
-      .stat-bg {
-        background-color: var(--stat-bg);
-        border-color: var(--border-item);
-      }
-    </style>
-  </head>
+    .stat-bg {
+      background-color: var(--stat-bg);
+      border-color: var(--border-item);
+    }
+  </style>
+</head>
 
 <body x-data="{
     scrolled: false,
@@ -228,19 +251,18 @@
             }
         }, 50);
     }
-}"
-    @scroll.window="scrolled = (window.pageYOffset > 20)"
-  >
-    <!-- Navbar -->
-    <nav :class="scrolled ? 'bg-[#0A3D62]/95 border-b border-[#1DD1A1]/20 shadow-lg' : 'bg-[#0A3D62]'" class="fixed top-0 left-0 right-0 z-[1000] backdrop-blur-md transition-all duration-300">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 h-[68px] flex items-center justify-between gap-3">
-        <a href="index.html" class="flex items-center gap-3 shrink-0">
-          <div class="w-10 h-10 rounded-[12px] bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center shadow-lg overflow-hidden">
-            <img src="logo_putih.png" alt="Logo" class="w-12 h-12 object-contain p-2" />
-          </div>
-          <div class="text-white">
-            <div class="font-extrabold text-base leading-none">RUANG AMAN</div>
-            <div class="text-[10px] text-[#1DD1A1] tracking-widest leading-none uppercase">Water-Related Disaster Safety</div>
+}" @scroll.window="scrolled = (window.pageYOffset > 20)">
+  <nav :class="scrolled ? 'bg-[#0A3D62]/95 border-b border-[#1DD1A1]/20 shadow-lg' : 'bg-[#0A3D62]'"
+    class="fixed top-0 left-0 right-0 z-[1000] backdrop-blur-md transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-[68px] flex items-center justify-between gap-3">
+      <a href="#" class="flex items-center gap-3 shrink-0">
+        <div
+          class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center shadow-lg">
+          <img src="logo_putih.png" alt="Logo" class="w-12 h-12 object-contain p-2" />
+        </div>
+        <div class="text-white">
+          <div class="font-extrabold text-base leading-none">RUANG AMAN</div>
+          <div class="text-[10px] text-[#1DD1A1] tracking-widest leading-none uppercase">Water-Related Disaster Safety
           </div>
         </div>
       </a>
@@ -280,7 +302,6 @@
       </button>
     </div>
 
-    <!-- Mobile Menu -->
     <div x-show="mobileOpen" x-transition:enter="transition ease-out duration-200"
       x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
       x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0"
@@ -319,9 +340,7 @@
     </div>
   </nav>
 
-  <!-- Main Content: Simulasi Dampak Bencana -->
   <div class="pt-[68px]">
-    <!-- Header Section -->
     <div class="bg-[#0A3D62] px-6 pt-16 pb-20 md:px-8">
       <div class="max-w-6xl mx-auto">
         <div class="opacity-0 animate-[fadeInUp_0.6s_ease_forwards]">
@@ -337,12 +356,9 @@
       </div>
     </div>
 
-    <!-- Konten utama (overlap) -->
     <div class="max-w-6xl mx-auto px-4 md:px-6 -mt-14 pb-20">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-        <!-- KIRI: kontrol slider + skenario -->
         <div class="space-y-5">
-          <!-- Slider panel -->
           <div class="card-bg rounded-2xl p-7 shadow-lg animate-[slideInLeft_0.5s_ease]">
             <div class="flex justify-between items-center mb-7">
               <h2 class="font-bold text-primary text-lg">Parameter Simulasi</h2>
@@ -353,7 +369,6 @@
             </div>
 
             <div class="space-y-6">
-              <!-- Curah Hujan -->
               <div class="item-bg border rounded-xl p-6">
                 <div class="flex items-center justify-between mb-4">
                   <div class="flex items-center gap-2.5">
@@ -388,7 +403,6 @@
                 </div>
               </div>
 
-              <!-- Pasang Laut -->
               <div class="item-bg border rounded-xl p-6">
                 <div class="flex items-center justify-between mb-4">
                   <div class="flex items-center gap-2.5">
@@ -424,15 +438,13 @@
               </div>
             </div>
 
-              <!-- info kecil -->
-              <div class="mt-4 bg-[#0A3D62]/5 dark:bg-[#1DD1A1]/10 rounded-lg p-3 flex gap-2.5 items-start">
-                <i data-lucide="info" class="w-4 h-4 text-[#0A3D62] dark:text-[#1DD1A1] shrink-0 mt-0.5"></i>
-                <p class="text-xs text-muted leading-relaxed">Geser slider untuk mengubah parameter. Output diperbarui secara real-time berdasarkan model hidrologi.</p>
-              </div>
+            <div class="mt-4 bg-[#0A3D62]/5 dark:bg-[#1DD1A1]/10 rounded-lg p-3 flex gap-2.5 items-start">
+              <i data-lucide="info" class="w-4 h-4 text-[#0A3D62] dark:text-[#1DD1A1] shrink-0 mt-0.5"></i>
+              <p class="text-xs text-muted leading-relaxed">Geser slider untuk mengubah parameter. Output diperbarui
+                secara real-time berdasarkan model hidrologi pesisir.</p>
             </div>
           </div>
 
-          <!-- Skenario Cepat -->
           <div class="card-bg rounded-2xl p-6 shadow-lg animate-[slideInLeft_0.5s_0.1s_ease_both]">
             <div class="flex items-center gap-2 mb-5">
               <i data-lucide="timer" class="w-5 h-5 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
@@ -472,9 +484,7 @@
           </div>
         </div>
 
-        <!-- KANAN: estimasi dampak + grafik -->
         <div class="space-y-5">
-          <!-- Estimasi Dampak card -->
           <div id="impactCard" class="card-bg rounded-2xl p-7 shadow-lg border-t-4" style="border-top-color: #1dd1a1">
             <div class="flex justify-between items-center mb-6">
               <h2 class="font-bold text-primary">Estimasi Dampak</h2>
@@ -482,7 +492,6 @@
                 class="bg-[#1DD1A1] text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wide">Rendah</span>
             </div>
 
-            <!-- Meter visual + ketinggian -->
             <div id="meterContainer" class="rounded-2xl p-5 mb-5 flex gap-5 items-center"
               style="background: rgba(29, 209, 161, 0.08); border: 1px solid rgba(29, 209, 161, 0.25)">
               <div class="w-14 h-24 rounded-xl border-2 relative overflow-hidden shrink-0"
@@ -502,9 +511,7 @@
               </div>
             </div>
 
-            <!-- 3 statistik kecil - DIEDIT untuk dark mode -->
             <div class="grid grid-cols-3 gap-3">
-              <!-- Card Terdampak - Border hijau -->
               <div class="stat-bg border rounded-xl p-3 text-center dark:border-gray-700"
                 style="border: 1px solid var(--border-card)">
                 <i data-lucide="alert-triangle" class="w-5 h-5 mx-auto mb-1.5 text-[#1DD1A1]"></i>
@@ -515,7 +522,6 @@
                 <div class="text-[11px] text-muted dark:text-gray-400">Terdampak</div>
               </div>
 
-              <!-- Card Durasi - Border biru -->
               <div class="stat-bg rounded-xl p-3 text-center dark:border-gray-700"
                 style="border: 1px solid var(--border-card)">
                 <i data-lucide="activity" class="w-5 h-5 mx-auto mb-1.5 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
@@ -525,7 +531,6 @@
                 <div class="text-[11px] text-muted dark:text-gray-400">Durasi</div>
               </div>
 
-              <!-- Card Infrastruktur - Border abu-abu -->
               <div class="stat-bg rounded-xl p-3 text-center dark:border-gray-700"
                 style="border: 1px solid var(--border-card)">
                 <i data-lucide="trending-up" class="w-5 h-5 mx-auto mb-1.5 text-[#6B7C8A] dark:text-gray-400"></i>
@@ -537,7 +542,6 @@
             </div>
           </div>
 
-          <!-- Grafik proyeksi -->
           <div class="card-bg rounded-2xl p-6 shadow-lg">
             <div class="flex items-center gap-2 mb-5">
               <i data-lucide="bar-chart-2" class="w-5 h-5 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
@@ -558,16 +562,15 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Footer -->
-    <footer class="footer-section text-white pt-20">
-      <div class="max-w-7xl mx-auto px-6 pb-20 grid grid-cols-1 md:grid-cols-4 gap-12">
-        <div class="col-span-1 md:col-span-1">
-          <div class="flex items-center gap-3 mb-6">
-            <div class="w-10 h-10 rounded-[12px] bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center shadow-lg overflow-hidden">
-              <img src="logo_putih.png" alt="Logo" class="w-12 h-12 object-contain p-2" />
-            </div>
-            <div class="font-extrabold text-lg">RUANG AMAN</div>
+  <footer class="footer-section text-white pt-20">
+    <div class="max-w-7xl mx-auto px-6 pb-20 grid grid-cols-1 md:grid-cols-4 gap-12">
+      <div class="col-span-1 md:col-span-1">
+        <div class="flex items-center gap-3 mb-6">
+          <div
+            class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center">
+            <i data-lucide="shield" class="text-white"></i>
           </div>
           <div class="font-extrabold text-lg">RUANG AMAN</div>
         </div>
@@ -607,7 +610,6 @@
   </footer>
 
   <script>
-    // Fungsi untuk update warna chart berdasarkan mode
     function updateChartColors() {
       if (!chart) return;
       const isDark = document.documentElement.classList.contains('dark');
@@ -615,13 +617,11 @@
       chart.options.scales.x.ticks.color = isDark ? "#9CA3AF" : "#9aabb5";
       chart.options.scales.y.ticks.color = isDark ? "#9CA3AF" : "#9aabb5";
 
-      // Update line Intensitas Hujan di dark mode menjadi putih
       if (chart.data.datasets[1]) {
         chart.data.datasets[1].borderColor = isDark ? "#FFFFFF" : "#0A3D62";
         chart.data.datasets[1].backgroundColor = isDark ? "#FFFFFF20" : "#0A3D6220";
       }
 
-      // Update legend Intensitas Hujan
       const legendLine2 = document.getElementById("legendLine2");
       if (legendLine2) {
         legendLine2.style.backgroundColor = isDark ? "#FFFFFF" : "#0A3D62";
@@ -630,7 +630,6 @@
       chart.update();
     }
 
-    // Inisialisasi ikon lucide
     function refreshIcons() {
       if (typeof lucide !== "undefined") {
         lucide.createIcons();
@@ -645,7 +644,6 @@
       }
     }
 
-    // Konfigurasi tingkat dampak
     const IMPACT_CONFIG = {
       rendah: { label: "Rendah", color: "#1DD1A1", bg: "rgba(29,209,161,0.08)", desc: "Kondisi normal, dampak minimal" },
       sedang: { label: "Sedang", color: "#FFC312", bg: "rgba(255,195,18,0.08)", desc: "Genangan ringan di beberapa titik" },
@@ -653,7 +651,6 @@
       ekstrem: { label: "Ekstrem", color: "#EE5253", bg: "rgba(238,82,83,0.08)", desc: "Banjir besar, evakuasi menyeluruh" },
     };
 
-    // Fungsi menghitung dampak
     function calculateImpact(rain, tide) {
       const score = rain * 0.6 + tide * 0.4;
       let level, floodHeight, affected, duration, infrastructure;
@@ -685,7 +682,6 @@
       return { level, floodHeight, affected, duration, infrastructure };
     }
 
-    // Fungsi generate data chart
     function generateChartData(rain, tide) {
       const labels = [];
       const ketinggian = [];
@@ -701,7 +697,6 @@
       return { labels, ketinggian, hujan };
     }
 
-    // DOM Elements
     const rainSlider = document.getElementById("rainSlider");
     const tideSlider = document.getElementById("tideSlider");
     const rainValue = document.getElementById("rainValue");
@@ -722,7 +717,6 @@
     const legendLine1 = document.getElementById("legendLine1");
     const impactCard = document.getElementById("impactCard");
 
-    // Chart initialization
     const ctx = document.getElementById("floodChart").getContext("2d");
     let chart;
 
@@ -781,13 +775,11 @@
       updateChartColors();
     }
 
-    // Fungsi update UI (dibuat global agar bisa diakses dari Alpine)
     window.updateUI = function () {
       const rain = parseInt(rainSlider.value, 10);
       const tide = parseInt(tideSlider.value, 10);
       const isDark = document.documentElement.classList.contains('dark');
 
-      // update angka & slider fill
       rainValue.textContent = rain;
       tideValue.textContent = tide;
       const rainPct = (rain / 100) * 100;
@@ -797,48 +789,38 @@
       rainThumb.style.left = `calc(${rainPct}% - 8px)`;
       tideThumb.style.left = `calc(${tidePct}% - 8px)`;
 
-      // impact calculation
       const impact = calculateImpact(rain, tide);
       const cfg = IMPACT_CONFIG[impact.level];
 
-      // Update card utama
       impactCard.style.borderTopColor = cfg.color;
 
-      // Update badge
       levelBadge.textContent = cfg.label.toUpperCase();
       levelBadge.style.backgroundColor = cfg.color;
 
-      // Update meter container
       meterContainer.style.backgroundColor = cfg.bg;
       meterContainer.style.borderColor = cfg.color + "40";
 
-      // Update water fill
       waterFill.style.background = `linear-gradient(180deg, ${cfg.color}40, ${cfg.color})`;
       waterFill.style.height = Math.min((impact.floodHeight / 200) * 100, 100) + "%";
 
-      // Update border water meter
       const waterMeterBox = meterContainer.querySelector(".w-14");
       if (waterMeterBox) {
         waterMeterBox.style.borderColor = cfg.color + "40";
       }
 
-      // Update ikon droplets
       const meterIcon = meterContainer.querySelector('[data-lucide="droplets"]');
       if (meterIcon) {
         meterIcon.style.color = cfg.color;
       }
 
-      // Update teks ketinggian
       floodHeightSpan.innerHTML = impact.floodHeight + '<span class="text-base font-medium ml-0.5">cm</span>';
       floodHeightSpan.style.color = cfg.color;
       impactDesc.textContent = cfg.desc;
 
-      // Update angka statistik
       affectedSpan.textContent = impact.affected.toLocaleString();
       durationSpan.textContent = impact.duration;
       infraSpan.textContent = impact.infrastructure;
 
-      // Update card Terdampak
       const terdampakCard = document.querySelector("#impactCard .grid > div:first-child");
       if (terdampakCard) {
         const alertIcon = terdampakCard.querySelector('[data-lucide="alert-triangle"]');
@@ -847,7 +829,6 @@
         if (textDiv) textDiv.style.color = cfg.color;
       }
 
-      // Update card Durasi - FIX untuk dark mode
       const durasiCard = document.querySelector("#impactCard .grid > div:nth-child(2)");
       if (durasiCard) {
         const activityIcon = durasiCard.querySelector('[data-lucide="activity"]');
@@ -860,7 +841,6 @@
         }
       }
 
-      // Update card Infrastruktur - FIX untuk dark mode
       const infraCard = document.querySelector("#impactCard .grid > div:nth-child(3)");
       if (infraCard) {
         const trendIcon = infraCard.querySelector('[data-lucide="trending-up"]');
@@ -873,10 +853,8 @@
         }
       }
 
-      // Update legend chart
       legendLine1.style.backgroundColor = cfg.color;
 
-      // Update warna line Intensitas Hujan di chart
       if (chart) {
         chart.data.datasets[0].borderColor = cfg.color;
         chart.data.datasets[0].backgroundColor = cfg.color + "30";
@@ -892,13 +870,11 @@
         chart.update();
       }
 
-      // Re-render icons
       setTimeout(() => {
         refreshIcons();
       }, 10);
     };
 
-    // Debounced generate untuk chart
     let timeout;
     function debouncedGenerate() {
       clearTimeout(timeout);
@@ -914,7 +890,6 @@
       }, 250);
     }
 
-    // Event listeners
     rainSlider.addEventListener("input", () => {
       window.updateUI();
       debouncedGenerate();
@@ -932,13 +907,13 @@
       debouncedGenerate();
     });
 
-    // Preset buttons
     document.querySelectorAll(".preset-btn").forEach((btn) => {
       btn.addEventListener("click", (e) => {
         const preset = JSON.parse(btn.dataset.preset);
         rainSlider.value = preset.rain;
         tideSlider.value = preset.tide;
         window.updateUI();
+        debouncedGenerate();
       });
       btn.addEventListener("mouseenter", (e) => {
         const color = JSON.parse(btn.dataset.preset).color;
@@ -952,7 +927,6 @@
       });
     });
 
-    // Initialize
     document.addEventListener("DOMContentLoaded", () => {
       setTimeout(initWithRetry, 100);
       initChart();

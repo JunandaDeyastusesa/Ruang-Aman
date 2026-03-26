@@ -1,820 +1,819 @@
 <!doctype html>
 <html lang="id" class="light">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Riwayat Peringatan Bencana — RUANG AMAN</title>
-    <link rel="icon" type="image/png" href="logo_putih.png" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <script src="https://unpkg.com/lucide@latest"></script>
 
-    <style>
-      * {
-        font-family: "Inter", "Poppins", sans-serif;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Riwayat Peringatan Bencana — RUANG AMAN</title>
+  <link rel="icon" type="image/png" href="logo_putih.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest"></script>
 
-      /* ── Light Mode ─────────────────────── */
-      .page-bg {
-        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-      }
-      .card-bg {
-        background-color: #ffffff;
-        border-color: #e2e8f0;
-      }
-      .item-bg {
-        background-color: #ffffff;
-      }
-      .text-primary {
-        color: #0f172a;
-      }
-      .text-secondary {
-        color: #475569;
-      }
-      .text-muted {
-        color: #64748b;
-      }
-      .border-default {
-        border-color: #e2e8f0;
-      }
+  <style>
+    * {
+      font-family: "Inter", "Poppins", sans-serif;
+    }
 
-      /* ── Dark Mode ──────────────────────── */
-      .dark .page-bg {
-        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      }
-      .dark .card-bg {
-        background-color: #1e293b;
-        border-color: #334155;
-      }
-      .dark .item-bg {
-        background-color: #1e293b;
-      }
-      .dark .text-primary {
-        color: #f1f5f9;
-      }
-      .dark .text-secondary {
-        color: #94a3b8;
-      }
-      .dark .text-muted {
-        color: #94a3b8;
-      }
-      .dark .border-default {
-        border-color: #334155;
-      }
+    /* ── Light Mode ─────────────────────── */
+    .page-bg {
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    }
 
-      /* ── Stat Cards ─────────────────────── */
-      .stat-card {
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
-        border-radius: 16px;
-        padding: 1.25rem 1.5rem;
-        transition:
-          transform 0.2s,
-          box-shadow 0.2s;
-      }
-      .stat-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
-      }
-      .dark .stat-card {
-        background: #1e293b;
-        border-color: #334155;
-      }
-      .stat-card:hover.dark {
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-      }
+    .card-bg {
+      background-color: #ffffff;
+      border-color: #e2e8f0;
+    }
 
-      /* ── Select ─────────────────────────── */
-      select {
-        background-color: #ffffff;
-        border-color: #e2e8f0;
-        color: #0f172a;
-        appearance: none;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: right 0.75rem center;
-        padding-right: 2.5rem !important;
-      }
-      .dark select {
-        background-color: #1e293b;
-        border-color: #334155;
-        color: #f1f5f9;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-      }
-      select option {
-        background-color: #ffffff;
-        color: #0f172a;
-      }
-      .dark select option {
-        background-color: #1e293b;
-        color: #f1f5f9;
-      }
+    .item-bg {
+      background-color: #ffffff;
+    }
 
-      /* ── Animations ─────────────────────── */
-      @keyframes fadeSlide {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      .animate-fade-slide {
-        animation: fadeSlide 0.6s ease-out forwards;
-      }
+    .text-primary {
+      color: #0f172a;
+    }
 
-      @keyframes countUp {
-        from {
-          opacity: 0;
-          transform: translateY(8px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      .animate-count {
-        animation: countUp 0.4s ease-out forwards;
+    .text-secondary {
+      color: #475569;
+    }
+
+    .text-muted {
+      color: #64748b;
+    }
+
+    .border-default {
+      border-color: #e2e8f0;
+    }
+
+    /* ── Dark Mode ──────────────────────── */
+    .dark .page-bg {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    }
+
+    .dark .card-bg {
+      background-color: #1e293b;
+      border-color: #334155;
+    }
+
+    .dark .item-bg {
+      background-color: #1e293b;
+    }
+
+    .dark .text-primary {
+      color: #f1f5f9;
+    }
+
+    .dark .text-secondary {
+      color: #94a3b8;
+    }
+
+    .dark .text-muted {
+      color: #94a3b8;
+    }
+
+    .dark .border-default {
+      border-color: #334155;
+    }
+
+    /* ── Stat Cards ─────────────────────── */
+    .stat-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+    }
+
+    .dark .stat-card {
+      background: #1e293b;
+      border-color: #334155;
+    }
+
+    .stat-card:hover.dark {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    /* ── Select ─────────────────────────── */
+    select {
+      background-color: #ffffff;
+      border-color: #e2e8f0;
+      color: #0f172a;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      padding-right: 2.5rem !important;
+    }
+
+    .dark select {
+      background-color: #1e293b;
+      border-color: #334155;
+      color: #f1f5f9;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    }
+
+    select option {
+      background-color: #ffffff;
+      color: #0f172a;
+    }
+
+    .dark select option {
+      background-color: #1e293b;
+      color: #f1f5f9;
+    }
+
+    /* ── Animations ─────────────────────── */
+    @keyframes fadeSlide {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
       }
 
-      [x-cloak] {
-        display: none !important;
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-slide {
+      animation: fadeSlide 0.6s ease-out forwards;
+    }
+
+    @keyframes countUp {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
       }
 
-      /* ── Search input ───────────────────── */
-      .search-input {
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
-        color: #0f172a;
-        border-radius: 12px;
-        padding: 0.5rem 1rem 0.5rem 2.5rem;
-        font-size: 0.875rem;
-        outline: none;
-        transition:
-          border-color 0.2s,
-          box-shadow 0.2s;
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
-      .search-input:focus {
-        border-color: #0a3d62;
-        box-shadow: 0 0 0 3px rgba(10, 61, 98, 0.08);
-      }
-      .dark .search-input {
-        background: #1e293b;
-        border-color: #334155;
-        color: #f1f5f9;
-      }
-      .dark .search-input:focus {
-        border-color: #1dd1a1;
-        box-shadow: 0 0 0 3px rgba(29, 209, 161, 0.1);
-      }
+    }
 
-      /* ── Active filter badge ────────────── */
-      .filter-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.3rem;
-        font-size: 0.7rem;
-        font-weight: 600;
-        background: rgba(29, 209, 161, 0.12);
-        color: #0a3d62;
-        border: 1px solid rgba(29, 209, 161, 0.3);
-        border-radius: 20px;
-        padding: 2px 10px;
+    .animate-count {
+      animation: countUp 0.4s ease-out forwards;
+    }
+
+    [x-cloak] {
+      display: none !important;
+    }
+
+    /* ── Search input ───────────────────── */
+    .search-input {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      color: #0f172a;
+      border-radius: 12px;
+      padding: 0.5rem 1rem 0.5rem 2.5rem;
+      font-size: 0.875rem;
+      outline: none;
+      transition:
+        border-color 0.2s,
+        box-shadow 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: #0a3d62;
+      box-shadow: 0 0 0 3px rgba(10, 61, 98, 0.08);
+    }
+
+    .dark .search-input {
+      background: #1e293b;
+      border-color: #334155;
+      color: #f1f5f9;
+    }
+
+    .dark .search-input:focus {
+      border-color: #1dd1a1;
+      box-shadow: 0 0 0 3px rgba(29, 209, 161, 0.1);
+    }
+
+    /* ── Active filter badge ────────────── */
+    .filter-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      background: rgba(29, 209, 161, 0.12);
+      color: #0a3d62;
+      border: 1px solid rgba(29, 209, 161, 0.3);
+      border-radius: 20px;
+      padding: 2px 10px;
+    }
+
+    .dark .filter-badge {
+      color: #1dd1a1;
+    }
+  </style>
+
+  <script>
+    (function () {
+      const saved = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (saved === "dark" || (!saved && prefersDark)) {
+        document.documentElement.classList.remove("light");
+        document.documentElement.classList.add("dark");
       }
-      .dark .filter-badge {
-        color: #1dd1a1;
-      }
-    </style>
+    })();
+  </script>
+</head>
 
-    <script>
-      (function () {
-        const saved = localStorage.getItem("theme");
-        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        if (saved === "dark" || (!saved && prefersDark)) {
-          document.documentElement.classList.remove("light");
-          document.documentElement.classList.add("dark");
-        }
-      })();
-    </script>
-  </head>
-
-  <body x-data="riwayatApp()" @scroll.window="scrolled = (window.pageYOffset > 20)" :class="darkMode ? 'dark' : ''" class="page-bg" x-cloak>
-    <!-- ══════════════════ NAVBAR ══════════════════ -->
-    <nav :class="scrolled ? 'bg-[#0A3D62]/95 border-b border-[#1DD1A1]/20 shadow-lg' : 'bg-[#0A3D62]'" class="fixed top-0 left-0 right-0 z-[1000] backdrop-blur-md transition-all duration-300">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 h-[68px] flex items-center justify-between gap-3">
-        <a href="index.html" class="flex items-center gap-3 shrink-0">
-          <div class="w-10 h-10 rounded-[12px] bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center shadow-lg overflow-hidden">
-            <img src="logo_putih.png" alt="Logo RUANG AMAN" class="w-12 h-12 object-contain p-2" />
-          </div>
-          <div class="text-white">
-            <div class="font-extrabold text-base leading-none">RUANG AMAN</div>
-            <div class="text-[10px] text-[#1DD1A1] tracking-widest leading-none uppercase">Water-Related Disaster Safety</div>
-          </div>
-        </a>
-
-        <div class="hidden md:flex items-center gap-5 lg:gap-6">
-          <a href="index.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Home</a>
-          <a href="cek-risiko.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Cek Risiko</a>
-          <a href="peta.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Peta</a>
-          <a href="edukasi.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Edukasi</a>
-          <a href="simulasi.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Simulasi</a>
-          <a href="about.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">About</a>
-          <button
-            @click="toggleTheme()"
-            class="relative w-16 h-8 rounded-full transition-colors duration-300 focus:outline-none"
-            :class="darkMode ? 'bg-[#1DD1A1]' : 'bg-gray-600'"
-            :title="darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
-          >
-            <span class="absolute top-1 w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-300 flex items-center justify-center" :class="darkMode ? 'translate-x-8' : 'translate-x-1'">
-              <i :data-lucide="darkMode ? 'moon' : 'sun'" class="w-3.5 h-3.5" :class="darkMode ? 'text-[#1DD1A1]' : 'text-yellow-500'"></i>
-            </span>
-          </button>
+<body x-data="riwayatApp()" @scroll.window="scrolled = (window.pageYOffset > 20)" :class="darkMode ? 'dark' : ''"
+  class="page-bg" x-cloak>
+  <nav :class="scrolled ? 'bg-[#0A3D62]/95 border-b border-[#1DD1A1]/20 shadow-lg' : 'bg-[#0A3D62]'"
+    class="fixed top-0 left-0 right-0 z-[1000] backdrop-blur-md transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-[68px] flex items-center justify-between gap-3">
+      <a href="index.html" class="flex items-center gap-3 shrink-0">
+        <div
+          class="w-10 h-10 rounded-[12px] bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center shadow-lg overflow-hidden">
+          <img src="logo_putih.png" alt="Logo RUANG AMAN" class="w-12 h-12 object-contain p-2" />
         </div>
+        <div class="text-white">
+          <div class="font-extrabold text-base leading-none">RUANG AMAN</div>
+          <div class="text-[10px] text-[#1DD1A1] tracking-widest leading-none uppercase">Water-Related Disaster Safety
+          </div>
+        </div>
+      </a>
 
-        <button @click="mobileOpen = !mobileOpen" class="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 transition-all gap-1.5" aria-label="Toggle menu">
-          <span :class="mobileOpen ? 'rotate-45 translate-y-[7px]' : ''" class="block w-5 h-0.5 bg-white rounded-full transition-transform duration-200"></span>
-          <span :class="mobileOpen ? 'opacity-0 scale-x-0' : ''" class="block w-5 h-0.5 bg-white rounded-full transition-all duration-200"></span>
-          <span :class="mobileOpen ? '-rotate-45 -translate-y-[7px]' : ''" class="block w-5 h-0.5 bg-white rounded-full transition-transform duration-200"></span>
+      <div class="hidden md:flex items-center gap-5 lg:gap-6">
+        <a href="index.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Home</a>
+        <a href="cek-risiko.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Cek
+          Risiko</a>
+        <a href="peta.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Peta</a>
+        <a href="edukasi.html"
+          class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Edukasi</a>
+        <a href="simulasi.html"
+          class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Simulasi</a>
+        <a href="about.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">About</a>
+        <button @click="toggleTheme()"
+          class="relative w-16 h-8 rounded-full transition-colors duration-300 focus:outline-none"
+          :class="darkMode ? 'bg-[#1DD1A1]' : 'bg-gray-600'"
+          :title="darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+          <span
+            class="absolute top-1 w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-300 flex items-center justify-center"
+            :class="darkMode ? 'translate-x-8' : 'translate-x-1'">
+            <i :data-lucide="darkMode ? 'moon' : 'sun'" class="w-3.5 h-3.5"
+              :class="darkMode ? 'text-[#1DD1A1]' : 'text-yellow-500'"></i>
+          </span>
         </button>
       </div>
 
-      <div
-        x-show="mobileOpen"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0 -translate-y-2"
-        x-transition:enter-end="opacity-100 translate-y-0"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100 translate-y-0"
-        x-transition:leave-end="opacity-0 -translate-y-2"
-        class="md:hidden bg-[#0A3D62]/98 backdrop-blur-md border-t border-white/10 px-4 py-4"
-      >
-        <div class="flex flex-col gap-1">
-          <a href="index.html" @click="mobileOpen = false" class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Home</a>
-          <a href="cek-risiko.html" @click="mobileOpen = false" class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Cek Risiko</a>
-          <a href="peta.html" @click="mobileOpen = false" class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Peta</a>
-          <a href="edukasi.html" @click="mobileOpen = false" class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Edukasi</a>
-          <a href="simulasi.html" @click="mobileOpen = false" class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Simulasi</a>
-          <a href="about.html" @click="mobileOpen = false" class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">About</a>
-          <div class="flex items-center justify-between px-3 py-2.5 mt-2 border-t border-white/10 pt-3">
-            <span class="text-sm font-medium text-white/80">Mode Tampilan</span>
-            <button @click="toggleTheme()" class="relative w-16 h-8 rounded-full transition-colors duration-300 focus:outline-none flex items-center" :class="darkMode ? 'bg-[#1DD1A1]' : 'bg-gray-600'">
-              <span class="absolute w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300 flex items-center justify-center" :class="darkMode ? 'translate-x-9' : 'translate-x-1'">
-                <i :data-lucide="darkMode ? 'moon' : 'sun'" class="w-3.5 h-3.5" :class="darkMode ? 'text-[#1DD1A1]' : 'text-yellow-500'"></i>
-              </span>
-            </button>
-          </div>
+      <button @click="mobileOpen = !mobileOpen"
+        class="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 transition-all gap-1.5"
+        aria-label="Toggle menu">
+        <span :class="mobileOpen ? 'rotate-45 translate-y-[7px]' : ''"
+          class="block w-5 h-0.5 bg-white rounded-full transition-transform duration-200"></span>
+        <span :class="mobileOpen ? 'opacity-0 scale-x-0' : ''"
+          class="block w-5 h-0.5 bg-white rounded-full transition-all duration-200"></span>
+        <span :class="mobileOpen ? '-rotate-45 -translate-y-[7px]' : ''"
+          class="block w-5 h-0.5 bg-white rounded-full transition-transform duration-200"></span>
+      </button>
+    </div>
+
+    <div x-show="mobileOpen" x-transition:enter="transition ease-out duration-200"
+      x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+      x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0"
+      x-transition:leave-end="opacity-0 -translate-y-2"
+      class="md:hidden bg-[#0A3D62]/98 backdrop-blur-md border-t border-white/10 px-4 py-4">
+      <div class="flex flex-col gap-1">
+        <a href="index.html" @click="mobileOpen = false"
+          class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Home</a>
+        <a href="cek-risiko.html" @click="mobileOpen = false"
+          class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Cek
+          Risiko</a>
+        <a href="peta.html" @click="mobileOpen = false"
+          class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Peta</a>
+        <a href="edukasi.html" @click="mobileOpen = false"
+          class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Edukasi</a>
+        <a href="simulasi.html" @click="mobileOpen = false"
+          class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Simulasi</a>
+        <a href="about.html" @click="mobileOpen = false"
+          class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">About</a>
+        <div class="flex items-center justify-between px-3 py-2.5 mt-2 border-t border-white/10 pt-3">
+          <span class="text-sm font-medium text-white/80">Mode Tampilan</span>
+          <button @click="toggleTheme()"
+            class="relative w-16 h-8 rounded-full transition-colors duration-300 focus:outline-none flex items-center"
+            :class="darkMode ? 'bg-[#1DD1A1]' : 'bg-gray-600'">
+            <span
+              class="absolute w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300 flex items-center justify-center"
+              :class="darkMode ? 'translate-x-9' : 'translate-x-1'">
+              <i :data-lucide="darkMode ? 'moon' : 'sun'" class="w-3.5 h-3.5"
+                :class="darkMode ? 'text-[#1DD1A1]' : 'text-yellow-500'"></i>
+            </span>
+          </button>
         </div>
       </div>
-    </nav>
+    </div>
+  </nav>
 
-    <!-- ══════════════════ MAIN ══════════════════ -->
-    <main class="pt-[68px]">
-      <!-- Hero Header -->
-      <div class="bg-[#0A3D62] px-6 pt-12 pb-20 md:px-8">
-        <div class="max-w-7xl mx-auto">
-          <div class="animate-fade-slide opacity-0">
-            <div class="inline-flex items-center gap-2 bg-[rgba(29,209,161,0.12)] border border-[rgba(29,209,161,0.25)] rounded-full px-4 py-1.5 mb-4">
-              <i data-lucide="bell" class="text-[#1DD1A1] w-3.5 h-3.5"></i>
-              <span class="text-[#1DD1A1] text-xs font-semibold tracking-wide">DATA PERINGATAN DINI</span>
-            </div>
-            <!-- PERBAIKAN: Judul selaras, spesifik, dan informatif -->
-            <h1 class="text-white font-extrabold text-3xl md:text-4xl lg:text-5xl mb-3">Riwayat Peringatan Bencana</h1>
-            <p class="text-white/65 text-sm md:text-base max-w-2xl leading-relaxed">
-              Data kejadian bencana berbasis air di Indonesia, mencakup kejadian aktif dan yang telah tertangani. Bersumber dari BNPB, BMKG, BPBD Provinsi, dan Kementerian PUPR.
-            </p>
+  <main class="pt-[68px]">
+    <div class="bg-[#0A3D62] px-6 pt-12 pb-20 md:px-8">
+      <div class="max-w-7xl mx-auto">
+        <div class="animate-fade-slide opacity-0">
+          <div
+            class="inline-flex items-center gap-2 bg-[rgba(29,209,161,0.12)] border border-[rgba(29,209,161,0.25)] rounded-full px-4 py-1.5 mb-4">
+            <i data-lucide="bell" class="text-[#1DD1A1] w-3.5 h-3.5"></i>
+            <span class="text-[#1DD1A1] text-xs font-semibold tracking-wide">DATA PERINGATAN DINI</span>
           </div>
+          <h1 class="text-white font-extrabold text-3xl md:text-4xl lg:text-5xl mb-3">Riwayat Peringatan Bencana</h1>
+          <p class="text-white/65 text-sm md:text-base max-w-2xl leading-relaxed">
+            Data kejadian bencana berbasis air di Indonesia, mencakup kejadian aktif dan yang telah tertangani.
+            Bersumber dari BNPB, BMKG, BPBD Provinsi, dan Kementerian PUPR.
+          </p>
         </div>
       </div>
+    </div>
 
-      <!-- Content -->
-      <div class="max-w-7xl mx-auto -mt-10 px-4 md:px-6 pb-20">
-        <!-- ── STAT CARDS ──
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
-          <div class="stat-card col-span-2 md:col-span-1">
-            <div class="text-xs font-semibold text-secondary mb-1 uppercase tracking-wide">Total Kejadian</div>
-            <div class="text-3xl font-extrabold text-primary animate-count" x-text="totalKejadian"></div>
-            <div class="text-xs text-muted mt-1">Jan – Mar 2026</div>
-          </div>
-          <div class="stat-card">
-            <div class="flex items-center gap-1.5 mb-1">
-              <div class="w-2 h-2 rounded-full bg-[#0284c7]"></div>
-              <span class="text-xs font-semibold text-secondary uppercase tracking-wide">Banjir</span>
-            </div>
-            <div class="text-2xl font-extrabold text-[#0284c7]" x-text="statBanjir"></div>
-            <div class="text-xs text-muted mt-1">kejadian</div>
-          </div>
-          <div class="stat-card">
-            <div class="flex items-center gap-1.5 mb-1">
-              <div class="w-2 h-2 rounded-full bg-[#d97706]"></div>
-              <span class="text-xs font-semibold text-secondary uppercase tracking-wide">Rob</span>
-            </div>
-            <div class="text-2xl font-extrabold text-[#d97706]" x-text="statRob"></div>
-            <div class="text-xs text-muted mt-1">kejadian</div>
-          </div>
-          <div class="stat-card">
-            <div class="flex items-center gap-1.5 mb-1">
-              <div class="w-2 h-2 rounded-full bg-[#dc2626]"></div>
-              <span class="text-xs font-semibold text-secondary uppercase tracking-wide">Bandang</span>
-            </div>
-            <div class="text-2xl font-extrabold text-[#dc2626]" x-text="statBanjirBandang"></div>
-            <div class="text-xs text-muted mt-1">kejadian</div>
-          </div>
-          <div class="stat-card">
-            <div class="flex items-center gap-1.5 mb-1">
-              <div class="w-2 h-2 rounded-full bg-[#059669]"></div>
-              <span class="text-xs font-semibold text-secondary uppercase tracking-wide">Abrasi</span>
-            </div>
-            <div class="text-2xl font-extrabold text-[#059669]" x-text="statAbrasi"></div>
-            <div class="text-xs text-muted mt-1">kejadian</div>
-          </div>
-        </div> -->
+    <div class="max-w-7xl mx-auto -mt-10 px-4 md:px-6 pb-20">
+      <div class="card-bg rounded-2xl p-6 md:p-8 shadow-lg border border-default mb-6">
+        <a href="index.html"
+          class="text-[#0A3D62] dark:text-[#1DD1A1] font-bold text-sm flex items-center gap-1 hover:underline mb-4"> <i
+            data-lucide="arrow-left" class="w-4"></i> Kembali ke Beranda </a>
 
-        <!-- ── TABLE SECTION ── -->
-        <div class="card-bg rounded-2xl p-6 md:p-8 shadow-lg border border-default mb-6">
-          <a href="index.html" class="text-[#0A3D62] dark:text-[#1DD1A1] font-bold text-sm flex items-center gap-1 hover:underline mb-4"> <i data-lucide="arrow-left" class="w-4"></i> Kembali ke Beranda </a>
-
-          <!-- Header + Filter -->
-          <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-5 gap-4 flex-wrap">
-            <div>
-              <h2 class="text-xl md:text-2xl font-bold text-primary">Data Kejadian Terkini</h2>
-              <!-- PERBAIKAN: Sumber lebih spesifik -->
-              <p class="text-xs text-secondary mt-1">Sumber: BNPB, BMKG, BPBD Provinsi, Kementerian PUPR &nbsp;·&nbsp; Diperbarui: 23 Maret 2026</p>
-            </div>
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-5 gap-4 flex-wrap">
+          <div>
+            <h2 class="text-xl md:text-2xl font-bold text-primary">Data Kejadian Terkini</h2>
+            <p class="text-xs text-secondary mt-1">Sumber: BNPB, BMKG, BPBD Provinsi, Kementerian PUPR &nbsp;·&nbsp;
+              Diperbarui: 23 Maret 2026</p>
           </div>
+        </div>
 
-          <!-- Search + Filter bar -->
-          <div class="flex flex-col sm:flex-row gap-3 mb-4 flex-wrap">
-            <!-- Pencarian teks -->
-            <div class="relative flex-1 min-w-[180px]">
-              <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted pointer-events-none"></i>
-              <input type="text" x-model="searchQuery" placeholder="Cari lokasi atau wilayah..." class="search-input w-full" />
-            </div>
-            <select x-model="filterJenis" class="text-sm px-3 py-2 rounded-xl border focus:outline-none focus:ring-2 focus:ring-[#0A3D62] dark:focus:ring-[#1DD1A1]">
-              <option value="all">Semua Jenis</option>
-              <option value="banjir">Banjir</option>
-              <option value="rob">Rob</option>
-              <option value="gempa">Gempa</option>
-              <option value="tsunami">Tsunami</option>
-            </select>
-            <select x-model="filterStatus" class="text-sm px-3 py-2 rounded-xl border focus:outline-none focus:ring-2 focus:ring-[#0A3D62] dark:focus:ring-[#1DD1A1]">
-              <option value="all">Semua Status</option>
-              <option value="AMAN">AMAN</option>
-              <option value="WASPADA">WASPADA</option>
-              <option value="SIAGA">SIAGA</option>
-              <option value="BAHAYA">BAHAYA</option>
-            </select>
+        <div class="flex flex-col sm:flex-row gap-3 mb-4 flex-wrap">
+          <div class="relative flex-1 min-w-[180px]">
+            <i data-lucide="search"
+              class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted pointer-events-none"></i>
+            <input type="text" x-model="searchQuery" placeholder="Cari lokasi atau wilayah..."
+              class="search-input w-full" />
           </div>
+          <select x-model="filterJenis"
+            class="text-sm px-3 py-2 rounded-xl border focus:outline-none focus:ring-2 focus:ring-[#0A3D62] dark:focus:ring-[#1DD1A1]">
+            <option value="all">Semua Jenis</option>
+            <option value="banjir">Banjir</option>
+            <option value="rob">Rob</option>
+            <option value="gempa">Gempa</option>
+            <option value="tsunami">Tsunami</option>
+          </select>
+          <select x-model="filterStatus"
+            class="text-sm px-3 py-2 rounded-xl border focus:outline-none focus:ring-2 focus:ring-[#0A3D62] dark:focus:ring-[#1DD1A1]">
+            <option value="all">Semua Status</option>
+            <option value="AMAN">AMAN</option>
+            <option value="WASPADA">WASPADA</option>
+            <option value="SIAGA">SIAGA</option>
+            <option value="BAHAYA">BAHAYA</option>
+          </select>
+        </div>
 
-          <!-- Result counter + active filters -->
-          <div class="flex items-center gap-3 mb-4 flex-wrap">
-            <span class="text-xs text-secondary"> Menampilkan <span class="font-bold text-primary" x-text="filteredData.length"></span> dari <span class="font-bold text-primary" x-text="totalKejadian"></span> peringatan </span>
-            <!-- Badge filter aktif -->
-            <template x-if="filterJenis !== 'all'">
-              <span class="filter-badge">
-                <i data-lucide="filter" class="w-3 h-3"></i>
-                <span x-text="labelJenis(filterJenis)"></span>
-                <button @click="filterJenis = 'all'" class="ml-1 opacity-60 hover:opacity-100">×</button>
-              </span>
-            </template>
-            <template x-if="filterStatus !== 'all'">
-              <span class="filter-badge">
-                <i data-lucide="tag" class="w-3 h-3"></i>
-                <span x-text="filterStatus"></span>
-                <button @click="filterStatus = 'all'" class="ml-1 opacity-60 hover:opacity-100">×</button>
-              </span>
-            </template>
-            <template x-if="searchQuery.trim() !== ''">
-              <span class="filter-badge">
-                <i data-lucide="search" class="w-3 h-3"></i>
-                "<span x-text="searchQuery"></span>"
-                <button @click="searchQuery = ''" class="ml-1 opacity-60 hover:opacity-100">×</button>
-              </span>
-            </template>
-          </div>
+        <div class="flex items-center gap-3 mb-4 flex-wrap">
+          <span class="text-xs text-secondary"> Menampilkan <span class="font-bold text-primary"
+              x-text="filteredData.length"></span> dari <span class="font-bold text-primary"
+              x-text="totalKejadian"></span> peringatan </span>
+          <template x-if="filterJenis !== 'all'">
+            <span class="filter-badge">
+              <i data-lucide="filter" class="w-3 h-3"></i>
+              <span x-text="labelJenis(filterJenis)"></span>
+              <button @click="filterJenis = 'all'" class="ml-1 opacity-60 hover:opacity-100">×</button>
+            </span>
+          </template>
+          <template x-if="filterStatus !== 'all'">
+            <span class="filter-badge">
+              <i data-lucide="tag" class="w-3 h-3"></i>
+              <span x-text="filterStatus"></span>
+              <button @click="filterStatus = 'all'" class="ml-1 opacity-60 hover:opacity-100">×</button>
+            </span>
+          </template>
+          <template x-if="searchQuery.trim() !== ''">
+            <span class="filter-badge">
+              <i data-lucide="search" class="w-3 h-3"></i>
+              "<span x-text="searchQuery"></span>"
+              <button @click="searchQuery = ''" class="ml-1 opacity-60 hover:opacity-100">×</button>
+            </span>
+          </template>
+        </div>
 
-          <!-- List Peringatan -->
-          <div class="space-y-3">
-            <template x-for="(item, index) in filteredData" :key="index">
-              <div
-                class="item-bg border-l-4 border-default p-5 rounded-2xl flex items-start gap-4 flex-wrap transition-all hover:shadow-md"
-                :class="{
+        <div class="space-y-3">
+          <template x-for="(item, index) in filteredData" :key="index">
+            <div
+              class="item-bg border-l-4 border-default p-5 rounded-2xl flex items-start gap-4 flex-wrap transition-all hover:shadow-md"
+              :class="{
     'border-l-[#10b981]': item.statusKelas === 'aman',
     'border-l-[#f59e0b]': item.statusKelas === 'waspada',
     'border-l-[#f97316]': item.statusKelas === 'siaga',
     'border-l-[#ef4444]': item.statusKelas === 'bahaya'
-  }"
-              >
-                <!-- Icon -->
-                <div
-                  class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5"
-                  :class="item.jenisKelas === 'rob'
+  }">
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5" :class="item.jenisKelas === 'rob'
                     ? 'bg-[#FF9F43]/10 text-[#FF9F43]'
                     : item.jenisKelas === 'banjir-bandang' || item.jenisKelas === 'banjir-lahar-hujan'
                       ? 'bg-[#EE5253]/10 text-[#EE5253]'
                       : item.jenisKelas === 'abrasi-gelombang'
                         ? 'bg-[#059669]/10 text-[#059669]'
-                        : 'bg-[#0A3D62]/10 text-[#0A3D62] dark:text-[#1DD1A1]'"
-                >
-                  <i :data-lucide="item.icon" class="w-5 h-5"></i>
-                </div>
+                        : 'bg-[#0A3D62]/10 text-[#0A3D62] dark:text-[#1DD1A1]'">
+                <i :data-lucide="item.icon" class="w-5 h-5"></i>
+              </div>
 
-                <!-- Info -->
-                <div class="flex-1 min-w-[180px]">
-                  <h4 class="font-bold text-primary text-sm leading-tight" x-text="item.lokasi"></h4>
-                  <p class="text-muted text-xs mt-1 leading-relaxed" x-text="item.dampak"></p>
-                  <div class="flex items-center gap-2 mt-2 flex-wrap">
-                    <i data-lucide="calendar" class="w-3 h-3 text-muted"></i>
-                    <span class="text-muted text-[11px]" x-text="item.tanggal"></span>
-                    <span class="text-muted text-[11px]">·</span>
-                    <span class="text-muted text-[11px]" x-text="item.jam"></span>
-                  </div>
+              <div class="flex-1 min-w-[180px]">
+                <h4 class="font-bold text-primary text-sm leading-tight" x-text="item.lokasi"></h4>
+                <p class="text-muted text-xs mt-1 leading-relaxed" x-text="item.dampak"></p>
+                <div class="flex items-center gap-2 mt-2 flex-wrap">
+                  <i data-lucide="calendar" class="w-3 h-3 text-muted"></i>
+                  <span class="text-muted text-[11px]" x-text="item.tanggal"></span>
+                  <span class="text-muted text-[11px]">·</span>
+                  <span class="text-muted text-[11px]" x-text="item.jam"></span>
                 </div>
+              </div>
 
-                <!-- Badges -->
-                <div class="flex items-center gap-2 flex-wrap justify-end">
-                  <span
-                    class="text-[10px] font-bold px-3 py-1 rounded-full border"
-                    :class="{
+              <div class="flex items-center gap-2 flex-wrap justify-end">
+                <span class="text-[10px] font-bold px-3 py-1 rounded-full border" :class="{
     'bg-[#10b981]/10 text-[#10b981] border-[#10b981]/30': item.statusKelas === 'aman',
     'bg-[#f59e0b]/10 text-[#f59e0b] border-[#f59e0b]/30': item.statusKelas === 'waspada',
     'bg-[#f97316]/10 text-[#f97316] border-[#f97316]/30': item.statusKelas === 'siaga',
     'bg-[#ef4444]/10 text-[#ef4444] border-[#ef4444]/30': item.statusKelas === 'bahaya'
-  }"
-                    x-text="item.status"
-                  >
-                  </span>
-                  <span class="bg-gray-100 dark:bg-white/10 text-muted text-[10px] px-3 py-1 rounded-full font-semibold" x-text="item.jenis"></span>
-                </div>
-              </div>
-            </template>
-          </div>
-
-          <!-- Empty state -->
-          <div x-show="filteredData.length === 0" class="text-center py-16">
-            <div class="w-16 h-16 rounded-2xl bg-gray-100 dark:bg-white/5 flex items-center justify-center mx-auto mb-4">
-              <i data-lucide="search-x" class="w-7 h-7 text-muted"></i>
-            </div>
-            <p class="text-primary font-semibold mb-1">Tidak ada data ditemukan</p>
-            <p class="text-muted text-sm">Coba ubah filter atau kata kunci pencarian</p>
-            <button @click="resetFilter()" class="mt-4 text-sm text-[#0A3D62] dark:text-[#1DD1A1] font-semibold hover:underline">Reset semua filter</button>
-          </div>
-
-          <!-- Footer keterangan -->
-          <div class="mt-6 pt-4 border-t border-default">
-            <div class="flex flex-wrap gap-x-6 gap-y-1 text-xs text-secondary">
-              <span><span class="font-bold text-primary">WIB</span> = UTC+7 (Sumatera, Jawa, Kalbar, Kalteng)</span>
-              <span><span class="font-bold text-primary">WITA</span> = UTC+8 (Kaltim, Bali, NTB, NTT, Sulawesi)</span>
-              <span><span class="font-bold text-primary">WIT</span> = UTC+9 (Maluku, Papua)</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- ── CTA CARD ── -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          <!-- CTA: Cek Risiko -->
-          <a href="cek-risiko.html" class="group block rounded-2xl overflow-hidden border border-default hover:border-[#1DD1A1]/40 transition-all duration-200 hover:shadow-lg">
-            <div class="bg-gradient-to-br from-[#0A3D62] to-[#0d4f7c] p-6 h-full">
-              <div class="flex items-start gap-4">
-                <div class="w-11 h-11 rounded-xl bg-[#1DD1A1]/15 flex items-center justify-center flex-shrink-0">
-                  <i data-lucide="shield-check" class="w-6 h-6 text-[#1DD1A1]"></i>
-                </div>
-                <div class="flex-1">
-                  <div class="text-xs font-semibold text-[#1DD1A1] uppercase tracking-wide mb-1">Langkah Selanjutnya</div>
-                  <h3 class="text-white font-bold text-base mb-1">Cek Risiko Wilayahmu</h3>
-                  <p class="text-white/60 text-xs leading-relaxed">Masukkan lokasimu dan ketahui tingkat risiko bencana berbasis air di sekitarmu secara personal.</p>
-                </div>
-                <i data-lucide="arrow-right" class="w-5 h-5 text-white/40 group-hover:text-[#1DD1A1] group-hover:translate-x-1 transition-all flex-shrink-0 mt-1"></i>
+  }" x-text="item.status">
+                </span>
+                <span class="bg-gray-100 dark:bg-white/10 text-muted text-[10px] px-3 py-1 rounded-full font-semibold"
+                  x-text="item.jenis"></span>
               </div>
             </div>
-          </a>
-
-          <!-- CTA: Peta -->
-          <a href="peta.html" class="group block rounded-2xl overflow-hidden border border-default hover:border-[#1DD1A1]/40 transition-all duration-200 hover:shadow-lg">
-            <div class="bg-gradient-to-br from-[#0f172a] to-[#1e293b] p-6 h-full dark:from-[#1e293b] dark:to-[#0f172a]">
-              <div class="flex items-start gap-4">
-                <div class="w-11 h-11 rounded-xl bg-[#0284c7]/15 flex items-center justify-center flex-shrink-0">
-                  <i data-lucide="map" class="w-6 h-6 text-[#38bdf8]"></i>
-                </div>
-                <div class="flex-1">
-                  <div class="text-xs font-semibold text-[#38bdf8] uppercase tracking-wide mb-1">Visualisasi Data</div>
-                  <h3 class="text-white font-bold text-base mb-1">Lihat Peta Bencana Interaktif</h3>
-                  <p class="text-white/60 text-xs leading-relaxed">Pantau sebaran kejadian bencana di seluruh Indonesia secara visual dan real-time.</p>
-                </div>
-                <i data-lucide="arrow-right" class="w-5 h-5 text-white/40 group-hover:text-[#38bdf8] group-hover:translate-x-1 transition-all flex-shrink-0 mt-1"></i>
-              </div>
-            </div>
-          </a>
+          </template>
         </div>
-      </div>
-    </main>
 
-    <!-- ══════════════════ FOOTER ══════════════════ -->
-    <footer class="bg-[#1B262C] text-white pt-16 sm:pt-20">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 pb-16 sm:pb-20 grid grid-cols-1 md:grid-cols-4 gap-8 sm:gap-12">
-        <div class="col-span-1 md:col-span-1">
-          <div class="flex items-center gap-3 mb-6">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center flex-shrink-0">
-              <i data-lucide="shield" class="text-white w-5 h-5"></i>
-            </div>
-            <div class="font-extrabold text-lg">RUANG AMAN</div>
+        <div x-show="filteredData.length === 0" class="text-center py-16">
+          <div class="w-16 h-16 rounded-2xl bg-gray-100 dark:bg-white/5 flex items-center justify-center mx-auto mb-4">
+            <i data-lucide="search-x" class="w-7 h-7 text-muted"></i>
           </div>
-          <p class="text-white/50 text-sm leading-relaxed">Platform terpadu untuk analisis dan informasi risiko bencana berbasis air guna mendukung kesiapsiagaan masyarakat Indonesia.</p>
+          <p class="text-primary font-semibold mb-1">Tidak ada data ditemukan</p>
+          <p class="text-muted text-sm">Coba ubah filter atau kata kunci pencarian</p>
+          <button @click="resetFilter()"
+            class="mt-4 text-sm text-[#0A3D62] dark:text-[#1DD1A1] font-semibold hover:underline">Reset semua
+            filter</button>
         </div>
-        <div>
-          <h5 class="font-bold mb-6">Navigasi</h5>
-          <ul class="space-y-4 text-sm text-white/50">
-            <li><a href="cek-risiko.html" class="hover:text-[#1DD1A1] transition-colors">Cek Risiko</a></li>
-            <li><a href="peta.html" class="hover:text-[#1DD1A1] transition-colors">Peta Interaktif</a></li>
-            <li><a href="edukasi.html" class="hover:text-[#1DD1A1] transition-colors">Panduan Edukasi</a></li>
-            <li><a href="simulasi.html" class="hover:text-[#1DD1A1] transition-colors">Simulasi</a></li>
-            <li><a href="about.html" class="hover:text-[#1DD1A1] transition-colors">About</a></li>
-          </ul>
-        </div>
-        <div>
-          <h5 class="font-bold mb-6">Kontak</h5>
-          <ul class="space-y-4 text-sm text-white/50">
-            <li class="flex gap-2"><i data-lucide="mail" class="w-4 text-[#1DD1A1] shrink-0"></i> info@ruangaman.go.id</li>
-            <li class="flex gap-2"><i data-lucide="phone" class="w-4 text-[#1DD1A1] shrink-0"></i> +62 21 1234 5678</li>
-          </ul>
-        </div>
-        <div>
-          <div class="bg-[#1DD1A1]/10 border border-[#1DD1A1]/20 p-6 rounded-2xl">
-            <div class="text-[10px] font-bold text-[#1DD1A1] uppercase mb-1">Darurat Bencana</div>
-            <div class="text-3xl font-black">117</div>
-            <div class="text-[10px] text-white/40 mt-1 uppercase">BNPB Hotline 24 Jam</div>
+
+        <div class="mt-6 pt-4 border-t border-default">
+          <div class="flex flex-wrap gap-x-6 gap-y-1 text-xs text-secondary">
+            <span><span class="font-bold text-primary">WIB</span> = UTC+7 (Sumatera, Jawa, Kalbar, Kalteng)</span>
+            <span><span class="font-bold text-primary">WITA</span> = UTC+8 (Kaltim, Bali, NTB, NTT, Sulawesi)</span>
+            <span><span class="font-bold text-primary">WIT</span> = UTC+9 (Maluku, Papua)</span>
           </div>
         </div>
       </div>
-      <div class="border-t border-white/5 py-8 text-center text-[11px] text-white/30">© 2026 RUANG AMAN. Water-Related Disasters Safety Platform Indonesia.</div>
-    </footer>
 
-    <!-- ══════════════════ SCRIPT ══════════════════ -->
-    <script>
-      function riwayatApp() {
-        return {
-          scrolled: false,
-          mobileOpen: false,
-          darkMode: document.documentElement.classList.contains("dark"),
-          filterJenis: "all",
-          filterStatus: "all",
-          searchQuery: "",
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <a href="cek-risiko.html"
+          class="group block rounded-2xl overflow-hidden border border-default hover:border-[#1DD1A1]/40 transition-all duration-200 hover:shadow-lg">
+          <div class="bg-gradient-to-br from-[#0A3D62] to-[#0d4f7c] p-6 h-full">
+            <div class="flex items-start gap-4">
+              <div class="w-11 h-11 rounded-xl bg-[#1DD1A1]/15 flex items-center justify-center flex-shrink-0">
+                <i data-lucide="shield-check" class="w-6 h-6 text-[#1DD1A1]"></i>
+              </div>
+              <div class="flex-1">
+                <div class="text-xs font-semibold text-[#1DD1A1] uppercase tracking-wide mb-1">Langkah Selanjutnya</div>
+                <h3 class="text-white font-bold text-base mb-1">Cek Risiko Wilayahmu</h3>
+                <p class="text-white/60 text-xs leading-relaxed">Masukkan lokasimu dan ketahui tingkat risiko bencana
+                  berbasis air di sekitarmu secara personal.</p>
+              </div>
+              <i data-lucide="arrow-right"
+                class="w-5 h-5 text-white/40 group-hover:text-[#1DD1A1] group-hover:translate-x-1 transition-all flex-shrink-0 mt-1"></i>
+            </div>
+          </div>
+        </a>
 
-          // Data dengan properti icon tersimpan di objek — tidak perlu nested ternary di template
-          riwayatData: [
-            {
-              no: 1,
-              tanggal: "24 Mar 2026",
-              jam: "01.23 WIB",
-              lokasi: "Kepulauan Mentawai, Sumatera Barat",
-              jenis: "Gempa Bumi",
-              jenisKelas: "gempa",
-              jenisTag: "gempa",
-              icon: "activity",
-              status: "WASPADA",
-              statusKelas: "waspada",
-              dampak: "M 5.2, kedalaman 27 km, getaran III MMI di Sikakap. Belum ada laporan kerusakan, warga diimbau tetap waspada.",
-            },
-            {
-              no: 2,
-              tanggal: "24 Mar 2026",
-              jam: "05.45 WIB",
-              lokasi: "Kab. Demak & Jepara, Jawa Tengah",
-              jenis: "Rob",
-              jenisKelas: "rob",
-              jenisTag: "rob",
-              icon: "waves",
-              status: "SIAGA",
-              statusKelas: "siaga",
-              dampak: "Pasang air laut maksimum 80-100 cm, jalan pantura terendam, aktivitas nelayan terhambat. Siapkan rencana evakuasi.",
-            },
-            {
-              no: 3,
-              tanggal: "23 Mar 2026",
-              jam: "14.40 WITA",
-              lokasi: "Kab. Dompu, NTB",
-              jenis: "Gempa Bumi",
-              jenisKelas: "gempa",
-              jenisTag: "gempa",
-              icon: "activity",
-              status: "AMAN",
-              statusKelas: "aman",
-              dampak: "M 4.9, pusat 18 km Barat Daya Dompu, dirasakan III MMI. Kondisi relatif aman, tetap jaga kewaspadaan.",
-            },
-            {
-              no: 4,
-              tanggal: "23 Mar 2026",
-              jam: "09.10 WIB",
-              lokasi: "Kab. Tangerang, Banten",
-              jenis: "Rob",
-              jenisKelas: "rob",
-              jenisTag: "rob",
-              icon: "waves",
-              status: "SIAGA",
-              statusKelas: "siaga",
-              dampak: "Rob pesisir utara (Mauk, Teluknaga) ketinggian 40-60 cm, akses jalan tergenang, tingkatkan kesiapsiagaan evakuasi.",
-            },
-            {
-              no: 5,
-              tanggal: "22 Mar 2026",
-              jam: "03.47 WIT",
-              lokasi: "Maluku Tenggara, Maluku",
-              jenis: "Gempa Bumi",
-              jenisKelas: "gempa",
-              jenisTag: "gempa",
-              icon: "activity",
-              status: "AMAN",
-              statusKelas: "aman",
-              dampak: "M 5.0, 132 km Timur Laut Tual, tidak berpotensi tsunami, laporan getaran ringan. Kondisi aman.",
-            },
-            {
-              no: 6,
-              tanggal: "21 Mar 2026",
-              jam: "16.30 WIB",
-              lokasi: "Kota Bandung & Kab. Bandung, Jawa Barat",
-              jenis: "Banjir",
-              jenisKelas: "banjir",
-              jenisTag: "banjir",
-              icon: "droplet",
-              status: "AMAN",
-              statusKelas: "aman",
-              dampak: "Banjir luapan Sungai Citarum surut total. 500 rumah sebelumnya tergenang, saat ini aman.",
-            },
-            {
-              no: 7,
-              tanggal: "21 Mar 2026",
-              jam: "08.15 WITA",
-              lokasi: "Kab. Bima, NTB",
-              jenis: "Banjir",
-              jenisKelas: "banjir",
-              jenisTag: "banjir",
-              icon: "droplet",
-              status: "WASPADA",
-              statusKelas: "waspada",
-              dampak: "Hujan lebat berpotensi banjir susulan. 287 KK terdampak sebelumnya, perlu antisipasi hujan lanjutan.",
-            },
-            {
-              no: 8,
-              tanggal: "20 Mar 2026",
-              jam: "12.50 WIB",
-              lokasi: "Kota Semarang, Jawa Tengah",
-              jenis: "Rob",
-              jenisKelas: "rob",
-              jenisTag: "rob",
-              icon: "waves",
-              status: "WASPADA",
-              statusKelas: "waspada",
-              dampak: "Rob kawasan Pantai Marina & Tugu, ketinggian 30 cm, arus lalu lintas terganggu. Perlu waspada pasang berikutnya.",
-            },
-            {
-              no: 9,
-              tanggal: "19 Mar 2026",
-              jam: "22.08 WIB",
-              lokasi: "Samudera Hindia selatan Jawa Timur",
-              jenis: "Gempa Bumi",
-              jenisKelas: "gempa",
-              jenisTag: "gempa",
-              icon: "activity",
-              status: "AMAN",
-              statusKelas: "aman",
-              dampak: "M 5.7, episenter 128 km selatan Pacitan, tidak berpotensi tsunami. Getaran II MIM, kondisi aman.",
-            },
-            {
-              no: 10,
-              tanggal: "18 Mar 2026",
-              jam: "06.00 WIB",
-              lokasi: "Kab. Cilacap, Jawa Tengah",
-              jenis: "Banjir",
-              jenisKelas: "banjir",
-              jenisTag: "banjir",
-              icon: "droplet",
-              status: "AMAN",
-              statusKelas: "aman",
-              dampak: "Banjir bandang sungai Cibeet telah surut, 200 rumah terdampak, pembersihan selesai. Status aman.",
-            },
-            {
-              no: 11,
-              tanggal: "17 Mar 2026",
-              jam: "10.25 WIT",
-              lokasi: "Jayapura, Papua",
-              jenis: "Tsunami",
-              jenisKelas: "tsunami",
-              jenisTag: "tsunami",
-              icon: "waves",
-              status: "BAHAYA",
-              statusKelas: "bahaya",
-              dampak: "Gempa M 6.1 di utara Jayapura, BMKG keluarkan peringatan tsunami lokal. Gelombang 0.4 m terekam, warga pesisir dievakuasi. Ancaman nyata, lakukan evakuasi jika diperlukan.",
-            },
-            {
-              no: 12,
-              tanggal: "16 Mar 2026",
-              jam: "14.15 WIB",
-              lokasi: "Kab. Pangandaran, Jawa Barat",
-              jenis: "Gempa Bumi",
-              jenisKelas: "gempa",
-              jenisTag: "gempa",
-              icon: "activity",
-              status: "WASPADA",
-              statusKelas: "waspada",
-              dampak: "M 4.8, 64 km Barat Daya Pangandaran, dirasakan II MMI, berpotensi gempa susulan.",
-            },
-            {
-              no: 13,
-              tanggal: "15 Mar 2026",
-              jam: "05.45 WITA",
-              lokasi: "Lombok Utara, NTB",
-              jenis: "Gempa Bumi",
-              jenisKelas: "gempa",
-              jenisTag: "gempa",
-              icon: "activity",
-              status: "AMAN",
-              statusKelas: "aman",
-              dampak: "M 5.1, getaran III MMI, tidak ada kerusakan signifikan, aktivitas normal.",
-            },
-            {
-              no: 14,
-              tanggal: "14 Mar 2026",
-              jam: "19.30 WIB",
-              lokasi: "Selat Sunda, Banten-Lampung",
-              jenis: "Tsunami",
-              jenisKelas: "tsunami",
-              jenisTag: "tsunami",
-              icon: "waves",
-              status: "SIAGA",
-              statusKelas: "siaga",
-              dampak: "Gempa M 6.4 Selat Sunda, berpotensi tsunami. Evakuasi mandiri, status dicabut dini hari. Saat ini status siaga monitoring.",
-            },
-            {
-              no: 15,
-              tanggal: "13 Mar 2026",
-              jam: "09.20 WIB",
-              lokasi: "Jakarta Utara & Bekasi",
-              jenis: "Rob",
-              jenisKelas: "rob",
-              jenisTag: "rob",
-              icon: "waves",
-              status: "WASPADA",
-              statusKelas: "waspada",
-              dampak: "Rob pesisir Jakarta ketinggian 40-60 cm, 12 RW tergenang, pompa air aktif. Perlu waspada pasang berikutnya.",
-            },
-          ],
+        <a href="peta.html"
+          class="group block rounded-2xl overflow-hidden border border-default hover:border-[#1DD1A1]/40 transition-all duration-200 hover:shadow-lg">
+          <div class="bg-gradient-to-br from-[#0f172a] to-[#1e293b] p-6 h-full dark:from-[#1e293b] dark:to-[#0f172a]">
+            <div class="flex items-start gap-4">
+              <div class="w-11 h-11 rounded-xl bg-[#0284c7]/15 flex items-center justify-center flex-shrink-0">
+                <i data-lucide="map" class="w-6 h-6 text-[#38bdf8]"></i>
+              </div>
+              <div class="flex-1">
+                <div class="text-xs font-semibold text-[#38bdf8] uppercase tracking-wide mb-1">Visualisasi Data</div>
+                <h3 class="text-white font-bold text-base mb-1">Lihat Peta Bencana Interaktif</h3>
+                <p class="text-white/60 text-xs leading-relaxed">Pantau sebaran kejadian bencana di seluruh Indonesia
+                  secara visual dan real-time.</p>
+              </div>
+              <i data-lucide="arrow-right"
+                class="w-5 h-5 text-white/40 group-hover:text-[#38bdf8] group-hover:translate-x-1 transition-all flex-shrink-0 mt-1"></i>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </main>
 
-          // Filter menggunakan jenisTag (key pendek) — lebih robust
-          get filteredData() {
-            return this.riwayatData.filter((item) => {
-              const matchJenis = this.filterJenis === "all" || item.jenisTag === this.filterJenis;
-              const matchStatus = this.filterStatus === "all" || item.status === this.filterStatus;
-              const q = this.searchQuery.trim().toLowerCase();
-              const matchSearch = q === "" || item.lokasi.toLowerCase().includes(q) || item.jenis.toLowerCase().includes(q);
-              return matchJenis && matchStatus && matchSearch;
-            });
-          },
+  <footer class="bg-[#1B262C] text-white pt-16 sm:pt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 pb-16 sm:pb-20 grid grid-cols-1 md:grid-cols-4 gap-8 sm:gap-12">
+      <div class="col-span-1 md:col-span-1">
+        <div class="flex items-center gap-3 mb-6">
+          <div
+            class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center flex-shrink-0">
+            <i data-lucide="shield" class="text-white w-5 h-5"></i>
+          </div>
+          <div class="font-extrabold text-lg">RUANG AMAN</div>
+        </div>
+        <p class="text-white/50 text-sm leading-relaxed">Platform terpadu untuk analisis dan informasi risiko bencana
+          berbasis air guna mendukung kesiapsiagaan masyarakat Indonesia.</p>
+      </div>
+      <div>
+        <h5 class="font-bold mb-6">Navigasi</h5>
+        <ul class="space-y-4 text-sm text-white/50">
+          <li><a href="cek-risiko.html" class="hover:text-[#1DD1A1] transition-colors">Cek Risiko</a></li>
+          <li><a href="peta.html" class="hover:text-[#1DD1A1] transition-colors">Peta Interaktif</a></li>
+          <li><a href="edukasi.html" class="hover:text-[#1DD1A1] transition-colors">Panduan Edukasi</a></li>
+          <li><a href="simulasi.html" class="hover:text-[#1DD1A1] transition-colors">Simulasi</a></li>
+          <li><a href="about.html" class="hover:text-[#1DD1A1] transition-colors">About</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="font-bold mb-6">Kontak</h5>
+        <ul class="space-y-4 text-sm text-white/50">
+          <li class="flex gap-2"><i data-lucide="mail" class="w-4 text-[#1DD1A1] shrink-0"></i> info@ruangaman.go.id
+          </li>
+          <li class="flex gap-2"><i data-lucide="phone" class="w-4 text-[#1DD1A1] shrink-0"></i> +62 21 1234 5678</li>
+        </ul>
+      </div>
+      <div>
+        <div class="bg-[#1DD1A1]/10 border border-[#1DD1A1]/20 p-6 rounded-2xl">
+          <div class="text-[10px] font-bold text-[#1DD1A1] uppercase mb-1">Darurat Bencana</div>
+          <div class="text-3xl font-black">117</div>
+          <div class="text-[10px] text-white/40 mt-1 uppercase">BNPB Hotline 24 Jam</div>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-white/5 py-8 text-center text-[11px] text-white/30">© 2026 RUANG AMAN. Water-Related
+      Disasters Safety Platform Indonesia.</div>
+  </footer>
 
-          get totalKejadian() {
-            return this.riwayatData.length;
-          },
-          get statBanjir() {
-            return this.riwayatData.filter((i) => i.jenisKelas.startsWith("banjir")).length;
-          },
-          get statRob() {
-            return this.riwayatData.filter((i) => i.jenisKelas === "rob").length;
-          },
-          get statBanjirBandang() {
-            return this.riwayatData.filter((i) => i.jenisKelas === "banjir-bandang" || i.jenisKelas === "banjir-lahar-hujan").length;
-          },
-          get statAbrasi() {
-            return this.riwayatData.filter((i) => i.jenisKelas === "abrasi-gelombang").length;
-          },
+  <script>
+    function riwayatApp() {
+      return {
+        scrolled: false,
+        mobileOpen: false,
+        darkMode: document.documentElement.classList.contains("dark"),
+        filterJenis: "all",
+        filterStatus: "all",
+        searchQuery: "",
 
-          labelJenis(val) {
-            const map = { banjir: "Banjir", rob: "Rob", bandang: "Banjir Bandang", lahar: "Banjir Lahar Hujan", luapan: "Banjir Luapan", abrasi: "Abrasi & Gelombang" };
-            return map[val] || val;
+        riwayatData: [
+          {
+            no: 1,
+            tanggal: "24 Mar 2026",
+            jam: "01.23 WIB",
+            lokasi: "Kepulauan Mentawai, Sumatera Barat",
+            jenis: "Gempa Bumi",
+            jenisKelas: "gempa",
+            jenisTag: "gempa",
+            icon: "activity",
+            status: "WASPADA",
+            statusKelas: "waspada",
+            dampak: "M 5.2, kedalaman 27 km, getaran III MMI di Sikakap. Belum ada laporan kerusakan, warga diimbau tetap waspada.",
           },
-
-          resetFilter() {
-            this.filterJenis = "all";
-            this.filterStatus = "all";
-            this.searchQuery = "";
+          {
+            no: 2,
+            tanggal: "24 Mar 2026",
+            jam: "05.45 WIB",
+            lokasi: "Kab. Demak & Jepara, Jawa Tengah",
+            jenis: "Rob",
+            jenisKelas: "rob",
+            jenisTag: "rob",
+            icon: "waves",
+            status: "SIAGA",
+            statusKelas: "siaga",
+            dampak: "Pasang air laut maksimum 80-100 cm, jalan pantura terendam, aktivitas nelayan terhambat. Siapkan rencana evakuasi.",
           },
-
-          toggleTheme() {
-            this.darkMode = !this.darkMode;
-            document.documentElement.classList.toggle("dark", this.darkMode);
-            localStorage.setItem("theme", this.darkMode ? "dark" : "light");
-            setTimeout(() => lucide.createIcons(), 50);
+          {
+            no: 3,
+            tanggal: "23 Mar 2026",
+            jam: "14.40 WITA",
+            lokasi: "Kab. Dompu, NTB",
+            jenis: "Gempa Bumi",
+            jenisKelas: "gempa",
+            jenisTag: "gempa",
+            icon: "activity",
+            status: "AMAN",
+            statusKelas: "aman",
+            dampak: "M 4.9, pusat 18 km Barat Daya Dompu, dirasakan III MMI. Kondisi relatif aman, tetap jaga kewaspadaan.",
           },
-
-          init() {
-            lucide.createIcons();
+          {
+            no: 4,
+            tanggal: "23 Mar 2026",
+            jam: "09.10 WIB",
+            lokasi: "Kab. Tangerang, Banten",
+            jenis: "Rob",
+            jenisKelas: "rob",
+            jenisTag: "rob",
+            icon: "waves",
+            status: "SIAGA",
+            statusKelas: "siaga",
+            dampak: "Rob pesisir utara (Mauk, Teluknaga) ketinggian 40-60 cm, akses jalan tergenang, tingkatkan kesiapsiagaan evakuasi.",
           },
-        };
-      }
+          {
+            no: 5,
+            tanggal: "22 Mar 2026",
+            jam: "03.47 WIT",
+            lokasi: "Maluku Tenggara, Maluku",
+            jenis: "Gempa Bumi",
+            jenisKelas: "gempa",
+            jenisTag: "gempa",
+            icon: "activity",
+            status: "AMAN",
+            statusKelas: "aman",
+            dampak: "M 5.0, 132 km Timur Laut Tual, tidak berpotensi tsunami, laporan getaran ringan. Kondisi aman.",
+          },
+          {
+            no: 6,
+            tanggal: "21 Mar 2026",
+            jam: "16.30 WIB",
+            lokasi: "Kota Bandung & Kab. Bandung, Jawa Barat",
+            jenis: "Banjir",
+            jenisKelas: "banjir",
+            jenisTag: "banjir",
+            icon: "droplet",
+            status: "AMAN",
+            statusKelas: "aman",
+            dampak: "Banjir luapan Sungai Citarum surut total. 500 rumah sebelumnya tergenang, saat ini aman.",
+          },
+          {
+            no: 7,
+            tanggal: "21 Mar 2026",
+            jam: "08.15 WITA",
+            lokasi: "Kab. Bima, NTB",
+            jenis: "Banjir",
+            jenisKelas: "banjir",
+            jenisTag: "banjir",
+            icon: "droplet",
+            status: "WASPADA",
+            statusKelas: "waspada",
+            dampak: "Hujan lebat berpotensi banjir susulan. 287 KK terdampak sebelumnya, perlu antisipasi hujan lanjutan.",
+          },
+          {
+            no: 8,
+            tanggal: "20 Mar 2026",
+            jam: "12.50 WIB",
+            lokasi: "Kota Semarang, Jawa Tengah",
+            jenis: "Rob",
+            jenisKelas: "rob",
+            jenisTag: "rob",
+            icon: "waves",
+            status: "WASPADA",
+            statusKelas: "waspada",
+            dampak: "Rob kawasan Pantai Marina & Tugu, ketinggian 30 cm, arus lalu lintas terganggu. Perlu waspada pasang berikutnya.",
+          },
+          {
+            no: 9,
+            tanggal: "19 Mar 2026",
+            jam: "22.08 WIB",
+            lokasi: "Samudera Hindia selatan Jawa Timur",
+            jenis: "Gempa Bumi",
+            jenisKelas: "gempa",
+            jenisTag: "gempa",
+            icon: "activity",
+            status: "AMAN",
+            statusKelas: "aman",
+            dampak: "M 5.7, episenter 128 km selatan Pacitan, tidak berpotensi tsunami. Getaran II MIM, kondisi aman.",
+          },
+          {
+            no: 10,
+            tanggal: "18 Mar 2026",
+            jam: "06.00 WIB",
+            lokasi: "Kab. Cilacap, Jawa Tengah",
+            jenis: "Banjir",
+            jenisKelas: "banjir",
+            jenisTag: "banjir",
+            icon: "droplet",
+            status: "AMAN",
+            statusKelas: "aman",
+            dampak: "Banjir bandang sungai Cibeet telah surut, 200 rumah terdampak, pembersihan selesai. Status aman.",
+          },
+          {
+            no: 11,
+            tanggal: "17 Mar 2026",
+            jam: "10.25 WIT",
+            lokasi: "Jayapura, Papua",
+            jenis: "Tsunami",
+            jenisKelas: "tsunami",
+            jenisTag: "tsunami",
+            icon: "waves",
+            status: "BAHAYA",
+            statusKelas: "bahaya",
+            dampak: "Gempa M 6.1 di utara Jayapura, BMKG keluarkan peringatan tsunami lokal. Gelombang 0.4 m terekam, warga pesisir dievakuasi. Ancaman nyata, lakukan evakuasi jika diperlukan.",
+          },
+          {
+            no: 12,
+            tanggal: "16 Mar 2026",
+            jam: "14.15 WIB",
+            lokasi: "Kab. Pangandaran, Jawa Barat",
+            jenis: "Gempa Bumi",
+            jenisKelas: "gempa",
+            jenisTag: "gempa",
+            icon: "activity",
+            status: "WASPADA",
+            statusKelas: "waspada",
+            dampak: "M 4.8, 64 km Barat Daya Pangandaran, dirasakan II MMI, berpotensi gempa susulan.",
+          },
+          {
+            no: 13,
+            tanggal: "15 Mar 2026",
+            jam: "05.45 WITA",
+            lokasi: "Lombok Utara, NTB",
+            jenis: "Gempa Bumi",
+            jenisKelas: "gempa",
+            jenisTag: "gempa",
+            icon: "activity",
+            status: "AMAN",
+            statusKelas: "aman",
+            dampak: "M 5.1, getaran III MMI, tidak ada kerusakan signifikan, aktivitas normal.",
+          },
+          {
+            no: 14,
+            tanggal: "14 Mar 2026",
+            jam: "19.30 WIB",
+            lokasi: "Selat Sunda, Banten-Lampung",
+            jenis: "Tsunami",
+            jenisKelas: "tsunami",
+            jenisTag: "tsunami",
+            icon: "waves",
+            status: "SIAGA",
+            statusKelas: "siaga",
+            dampak: "Gempa M 6.4 Selat Sunda, berpotensi tsunami. Evakuasi mandiri, status dicabut dini hari. Saat ini status siaga monitoring.",
+          },
+          {
+            no: 15,
+            tanggal: "13 Mar 2026",
+            jam: "09.20 WIB",
+            lokasi: "Jakarta Utara & Bekasi",
+            jenis: "Rob",
+            jenisKelas: "rob",
+            jenisTag: "rob",
+            icon: "waves",
+            status: "WASPADA",
+            statusKelas: "waspada",
+            dampak: "Rob pesisir Jakarta ketinggian 40-60 cm, 12 RW tergenang, pompa air aktif. Perlu waspada pasang berikutnya.",
+          },
+        ],
 
-      document.addEventListener("DOMContentLoaded", () => lucide.createIcons());
-      document.addEventListener("alpine:initialized", () => lucide.createIcons());
-    </script>
-  </body>
+        get filteredData() {
+          return this.riwayatData.filter((item) => {
+            const matchJenis = this.filterJenis === "all" || item.jenisTag === this.filterJenis;
+            const matchStatus = this.filterStatus === "all" || item.status === this.filterStatus;
+            const q = this.searchQuery.trim().toLowerCase();
+            const matchSearch = q === "" || item.lokasi.toLowerCase().includes(q) || item.jenis.toLowerCase().includes(q);
+            return matchJenis && matchStatus && matchSearch;
+          });
+        },
+
+        get totalKejadian() {
+          return this.riwayatData.length;
+        },
+        get statBanjir() {
+          return this.riwayatData.filter((i) => i.jenisKelas.startsWith("banjir")).length;
+        },
+        get statRob() {
+          return this.riwayatData.filter((i) => i.jenisKelas === "rob").length;
+        },
+        get statBanjirBandang() {
+          return this.riwayatData.filter((i) => i.jenisKelas === "banjir-bandang" || i.jenisKelas === "banjir-lahar-hujan").length;
+        },
+        get statAbrasi() {
+          return this.riwayatData.filter((i) => i.jenisKelas === "abrasi-gelombang").length;
+        },
+
+        labelJenis(val) {
+          const map = { banjir: "Banjir", rob: "Rob", bandang: "Banjir Bandang", lahar: "Banjir Lahar Hujan", luapan: "Banjir Luapan", abrasi: "Abrasi & Gelombang" };
+          return map[val] || val;
+        },
+
+        resetFilter() {
+          this.filterJenis = "all";
+          this.filterStatus = "all";
+          this.searchQuery = "";
+        },
+
+        toggleTheme() {
+          this.darkMode = !this.darkMode;
+          document.documentElement.classList.toggle("dark", this.darkMode);
+          localStorage.setItem("theme", this.darkMode ? "dark" : "light");
+          setTimeout(() => lucide.createIcons(), 50);
+        },
+
+        init() {
+          lucide.createIcons();
+        },
+      };
+    }
+
+    document.addEventListener("DOMContentLoaded", () => lucide.createIcons());
+    document.addEventListener("alpine:initialized", () => lucide.createIcons());
+  </script>
+</body>
+
 </html>
