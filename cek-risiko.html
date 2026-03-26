@@ -1,17 +1,16 @@
 <!doctype html>
 <html lang="id" class="light">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RUANG AMAN - Cek Risiko Wilayah</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
-    rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RUANG AMAN - Cek Risiko Wilayah</title>
+    <link rel="icon" type="image/png" href="logo_putih.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
 
   <script>
     (function () {
@@ -312,21 +311,13 @@
         </template>
       </div>
 
-      <!-- Risk Level Guide -->
-      <div class="mt-8 card-bg rounded-2xl p-4 sm:p-6 md:p-8 shadow-md border border-default">
-        <h3 class="font-bold text-base text-primary mb-4">Panduan Tingkat Risiko</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          <template x-for="[key, config] in Object.entries(levelConfig)" :key="key">
-            <div class="p-4 rounded-xl border flex items-start gap-3"
-              :style="{ background: config.bg, borderColor: config.border }">
-              <div class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
-                :style="{ background: config.color }">
-                <i :data-lucide="config.icon" class="w-4 h-4 text-white"></i>
-              </div>
-              <div>
-                <div class="font-bold text-xs" :style="{ color: config.color }" x-text="config.label"></div>
-                <div class="text-xs text-secondary mt-0.5" x-text="config.description"></div>
-              </div>
+    <!-- FOOTER -->
+    <footer class="bg-[#1B262C] text-white pt-16 sm:pt-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 pb-16 sm:pb-20 grid grid-cols-1 md:grid-cols-4 gap-8 sm:gap-12">
+        <div class="col-span-1 md:col-span-1">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-[12px] bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center shadow-lg overflow-hidden">
+              <img src="logo_putih.png" alt="Logo" class="w-12 h-12 object-contain p-2" />
             </div>
           </template>
         </div>
