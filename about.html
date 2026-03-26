@@ -1,267 +1,31 @@
 <!doctype html>
 <html lang="id" class="light">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RUANG AMAN - Tentang Kami</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
-    <script src="https://unpkg.com/lucide@latest"></script>
 
-    <script>
-      (function () {
-        const saved = localStorage.getItem("theme");
-        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        if (saved === "dark" || (!saved && prefersDark)) {
-          document.documentElement.classList.remove("light");
-          document.documentElement.classList.add("dark");
-        }
-      })();
-    </script>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RUANG AMAN - Tentang Kami</title>
+  <link rel="icon" type="image/png" href="logo_putih.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            scroll-behavior: smooth;
-        }
+  <script>
+    (function () {
+      const saved = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (saved === "dark" || (!saved && prefersDark)) {
+        document.documentElement.classList.remove("light");
+        document.documentElement.classList.add("dark");
+      }
+    })();
+  </script>
+</head>
 
-        :root {
-            --bg-page: #F1F2F6;
-            --bg-card: #ffffff;
-            --bg-section-alt: #ffffff;
-            --text-primary: #1B262C;
-            --text-muted: #6b7280;
-            --border-card: #e5e7eb;
-            --bg-item: #fafbfc;
-            --border-item: #e8ecef;
-            --footer-bg: #1B262C;
-            --footer-text: rgba(255, 255, 255, 0.5);
-        }
-
-        html.dark {
-            --bg-page: #0d1b2a;
-            --bg-card: #1a2a3a;
-            --bg-section-alt: #132035;
-            --text-primary: #e8f4ff;
-            --text-muted: #8aafc8;
-            --border-card: #1f3a52;
-            --bg-item: #162233;
-            --border-item: #1f3a52;
-            --footer-bg: #091525;
-            --footer-text: rgba(255, 255, 255, 0.4);
-        }
-
-        body {
-            background-color: var(--bg-page);
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .hero-gradient {
-            background: linear-gradient(135deg, rgba(10, 61, 98, 0.95) 0%, rgba(10, 61, 98, 0.7) 60%, rgba(10, 61, 98, 0.55) 100%);
-        }
-
-        .cta-gradient {
-            background: linear-gradient(135deg, #0A3D62 0%, #1565a0 100%);
-        }
-
-        @keyframes pulse-soft {
-
-            0%,
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-
-            50% {
-                opacity: 0.5;
-                transform: scale(1.1);
-            }
-        }
-
-        .animate-pulse-custom {
-            animation: pulse-soft 2s infinite;
-        }
-
-        @keyframes fadeInUp {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-
-            100% {
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideInLeft {
-            0% {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes slideInRight {
-            0% {
-                opacity: 0;
-                transform: translateX(20px);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        *,
-        *::before,
-        *::after {
-            transition: background-color 0.25s ease, border-color 0.25s ease, color 0.15s ease;
-        }
-
-        *:hover {
-            transition: background-color 0.25s ease, border-color 0.25s ease, color 0.15s ease, transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .card-bg {
-            background-color: var(--bg-card);
-            border-color: var(--border-card);
-        }
-
-        .item-bg {
-            background-color: var(--bg-item);
-            border-color: var(--border-item);
-        }
-
-        .text-primary {
-            color: var(--text-primary);
-        }
-
-        .text-muted {
-            color: var(--text-muted);
-        }
-
-        .section-alt-bg {
-            background-color: var(--bg-section-alt);
-        }
-
-        .page-bg {
-            background-color: var(--bg-page);
-        }
-
-        #mobile-menu {
-            transition: opacity 0.25s ease, transform 0.25s ease;
-        }
-
-        #mobile-menu.hidden {
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(-8px);
-        }
-
-        #mobile-menu:not(.hidden) {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .footer-section {
-            background-color: var(--footer-bg);
-        }
-
-        .animate-fadeInUp {
-            animation: fadeInUp 0.6s ease forwards;
-        }
-
-        .animate-fadeIn {
-            animation: fadeIn 0.5s ease forwards;
-        }
-
-        .animate-slideInLeft {
-            animation: slideInLeft 0.5s ease forwards;
-        }
-
-        .animate-slideInRight {
-            animation: slideInRight 0.5s ease forwards;
-        }
-
-        .delay-100 {
-            animation-delay: 0.1s;
-        }
-
-        .delay-200 {
-            animation-delay: 0.2s;
-        }
-
-        .delay-300 {
-            animation-delay: 0.3s;
-        }
-
-        .delay-400 {
-            animation-delay: 0.4s;
-        }
-
-        .delay-500 {
-            animation-delay: 0.5s;
-        }
-
-        .delay-600 {
-            animation-delay: 0.6s;
-        }
-
-        .hover-lift {
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-        }
-
-        .hover-lift:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-        }
-
-        html.dark .hover-lift:hover {
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-        }
-
-        .connecting-line {
-            position: absolute;
-            top: 32px;
-            left: 12.5%;
-            right: 12.5%;
-            height: 2px;
-            background: linear-gradient(90deg, #0A3D62, #1DD1A1);
-            z-index: 0;
-        }
-
-        @media (max-width: 768px) {
-            .connecting-line {
-                display: none;
-            }
-
-            .about-grid {
-                grid-template-columns: 1fr !important;
-            }
-        }
-    </style> -->
-  </head>
-
-  <body
-    x-data="{
+<body x-data="{
     scrolled: false,
     mobileOpen: false,
     darkMode: document.documentElement.classList.contains('dark'),
@@ -276,498 +40,535 @@
         }
         setTimeout(() => lucide.createIcons(), 50);
     }
-}"
-    @scroll.window="scrolled = (window.pageYOffset > 20)"
-  >
-    <!-- Navbar -->
-    <nav :class="scrolled ? 'bg-[#0A3D62]/95 border-b border-[#1DD1A1]/20 shadow-lg' : 'bg-[#0A3D62]'" class="fixed top-0 left-0 right-0 z-[1000] backdrop-blur-md transition-all duration-300">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 h-[68px] flex items-center justify-between gap-3">
-        <a href="index.html" class="flex items-center gap-3 shrink-0">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center shadow-lg">
-            <i data-lucide="shield" class="text-white w-5 h-5"></i>
-          </div>
-          <div class="text-white">
-            <div class="font-extrabold text-base leading-none">RUANG AMAN</div>
-            <div class="text-[10px] text-[#1DD1A1] tracking-widest leading-none uppercase">Water-Related Disasters Safety</div>
-          </div>
-        </a>
-
-        <div class="hidden md:flex items-center gap-5 lg:gap-6">
-          <a href="index.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Home</a>
-          <a href="cek-risiko.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Cek Risiko</a>
-          <a href="peta.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Peta</a>
-          <a href="edukasi.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Edukasi</a>
-          <a href="simulasi.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Simulasi</a>
-          <a href="about.html" class="text-sm font-medium text-[#1DD1A1]">About</a>
-
-          <button
-            @click="toggleTheme()"
-            class="relative w-16 h-8 rounded-full transition-colors duration-300 focus:outline-none"
-            :class="darkMode ? 'bg-[#1DD1A1]' : 'bg-gray-600'"
-            :title="darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
-          >
-            <span class="absolute top-1 w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-300 flex items-center justify-center" :class="darkMode ? 'translate-x-8' : 'translate-x-1'">
-              <i :data-lucide="darkMode ? 'moon' : 'sun'" class="w-3.5 h-3.5" :class="darkMode ? 'text-[#1DD1A1]' : 'text-yellow-500'"></i>
-            </span>
-          </button>
+}" @scroll.window="scrolled = (window.pageYOffset > 20)">
+  <nav :class="scrolled ? 'bg-[#0A3D62]/95 border-b border-[#1DD1A1]/20 shadow-lg' : 'bg-[#0A3D62]'"
+    class="fixed top-0 left-0 right-0 z-[1000] backdrop-blur-md transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-[68px] flex items-center justify-between gap-3">
+      <a href="index.html" class="flex items-center gap-3 shrink-0">
+        <div
+          class="w-10 h-10 rounded-[12px] bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center shadow-lg overflow-hidden">
+          <img src="logo_putih.png" alt="Logo" class="w-12 h-12 object-contain p-2" />
         </div>
+        <div class="text-white">
+          <div class="font-extrabold text-base leading-none">RUANG AMAN</div>
+          <div class="text-[10px] text-[#1DD1A1] tracking-widest leading-none uppercase">Water-Related Disaster Safety
+          </div>
+        </div>
+      </a>
 
-        <button @click="mobileOpen = !mobileOpen" class="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 transition-all gap-1.5" aria-label="Toggle menu">
-          <span :class="mobileOpen ? 'rotate-45 translate-y-[7px]' : ''" class="block w-5 h-0.5 bg-white rounded-full transition-transform duration-200"></span>
-          <span :class="mobileOpen ? 'opacity-0 scale-x-0' : ''" class="block w-5 h-0.5 bg-white rounded-full transition-all duration-200"></span>
-          <span :class="mobileOpen ? '-rotate-45 -translate-y-[7px]' : ''" class="block w-5 h-0.5 bg-white rounded-full transition-transform duration-200"></span>
+      <div class="hidden md:flex items-center gap-5 lg:gap-6">
+        <a href="index.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Home</a>
+        <a href="cek-risiko.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Cek
+          Risiko</a>
+        <a href="peta.html" class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Peta</a>
+        <a href="edukasi.html"
+          class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Edukasi</a>
+        <a href="simulasi.html"
+          class="text-sm font-medium text-white/80 hover:text-[#1DD1A1] transition-colors">Simulasi</a>
+        <a href="about.html" class="text-sm font-medium text-[#1DD1A1]">About</a>
+
+        <button @click="toggleTheme()"
+          class="relative w-16 h-8 rounded-full transition-colors duration-300 focus:outline-none"
+          :class="darkMode ? 'bg-[#1DD1A1]' : 'bg-gray-600'"
+          :title="darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+          <span
+            class="absolute top-1 w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-300 flex items-center justify-center"
+            :class="darkMode ? 'translate-x-8' : 'translate-x-1'">
+            <i :data-lucide="darkMode ? 'moon' : 'sun'" class="w-3.5 h-3.5"
+              :class="darkMode ? 'text-[#1DD1A1]' : 'text-yellow-500'"></i>
+          </span>
         </button>
       </div>
 
-      <!-- Mobile Menu -->
-      <div
-        x-show="mobileOpen"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0 -translate-y-2"
-        x-transition:enter-end="opacity-100 translate-y-0"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100 translate-y-0"
-        x-transition:leave-end="opacity-0 -translate-y-2"
-        class="md:hidden bg-[#0A3D62]/98 backdrop-blur-md border-t border-white/10 px-4 py-4"
-      >
-        <div class="flex flex-col gap-1">
-          <a href="index.html" class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Home</a>
-          <a href="cek-risiko.html" class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Cek Risiko</a>
-          <a href="peta.html" class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Peta</a>
-          <a href="edukasi.html" class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Edukasi</a>
-          <a href="simulasi.html" class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Simulasi</a>
-          <a href="about.html" class="text-[#1DD1A1] font-semibold text-sm px-3 py-2.5 rounded-xl bg-white/5">About</a>
+      <button @click="mobileOpen = !mobileOpen"
+        class="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 transition-all gap-1.5"
+        aria-label="Toggle menu">
+        <span :class="mobileOpen ? 'rotate-45 translate-y-[7px]' : ''"
+          class="block w-5 h-0.5 bg-white rounded-full transition-transform duration-200"></span>
+        <span :class="mobileOpen ? 'opacity-0 scale-x-0' : ''"
+          class="block w-5 h-0.5 bg-white rounded-full transition-all duration-200"></span>
+        <span :class="mobileOpen ? '-rotate-45 -translate-y-[7px]' : ''"
+          class="block w-5 h-0.5 bg-white rounded-full transition-transform duration-200"></span>
+      </button>
+    </div>
 
-          <div class="flex items-center justify-between px-3 py-2.5 mt-2 border-t border-white/10 pt-3">
-            <span class="text-sm font-medium text-white/80">Mode Tampilan</span>
-            <button
-              @click="toggleTheme()"
-              class="relative w-16 h-8 rounded-full transition-colors duration-300 focus:outline-none flex items-center"
-              :class="darkMode ? 'bg-[#1DD1A1]' : 'bg-gray-600'"
-              :title="darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
-            >
-              <span class="absolute w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300 flex items-center justify-center" :class="darkMode ? 'translate-x-9' : 'translate-x-1'">
-                <i :data-lucide="darkMode ? 'moon' : 'sun'" class="w-3.5 h-3.5" :class="darkMode ? 'text-[#1DD1A1]' : 'text-yellow-500'"></i>
-              </span>
-            </button>
-          </div>
+    <div x-show="mobileOpen" x-transition:enter="transition ease-out duration-200"
+      x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+      x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0"
+      x-transition:leave-end="opacity-0 -translate-y-2"
+      class="md:hidden bg-[#0A3D62]/98 backdrop-blur-md border-t border-white/10 px-4 py-4">
+      <div class="flex flex-col gap-1">
+        <a href="index.html"
+          class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Home</a>
+        <a href="cek-risiko.html"
+          class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Cek
+          Risiko</a>
+        <a href="peta.html"
+          class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Peta</a>
+        <a href="edukasi.html"
+          class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Edukasi</a>
+        <a href="simulasi.html"
+          class="text-white/80 font-medium text-sm px-3 py-2.5 rounded-xl hover:bg-white/10 hover:text-[#1DD1A1] transition-all">Simulasi</a>
+        <a href="about.html" class="text-[#1DD1A1] font-semibold text-sm px-3 py-2.5 rounded-xl bg-white/5">About</a>
+
+        <div class="flex items-center justify-between px-3 py-2.5 mt-2 border-t border-white/10 pt-3">
+          <span class="text-sm font-medium text-white/80">Mode Tampilan</span>
+          <button @click="toggleTheme()"
+            class="relative w-16 h-8 rounded-full transition-colors duration-300 focus:outline-none flex items-center"
+            :class="darkMode ? 'bg-[#1DD1A1]' : 'bg-gray-600'"
+            :title="darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+            <span
+              class="absolute w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300 flex items-center justify-center"
+              :class="darkMode ? 'translate-x-9' : 'translate-x-1'">
+              <i :data-lucide="darkMode ? 'moon' : 'sun'" class="w-3.5 h-3.5"
+                :class="darkMode ? 'text-[#1DD1A1]' : 'text-yellow-500'"></i>
+            </span>
+          </button>
         </div>
       </div>
-    </nav>
+    </div>
+  </nav>
 
-    <!-- Main Content: About Page -->
-    <div class="pt-[68px]">
-      <!-- Header -->
-      <div class="bg-[#0A3D62] px-6 pt-16 pb-20 md:px-8 relative overflow-hidden">
-        <div class="absolute top-[-100px] right-[-100px] w-[400px] h-[400px] rounded-full bg-[#1DD1A1]/5"></div>
-        <div class="max-w-6xl mx-auto relative">
-          <div class="opacity-0 animate-fadeInUp">
-            <div class="inline-flex items-center gap-2 bg-[#1DD1A1]/20 border border-[#1DD1A1]/40 rounded-full px-4 py-1.5 mb-5">
-              <i data-lucide="shield" class="w-3.5 h-3.5 text-[#1DD1A1]"></i>
-              <span class="text-[#1DD1A1] text-xs font-semibold tracking-wide">TENTANG RUANG AMAN</span>
-            </div>
-            <h1 class="text-white font-extrabold text-4xl md:text-5xl leading-tight mb-4 max-w-3xl">Platform Risiko Bencana Berbasis Air</h1>
-            <p class="text-white/65 text-base max-w-2xl leading-relaxed">Ruang Aman membantu Anda memahami risiko di wilayah Anda, mensimulasikan dampaknya, dan mengambil langkah tepat sebelum bencana terjadi.</p>
+  <div class="pt-[68px]">
+    <div class="bg-[#0A3D62] px-6 pt-16 pb-20 md:px-8 relative overflow-hidden">
+      <div class="absolute top-[-100px] right-[-100px] w-[400px] h-[400px] rounded-full bg-[#1DD1A1]/5"></div>
+      <div class="max-w-6xl mx-auto relative">
+        <div class="opacity-0 animate-fadeInUp">
+          <div
+            class="inline-flex items-center gap-2 bg-[#1DD1A1]/20 border border-[#1DD1A1]/40 rounded-full px-4 py-1.5 mb-5">
+            <i data-lucide="shield" class="w-3.5 h-3.5 text-[#1DD1A1]"></i>
+            <span class="text-[#1DD1A1] text-xs font-semibold tracking-wide">TENTANG RUANG AMAN</span>
           </div>
-        </div>
-      </div>
-
-      <!-- Main Content Container -->
-      <div class="max-w-6xl mx-auto px-4 md:px-6 -mt-12 pb-20">
-        <!-- Stats Banner -->
-        <div class="card-bg rounded-2xl p-7 md:p-8 shadow-lg mb-10 grid grid-cols-2 md:grid-cols-4 gap-6 animate-fadeInUp">
-          <!-- Stat 1 -->
-          <div class="text-center opacity-0 animate-fadeInUp delay-100">
-            <div class="font-extrabold text-4xl text-[#1DD1A1] leading-none mb-1">38</div>
-            <div class="font-semibold text-sm text-primary mb-0.5">Provinsi</div>
-            <div class="text-xs text-muted">Data tersedia</div>
-          </div>
-          <!-- Stat 2 -->
-          <div class="text-center opacity-0 animate-fadeInUp delay-200">
-            <div class="font-extrabold text-4xl text-[#FFC312] leading-none mb-1">500+</div>
-            <div class="font-semibold text-sm text-primary mb-0.5">Kabupaten/Kota</div>
-            <div class="text-xs text-muted">Teranalisis</div>
-          </div>
-          <!-- Stat 3 -->
-          <div class="text-center opacity-0 animate-fadeInUp delay-300">
-            <div class="font-extrabold text-4xl text-[#0A3D62] dark:text-[#1DD1A1] leading-none mb-1">6</div>
-            <div class="font-semibold text-sm text-primary mb-0.5">Sumber Data</div>
-            <div class="text-xs text-muted">Terintegrasi</div>
-          </div>
-          <!-- Stat 4 -->
-          <div class="text-center opacity-0 animate-fadeInUp delay-400">
-            <div class="font-extrabold text-4xl text-[#FF9F43] leading-none mb-1">4</div>
-            <div class="font-semibold text-sm text-primary mb-0.5">Jenis Bencana</div>
-            <div class="text-xs text-muted">Dipantau</div>
-          </div>
-        </div>
-
-        <!-- Problem Statement Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10 about-grid">
-          <!-- Left: Problems -->
-          <div class="card-bg rounded-2xl p-8 shadow-lg opacity-0 animate-slideInLeft">
-            <span class="inline-block bg-[#EE5253]/10 text-[#EE5253] text-[11px] font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-4"> Masalah yang Kami Atasi </span>
-            <h2 class="font-bold text-2xl text-primary mb-6 leading-tight">Bencana Air Tak Menunggu, <span class="text-[#EE5253]">Tapi Kita Bisa Bersiap</span></h2>
-
-            <!-- Problem 1 -->
-            <div class="flex gap-4 mb-5 items-start opacity-0 animate-fadeInUp delay-100">
-              <div class="w-11 h-11 rounded-xl bg-[#0A3D62]/10 dark:bg-[#1DD1A1]/10 flex items-center justify-center shrink-0">
-                <i data-lucide="waves" class="w-5 h-5 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
-              </div>
-              <div>
-                <h4 class="font-bold text-sm text-primary mb-1">Bencana Berbasis Air Paling Mematikan</h4>
-                <p class="text-xs text-muted leading-relaxed">Banjir, rob, dan tsunami secara konsisten menjadi penyebab korban jiwa terbesar di Indonesia tiap tahunnya dan frekuensinya terus meningkat akibat perubahan iklim.</p>
-              </div>
-            </div>
-
-            <!-- Problem 2 -->
-            <div class="flex gap-4 mb-5 items-start opacity-0 animate-fadeInUp delay-200">
-              <div class="w-11 h-11 rounded-xl bg-[#FF9F43]/10 flex items-center justify-center shrink-0">
-                <i data-lucide="map" class="w-5 h-5 text-[#FF9F43]"></i>
-              </div>
-              <div>
-                <h4 class="font-bold text-sm text-primary mb-1">Tidak Tahu Seberapa Berbahaya Wilayahnya</h4>
-                <p class="text-xs text-muted leading-relaxed">
-                  Mayoritas warga tidak tahu tingkat risiko bencana di wilayah mereka sendiri. Data BNPB dan BMKG ada, tapi tidak pernah sampai ke tangan masyarakat dalam bentuk yang mudah dipahami.
-                </p>
-              </div>
-            </div>
-
-            <!-- Problem 3 -->
-            <div class="flex gap-4 mb-5 items-start opacity-0 animate-fadeInUp delay-300">
-              <div class="w-11 h-11 rounded-xl bg-[#EE5253]/10 flex items-center justify-center shrink-0">
-                <i data-lucide="cloud-rain" class="w-5 h-5 text-[#EE5253]"></i>
-              </div>
-              <div>
-                <h4 class="font-bold text-sm text-primary mb-1">Dampak Bencana Sulit Dibayangkan Sebelumnya</h4>
-                <p class="text-xs text-muted leading-relaxed">
-                  Warga tidak bisa membayangkan seberapa parah banjir saat curah hujan ekstrem, atau sejauh mana rob merendam saat pasang purnama. Tanpa gambaran nyata, persiapan pun tidak pernah serius.
-                </p>
-              </div>
-            </div>
-
-            <!-- Problem 4 -->
-            <div class="flex gap-4 items-start opacity-0 animate-fadeInUp delay-[400ms]">
-              <div class="w-11 h-11 rounded-xl bg-[#1DD1A1]/10 flex items-center justify-center shrink-0">
-                <i data-lucide="book-x" class="w-5 h-5 text-[#1DD1A1]"></i>
-              </div>
-              <div>
-                <h4 class="font-bold text-sm text-primary mb-1">Panduan Bencana Tidak Kontekstual</h4>
-                <p class="text-xs text-muted leading-relaxed">
-                  Informasi keselamatan yang beredar seringkali generik dan tidak relevan dengan kondisi lokal. Warga butuh panduan spesifik sebelum, saat, dan setelah bencana terjadi di wilayah mereka.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right: Image + Mission -->
-          <div class="flex flex-col gap-5">
-            <!-- Image -->
-            <div class="rounded-2xl overflow-hidden h-[220px] relative opacity-0 animate-slideInRight">
-              <img src="https://img.antarafoto.com/cache/1200x799/2024/03/15/evakuasi-korban-banjir-di-semarang-1amt0-dom.jpg" alt="Disaster response team" class="w-full h-full object-cover" />
-              <div class="absolute inset-0 bg-gradient-to-t from-[#0A3D62]/70 via-transparent to-transparent"></div>
-              <div class="absolute bottom-4 left-5 right-5 text-white font-semibold text-sm">Setiap detik informasi yang tepat bisa menyelamatkan nyawa</div>
-            </div>
-
-            <!-- Mission Card -->
-            <div class="bg-gradient-to-br from-[#0A3D62] to-[#1565a0] rounded-2xl p-7 shadow-lg flex-1 opacity-0 animate-slideInRight delay-200">
-              <i data-lucide="shield-check" class="w-7 h-7 text-[#1DD1A1] mb-4"></i>
-              <h3 class="font-bold text-lg text-white mb-3">Misi Kami</h3>
-              <p class="text-white/75 text-sm leading-relaxed mb-5">
-                Ruang Aman hadir untuk mengubah data bencana menjadi informasi yang bisa langsung ditindaklanjuti agar setiap warga tahu risikonya, paham dampaknya, dan siap menghadapinya sebelum bencana datang.
-              </p>
-              <div class="space-y-2">
-                <div class="flex gap-2 items-center">
-                  <i data-lucide="check-circle" class="w-4 h-4 text-[#1DD1A1]"></i>
-                  <span class="text-white/85 text-xs">Analisis risiko wilayah berdasarkan jenis ancaman secara instan</span>
-                </div>
-                <div class="flex gap-2 items-center">
-                  <i data-lucide="check-circle" class="w-4 h-4 text-[#1DD1A1]"></i>
-                  <span class="text-white/85 text-xs">Visualisasi zona risiko & titik aman pada peta interaktif</span>
-                </div>
-                <div class="flex gap-2 items-center">
-                  <i data-lucide="check-circle" class="w-4 h-4 text-[#1DD1A1]"></i>
-                  <span class="text-white/85 text-xs">Simulasi dampak banjir & rob berdasarkan parameter nyata</span>
-                </div>
-                <div class="flex gap-2 items-center">
-                  <i data-lucide="check-circle" class="w-4 h-4 text-[#1DD1A1]"></i>
-                  <span class="text-white/85 text-xs">Panduan keselamatan kontekstual sebelum, saat & setelah bencana</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- How It Works -->
-        <div class="card-bg rounded-2xl p-8 md:p-10 shadow-lg mb-10 opacity-0 animate-fadeInUp">
-          <div class="text-center mb-10">
-            <span class="inline-block bg-[#1DD1A1]/10 text-[#0A8F6C] dark:text-[#1DD1A1] text-[11px] font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-3"> Cara Kerja Sistem </span>
-            <h2 class="font-bold text-2xl md:text-3xl text-primary mb-3">Dari Data Menjadi Keputusan</h2>
-            <p class="text-sm text-muted max-w-lg mx-auto leading-relaxed">Sistem kami mengintegrasikan multi-sumber data menjadi informasi yang mudah dipahami dan dapat langsung ditindaklanjuti.</p>
-          </div>
-
-          <!-- Steps Grid -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 relative">
-            <!-- Connecting line (hidden on mobile) -->
-            <!-- <div class="connecting-line hidden lg:block"></div> -->
-
-            <!-- Step 1 -->
-            <div class="text-center p-6 relative z-10 opacity-0 animate-fadeInUp delay-100">
-              <div
-                class="w-16 h-16 rounded-xl bg-gradient-to-br from-[#0A3D62]/10 to-[#0A3D62]/20 dark:from-[#1DD1A1]/10 dark:to-[#1DD1A1]/20 border-2 border-[#0A3D62]/30 dark:border-[#1DD1A1]/30 flex items-center justify-center mx-auto mb-5 relative"
-              >
-                <i data-lucide="database" class="w-7 h-7 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
-              </div>
-              <h3 class="font-bold text-sm text-primary mb-2">Pengumpulan Data</h3>
-              <p class="text-xs text-muted leading-relaxed">Mengintegrasikan data dari BMKG, BNPB, PVMBG, BIG, dan lembaga riset nasional.</p>
-            </div>
-
-            <!-- Step 2 -->
-            <div class="text-center p-6 relative z-10 opacity-0 animate-fadeInUp delay-200">
-              <div
-                class="w-16 h-16 rounded-xl bg-gradient-to-br from-[#1565a0]/10 to-[#1565a0]/20 dark:from-[#1DD1A1]/10 dark:to-[#1DD1A1]/20 border-2 border-[#1565a0]/30 dark:border-[#1DD1A1]/30 flex items-center justify-center mx-auto mb-5 relative"
-              >
-                <i data-lucide="cpu" class="w-7 h-7 text-[#1565a0] dark:text-[#1DD1A1]"></i>
-              </div>
-              <h3 class="font-bold text-sm text-primary mb-2">Analisis Risiko</h3>
-              <p class="text-xs text-muted leading-relaxed">Model komputasi menganalisis kombinasi faktor kerentanan, bahaya, dan kapasitas respons.</p>
-            </div>
-
-            <!-- Step 3 -->
-            <div class="text-center p-6 relative z-10 opacity-0 animate-fadeInUp delay-300">
-              <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-[#1DD1A1]/10 to-[#1DD1A1]/20 border-2 border-[#1DD1A1]/30 flex items-center justify-center mx-auto mb-5 relative">
-                <i data-lucide="bar-chart-2" class="w-7 h-7 text-[#1DD1A1]"></i>
-              </div>
-              <h3 class="font-bold text-sm text-primary mb-2">Visualisasi & Simulasi</h3>
-              <p class="text-xs text-muted leading-relaxed">Data disajikan dalam peta interaktif, grafik dinamis, dan simulasi skenario.</p>
-            </div>
-
-            <!-- Step 4 -->
-            <div class="text-center p-6 relative z-10 opacity-0 animate-fadeInUp delay-400">
-              <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-[#1DD1A1]/10 to-[#1DD1A1]/20 border-2 border-[#1DD1A1]/30 flex items-center justify-center mx-auto mb-5 relative">
-                <i data-lucide="check-circle" class="w-7 h-7 text-[#1DD1A1]"></i>
-              </div>
-              <h3 class="font-bold text-sm text-primary mb-2">Rekomendasi Aksi</h3>
-              <p class="text-xs text-muted leading-relaxed">Sistem menghasilkan rekomendasi tindakan spesifik berdasarkan tingkat risiko.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Data Sources -->
-        <div class="card-bg rounded-2xl p-8 shadow-lg mb-14 opacity-0 animate-fadeInUp">
-          <h2 class="font-bold text-xl text-primary mb-1">Sumber Data Terintegrasi</h2>
-          <p class="text-sm text-muted mb-6">Platform ini menggunakan data dari lembaga-lembaga resmi dan terpercaya Indonesia</p>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <!-- BMKG -->
-            <div class="item-bg rounded-xl p-5 border-2 border-[#0A3D62]/20 dark:border-[#1DD1A1]/20 flex gap-4 items-center hover-lift cursor-default opacity-0 animate-fadeInUp delay-100">
-              <div class="w-12 h-12 rounded-xl bg-[#0A3D62]/10 dark:bg-[#1DD1A1]/10 flex items-center justify-center shrink-0 font-extrabold text-sm text-[#0A3D62] dark:text-[#1DD1A1]">BM</div>
-              <div>
-                <div class="font-bold text-sm text-primary mb-0.5">BMKG</div>
-                <div class="text-xs text-muted mb-1">Badan Meteorologi Klimatologi dan Geofisika</div>
-                <span class="bg-[#0A3D62]/10 dark:bg-[#1DD1A1]/10 text-[#0A3D62] dark:text-[#1DD1A1] text-[10px] font-bold px-2 py-0.5 rounded-full">Cuaca & Gempa</span>
-              </div>
-            </div>
-
-            <!-- BNPB -->
-            <div class="item-bg rounded-xl p-5 border-2 border-[#EE5253]/20 flex gap-4 items-center hover-lift cursor-default opacity-0 animate-fadeInUp delay-200">
-              <div class="w-12 h-12 rounded-xl bg-[#EE5253]/10 flex items-center justify-center shrink-0 font-extrabold text-sm text-[#EE5253]">BN</div>
-              <div>
-                <div class="font-bold text-sm text-primary mb-0.5">BNPB</div>
-                <div class="text-xs text-muted mb-1">Badan Nasional Penanggulangan Bencana</div>
-                <span class="bg-[#EE5253]/10 text-[#EE5253] text-[10px] font-bold px-2 py-0.5 rounded-full">Data Kebencanaan</span>
-              </div>
-            </div>
-
-            <!-- PVMBG -->
-            <div class="item-bg rounded-xl p-5 border-2 border-[#FF9F43]/20 flex gap-4 items-center hover-lift cursor-default opacity-0 animate-fadeInUp delay-300">
-              <div class="w-12 h-12 rounded-xl bg-[#FF9F43]/10 flex items-center justify-center shrink-0 font-extrabold text-sm text-[#FF9F43]">PV</div>
-              <div>
-                <div class="font-bold text-sm text-primary mb-0.5">PVMBG</div>
-                <div class="text-xs text-muted mb-1">Pusat Vulkanologi Mitigasi Bencana Geologi</div>
-                <span class="bg-[#FF9F43]/10 text-[#FF9F43] text-[10px] font-bold px-2 py-0.5 rounded-full">Geologi & Vulkanologi</span>
-              </div>
-            </div>
-
-            <!-- BIG -->
-            <div class="item-bg rounded-xl p-5 border-2 border-[#1DD1A1]/20 flex gap-4 items-center hover-lift cursor-default opacity-0 animate-fadeInUp delay-400">
-              <div class="w-12 h-12 rounded-xl bg-[#1DD1A1]/10 flex items-center justify-center shrink-0 font-extrabold text-sm text-[#1DD1A1]">BI</div>
-              <div>
-                <div class="font-bold text-sm text-primary mb-0.5">BIG</div>
-                <div class="text-xs text-muted mb-1">Badan Informasi Geospasial</div>
-                <span class="bg-[#1DD1A1]/10 text-[#1DD1A1] text-[10px] font-bold px-2 py-0.5 rounded-full">Peta & Spasial</span>
-              </div>
-            </div>
-
-            <!-- BPBD -->
-            <div class="item-bg rounded-xl p-5 border-2 border-[#FFC312]/20 flex gap-4 items-center hover-lift cursor-default opacity-0 animate-fadeInUp delay-500">
-              <div class="w-12 h-12 rounded-xl bg-[#FFC312]/10 flex items-center justify-center shrink-0 font-extrabold text-sm text-[#FFC312]">BP</div>
-              <div>
-                <div class="font-bold text-sm text-primary mb-0.5">BPBD</div>
-                <div class="text-xs text-muted mb-1">Badan Penanggulangan Bencana Daerah</div>
-                <span class="bg-[#FFC312]/10 text-[#FFC312] text-[10px] font-bold px-2 py-0.5 rounded-full">Data Daerah</span>
-              </div>
-            </div>
-
-            <!-- Lapan -->
-            <div class="item-bg rounded-xl p-5 border-2 border-[#1565a0]/20 dark:border-[#1DD1A1]/20 flex gap-4 items-center hover-lift cursor-default opacity-0 animate-fadeInUp delay-600">
-              <div class="w-12 h-12 rounded-xl bg-[#1565a0]/10 dark:bg-[#1DD1A1]/10 flex items-center justify-center shrink-0 font-extrabold text-sm text-[#1565a0] dark:text-[#1DD1A1]">LA</div>
-              <div>
-                <div class="font-bold text-sm text-primary mb-0.5">LAPAN</div>
-                <div class="text-xs text-muted mb-1">Lembaga Penerbangan dan Antariksa</div>
-                <span class="bg-[#1565a0]/10 dark:bg-[#1DD1A1]/10 text-[#1565a0] dark:text-[#1DD1A1] text-[10px] font-bold px-2 py-0.5 rounded-full">Remote Sensing</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Target Users -->
-        <div class="mb-14 opacity-0 animate-fadeInUp">
-          <div class="text-center mb-8">
-            <h2 class="font-bold text-2xl md:text-3xl text-primary mb-2">Platform Ini Untuk Siapa?</h2>
-            <p class="text-sm text-muted">Ruang Aman dirancang untuk semua kalangan yang peduli keselamatan</p>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <!-- Masyarakat Umum -->
-            <div class="card-bg rounded-xl p-6 border shadow-sm hover-lift opacity-0 animate-fadeInUp delay-100">
-              <div class="w-12 h-12 rounded-xl bg-[#0A3D62]/10 dark:bg-[#1DD1A1]/10 flex items-center justify-center mb-4">
-                <i data-lucide="users" class="w-6 h-6 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
-              </div>
-              <h3 class="font-bold text-sm text-primary mb-2">Masyarakat Umum</h3>
-              <p class="text-xs text-muted leading-relaxed">Masyarakat yang ingin mengetahui risiko dan cara melindungi diri dan keluarga.</p>
-            </div>
-
-            <!-- Pemerintah Daerah -->
-            <div class="card-bg rounded-xl p-6 border shadow-sm hover-lift opacity-0 animate-fadeInUp delay-200">
-              <div class="w-12 h-12 rounded-xl bg-[#0A3D62]/10 dark:bg-[#1DD1A1]/10 flex items-center justify-center mb-4">
-                <i data-lucide="building-2" class="w-6 h-6 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
-              </div>
-              <h3 class="font-bold text-sm text-primary mb-2">Pemerintah Daerah</h3>
-              <p class="text-xs text-muted leading-relaxed">BPBD dan dinas terkait untuk perencanaan kesiapsiagaan dan evakuasi berbasis data.</p>
-            </div>
-
-            <!-- Peneliti -->
-            <div class="card-bg rounded-xl p-6 border shadow-sm hover-lift opacity-0 animate-fadeInUp delay-300">
-              <div class="w-12 h-12 rounded-xl bg-[#0A3D62]/10 dark:bg-[#1DD1A1]/10 flex items-center justify-center mb-4">
-                <i data-lucide="graduation-cap" class="w-6 h-6 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
-              </div>
-              <h3 class="font-bold text-sm text-primary mb-2">Peneliti & Akademisi</h3>
-              <p class="text-xs text-muted leading-relaxed">Ilmuwan dan peneliti yang membutuhkan visualisasi data kebencanaan berbasis air.</p>
-            </div>
-
-            <!-- Lembaga Kemanusiaan -->
-            <div class="card-bg rounded-xl p-6 border shadow-sm hover-lift opacity-0 animate-fadeInUp delay-400">
-              <div class="w-12 h-12 rounded-xl bg-[#0A3D62]/10 dark:bg-[#1DD1A1]/10 flex items-center justify-center mb-4">
-                <i data-lucide="globe" class="w-6 h-6 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
-              </div>
-              <h3 class="font-bold text-sm text-primary mb-2">Lembaga Kemanusiaan</h3>
-              <p class="text-xs text-muted leading-relaxed">NGO dan lembaga kemanusiaan untuk koordinasi respons dan mitigasi bencana.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- CTA -->
-        <div class="bg-gradient-to-br from-[#0A3D62] to-[#1565a0] rounded-2xl p-10 md:p-16 text-center relative overflow-hidden opacity-0 animate-fadeInUp">
-          <div class="absolute -top-20 -right-20 w-[300px] h-[300px] rounded-full bg-[#1DD1A1]/5"></div>
-          <div class="relative">
-            <h2 class="font-extrabold text-2xl md:text-3xl text-white mb-4 leading-tight">
-              Mulai Gunakan Ruang Aman
-              <span class="bg-gradient-to-r from-[#1DD1A1] to-[#7efdd8] bg-clip-text text-transparent">Sekarang</span>
-            </h2>
-            <p class="text-white/65 text-sm max-w-md mx-auto mb-8 leading-relaxed">Lindungi diri dan keluarga Anda dengan pengetahuan yang tepat. Platform ini gratis untuk semua.</p>
-            <div class="flex gap-4 justify-center flex-wrap">
-              <a
-                href="simulasi.html"
-                class="inline-flex items-center gap-2 bg-gradient-to-r from-[#1DD1A1] to-[#17b88d] text-[#0A3D61] font-bold text-sm px-7 py-4 rounded-xl shadow-lg hover:shadow-[0_4px_20px_rgba(29,209,161,0.4)] transition-all"
-              >
-                <i data-lucide="shield" class="w-4 h-4"></i>
-                Cek Risiko Wilayah
-              </a>
-              <a href="#" class="inline-flex items-center gap-2 bg-white/10 border border-white/25 text-white font-semibold text-sm px-7 py-4 rounded-xl hover:bg-white/20 transition-all">
-                Panduan Keselamatan <i data-lucide="arrow-right" class="w-4 h-4"></i>
-              </a>
-            </div>
-          </div>
+          <h1 class="text-white font-extrabold text-4xl md:text-5xl leading-tight mb-4 max-w-3xl">Platform Risiko
+            Bencana Berbasis Air</h1>
+          <p class="text-white/65 text-base max-w-2xl leading-relaxed">Ruang Aman membantu Anda memahami risiko di
+            wilayah Anda, mensimulasikan dampaknya, dan mengambil langkah tepat sebelum bencana terjadi.</p>
         </div>
       </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer-section text-white pt-20">
-      <div class="max-w-7xl mx-auto px-6 pb-20 grid grid-cols-1 md:grid-cols-4 gap-12">
-        <div class="col-span-1 md:col-span-1">
-          <div class="flex items-center gap-3 mb-6">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center">
-              <i data-lucide="shield" class="text-white"></i>
+    <div class="max-w-6xl mx-auto px-4 md:px-6 -mt-12 pb-20">
+      <div
+        class="card-bg rounded-2xl p-7 md:p-8 shadow-lg mb-10 grid grid-cols-2 md:grid-cols-4 gap-6 animate-fadeInUp">
+        <div class="text-center opacity-0 animate-fadeInUp delay-100">
+          <div class="font-extrabold text-4xl text-[#1DD1A1] leading-none mb-1">38</div>
+          <div class="font-semibold text-sm text-primary mb-0.5">Provinsi</div>
+          <div class="text-xs text-muted">Data tersedia</div>
+        </div>
+        <div class="text-center opacity-0 animate-fadeInUp delay-200">
+          <div class="font-extrabold text-4xl text-[#FFC312] leading-none mb-1">500+</div>
+          <div class="font-semibold text-sm text-primary mb-0.5">Kabupaten/Kota</div>
+          <div class="text-xs text-muted">Teranalisis</div>
+        </div>
+        <div class="text-center opacity-0 animate-fadeInUp delay-300">
+          <div class="font-extrabold text-4xl text-[#0A3D62] dark:text-[#1DD1A1] leading-none mb-1">6</div>
+          <div class="font-semibold text-sm text-primary mb-0.5">Sumber Data</div>
+          <div class="text-xs text-muted">Terintegrasi</div>
+        </div>
+        <div class="text-center opacity-0 animate-fadeInUp delay-400">
+          <div class="font-extrabold text-4xl text-[#FF9F43] leading-none mb-1">4</div>
+          <div class="font-semibold text-sm text-primary mb-0.5">Jenis Bencana</div>
+          <div class="text-xs text-muted">Dipantau</div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10 about-grid">
+        <div class="card-bg rounded-2xl p-8 shadow-lg opacity-0 animate-slideInLeft">
+          <span
+            class="inline-block bg-[#EE5253]/10 text-[#EE5253] text-[11px] font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-4">
+            Masalah yang Kami Atasi </span>
+          <h2 class="font-bold text-2xl text-primary mb-6 leading-tight">Bencana Air Tak Menunggu, <span
+              class="text-[#EE5253]">Tapi Kita Bisa Bersiap</span></h2>
+
+          <div class="flex gap-4 mb-5 items-start opacity-0 animate-fadeInUp delay-100">
+            <div
+              class="w-11 h-11 rounded-xl bg-[#0A3D62]/10 dark:bg-[#1DD1A1]/10 flex items-center justify-center shrink-0">
+              <i data-lucide="waves" class="w-5 h-5 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
             </div>
-            <div class="font-extrabold text-lg">RUANG AMAN</div>
+            <div>
+              <h4 class="font-bold text-sm text-primary mb-1">Bencana Berbasis Air Paling Mematikan</h4>
+              <p class="text-xs text-muted leading-relaxed">Banjir, rob, dan tsunami secara konsisten menjadi penyebab
+                korban jiwa terbesar di Indonesia tiap tahunnya dan frekuensinya terus meningkat akibat perubahan iklim.
+              </p>
+            </div>
           </div>
-          <p class="text-white/50 text-sm leading-relaxed">Platform terpadu untuk analisis dan informasi risiko bencana berbasis air guna mendukung kesiapsiagaan masyarakat.</p>
+
+          <div class="flex gap-4 mb-5 items-start opacity-0 animate-fadeInUp delay-200">
+            <div class="w-11 h-11 rounded-xl bg-[#FF9F43]/10 flex items-center justify-center shrink-0">
+              <i data-lucide="map" class="w-5 h-5 text-[#FF9F43]"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-sm text-primary mb-1">Tidak Tahu Seberapa Berbahaya Wilayahnya</h4>
+              <p class="text-xs text-muted leading-relaxed">
+                Mayoritas warga tidak tahu tingkat risiko bencana di wilayah mereka sendiri. Data BNPB dan BMKG ada,
+                tapi tidak pernah sampai ke tangan masyarakat dalam bentuk yang mudah dipahami.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-4 mb-5 items-start opacity-0 animate-fadeInUp delay-300">
+            <div class="w-11 h-11 rounded-xl bg-[#EE5253]/10 flex items-center justify-center shrink-0">
+              <i data-lucide="cloud-rain" class="w-5 h-5 text-[#EE5253]"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-sm text-primary mb-1">Dampak Bencana Sulit Dibayangkan Sebelumnya</h4>
+              <p class="text-xs text-muted leading-relaxed">
+                Warga tidak bisa membayangkan seberapa parah banjir saat curah hujan ekstrem, atau sejauh mana rob
+                merendam saat pasang purnama. Tanpa gambaran nyata, persiapan pun tidak pernah serius.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-4 items-start opacity-0 animate-fadeInUp delay-[400ms]">
+            <div class="w-11 h-11 rounded-xl bg-[#1DD1A1]/10 flex items-center justify-center shrink-0">
+              <i data-lucide="book-x" class="w-5 h-5 text-[#1DD1A1]"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-sm text-primary mb-1">Panduan Bencana Tidak Kontekstual</h4>
+              <p class="text-xs text-muted leading-relaxed">
+                Informasi keselamatan yang beredar seringkali generik dan tidak relevan dengan kondisi lokal. Warga
+                butuh panduan spesifik sebelum, saat, dan setelah bencana terjadi di wilayah mereka.
+              </p>
+            </div>
+          </div>
         </div>
-        <div>
-          <h5 class="font-bold mb-6">Navigasi</h5>
-          <ul class="space-y-4 text-sm text-white/50">
-            <li><a href="cek-risiko.html" class="hover:text-[#1DD1A1] transition-colors">Cek Risiko</a></li>
-            <li><a href="peta.html" class="hover:text-[#1DD1A1] transition-colors">Peta Interaktif</a></li>
-            <li><a href="edukasi.html" class="hover:text-[#1DD1A1] transition-colors">Panduan Edukasi</a></li>
-            <li><a href="simulasi.html" class="hover:text-[#1DD1A1] transition-colors">Simulasi</a></li>
-            <li><a href="about.html" class="hover:text-[#1DD1A1] transition-colors">About</a></li>
-          </ul>
-        </div>
-        <div>
-          <h5 class="font-bold mb-6">Kontak</h5>
-          <ul class="space-y-4 text-sm text-white/50">
-            <li class="flex gap-2">
-              <i data-lucide="mail" class="w-4 text-[#1DD1A1] shrink-0"></i>
-              info@ruangaman.go.id
-            </li>
-            <li class="flex gap-2"><i data-lucide="phone" class="w-4 text-[#1DD1A1] shrink-0"></i> +62 21 1234 5678</li>
-          </ul>
-        </div>
-        <div>
-          <div class="bg-[#1DD1A1]/10 border border-[#1DD1A1]/20 p-6 rounded-2xl">
-            <div class="text-[10px] font-bold text-[#1DD1A1] uppercase mb-1">Darurat</div>
-            <div class="text-3xl font-black">117</div>
-            <div class="text-[10px] text-white/40 mt-1 uppercase">BNPB Response</div>
+
+        <div class="flex flex-col gap-5">
+          <div class="rounded-2xl overflow-hidden h-[220px] relative opacity-0 animate-slideInRight">
+            <img
+              src="https://img.antarafoto.com/cache/1200x799/2024/03/15/evakuasi-korban-banjir-di-semarang-1amt0-dom.jpg"
+              alt="Disaster response team" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0A3D62]/70 via-transparent to-transparent"></div>
+            <div class="absolute bottom-4 left-5 right-5 text-white font-semibold text-sm">Setiap detik informasi yang
+              tepat bisa menyelamatkan nyawa</div>
+          </div>
+
+          <div
+            class="bg-gradient-to-br from-[#0A3D62] to-[#1565a0] rounded-2xl p-7 shadow-lg flex-1 opacity-0 animate-slideInRight delay-200">
+            <i data-lucide="shield-check" class="w-7 h-7 text-[#1DD1A1] mb-4"></i>
+            <h3 class="font-bold text-lg text-white mb-3">Misi Kami</h3>
+            <p class="text-white/75 text-sm leading-relaxed mb-5">
+              Ruang Aman hadir untuk mengubah data bencana menjadi informasi yang bisa langsung ditindaklanjuti agar
+              setiap warga tahu risikonya, paham dampaknya, dan siap menghadapinya sebelum bencana datang.
+            </p>
+            <div class="space-y-2">
+              <div class="flex gap-2 items-center">
+                <i data-lucide="check-circle" class="w-4 h-4 text-[#1DD1A1]"></i>
+                <span class="text-white/85 text-xs">Analisis risiko wilayah berdasarkan jenis ancaman secara
+                  instan</span>
+              </div>
+              <div class="flex gap-2 items-center">
+                <i data-lucide="check-circle" class="w-4 h-4 text-[#1DD1A1]"></i>
+                <span class="text-white/85 text-xs">Visualisasi zona risiko & titik aman pada peta interaktif</span>
+              </div>
+              <div class="flex gap-2 items-center">
+                <i data-lucide="check-circle" class="w-4 h-4 text-[#1DD1A1]"></i>
+                <span class="text-white/85 text-xs">Simulasi dampak banjir & rob berdasarkan parameter nyata</span>
+              </div>
+              <div class="flex gap-2 items-center">
+                <i data-lucide="check-circle" class="w-4 h-4 text-[#1DD1A1]"></i>
+                <span class="text-white/85 text-xs">Panduan keselamatan kontekstual sebelum, saat & setelah
+                  bencana</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="border-t border-white/5 py-8 text-center text-[11px] text-white/30">© 2026 RUANG AMAN. Water-Related Disasters Safety Platform Indonesia.</div>
-    </footer>
 
-    <script>
-      function refreshIcons() {
-        if (typeof lucide !== "undefined") {
-          lucide.createIcons();
-        }
+      <div class="card-bg rounded-2xl p-8 md:p-10 shadow-lg mb-10 opacity-0 animate-fadeInUp">
+        <div class="text-center mb-10">
+          <span
+            class="inline-block bg-[#1DD1A1]/10 text-[#0A8F6C] dark:text-[#1DD1A1] text-[11px] font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-3">
+            Cara Kerja Sistem </span>
+          <h2 class="font-bold text-2xl md:text-3xl text-primary mb-3">Dari Data Menjadi Keputusan</h2>
+          <p class="text-sm text-muted max-w-lg mx-auto leading-relaxed">Sistem kami mengintegrasikan multi-sumber data
+            menjadi informasi yang mudah dipahami dan dapat langsung ditindaklanjuti.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 relative">
+          <div class="text-center p-6 relative z-10 opacity-0 animate-fadeInUp delay-100">
+            <div
+              class="w-16 h-16 rounded-xl bg-gradient-to-br from-[#0A3D62]/10 to-[#0A3D62]/20 dark:from-[#1DD1A1]/10 dark:to-[#1DD1A1]/20 border-2 border-[#0A3D62]/30 dark:border-[#1DD1A1]/30 flex items-center justify-center mx-auto mb-5 relative">
+              <i data-lucide="database" class="w-7 h-7 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
+            </div>
+            <h3 class="font-bold text-sm text-primary mb-2">Pengumpulan Data</h3>
+            <p class="text-xs text-muted leading-relaxed">Mengintegrasikan data dari BMKG, BNPB, PVMBG, BIG, dan lembaga
+              riset nasional.</p>
+          </div>
+
+          <div class="text-center p-6 relative z-10 opacity-0 animate-fadeInUp delay-200">
+            <div
+              class="w-16 h-16 rounded-xl bg-gradient-to-br from-[#1565a0]/10 to-[#1565a0]/20 dark:from-[#1DD1A1]/10 dark:to-[#1DD1A1]/20 border-2 border-[#1565a0]/30 dark:border-[#1DD1A1]/30 flex items-center justify-center mx-auto mb-5 relative">
+              <i data-lucide="cpu" class="w-7 h-7 text-[#1565a0] dark:text-[#1DD1A1]"></i>
+            </div>
+            <h3 class="font-bold text-sm text-primary mb-2">Analisis Risiko</h3>
+            <p class="text-xs text-muted leading-relaxed">Model komputasi menganalisis kombinasi faktor kerentanan,
+              bahaya, dan kapasitas respons.</p>
+          </div>
+
+          <div class="text-center p-6 relative z-10 opacity-0 animate-fadeInUp delay-300">
+            <div
+              class="w-16 h-16 rounded-xl bg-gradient-to-br from-[#1DD1A1]/10 to-[#1DD1A1]/20 border-2 border-[#1DD1A1]/30 flex items-center justify-center mx-auto mb-5 relative">
+              <i data-lucide="bar-chart-2" class="w-7 h-7 text-[#1DD1A1]"></i>
+            </div>
+            <h3 class="font-bold text-sm text-primary mb-2">Visualisasi & Simulasi</h3>
+            <p class="text-xs text-muted leading-relaxed">Data disajikan dalam peta interaktif, grafik dinamis, dan
+              simulasi skenario.</p>
+          </div>
+
+          <div class="text-center p-6 relative z-10 opacity-0 animate-fadeInUp delay-400">
+            <div
+              class="w-16 h-16 rounded-xl bg-gradient-to-br from-[#1DD1A1]/10 to-[#1DD1A1]/20 border-2 border-[#1DD1A1]/30 flex items-center justify-center mx-auto mb-5 relative">
+              <i data-lucide="check-circle" class="w-7 h-7 text-[#1DD1A1]"></i>
+            </div>
+            <h3 class="font-bold text-sm text-primary mb-2">Rekomendasi Aksi</h3>
+            <p class="text-xs text-muted leading-relaxed">Sistem menghasilkan rekomendasi tindakan spesifik berdasarkan
+              tingkat risiko.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-bg rounded-2xl p-8 shadow-lg mb-14 opacity-0 animate-fadeInUp">
+        <h2 class="font-bold text-xl text-primary mb-1">Sumber Data Terintegrasi</h2>
+        <p class="text-sm text-muted mb-6">Platform ini menggunakan data dari lembaga-lembaga resmi dan terpercaya
+          Indonesia</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div
+            class="item-bg rounded-xl p-5 border-2 border-[#1DD1A1]/20 flex gap-4 items-center hover-lift cursor-default opacity-0 animate-fadeInUp delay-100">
+            <div
+              class="w-12 h-12 rounded-xl bg-[#0A3D62]/10 dark:bg-[#1DD1A1]/10 flex items-center justify-center shrink-0 font-extrabold text-sm text-[#0A3D62] dark:text-[#1DD1A1]">
+              BM</div>
+            <div>
+              <div class="font-bold text-sm text-primary mb-0.5">BMKG</div>
+              <div class="text-xs text-muted mb-1">Badan Meteorologi Klimatologi dan Geofisika</div>
+              <span
+                class="bg-[#0A3D62]/10 dark:bg-[#1DD1A1]/10 text-[#0A3D62] dark:text-[#1DD1A1] text-[10px] font-bold px-2 py-0.5 rounded-full">Cuaca
+                & Gempa</span>
+            </div>
+          </div>
+
+          <div
+            class="item-bg rounded-xl p-5 border-2 border-[#1DD1A1]/20 flex gap-4 items-center hover-lift cursor-default opacity-0 animate-fadeInUp delay-200">
+            <div
+              class="w-12 h-12 rounded-xl bg-[#1DD1A1]/10 flex items-center justify-center shrink-0 font-extrabold text-sm text-[#1DD1A1]">
+              BN</div>
+            <div>
+              <div class="font-bold text-sm text-primary mb-0.5">BNPB</div>
+              <div class="text-xs text-muted mb-1">Badan Nasional Penanggulangan Bencana</div>
+              <span class="bg-[#1DD1A1]/10 text-[#1DD1A1] text-[10px] font-bold px-2 py-0.5 rounded-full">Data
+                Kebencanaan</span>
+            </div>
+          </div>
+
+          <div
+            class="item-bg rounded-xl p-5 border-2 border-[#1DD1A1]/20 flex gap-4 items-center hover-lift cursor-default opacity-0 animate-fadeInUp delay-300">
+            <div
+              class="w-12 h-12 rounded-xl bg-[#1DD1A1]/10 flex items-center justify-center shrink-0 font-extrabold text-sm text-[#1DD1A1]">
+              PV</div>
+            <div>
+              <div class="font-bold text-sm text-primary mb-0.5">PVMBG</div>
+              <div class="text-xs text-muted mb-1">Pusat Vulkanologi Mitigasi Bencana Geologi</div>
+              <span class="bg-[#1DD1A1]/10 text-[#1DD1A1] text-[10px] font-bold px-2 py-0.5 rounded-full">Geologi &
+                Vulkanologi</span>
+            </div>
+          </div>
+
+          <div
+            class="item-bg rounded-xl p-5 border-2 border-[#1DD1A1]/20 flex gap-4 items-center hover-lift cursor-default opacity-0 animate-fadeInUp delay-400">
+            <div
+              class="w-12 h-12 rounded-xl bg-[#1DD1A1]/10 flex items-center justify-center shrink-0 font-extrabold text-sm text-[#1DD1A1]">
+              BI</div>
+            <div>
+              <div class="font-bold text-sm text-primary mb-0.5">BIG</div>
+              <div class="text-xs text-muted mb-1">Badan Informasi Geospasial</div>
+              <span class="bg-[#1DD1A1]/10 text-[#1DD1A1] text-[10px] font-bold px-2 py-0.5 rounded-full">Peta &
+                Spasial</span>
+            </div>
+          </div>
+
+          <div
+            class="item-bg rounded-xl p-5 border-2 border-[#1DD1A1]/20 flex gap-4 items-center hover-lift cursor-default opacity-0 animate-fadeInUp delay-500">
+            <div
+              class="w-12 h-12 rounded-xl bg-[#1DD1A1]/10 flex items-center justify-center shrink-0 font-extrabold text-sm text-[#1DD1A1]">
+              BP</div>
+            <div>
+              <div class="font-bold text-sm text-primary mb-0.5">BPBD</div>
+              <div class="text-xs text-muted mb-1">Badan Penanggulangan Bencana Daerah</div>
+              <span class="bg-[#1DD1A1]/10 text-[#1DD1A1] text-[10px] font-bold px-2 py-0.5 rounded-full">Data
+                Daerah</span>
+            </div>
+          </div>
+
+          <div
+            class="item-bg rounded-xl p-5 border-2 border-[#1DD1A1]/20 flex gap-4 items-center hover-lift cursor-default opacity-0 animate-fadeInUp delay-600">
+            <div
+              class="w-12 h-12 rounded-xl bg-[#1565a0]/10 dark:bg-[#1DD1A1]/10 flex items-center justify-center shrink-0 font-extrabold text-sm text-[#1565a0] dark:text-[#1DD1A1]">
+              LA</div>
+            <div>
+              <div class="font-bold text-sm text-primary mb-0.5">LAPAN</div>
+              <div class="text-xs text-muted mb-1">Lembaga Penerbangan dan Antariksa</div>
+              <span
+                class="bg-[#1565a0]/10 dark:bg-[#1DD1A1]/10 text-[#1565a0] dark:text-[#1DD1A1] text-[10px] font-bold px-2 py-0.5 rounded-full">Remote
+                Sensing</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-14 opacity-0 animate-fadeInUp">
+        <div class="text-center mb-8">
+          <h2 class="font-bold text-2xl md:text-3xl text-primary mb-2">Platform Ini Untuk Siapa?</h2>
+          <p class="text-sm text-muted">Ruang Aman dirancang untuk semua kalangan yang peduli keselamatan</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="card-bg rounded-xl p-6 border shadow-sm hover-lift opacity-0 animate-fadeInUp delay-100">
+            <div
+              class="w-12 h-12 rounded-xl bg-[#0A3D62]/10 dark:bg-[#1DD1A1]/10 flex items-center justify-center mb-4">
+              <i data-lucide="users" class="w-6 h-6 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
+            </div>
+            <h3 class="font-bold text-sm text-primary mb-2">Masyarakat Umum</h3>
+            <p class="text-xs text-muted leading-relaxed">Masyarakat yang ingin mengetahui risiko dan cara melindungi
+              diri dan keluarga.</p>
+          </div>
+
+          <div class="card-bg rounded-xl p-6 border shadow-sm hover-lift opacity-0 animate-fadeInUp delay-200">
+            <div
+              class="w-12 h-12 rounded-xl bg-[#0A3D62]/10 dark:bg-[#1DD1A1]/10 flex items-center justify-center mb-4">
+              <i data-lucide="building-2" class="w-6 h-6 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
+            </div>
+            <h3 class="font-bold text-sm text-primary mb-2">Pemerintah Daerah</h3>
+            <p class="text-xs text-muted leading-relaxed">BPBD dan dinas terkait untuk perencanaan kesiapsiagaan dan
+              evakuasi berbasis data.</p>
+          </div>
+
+          <div class="card-bg rounded-xl p-6 border shadow-sm hover-lift opacity-0 animate-fadeInUp delay-300">
+            <div
+              class="w-12 h-12 rounded-xl bg-[#0A3D62]/10 dark:bg-[#1DD1A1]/10 flex items-center justify-center mb-4">
+              <i data-lucide="graduation-cap" class="w-6 h-6 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
+            </div>
+            <h3 class="font-bold text-sm text-primary mb-2">Peneliti & Akademisi</h3>
+            <p class="text-xs text-muted leading-relaxed">Ilmuwan dan peneliti yang membutuhkan visualisasi data
+              kebencanaan berbasis air.</p>
+          </div>
+
+          <div class="card-bg rounded-xl p-6 border shadow-sm hover-lift opacity-0 animate-fadeInUp delay-400">
+            <div
+              class="w-12 h-12 rounded-xl bg-[#0A3D62]/10 dark:bg-[#1DD1A1]/10 flex items-center justify-center mb-4">
+              <i data-lucide="globe" class="w-6 h-6 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
+            </div>
+            <h3 class="font-bold text-sm text-primary mb-2">Lembaga Kemanusiaan</h3>
+            <p class="text-xs text-muted leading-relaxed">NGO dan lembaga kemanusiaan untuk koordinasi respons dan
+              mitigasi bencana.</p>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-[#0A3D62] to-[#1565a0] rounded-2xl p-10 md:p-16 text-center relative overflow-hidden opacity-0 animate-fadeInUp">
+        <div class="absolute -top-20 -right-20 w-[300px] h-[300px] rounded-full bg-[#1DD1A1]/5"></div>
+        <div class="relative">
+          <h2 class="font-extrabold text-2xl md:text-3xl text-white mb-4 leading-tight">
+            Mulai Gunakan Ruang Aman
+            <span class="bg-gradient-to-r from-[#1DD1A1] to-[#7efdd8] bg-clip-text text-transparent">Sekarang</span>
+          </h2>
+          <p class="text-white/65 text-sm max-w-md mx-auto mb-8 leading-relaxed">Lindungi diri dan keluarga Anda dengan
+            pengetahuan yang tepat. Platform ini gratis untuk semua.</p>
+          <div class="flex gap-4 justify-center flex-wrap">
+            <a href="cek-risiko.html"
+              class="inline-flex items-center gap-2 bg-gradient-to-r from-[#1DD1A1] to-[#17b88d] text-[#0A3D61] font-bold text-sm px-7 py-4 rounded-xl shadow-lg hover:shadow-[0_4px_20px_rgba(29,209,161,0.4)] transition-all">
+              <i data-lucide="shield" class="w-4 h-4"></i>
+              Cek Risiko Wilayah
+            </a>
+            <a href="edukasi.html"
+              class="inline-flex items-center gap-2 bg-white/10 border border-white/25 text-white font-semibold text-sm px-7 py-4 rounded-xl hover:bg-white/20 transition-all">
+              Panduan Keselamatan <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer-section text-white pt-20">
+    <div class="max-w-7xl mx-auto px-6 pb-20 grid grid-cols-1 md:grid-cols-4 gap-12">
+      <div class="col-span-1 md:col-span-1">
+        <div class="flex items-center gap-3 mb-6">
+          <div
+            class="w-10 h-10 rounded-[12px] bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center shadow-lg overflow-hidden">
+            <img src="logo_putih.png" alt="Logo" class="w-12 h-12 object-contain p-2" />
+          </div>
+          <div class="font-extrabold text-lg">RUANG AMAN</div>
+        </div>
+        <p class="text-white/50 text-sm leading-relaxed">Platform terpadu untuk analisis dan informasi risiko bencana
+          berbasis air guna mendukung kesiapsiagaan masyarakat.</p>
+      </div>
+      <div>
+        <h5 class="font-bold mb-6">Navigasi</h5>
+        <ul class="space-y-4 text-sm text-white/50">
+          <li><a href="cek-risiko.html" class="hover:text-[#1DD1A1] transition-colors">Cek Risiko</a></li>
+          <li><a href="peta.html" class="hover:text-[#1DD1A1] transition-colors">Peta Interaktif</a></li>
+          <li><a href="edukasi.html" class="hover:text-[#1DD1A1] transition-colors">Panduan Edukasi</a></li>
+          <li><a href="simulasi.html" class="hover:text-[#1DD1A1] transition-colors">Simulasi</a></li>
+          <li><a href="about.html" class="hover:text-[#1DD1A1] transition-colors">About</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="font-bold mb-6">Kontak</h5>
+        <ul class="space-y-4 text-sm text-white/50">
+          <li class="flex gap-2">
+            <i data-lucide="mail" class="w-4 text-[#1DD1A1] shrink-0"></i>
+            info@ruangaman.go.id
+          </li>
+          <li class="flex gap-2"><i data-lucide="phone" class="w-4 text-[#1DD1A1] shrink-0"></i> +62 21 1234 5678</li>
+        </ul>
+      </div>
+      <div>
+        <div class="bg-[#1DD1A1]/10 border border-[#1DD1A1]/20 p-6 rounded-2xl">
+          <div class="text-[10px] font-bold text-[#1DD1A1] uppercase mb-1">Darurat</div>
+          <div class="text-3xl font-black">117</div>
+          <div class="text-[10px] text-white/40 mt-1 uppercase">BNPB Response</div>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-white/5 py-8 text-center text-[11px] text-white/30">© 2026 RUANG AMAN. Water-Related
+      Disasters Safety Platform Indonesia.</div>
+  </footer>
+
+  <script>
+    function refreshIcons() {
+      if (typeof lucide !== "undefined") {
+        lucide.createIcons();
       }
+    }
 
-      function initWithRetry(retries = 3) {
-        refreshIcons();
+    function initWithRetry(retries = 3) {
+      refreshIcons();
 
-        if (retries > 0) {
-          setTimeout(() => initWithRetry(retries - 1), 300);
-        }
+      if (retries > 0) {
+        setTimeout(() => initWithRetry(retries - 1), 300);
       }
+    }
 
-      document.addEventListener("DOMContentLoaded", () => {
-        setTimeout(initWithRetry, 100);
-      });
+    document.addEventListener("DOMContentLoaded", () => {
+      setTimeout(initWithRetry, 100);
+    });
 
-      window.addEventListener("load", () => setTimeout(refreshIcons, 200));
+    window.addEventListener("load", () => setTimeout(refreshIcons, 200));
 
-      document.addEventListener("click", (e) => {
-        if (e.target.closest('button[\\@click="mobileOpen = !mobileOpen"]')) {
-          setTimeout(refreshIcons, 200);
-        }
-      });
+    document.addEventListener("click", (e) => {
+      if (e.target.closest('button[\\@click="mobileOpen = !mobileOpen"]')) {
+        setTimeout(refreshIcons, 200);
+      }
+    });
 
-      document.addEventListener("click", (e) => {
-        if (e.target.closest('button[\\@click="toggleTheme()"]')) {
-          setTimeout(refreshIcons, 200);
-        }
-      });
-    </script>
-  </body>
+    document.addEventListener("click", (e) => {
+      if (e.target.closest('button[\\@click="toggleTheme()"]')) {
+        setTimeout(refreshIcons, 200);
+      }
+    });
+  </script>
+</body>
+
 </html>

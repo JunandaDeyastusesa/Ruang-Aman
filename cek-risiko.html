@@ -31,14 +31,13 @@
 
 <body x-data="riskApp()" @scroll.window="scrolled = (window.pageYOffset > 20)" :class="darkMode ? 'dark' : ''"
   class="page-bg">
-  <!-- NAVBAR -->
   <nav :class="scrolled ? 'bg-[#0A3D62]/95 border-b border-[#1DD1A1]/20 shadow-lg' : 'bg-[#0A3D62]'"
     class="fixed top-0 left-0 right-0 z-[1000] backdrop-blur-md transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 h-[68px] flex items-center justify-between gap-3">
       <a href="#" class="flex items-center gap-3 shrink-0">
         <div
           class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center shadow-lg">
-          <i data-lucide="shield" class="text-white w-5 h-5"></i>
+          <img src="logo_putih.png" alt="Logo" class="w-12 h-12 object-contain p-2" />
         </div>
         <div class="text-white">
           <div class="font-extrabold text-base leading-none">RUANG AMAN</div>
@@ -120,10 +119,9 @@
     </div>
   </nav>
 
-  <!-- MAIN CONTENT -->
   <main class="pt-[68px]">
     <div class="bg-[#0A3D62] px-6 pt-12 pb-16 md:px-8">
-      <div class="max-w-7xl mx-auto">
+      <div class="max-w-6xl mx-auto">
         <div class="animate-fade-slide opacity-0">
           <div
             class="inline-flex items-center gap-2 bg-[rgba(29,209,161,0.12)] border border-[rgba(29,209,161,0.25)] rounded-full px-4 py-1.5 mb-4">
@@ -137,17 +135,14 @@
       </div>
     </div>
 
-    <!-- Content -->
-    <div class="max-w-7xl mx-auto -mt-10 px-4 md:px-6 pb-20">
+    <div class="max-w-6xl mx-auto -mt-10 px-4 md:px-6 pb-20">
       <div class="grid grid-cols-1 gap-8" :class="{'lg:grid-cols-2': result, 'lg:grid-cols-1': !result}"
         class="risk-grid transition-all duration-300">
-        <!-- Input Panel -->
         <div class="card-bg rounded-2xl p-4 sm:p-6 md:p-8 shadow-lg border border-default transition-all">
           <h2 class="font-bold text-lg text-primary mb-1">Pilih Wilayah & Bencana</h2>
           <p class="text-sm text-secondary mb-7">Masukkan informasi di bawah untuk memulai analisis risiko bencana.</p>
 
           <div class="space-y-5">
-            <!-- Wilayah Select -->
             <div>
               <label class="flex items-center gap-2 font-semibold text-xs text-primary mb-2 uppercase tracking-wide">
                 <i data-lucide="map-pin" class="w-3.5 h-3.5 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
@@ -166,7 +161,6 @@
               </div>
             </div>
 
-            <!-- Bencana Selector -->
             <div>
               <label class="flex items-center gap-2 font-semibold text-xs text-primary mb-3 uppercase tracking-wide">
                 <i data-lucide="activity" class="w-3.5 h-3.5 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
@@ -185,7 +179,6 @@
               </div>
             </div>
 
-            <!-- Analyze Button -->
             <button @click="handleAnalysis" :disabled="!wilayah || !bencana || loading"
               :class="!wilayah || !bencana ? 'bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed' : 'bg-gradient-to-r from-[#0A3D62] to-[#1565a0] text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5'"
               class="w-full p-4 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 mt-2 touch-target min-h-[52px]">
@@ -204,7 +197,6 @@
             </button>
           </div>
 
-          <!-- Info Note -->
           <div
             class="mt-5 p-3 bg-[rgba(10,61,98,0.04)] dark:bg-[rgba(29,209,161,0.1)] rounded-lg flex gap-2.5 items-start">
             <i data-lucide="info" class="w-4 h-4 text-[#0A3D62] dark:text-[#1DD1A1] flex-shrink-0 mt-0.5"></i>
@@ -213,10 +205,8 @@
           </div>
         </div>
 
-        <!-- Result Panel -->
         <template x-if="result && levelConf">
           <div class="card-bg rounded-2xl overflow-hidden shadow-lg border border-default animate-slide-in">
-            <!-- Result Header -->
             <div class="p-4 sm:p-6 md:p-7 border-b-4"
               :style="{ background: result.bgColor, borderBottomColor: result.color }">
               <div class="flex gap-3 items-start mb-4">
@@ -232,7 +222,6 @@
                 </div>
               </div>
 
-              <!-- Risk Index Bar -->
               <div>
                 <div class="flex justify-between items-center mb-2">
                   <span class="text-xs font-semibold text-secondary uppercase tracking-wide">Indeks Risiko</span>
@@ -253,7 +242,6 @@
               </div>
             </div>
 
-            <!-- Tabs -->
             <div class="flex border-b border-default">
               <button @click="activeTab = 'detail'"
                 :class="activeTab === 'detail' ? 'text-[#0A3D62] dark:text-[#1DD1A1] border-b-2 border-[#0A3D62] dark:border-[#1DD1A1] font-semibold' : 'text-muted'"
@@ -269,9 +257,7 @@
               </button>
             </div>
 
-            <!-- Tab Content -->
             <div class="p-4 sm:p-6 md:p-7">
-              <!-- Detail Tab -->
               <template x-if="activeTab === 'detail'">
                 <div class="animate-fade-up">
                   <p class="text-sm text-primary leading-relaxed mb-5" x-text="result.description"></p>
@@ -287,7 +273,6 @@
                 </div>
               </template>
 
-              <!-- Actions Tab -->
               <template x-if="activeTab === 'actions'">
                 <div class="animate-fade-up">
                   <div class="text-xs font-bold text-[#0A3D62] dark:text-[#1DD1A1] uppercase tracking-wide mb-4">
@@ -312,7 +297,6 @@
         </template>
       </div>
 
-      <!-- Risk Level Guide -->
       <div class="mt-8 card-bg rounded-2xl p-4 sm:p-6 md:p-8 shadow-md border border-default">
         <h3 class="font-bold text-base text-primary mb-4">Panduan Tingkat Risiko</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
@@ -334,9 +318,8 @@
     </div>
   </main>
 
-  <!-- FOOTER -->
   <footer class="bg-[#1B262C] text-white pt-16 sm:pt-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 pb-16 sm:pb-20 grid grid-cols-1 md:grid-cols-4 gap-8 sm:gap-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 pb-16 sm:pb-20 grid grid-cols-1 md:grid-cols-4 gap-8 sm:gap-12">
       <div class="col-span-1 md:col-span-1">
         <div class="flex items-center gap-3 mb-6">
           <div

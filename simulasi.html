@@ -11,7 +11,6 @@
     rel="stylesheet" />
   <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="stylesheet" href="style.css" />
-  <!-- Chart.js untuk grafik -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
   <script>
@@ -147,7 +146,6 @@
       background-color: var(--footer-bg);
     }
 
-    /* Custom slider styling */
     .custom-slider {
       -webkit-appearance: none;
       appearance: none;
@@ -253,14 +251,13 @@
         }, 50);
     }
 }" @scroll.window="scrolled = (window.pageYOffset > 20)">
-  <!-- Navbar -->
   <nav :class="scrolled ? 'bg-[#0A3D62]/95 border-b border-[#1DD1A1]/20 shadow-lg' : 'bg-[#0A3D62]'"
     class="fixed top-0 left-0 right-0 z-[1000] backdrop-blur-md transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 h-[68px] flex items-center justify-between gap-3">
       <a href="#" class="flex items-center gap-3 shrink-0">
         <div
           class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center shadow-lg">
-          <i data-lucide="shield" class="text-white w-5 h-5"></i>
+          <img src="logo_putih.png" alt="Logo" class="w-12 h-12 object-contain p-2" />
         </div>
         <div class="text-white">
           <div class="font-extrabold text-base leading-none">RUANG AMAN</div>
@@ -304,7 +301,6 @@
       </button>
     </div>
 
-    <!-- Mobile Menu -->
     <div x-show="mobileOpen" x-transition:enter="transition ease-out duration-200"
       x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
       x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0"
@@ -343,9 +339,7 @@
     </div>
   </nav>
 
-  <!-- Main Content: Simulasi Dampak Bencana -->
   <div class="pt-[68px]">
-    <!-- Header Section -->
     <div class="bg-[#0A3D62] px-6 pt-16 pb-20 md:px-8">
       <div class="max-w-6xl mx-auto">
         <div class="opacity-0 animate-[fadeInUp_0.6s_ease_forwards]">
@@ -361,12 +355,9 @@
       </div>
     </div>
 
-    <!-- Konten utama (overlap) -->
     <div class="max-w-6xl mx-auto px-4 md:px-6 -mt-14 pb-20">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-        <!-- KIRI: kontrol slider + skenario -->
         <div class="space-y-5">
-          <!-- Slider panel -->
           <div class="card-bg rounded-2xl p-7 shadow-lg animate-[slideInLeft_0.5s_ease]">
             <div class="flex justify-between items-center mb-7">
               <h2 class="font-bold text-primary text-lg">Parameter Simulasi</h2>
@@ -377,7 +368,6 @@
             </div>
 
             <div class="space-y-6">
-              <!-- Curah Hujan -->
               <div class="item-bg border rounded-xl p-6">
                 <div class="flex items-center justify-between mb-4">
                   <div class="flex items-center gap-2.5">
@@ -412,7 +402,6 @@
                 </div>
               </div>
 
-              <!-- Pasang Laut -->
               <div class="item-bg border rounded-xl p-6">
                 <div class="flex items-center justify-between mb-4">
                   <div class="flex items-center gap-2.5">
@@ -448,7 +437,6 @@
               </div>
             </div>
 
-            <!-- info kecil -->
             <div class="mt-4 bg-[#0A3D62]/5 dark:bg-[#1DD1A1]/10 rounded-lg p-3 flex gap-2.5 items-start">
               <i data-lucide="info" class="w-4 h-4 text-[#0A3D62] dark:text-[#1DD1A1] shrink-0 mt-0.5"></i>
               <p class="text-xs text-muted leading-relaxed">Geser slider untuk mengubah parameter. Output diperbarui
@@ -456,7 +444,6 @@
             </div>
           </div>
 
-          <!-- Skenario Cepat -->
           <div class="card-bg rounded-2xl p-6 shadow-lg animate-[slideInLeft_0.5s_0.1s_ease_both]">
             <div class="flex items-center gap-2 mb-5">
               <i data-lucide="timer" class="w-5 h-5 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
@@ -496,9 +483,7 @@
           </div>
         </div>
 
-        <!-- KANAN: estimasi dampak + grafik -->
         <div class="space-y-5">
-          <!-- Estimasi Dampak card -->
           <div id="impactCard" class="card-bg rounded-2xl p-7 shadow-lg border-t-4" style="border-top-color: #1dd1a1">
             <div class="flex justify-between items-center mb-6">
               <h2 class="font-bold text-primary">Estimasi Dampak</h2>
@@ -506,7 +491,6 @@
                 class="bg-[#1DD1A1] text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wide">Rendah</span>
             </div>
 
-            <!-- Meter visual + ketinggian -->
             <div id="meterContainer" class="rounded-2xl p-5 mb-5 flex gap-5 items-center"
               style="background: rgba(29, 209, 161, 0.08); border: 1px solid rgba(29, 209, 161, 0.25)">
               <div class="w-14 h-24 rounded-xl border-2 relative overflow-hidden shrink-0"
@@ -526,9 +510,7 @@
               </div>
             </div>
 
-            <!-- 3 statistik kecil - DIEDIT untuk dark mode -->
             <div class="grid grid-cols-3 gap-3">
-              <!-- Card Terdampak - Border hijau -->
               <div class="stat-bg border rounded-xl p-3 text-center dark:border-gray-700"
                 style="border: 1px solid var(--border-card)">
                 <i data-lucide="alert-triangle" class="w-5 h-5 mx-auto mb-1.5 text-[#1DD1A1]"></i>
@@ -536,47 +518,72 @@
                   <span id="affected">3.600</span>
                   <span class="text-[10px] font-normal">jiwa</span>
                 </div>
-                <div class="text-[11px] text-muted dark:text-gray-400">Terdampak</div>
+                <div class="text-[11px] text-muted dark:text-gray-500">Terdampak</div>
               </div>
 
-              <!-- Card Durasi - Border biru -->
-              <div class="stat-bg rounded-xl p-3 text-center dark:border-gray-700"
+              <div class="stat-bg rounded-xl p-3 text-center dark:border-gray-700 relative group"
                 style="border: 1px solid var(--border-card)">
+
+                <div class="absolute top-2 right-2">
+                  <div class="relative inline-block">
+                    <i data-lucide="info"
+                      class="w-3.5 h-3.5 text-muted dark:text-gray-500 cursor-help hover:text-[#0A3D62] dark:hover:text-[#1DD1A1] transition-colors"></i>
+                    <div
+                      class="absolute bottom-full right-0 mb-2 w-56 p-2 bg-gray-900 text-white text-xs rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 pointer-events-none">
+                      <div class="leading-relaxed text-gray-300">
+                        Perkiraan durasi banjir berdasarkan intensitas hujan dan pasang laut.
+                      </div>
+                      <div class="absolute bottom-0 right-3 translate-y-full w-2 h-2 bg-gray-900 rotate-45"></div>
+                    </div>
+                  </div>
+                </div>
+
                 <i data-lucide="activity" class="w-5 h-5 mx-auto mb-1.5 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
                 <div class="font-bold text-base text-[#1E293B] dark:text-white">
                   <span id="duration">9</span> <span class="text-[10px] font-normal">jam</span>
                 </div>
-                <div class="text-[11px] text-muted dark:text-gray-400">Durasi</div>
+                <div class="text-[11px] text-muted dark:text-gray-500">Durasi</div>
               </div>
 
-              <!-- Card Infrastruktur - Border abu-abu -->
-              <div class="stat-bg rounded-xl p-3 text-center dark:border-gray-700"
+              <div class="stat-bg rounded-xl p-3 text-center dark:border-gray-700 relative group"
                 style="border: 1px solid var(--border-card)">
-                <i data-lucide="trending-up" class="w-5 h-5 mx-auto mb-1.5 text-[#6B7C8A] dark:text-gray-400"></i>
+                <div class="absolute top-2 right-2">
+                  <div class="relative inline-block">
+                    <i data-lucide="info"
+                      class="w-3.5 h-3.5 text-muted dark:text-gray-500 cursor-help hover:text-[#0A3D62] dark:hover:text-[#1DD1A1] transition-colors"></i>
+                    <div
+                      class="absolute bottom-full right-0 mb-2 w-56 p-2 bg-gray-900 text-white text-xs rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 pointer-events-none">
+                      <div class="leading-relaxed text-gray-300">
+                        Jumlah infrastruktur terdampak (jalan, jembatan, sekolah, faskes, gardu listrik, dll).
+                      </div>
+                      <div class="absolute bottom-0 right-3 translate-y-full w-2 h-2 bg-gray-900 rotate-45"></div>
+                    </div>
+                  </div>
+                </div>
+                <i data-lucide="trending-up" class="w-5 h-5 mx-auto mb-1.5 text-[#6B7C8A] dark:text-gray-500"></i>
                 <div class="font-bold text-base text-[#1E293B] dark:text-white">
                   <span id="infra">24</span> <span class="text-[10px] font-normal">titik</span>
                 </div>
-                <div class="text-[11px] text-muted dark:text-gray-400">Infrastruktur</div>
+                <div class="text-[11px] text-muted dark:text-gray-500">Infrastruktur</div>
               </div>
             </div>
           </div>
 
-          <!-- Grafik proyeksi -->
           <div class="card-bg rounded-2xl p-6 shadow-lg">
             <div class="flex items-center gap-2 mb-5">
               <i data-lucide="bar-chart-2" class="w-5 h-5 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
               <h3 class="font-bold text-primary">Proyeksi 24 Jam Ke Depan</h3>
             </div>
-            <div class="w-full h-48">
+            <div class="w-full h-80">
               <canvas id="floodChart"></canvas>
             </div>
             <div class="flex gap-5 justify-center mt-4 text-xs">
               <div class="flex items-center gap-1.5"><span id="legendLine1" class="w-5 h-0.5 rounded"
-                  style="background: #1dd1a1"></span><span class="text-muted dark:text-gray-400">Ketinggian
+                  style="background: #1dd1a1"></span><span class="text-muted dark:text-gray-500">Ketinggian
                   Genangan</span></div>
               <div class="flex items-center gap-1.5"><span id="legendLine2"
-                  class="w-5 h-0.5 rounded bg-[#0A3D62] dark:bg-white"></span><span
-                  class="text-muted dark:text-gray-400">Intensitas Hujan</span></div>
+                  class="w-5 h-0.5 rounded dark:bg-white"></span><span class="text-muted dark:text-gray-500">Intensitas
+                  Hujan</span></div>
             </div>
           </div>
         </div>
@@ -584,7 +591,6 @@
     </div>
   </div>
 
-  <!-- Footer -->
   <footer class="footer-section text-white pt-20">
     <div class="max-w-7xl mx-auto px-6 pb-20 grid grid-cols-1 md:grid-cols-4 gap-12">
       <div class="col-span-1 md:col-span-1">
@@ -631,7 +637,6 @@
   </footer>
 
   <script>
-    // Fungsi untuk update warna chart berdasarkan mode
     function updateChartColors() {
       if (!chart) return;
       const isDark = document.documentElement.classList.contains('dark');
@@ -639,13 +644,11 @@
       chart.options.scales.x.ticks.color = isDark ? "#9CA3AF" : "#9aabb5";
       chart.options.scales.y.ticks.color = isDark ? "#9CA3AF" : "#9aabb5";
 
-      // Update line Intensitas Hujan di dark mode menjadi putih
       if (chart.data.datasets[1]) {
         chart.data.datasets[1].borderColor = isDark ? "#FFFFFF" : "#0A3D62";
         chart.data.datasets[1].backgroundColor = isDark ? "#FFFFFF20" : "#0A3D6220";
       }
 
-      // Update legend Intensitas Hujan
       const legendLine2 = document.getElementById("legendLine2");
       if (legendLine2) {
         legendLine2.style.backgroundColor = isDark ? "#FFFFFF" : "#0A3D62";
@@ -654,7 +657,6 @@
       chart.update();
     }
 
-    // Inisialisasi ikon lucide
     function refreshIcons() {
       if (typeof lucide !== "undefined") {
         lucide.createIcons();
@@ -669,7 +671,6 @@
       }
     }
 
-    // Konfigurasi tingkat dampak
     const IMPACT_CONFIG = {
       rendah: { label: "Rendah", color: "#1DD1A1", bg: "rgba(29,209,161,0.08)", desc: "Kondisi normal, dampak minimal" },
       sedang: { label: "Sedang", color: "#FFC312", bg: "rgba(255,195,18,0.08)", desc: "Genangan ringan di beberapa titik" },
@@ -677,7 +678,6 @@
       ekstrem: { label: "Ekstrem", color: "#EE5253", bg: "rgba(238,82,83,0.08)", desc: "Banjir besar, evakuasi menyeluruh" },
     };
 
-    // Fungsi menghitung dampak
     function calculateImpact(rain, tide) {
       const score = rain * 0.6 + tide * 0.4;
       let level, floodHeight, affected, duration, infrastructure;
@@ -709,7 +709,6 @@
       return { level, floodHeight, affected, duration, infrastructure };
     }
 
-    // Fungsi generate data chart
     function generateChartData(rain, tide) {
       const labels = [];
       const ketinggian = [];
@@ -725,7 +724,6 @@
       return { labels, ketinggian, hujan };
     }
 
-    // DOM Elements
     const rainSlider = document.getElementById("rainSlider");
     const tideSlider = document.getElementById("tideSlider");
     const rainValue = document.getElementById("rainValue");
@@ -746,7 +744,6 @@
     const legendLine1 = document.getElementById("legendLine1");
     const impactCard = document.getElementById("impactCard");
 
-    // Chart initialization
     const ctx = document.getElementById("floodChart").getContext("2d");
     let chart;
 
@@ -788,16 +785,37 @@
               backgroundColor: "#1B262C",
               titleColor: "white",
               bodyColor: "#ddd",
+              callbacks: {
+                label: function (context) {
+                  let label = context.dataset.label || '';
+                  let value = context.raw;
+                  return `${label}: ${value} ${context.dataset.label === 'Ketinggian (cm)' ? 'cm' : 'mm'}`;
+                }
+              }
             },
           },
           scales: {
             x: {
               grid: { display: false },
-              ticks: { color: "#9aabb5", font: { size: 10 } },
+              ticks: { color: "#9aabb5", font: { size: 12 } },
+              title: {
+                display: true,
+                text: 'Waktu (Jam)',
+                color: document.documentElement.classList.contains("dark") ? "#9CA3AF" : "#6B7280",
+                font: { size: 12, weight: 'normal' },
+                padding: { top: 8 }
+              }
             },
             y: {
               grid: { color: document.documentElement.classList.contains("dark") ? "#1f3a52" : "#f0f2f4" },
-              ticks: { color: "#9aabb5", font: { size: 10 } },
+              ticks: { color: "#9aabb5", font: { size: 12 } },
+              title: {
+                display: true,
+                text: 'Ketinggian genangan (cm)',
+                color: document.documentElement.classList.contains("dark") ? "#9CA3AF" : "#6B7280",
+                font: { size: 12, weight: 'normal' },
+                padding: { bottom: 8 }
+              }
             },
           },
         },
@@ -805,13 +823,11 @@
       updateChartColors();
     }
 
-    // Fungsi update UI (dibuat global agar bisa diakses dari Alpine)
     window.updateUI = function () {
       const rain = parseInt(rainSlider.value, 10);
       const tide = parseInt(tideSlider.value, 10);
       const isDark = document.documentElement.classList.contains('dark');
 
-      // update angka & slider fill
       rainValue.textContent = rain;
       tideValue.textContent = tide;
       const rainPct = (rain / 100) * 100;
@@ -821,48 +837,38 @@
       rainThumb.style.left = `calc(${rainPct}% - 8px)`;
       tideThumb.style.left = `calc(${tidePct}% - 8px)`;
 
-      // impact calculation
       const impact = calculateImpact(rain, tide);
       const cfg = IMPACT_CONFIG[impact.level];
 
-      // Update card utama
       impactCard.style.borderTopColor = cfg.color;
 
-      // Update badge
       levelBadge.textContent = cfg.label.toUpperCase();
       levelBadge.style.backgroundColor = cfg.color;
 
-      // Update meter container
       meterContainer.style.backgroundColor = cfg.bg;
       meterContainer.style.borderColor = cfg.color + "40";
 
-      // Update water fill
       waterFill.style.background = `linear-gradient(180deg, ${cfg.color}40, ${cfg.color})`;
       waterFill.style.height = Math.min((impact.floodHeight / 200) * 100, 100) + "%";
 
-      // Update border water meter
       const waterMeterBox = meterContainer.querySelector(".w-14");
       if (waterMeterBox) {
         waterMeterBox.style.borderColor = cfg.color + "40";
       }
 
-      // Update ikon droplets
       const meterIcon = meterContainer.querySelector('[data-lucide="droplets"]');
       if (meterIcon) {
         meterIcon.style.color = cfg.color;
       }
 
-      // Update teks ketinggian
       floodHeightSpan.innerHTML = impact.floodHeight + '<span class="text-base font-medium ml-0.5">cm</span>';
       floodHeightSpan.style.color = cfg.color;
       impactDesc.textContent = cfg.desc;
 
-      // Update angka statistik
       affectedSpan.textContent = impact.affected.toLocaleString();
       durationSpan.textContent = impact.duration;
       infraSpan.textContent = impact.infrastructure;
 
-      // Update card Terdampak
       const terdampakCard = document.querySelector("#impactCard .grid > div:first-child");
       if (terdampakCard) {
         const alertIcon = terdampakCard.querySelector('[data-lucide="alert-triangle"]');
@@ -871,7 +877,6 @@
         if (textDiv) textDiv.style.color = cfg.color;
       }
 
-      // Update card Durasi - FIX untuk dark mode
       const durasiCard = document.querySelector("#impactCard .grid > div:nth-child(2)");
       if (durasiCard) {
         const activityIcon = durasiCard.querySelector('[data-lucide="activity"]');
@@ -884,7 +889,6 @@
         }
       }
 
-      // Update card Infrastruktur - FIX untuk dark mode
       const infraCard = document.querySelector("#impactCard .grid > div:nth-child(3)");
       if (infraCard) {
         const trendIcon = infraCard.querySelector('[data-lucide="trending-up"]');
@@ -897,10 +901,8 @@
         }
       }
 
-      // Update legend chart
       legendLine1.style.backgroundColor = cfg.color;
 
-      // Update warna line Intensitas Hujan di chart
       if (chart) {
         chart.data.datasets[0].borderColor = cfg.color;
         chart.data.datasets[0].backgroundColor = cfg.color + "30";
@@ -916,13 +918,11 @@
         chart.update();
       }
 
-      // Re-render icons
       setTimeout(() => {
         refreshIcons();
       }, 10);
     };
 
-    // Debounced generate untuk chart
     let timeout;
     function debouncedGenerate() {
       clearTimeout(timeout);
@@ -938,7 +938,6 @@
       }, 250);
     }
 
-    // Event listeners
     rainSlider.addEventListener("input", () => {
       window.updateUI();
       debouncedGenerate();
@@ -956,7 +955,6 @@
       debouncedGenerate();
     });
 
-    // Preset buttons
     document.querySelectorAll(".preset-btn").forEach((btn) => {
       btn.addEventListener("click", (e) => {
         const preset = JSON.parse(btn.dataset.preset);
@@ -977,7 +975,6 @@
       });
     });
 
-    // Initialize
     document.addEventListener("DOMContentLoaded", () => {
       setTimeout(initWithRetry, 100);
       initChart();

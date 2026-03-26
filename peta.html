@@ -240,7 +240,7 @@
       <a href="#" class="flex items-center gap-3 shrink-0">
         <div
           class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1DD1A1] to-[#0A3D62] flex items-center justify-center shadow-lg">
-          <i data-lucide="shield" class="text-white w-5 h-5"></i>
+          <img src="logo_putih.png" alt="Logo" class="w-12 h-12 object-contain p-2" />
         </div>
         <div class="text-white">
           <div class="font-extrabold text-base leading-none">RUANG AMAN</div>
@@ -298,7 +298,7 @@
 
   <main class="pt-[68px]">
     <div class="bg-[#0A3D62] px-6 pt-12 pb-16 md:px-8">
-      <div class="max-w-7xl mx-auto">
+      <div class="max-w-6xl mx-auto">
         <div class="animate-fade-slide opacity-0">
           <div
             class="inline-flex items-center gap-2 bg-[rgba(29,209,161,0.12)] border border-[rgba(29,209,161,0.25)] rounded-full px-4 py-1.5 mb-4">
@@ -312,18 +312,9 @@
       </div>
     </div>
 
-    <div class="max-w-7xl mx-auto -mt-10 px-4 md:px-6 pb-20">
+    <div class="max-w-6xl mx-auto -mt-10 px-4 md:px-6 pb-20">
       <div class="grid grid-cols-1 lg:grid-cols-[280px,1fr] gap-5 items-start">
-        <!-- SIDEBAR -->
         <div class="flex flex-col gap-4">
-          <div class="card-bg rounded-xl shadow-md p-5 border border-default animate-fade-left opacity-0">
-            <div class="flex items-center gap-2 mb-4">
-              <i data-lucide="layers" class="w-4 h-4 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
-              <h3 class="font-bold text-sm text-primary">Navigasi</h3>
-            </div>
-            <div id="layerControls" class="space-y-2.5"></div>
-          </div>
-
           <div class="card-bg rounded-xl shadow-md p-5 animate-fade-left opacity-0 delay-100">
             <div class="flex items-center gap-2 mb-4">
               <i data-lucide="map" class="w-4 h-4 text-[#0A3D62] dark:text-[#1DD1A1]"></i>
@@ -335,12 +326,6 @@
               <div class="flex items-center gap-2.5">
                 <div class="w-6 h-[3px] bg-[#1DD1A1] rounded-full"></div>
                 <span class="text-xs text-secondary">Jalur Evakuasi (Jalan Aspal Nyata)</span>
-              </div>
-              <div class="flex items-center gap-2.5">
-                <div class="w-[14px] h-[14px] bg-[#FFC312] rounded flex items-center justify-center">
-                  <i data-lucide="shield" class="w-2 h-2 text-white"></i>
-                </div>
-                <span class="text-xs text-secondary">Titik Aman / Shelter</span>
               </div>
               <div class="p-2 bg-[#1DD1A1]/10 rounded-lg mt-2">
                 <p class="text-[10px] text-[#1DD1A1] font-semibold">Routing via OpenStreetMap</p>
@@ -366,7 +351,6 @@
           </div>
         </div>
 
-        <!-- MAP AREA -->
         <div class="card-bg rounded-2xl overflow-hidden shadow-xl animate-fade-left opacity-0 delay-200">
           <div class="bg-[#1B262C] px-5 py-3 flex items-center justify-between">
             <div class="flex items-center gap-2">
@@ -409,9 +393,8 @@
     </div>
   </main>
 
-  <!-- FOOTER -->
   <footer class="bg-[#1B262C] text-white pt-20">
-    <div class="max-w-7xl mx-auto px-6 pb-20 grid grid-cols-1 md:grid-cols-4 gap-12">
+    <div class="max-w-6xl mx-auto px-6 pb-20 grid grid-cols-1 md:grid-cols-4 gap-12">
       <div>
         <div class="flex items-center gap-3 mb-6">
           <div
@@ -458,45 +441,82 @@
 
     (function () {
       const COASTAL_REGIONS = [
-        { name: "Kota Semarang (Utara)", lat: -6.966, lng: 110.417, level: "bahaya", type: "Banjir & Rob", desc: "Kawasan pesisir Semarang, land subsidence tinggi, banjir rob rutin." },
-        { name: "Kabupaten Demak (Karanganyar)", lat: -6.894, lng: 110.639, level: "bahaya", type: "Banjir Bandang", desc: "Sungai Wulan meluap, 127 desa rawan." },
-        { name: "Kota Pekalongan", lat: -6.889, lng: 109.675, level: "siaga", type: "Banjir Pasang", desc: "Dataran rendah pesisir, banjir tahunan." },
-        { name: "Kota Palu (Pantai Talise)", lat: -0.886, lng: 119.856, level: "bahaya", type: "Tsunami", desc: "Teluk Palu bentuk corong, riwayat tsunami 2018." },
-        { name: "Kab. Aceh Besar (Lhoknga)", lat: 5.461, lng: 95.275, level: "bahaya", type: "Tsunami", desc: "Zona megathrust Sumatra, kawasan paling rawan." },
-        { name: "Kota Banda Aceh (Ulee Lheue)", lat: 5.55, lng: 95.3, level: "bahaya", type: "Tsunami", desc: "Pernah diterjang tsunami 2004, waktu tiba cepat." },
-        { name: "Kab. Cilacap (Teluk Penyu)", lat: -7.734, lng: 109.008, level: "bahaya", type: "Tsunami", desc: "Menghadap Samudra Hindia, zona merah nasional." },
-        { name: "Kota Padang (Purus)", lat: -0.947, lng: 100.35, level: "bahaya", type: "Tsunami", desc: "Kota padat penduduk, waktu evakuasi <25 menit." },
-        { name: "Kab. Lombok Barat (Senggigi)", lat: -8.494, lng: 116.046, level: "siaga", type: "Gempa & Tsunami", desc: "Zona sesar naik Flores, riwayat gempa 2018." },
-        { name: "Kota Manado (Megamas)", lat: 1.493, lng: 124.841, level: "waspada", type: "Tsunami", desc: "Teluk Manado potensi amplifikasi tsunami." },
-        { name: "Kab. Cirebon (Pesisir)", lat: -6.705, lng: 108.557, level: "siaga", type: "Banjir Rob", desc: "Abrasi dan rob mengancam pemukiman." },
+        { name: "Kecamatan Sayung, Kab Demak, Jawa Tengah", lat: -6.932, lng: 110.523, level: "bahaya", type: "Banjir & Rob", desc: "13 desa tergenang rob setiap tahun, tanggul rapuh." },
+        { name: "Kecamatan Karanganyar, Kab Demak, Jawa Tengah", lat: -6.894, lng: 110.602, level: "bahaya", type: "Banjir & Rob", desc: "Banjir kiriman Sungai Wulan, genangan hingga 1 meter." },
+        { name: "Kecamatan Semarang Utara, Kota Semarang, Jawa Tengah", lat: -6.950, lng: 110.422, level: "bahaya", type: "Banjir & Rob", desc: "Penurunan tanah 15-20 cm/th, rob rendam ribuan rumah." },
+        { name: "Kecamatan Genuk, Kota Semarang, Jawa Tengah", lat: -6.937, lng: 110.464, level: "bahaya", type: "Banjir & Rob", desc: "Kawasan industri dan pemukiman padat, genangan rob 50 cm." },
+        { name: "Kecamatan Pekalongan Utara, Kab Pekalongan, Jawa Tengah", lat: -6.875, lng: 109.668, level: "siaga", type: "Banjir Bandang", desc: "Banjir rob dan luapan Sungai Sengkarang, genangan 80 cm." },
+        { name: "Kecamatan Pekalongan Timur, Kab Pekalongan, Jawa Tengah", lat: -6.887, lng: 109.685, level: "siaga", type: "Banjir Bandang", desc: "Luapan Sungai Kupang, banjir bandang saat hujan deras." },
+        { name: "Kecamatan Palu Barat, Kota Palu, Sulawesi Tengah", lat: -0.886, lng: 119.857, level: "bahaya", type: "Gempa & Tsunami", desc: "Zona likuifaksi dan tsunami 2018, kerusakan parah." },
+        { name: "Kecamatan Palu Selatan, Kota Palu, Sulawesi Tengah", lat: -0.910, lng: 119.880, level: "bahaya", type: "Gempa & Tsunami", desc: "Wilayah terdampak likuifaksi, tanah bergerak massif." },
+        { name: "Kecamatan Krueng Raya, Kab Aceh Besar, Aceh", lat: 5.510, lng: 95.355, level: "bahaya", type: "Tsunami & Gempa", desc: "Wilayah pesisir timur, zona merah megathrust Sumatra." },
+        { name: "Kecamatan Meuraxa, Kota Banda Aceh, Aceh", lat: 5.562, lng: 95.304, level: "bahaya", type: "Tsunami", desc: "Garis pantai barat, hancur total saat tsunami 2004." },
+        { name: "Kecamatan Cilacap Selatan, Kab Cilacap, Jawa Tengah", lat: -7.746, lng: 109.010, level: "bahaya", type: "Tsunami", desc: "Zona merah nasional, menghadap langsung Samudra Hindia." },
+        { name: "Kecamatan Adipala, Kab Cilacap, Jawa Tengah", lat: -7.692, lng: 109.155, level: "bahaya", type: "Tsunami", desc: "Pantai panjang dengan potensi amplifikasi gelombang tsunami." },
+        { name: "Kecamatan Padang Barat, Kota Padang, Sumatera Barat", lat: -0.960, lng: 100.359, level: "bahaya", type: "Tsunami & Gempa", desc: "Zona merah tsunami, waktu evakuasi <20 menit, pemukiman padat." },
+        { name: "Kecamatan Lembar, Kab Lombok Barat, NTB", lat: -8.710, lng: 116.052, level: "siaga", type: "Gempa", desc: "Zona pesisir selatan, rawan likuifaksi dan gempa kuat." },
+        { name: "Kecamatan Sekotong, Kab Lombok Barat, NTB", lat: -8.768, lng: 116.012, level: "siaga", type: "Gempa", desc: "Kepulauan dan pesisir barat, rawan gempa megathrust." },
+        { name: "Kecamatan Bunaken, Kota Manado, Sulawesi Utara", lat: 1.620, lng: 124.782, level: "waspada", type: "Tsunami", desc: "Kawasan wisata bahari, potensi amplifikasi gelombang di teluk." },
+        { name: "Kecamatan Malalayang, Kota Manado, Sulawesi Utara", lat: 1.468, lng: 124.788, level: "waspada", type: "Tsunami", desc: "Wilayah pesisir barat, rawan tsunami dengan waktu tiba singkat." },
+        { name: "Kecamatan Indramayu, Kab Indramayu, Jawa Barat", lat: -6.326, lng: 108.324, level: "bahaya", type: "Banjir & Rob", desc: "Pusat kota berbatasan laut, genangan rob 30-50 cm saat pasang maksimal." },
+        { name: "Kecamatan Pasekan, Kab Indramayu, Jawa Barat", lat: -6.300, lng: 108.348, level: "bahaya", type: "Banjir & Rob", desc: "Desa Pagirikan dan Totoran, tanggul rapuh, rob rendam pemukiman." },
+        { name: "Kecamatan Kandanghaur, Kab Indramayu, Jawa Barat", lat: -6.274, lng: 108.089, level: "siaga", type: "Banjir & Rob", desc: "Desa Eretan Kulon dan Eretan Wetan, rawan rob dan abrasi." },
+        { name: "Kecamatan Balongan, Kab Indramayu, Jawa Barat", lat: -6.350, lng: 108.366, level: "bahaya", type: "Banjir & Rob", desc: "Kawasan pesisir dekat kilang Pertamina, genangan rob saat pasang." }
       ];
 
       const SAFE_POINTS = [
-        { name: "Bukit Tembalang (Semarang)", lat: -7.05, lng: 110.433, type: "Bukit Evakuasi", desc: "Ketinggian 150-250 mdpl, aman banjir & tsunami." },
-        { name: "Bukit Soko Mranggen (Demak)", lat: -7.012, lng: 110.522, type: "Bukit Alami", desc: "Elevasi >50m, shelter banjir rob." },
-        { name: "Perbukitan Lebakbarang (Pekalongan)", lat: -7.138, lng: 109.657, type: "Perbukitan", desc: "Jalur evakuasi dari Kajen." },
-        { name: "Shelter Taman Ria (Palu)", lat: -0.886, lng: 119.865, type: "Shelter Vertikal", desc: "Gedung evakuasi 3 lantai, kapasitas 1000." },
-        { name: "Bukit Lhoknga (Aceh Besar)", lat: 5.468, lng: 95.28, type: "Bukit Alami", desc: "Titik evakuasi tsunami 150 mdpl." },
-        { name: "Bukit Tsunami Ulee Lheue (Banda Aceh)", lat: 5.56, lng: 95.305, type: "Bukit Monumen", desc: "Monumen & jalur evakuasi cepat." },
-        { name: "Bukit Karangtalun (Cilacap)", lat: -7.724, lng: 109.006, type: "Bukit Strategis", desc: "Titik evakuasi tsunami utama." },
-        { name: "Bukit Padang (Padang)", lat: -0.928, lng: 100.367, type: "Bukit Evakuasi", desc: "Ketinggian 100m, aman tsunami." },
-        { name: "Perbukitan Senggigi (Lombok Barat)", lat: -8.5, lng: 116.03, type: "Perbukitan", desc: "Elevasi >80 mdpl, jalur alternatif." },
-        { name: "Bukit Malalayang (Manado)", lat: 1.47, lng: 124.79, type: "Bukit", desc: "Pesisir aman, jalur via jalan raya." },
-        { name: "Perbukitan Cirebon (Gunung Sembung)", lat: -6.74, lng: 108.52, type: "Perbukitan", desc: "Wilayah perbukitan timur, aman banjir." },
+        { id: "bukit_soko", name: "Bukit Soko - Mranggen", lat: -7.028, lng: 110.518, region: "Kecamatan Sayung, Kab Demak", type: "Bukit Evakuasi", desc: "Perbukitan selatan Mranggen, elevasi +75 mdpl, shelter utama banjir, jarak 15 km via Jl. Raya Demak-Mranggen." },
+        { id: "perbukitan_gajah", name: "Perbukitan Gajah - Gajah", lat: -6.942, lng: 110.628, region: "Kecamatan Karanganyar, Kab Demak", type: "Dataran Tinggi", desc: "Perbukitan timur Demak, ketinggian +50 mdpl, jarak 12 km via Jl. Karanganyar-Gajah." },
+        { id: "bukit_tembalang", name: "Bukit Tembalang", lat: -7.045, lng: 110.438, region: "Kecamatan Semarang Utara, Kota Semarang", type: "Bukit Evakuasi", desc: "Kawasan Tembalang, elevasi 150-250 mdpl, jarak 18 km via Jl. MT Haryono." },
+        { id: "bukit_gombel", name: "Bukit Gombel - Ngaliyan", lat: -7.018, lng: 110.375, region: "Kecamatan Genuk, Kota Semarang", type: "Perbukitan", desc: "Perbukitan barat Semarang, jarak 12 km via Jl. Soekarno-Hatta." },
+        { id: "perbukitan_lebakbarang", name: "Perbukitan Lebakbarang", lat: -7.132, lng: 109.665, region: "Kecamatan Pekalongan Utara, Kab Pekalongan", type: "Bukit Evakuasi", desc: "Ketinggian >200 mdpl, evakuasi banjir bandang, jarak 30 km via Jl. Raya Pekalongan-Kajen." },
+        { id: "perbukitan_karanganyar", name: "Perbukitan Karanganyar - Kesesi", lat: -7.075, lng: 109.645, region: "Kecamatan Pekalongan Timur, Kab Pekalongan", type: "Dataran Tinggi", desc: "Perbukitan selatan Pekalongan, jarak 22 km via Jl. Kesesi." },
+        { id: "shelter_taman_ria", name: "Shelter Tsunami Taman Ria", lat: -0.884, lng: 119.863, region: "Kecamatan Palu Barat, Kota Palu", type: "Shelter Vertikal", desc: "Gedung 3 lantai, kapasitas 1000 orang, jarak 2 km via Jl. Maluku." },
+        { id: "perbukitan_lolu", name: "Perbukitan Lolu - Palu Selatan", lat: -0.912, lng: 119.878, region: "Kecamatan Palu Selatan, Kota Palu", type: "Bukit Evakuasi", desc: "Ketinggian >80 mdpl, aman tsunami, jarak 3.5 km via Jl. Sungai Bantaya." },
+        { id: "perbukitan_jantho", name: "Perbukitan Jantho", lat: 5.331, lng: 95.588, region: "Kecamatan Krueng Raya, Kab Aceh Besar", type: "Bukit Alami", desc: "Perbukitan Jantho, ketinggian 100-200 mdpl, jarak 25 km." },
+        { id: "bukit_ulee_lheue", name: "Bukit Tsunami Ulee Lheue", lat: 5.558, lng: 95.303, region: "Kecamatan Meuraxa, Kota Banda Aceh", type: "Bukit Evakuasi", desc: "Monumen tsunami, titik evakuasi vertikal alami, jarak 2.5 km via Jl. Sultan Iskandar Muda." },
+        { id: "bukit_karangtalun", name: "Bukit Karangtalun", lat: -7.722, lng: 109.008, region: "Kecamatan Cilacap Selatan, Kab Cilacap", type: "Bukit Evakuasi", desc: "Perbukitan selatan, ketinggian 60-80 mdpl, jarak 1.5 km via Jl. Gatot Subroto." },
+        { id: "perbukitan_gandrungmangu", name: "Perbukitan Gandrungmangu", lat: -7.575, lng: 108.852, region: "Kecamatan Adipala, Kab Cilacap", type: "Dataran Tinggi", desc: "Perbukitan utara Cilacap, jarak 35 km via Jl. Raya Cilacap-Kebumen." },
+        { id: "shelter_purus", name: "Shelter Tsunami Purus", lat: -0.944, lng: 100.354, region: "Kecamatan Koto Tangah, Kota Padang", type: "Shelter Vertikal", desc: "Gedung evakuasi Pantai Purus, jarak 2 km via Jl. Kampung Pondok." },
+        { id: "perbukitan_senggigi", name: "Perbukitan Senggigi", lat: -8.524, lng: 116.066, region: "Kecamatan Lembar, Kab Lombok Barat", type: "Bukit Evakuasi", desc: "Ketinggian 80-150 mdpl, aman tsunami, jarak 22 km via Jl. Raya Mataram-Senggigi." },
+        { id: "bukit_mataram", name: "Bukit Mataram - Gunung Sari", lat: -8.584, lng: 116.105, region: "Kecamatan Sekotong, Kab Lombok Barat", type: "Bukit Alami", desc: "Perbukitan timur Mataram, jarak 12 km via Jl. Langko." },
+        { id: "bukit_malalayang", name: "Bukit Malalayang", lat: 1.468, lng: 124.788, region: "Kecamatan Bunaken, Kota Manado", type: "Bukit Evakuasi", desc: "Ketinggian 60-100 mdpl, shelter tsunami barat, jarak 6 km via Jl. Piere Tendean." },
+        { id: "shelter_megamas", name: "Shelter Tsunami Megamas", lat: 1.497, lng: 124.844, region: "Kecamatan Malalayang, Kota Manado", type: "Shelter Vertikal", desc: "Gedung evakuasi kawasan Megamas, jarak 2 km." },
+        { id: "bukit_situgede", name: "Bukit Situgede - Sindang", lat: -6.410, lng: 108.286, region: "Kecamatan Indramayu, Kab Indramayu", type: "Bukit Evakuasi", desc: "Perbukitan selatan Indramayu, elevasi +50 mdpl, jarak 12 km via Jl. Raya Sindang." },
+        { id: "perbukitan_sukra", name: "Perbukitan Sukra - Sukra", lat: -6.380, lng: 108.180, region: "Kecamatan Pasekan, Kab Indramayu", type: "Dataran Tinggi", desc: "Perbukitan selatan Pasekan, ketinggian +40 mdpl, jarak 10 km via Jl. Sukra." },
+        { id: "bukit_tukdana", name: "Bukit Tukdana - Tukdana", lat: -6.452, lng: 108.215, region: "Kecamatan Kandanghaur, Kab Indramayu", type: "Bukit Evakuasi", desc: "Perbukitan selatan Kandanghaur, elevasi +60 mdpl, jalur evakuasi banjir." },
+        { id: "bukit_sliyeg", name: "Bukit Sliyeg - Sliyeg", lat: -6.425, lng: 108.341, region: "Kecamatan Balongan, Kab Indramayu", type: "Bukit Evakuasi", desc: "Perbukitan selatan Balongan, ketinggian +45 mdpl, evakuasi rob cepat." },
+        { id: "shelter_vertikal_indramayu", name: "Shelter Vertikal Alun-Alun Indramayu", lat: -6.326, lng: 108.324, region: "Kecamatan Indramayu, Kab Indramayu", type: "Shelter Vertikal", desc: "Gedung 3 lantai di pusat kota, kapasitas 500 orang, evakuasi vertikal terdekat." },
+        { id: "masjid_agung_indramayu", name: "Masjid Agung Indramayu", lat: -6.326, lng: 108.324, region: "Kecamatan Indramayu, Kab Indramayu", type: "Shelter Vertikal", desc: "Bangunan tinggi di pusat kota, evakuasi cepat <10 menit." }
       ];
 
       const EVACUATION_PAIRS = [
-        { from: [-6.966, 110.417], to: [-7.05, 110.433], name: "Semarang Utara → Bukit Tembalang", desc: "Via Jl. MT Haryono - Jl. Tembalang, jalan aspal." },
-        { from: [-6.894, 110.639], to: [-7.012, 110.522], name: "Demak Kota → Bukit Soko", desc: "Rute melalui Mranggen, jalan provinsi." },
-        { from: [-6.889, 109.675], to: [-7.138, 109.657], name: "Pekalongan → Lebakbarang", desc: "Jalan raya Pekalongan - Kajen - perbukitan." },
-        { from: [-0.886, 119.856], to: [-0.886, 119.865], name: "Pantai Talise → Shelter Taman Ria", desc: "Jalur cepat Jl. Maluku - Jl. Moh Yamin." },
-        { from: [5.461, 95.275], to: [5.468, 95.28], name: "Lhoknga → Bukit Lhoknga", desc: "Jalan desa ke bukit evakuasi." },
-        { from: [5.55, 95.3], to: [5.56, 95.305], name: "Ulee Lheue → Bukit Tsunami", desc: "Jalur evakuasi prioritas tsunami." },
-        { from: [-7.734, 109.008], to: [-7.724, 109.006], name: "Teluk Penyu → Bukit Karangtalun", desc: "Jalan Gatot Subroto naik ke perbukitan." },
-        { from: [-0.947, 100.35], to: [-0.928, 100.367], name: "Pantai Purus → Bukit Padang", desc: "Jalan Jend. Sudirman - arah timur." },
-        { from: [-8.494, 116.046], to: [-8.5, 116.03], name: "Senggigi → Perbukitan Senggigi", desc: "Jalan raya Senggigi naik ke bukit." },
-        { from: [1.493, 124.841], to: [1.47, 124.79], name: "Megamas Manado → Bukit Malalayang", desc: "Jalan Piere Tendean - Malalayang." },
-        { from: [-6.705, 108.557], to: [-6.74, 108.52], name: "Pesisir Cirebon → Gunung Sembung", desc: "Jalur alternatif ke perbukitan selatan." },
+        { from: [-6.932, 110.523], to: [-7.028, 110.518], name: "Kecamatan Sayung → Bukit Soko", desc: "Via Jl. Raya Demak - Mranggen, ±15 km, waktu tempuh 30 menit, jalur utama evakuasi." },
+        { from: [-6.894, 110.602], to: [-6.942, 110.628], name: "Kecamatan Karanganyar → Perbukitan Gajah", desc: "Via Jl. Karanganyar - Gajah, ±12 km, waktu tempuh 25 menit, jalur alternatif." },
+        { from: [-6.950, 110.422], to: [-7.045, 110.438], name: "Kecamatan Semarang Utara → Bukit Tembalang", desc: "Via Jl. MT Haryono - Tembalang, ±18 km, waktu tempuh 35 menit, jalur evakuasi utama." },
+        { from: [-6.937, 110.464], to: [-7.018, 110.375], name: "Kecamatan Genuk → Bukit Gombel", desc: "Via Jl. Soekarno-Hatta, ±12 km, waktu tempuh 25 menit, jalur cepat ke perbukitan barat." },
+        { from: [-6.875, 109.668], to: [-7.132, 109.665], name: "Kecamatan Pekalongan Utara → Perbukitan Lebakbarang", desc: "Via Jl. Raya Pekalongan - Kajen, ±30 km, waktu tempuh 50 menit, evakuasi banjir bandang." },
+        { from: [-6.887, 109.685], to: [-7.075, 109.645], name: "Kecamatan Pekalongan Timur → Perbukitan Karanganyar", desc: "Via Jl. Kesesi, ±22 km, waktu tempuh 40 menit, jalur selatan ke dataran tinggi." },
+        { from: [-0.886, 119.857], to: [-0.884, 119.863], name: "Kecamatan Palu Barat → Shelter Taman Ria", desc: "Via Jl. Maluku - Jl. Moh. Yamin, ±2 km, waktu tempuh 5 menit, evakuasi vertikal cepat." },
+        { from: [-0.910, 119.880], to: [-0.912, 119.878], name: "Kecamatan Palu Selatan → Perbukitan Lolu", desc: "Via Jl. Sungai Bantaya, ±3.5 km, waktu tempuh 10 menit, evakuasi ke bukit aman tsunami." },
+        { from: [5.510, 95.355], to: [5.331, 95.588], name: "Kecamatan Krueng Raya → Perbukitan Jantho", desc: "Via Jl. Jantho, ±25 km, waktu tempuh 45 menit, evakuasi ke dataran tinggi." },
+        { from: [5.562, 95.304], to: [5.558, 95.303], name: "Kecamatan Meuraxa → Bukit Tsunami Ulee Lheue", desc: "Via Jl. Sultan Iskandar Muda, ±2.5 km, waktu tempuh 8 menit, evakuasi ke monumen tsunami." },
+        { from: [-7.746, 109.010], to: [-7.722, 109.008], name: "Kecamatan Cilacap Selatan → Bukit Karangtalun", desc: "Via Jl. Gatot Subroto, ±1.5 km, waktu tempuh 5 menit, evakuasi cepat ke perbukitan." },
+        { from: [-7.692, 109.155], to: [-7.575, 108.852], name: "Kecamatan Adipala → Perbukitan Gandrungmangu", desc: "Via Jl. Raya Cilacap - Kebumen, ±35 km, waktu tempuh 50 menit, evakuasi ke utara." },
+        { from: [-0.960, 100.359], to: [-0.944, 100.354], name: "Kecamatan Padang Barat → Bukit Padang", desc: "Via Jl. Jend. Sudirman - Air Pacah, ±5 km, waktu tempuh 12 menit, evakuasi tsunami utama." },
+        { from: [-8.710, 116.052], to: [-8.524, 116.066], name: "Kecamatan Lembar → Perbukitan Senggigi", desc: "Via Jl. Raya Mataram - Senggigi, ±22 km, waktu tempuh 40 menit, evakuasi ke perbukitan utara." },
+        { from: [-8.768, 116.012], to: [-8.584, 116.105], name: "Kecamatan Sekotong → Bukit Mataram", desc: "Via Jl. Langko - Gunung Sari, ±12 km, waktu tempuh 25 menit, evakuasi ke perbukitan timur." },
+        { from: [1.620, 124.782], to: [1.468, 124.788], name: "Kecamatan Bunaken → Bukit Malalayang", desc: "Via Jl. Piere Tendean - Malalayang, ±6 km, waktu tempuh 15 menit, evakuasi ke perbukitan barat." },
+        { from: [1.468, 124.788], to: [1.497, 124.844], name: "Kecamatan Malalayang → Shelter Megamas", desc: "Shelter vertikal kawasan Megamas, ±2 km, waktu tempuh 5 menit, evakuasi vertikal terdekat." },
+        { from: [-6.326, 108.324], to: [-6.410, 108.286], name: "Kecamatan Indramayu → Bukit Situgede", desc: "Via Jl. Raya Sindang, ±12 km, waktu tempuh 25 menit, jalur evakuasi utama." },
+        { from: [-6.326, 108.324], to: [-6.326, 108.324], name: "Kecamatan Indramayu → Shelter Vertikal Alun-Alun", desc: "Shelter vertikal pusat kota, ±500 m, waktu tempuh 5 menit, evakuasi cepat." },
+        { from: [-6.326, 108.324], to: [-6.326, 108.324], name: "Kecamatan Indramayu → Masjid Agung", desc: "Bangunan tinggi pusat kota, ±300 m, waktu tempuh 3 menit, evakuasi vertikal." },
+        { from: [-6.300, 108.348], to: [-6.380, 108.180], name: "Kecamatan Pasekan → Perbukitan Sukra", desc: "Via Jl. Sukra, ±10 km, waktu tempuh 20 menit, jalur evakuasi ke perbukitan selatan." },
+        { from: [-6.300, 108.348], to: [-6.326, 108.324], name: "Kecamatan Pasekan → Shelter Vertikal Indramayu", desc: "Via Jl. Raya Pasekan - Indramayu, ±5 km, waktu tempuh 12 menit, evakuasi vertikal." },
+        { from: [-6.274, 108.089], to: [-6.452, 108.215], name: "Kecamatan Kandanghaur → Bukit Tukdana", desc: "Via Jl. Kandanghaur - Tukdana, ±20 km, waktu tempuh 35 menit, evakuasi banjir rob." },
+        { from: [-6.274, 108.089], to: [-6.380, 108.180], name: "Kecamatan Kandanghaur → Perbukitan Sukra", desc: "Via Jl. Raya Kandanghaur - Sukra, ±18 km, waktu tempuh 30 menit, jalur alternatif." },
+        { from: [-6.350, 108.366], to: [-6.425, 108.341], name: "Kecamatan Balongan → Bukit Sliyeg", desc: "Via Jl. Balongan - Sliyeg, ±8 km, waktu tempuh 18 menit, evakuasi cepat ke perbukitan." },
+        { from: [-6.350, 108.366], to: [-6.326, 108.324], name: "Kecamatan Balongan → Shelter Vertikal Indramayu", desc: "Via Jl. Raya Balongan - Indramayu, ±6 km, waktu tempuh 15 menit, evakuasi vertikal terdekat." }
       ];
 
       const RISK_COLORS = { bahaya: "#EE5253", siaga: "#FF9F43", waspada: "#FFC312", aman: "#1DD1A1" };
@@ -617,16 +637,6 @@
 
         overlay.classList.remove("visible");
         routesLoaded = true;
-
-        const statusCard = document.getElementById("routeStatusCard");
-        const statusContent = document.getElementById("routeStatusContent");
-        statusCard.classList.remove("hidden");
-        statusContent.innerHTML = `
-                <div style="color: #1DD1A1; font-weight: 600; margin-bottom: 4px;">${EVACUATION_PAIRS.length} jalur evakuasi dimuat</div>
-                <div style="color: var(--text-secondary);">Semua jalur mengikuti jalan aspal yang bisa dilalui motor, dihitung via OpenStreetMap Routing (OSRM).</div>
-                <div style="margin-top: 6px; font-size: 10px;">Klik jalur untuk melihat jarak & estimasi waktu.</div>
-            `;
-        lucide.createIcons();
       }
 
       function clearRoutes() {
@@ -734,48 +744,6 @@
         safeMarkers = [];
       }
 
-      function renderLayerControls() {
-        const config = {
-          risikoZona: { label: "Zona Risiko", color: "#EE5253", desc: "Titik-titik rawan bencana di pesisir" },
-          jalurEvakuasi: { label: "Jalur Evakuasi Motor", color: "#1DD1A1", desc: "Rute nyata via jalan aspal (OSRM)" },
-          titikAman: { label: "Titik Aman / Shelter", color: "#FFC312", desc: "Shelter & bukit evakuasi >20 mdpl" },
-        };
-
-        const div = document.getElementById("layerControls");
-        div.innerHTML = "";
-
-        for (const [key, cfg] of Object.entries(config)) {
-          const active = layers[key];
-          const el = document.createElement("div");
-          el.className = "layer-item";
-          el.dataset.layer = key;
-          el.style.cssText = `
-                    display:flex; align-items:center; gap:10px; padding:10px 12px;
-                    border-radius:10px; cursor:pointer; transition:all 0.2s;
-                    background:${active ? cfg.color + "0f" : "var(--bg-item)"};
-                    border:1.5px solid ${active ? cfg.color + "40" : "var(--border-item)"};
-                `;
-          el.innerHTML = `
-                    <div style="width:34px; height:34px; border-radius:8px; background:${active ? cfg.color : "var(--border-item)"}; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all 0.2s;">
-                        ${active ? "✓" : "–"}
-                    </div>
-                    <div style="flex:1;">
-                        <div style="font-weight:600; font-size:12px; color:${active ? "var(--text-primary)" : "var(--text-muted)"};">${cfg.label}</div>
-                        <div style="font-size:10px; color:var(--text-muted);">${cfg.desc}</div>
-                    </div>
-                    <div style="width:16px; height:16px; border-radius:4px; border:2px solid ${active ? cfg.color : "var(--border-input)"}; background:${active ? cfg.color : "transparent"}; display:flex; align-items:center; justify-content:center;">
-                        ${active ? '<span style="color:white; font-size:10px; font-weight:bold;">✓</span>' : ""}
-                    </div>
-                `;
-          el.addEventListener("click", () => {
-            layers[key] = !layers[key];
-            handleLayerToggle(key, layers[key]);
-            renderLayerControls();
-          });
-          div.appendChild(el);
-        }
-      }
-
       function handleLayerToggle(key, active) {
         if (key === "risikoZona") {
           if (active) {
@@ -875,7 +843,6 @@
       document.addEventListener("DOMContentLoaded", function () {
         initMap();
         renderLegend();
-        renderLayerControls();
         updateStats();
         lucide.createIcons();
 
